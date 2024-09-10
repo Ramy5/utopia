@@ -1,7 +1,10 @@
-import { useLayoutEffect } from "react";
+import { lazy, useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useRTL } from "./hooks/useRTL";
-import { Home, StructurePages } from "./pages";
+import LoadingWrapper from "./components/Global/Loading/LoadingWrapper";
+
+const StructurePages = lazy(() => import("./pages/StructurePages"));
+const Home = lazy(() => import("./pages/Home"));
 
 function App() {
   const isRTL = useRTL();
@@ -13,11 +16,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<StructurePages />}>
-          <Route index element={<Home />} />
-        </Route>
-      </Routes>
+      <LoadingWrapper>
+        <Routes>
+          <Route path="/" element={<StructurePages />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </LoadingWrapper>
     </BrowserRouter>
   );
 }
