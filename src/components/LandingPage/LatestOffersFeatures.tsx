@@ -7,7 +7,7 @@ import "swiper/css";
 
 const LatestOffersFeatures = ({ data }) => {
   return (
-    <div className="mb-28 pt-20 sm:pt-0 mx-4 md:mx-0">
+    <div className="mb-20 sm:mb-28 pt-20 sm:pt-0 mx-4 md:mx-0">
       <h2 className="font-semibold text-xl sm:text-3xl mb-12">
         {t("latest offers and features")}
       </h2>
@@ -35,7 +35,7 @@ const LatestOffersFeatures = ({ data }) => {
         </div>
       </div>
       <div className="block sm:hidden">
-        <Swiper spaceBetween={20} slidesPerView={1}>
+        <Swiper spaceBetween={20} slidesPerView={1.2}>
           {data?.offers?.map((offer, index) => (
             <SwiperSlide key={index}>
               <div>
