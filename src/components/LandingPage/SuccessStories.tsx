@@ -3,9 +3,10 @@ import "swiper/css";
 import Button from "../atoms/Button/Button";
 import { t } from "i18next";
 import { useRef, useState } from "react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Grid } from "swiper/modules";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
+import "swiper/css/grid";
 
 const SuccessStories = () => {
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
@@ -17,7 +18,6 @@ const SuccessStories = () => {
         url: "/api/student/stories",
         method: "GET",
       });
-      console.log("🚀 ~ fetchSuccessStories ~ response:", response);
 
       return response?.data || [];
     } catch (error) {
@@ -30,7 +30,6 @@ const SuccessStories = () => {
     queryFn: fetchSuccessStories,
     suspense: true,
   });
-  console.log("🚀 ~ SuccessStories ~ data:", data);
 
   const handleImageClick = (index) => {
     setSelectedStoryIndex(index);
@@ -40,17 +39,33 @@ const SuccessStories = () => {
   };
 
   return (
-    <div className="bg-[#1B0924] px-8 pb-36">
-      <h2 className="text-3xl font-semibold text-white py-20">
+    <div className="bg-[#1B0924] px-8 pb-36 hidden md:block">
+      <h2 className="text-6xl text-white py-20">
         {t("success stories")}
       </h2>
       <div className="grid grid-cols-10 gap-8">
-        <div className="col-span-6">
-          <Swiper spaceBetween={50} slidesPerView={1}>
-            <SwiperSlide>
-              <div className="grid grid-cols-3 gap-y-8">
-                {data?.map((story, index) => (
-                  <div key={index} className="cursor-pointer">
+        <div className="col-span-5 lg:col-span-6">
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={3}
+            breakpoints={{
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+            grid={{
+              rows: 2,
+            }}
+            modules={[Grid]}
+            className="h-[450px] mySwiper"
+          >
+            <div>
+              {data?.map((story, index) => (
+                <SwiperSlide key={index}>
+                  <div className="p-4 cursor-pointer">
                     <div
                       className="relative w-44 h-44 rounded-full"
                       onClick={() => handleImageClick(index)}
@@ -68,12 +83,12 @@ const SuccessStories = () => {
                       />
                     </div>
                   </div>
-                ))}
-              </div>
-            </SwiperSlide>
+                </SwiperSlide>
+              ))}
+            </div>
           </Swiper>
         </div>
-        <div className="relative col-span-4">
+        <div className="relative col-span-5 lg:col-span-4">
           <div className="absolute -top-36 -right-20 z-10">
             <img
               src={data?.[selectedStoryIndex]?.image}
@@ -83,7 +98,7 @@ const SuccessStories = () => {
           <Swiper
             spaceBetween={50}
             slidesPerView={1}
-            className="h-full"
+            className="h-[450px]"
             pagination={{
               clickable: true,
             }}

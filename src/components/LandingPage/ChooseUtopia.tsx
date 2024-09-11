@@ -1,8 +1,4 @@
 import { t } from "i18next";
-import React from "react";
-import ChooseUtopia_1 from "../../assets/LandingPage/chooseUtopia_1.png";
-import ChooseUtopia_2 from "../../assets/LandingPage/chooseUtopia_2.png";
-import ChooseUtopia_3 from "../../assets/LandingPage/chooseUtopia_3.png";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 
