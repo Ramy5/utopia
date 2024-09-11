@@ -1,10 +1,9 @@
-import React from "react";
 import Button from "../atoms/Button/Button";
 import { t } from "i18next";
 
 const ProgramsType = ({ data }) => {
   return (
-    <div className="mb-28">
+    <div className="mb-20 sm:mb-28">
       <div className="hidden sm:block my-12 mx-4 md:mx-0">
         <div className="grid grid-cols-10 gap-5">
           {data?.categories?.map((categorie, index) => (
@@ -34,7 +33,9 @@ const ProgramsType = ({ data }) => {
                 {index === 0 && (
                   <>
                     <p className="mt-3 text-[15px] font-base">
-                      {categorie?.desc}
+                      <div
+                        dangerouslySetInnerHTML={{ __html: categorie?.desc }}
+                      />
                     </p>
                     <Button className="bg-white text-mainColor mt-5">
                       {t("learn more")}

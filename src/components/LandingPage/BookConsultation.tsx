@@ -38,7 +38,7 @@ const BookConsultation = ({ data }) => {
   ];
 
   return (
-    <div className="mb-28">
+    <div className="mb-24 sm:mb-28">
       <div className="hidden sm:block my-12 mx-4 md:mx-0">
         <div className="grid grid-cols-11 gap-3">
           {data?.offers?.map((offer, index) => (
