@@ -1,27 +1,31 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
+    "skipLibCheck": true,
+    "noEmitOnError": false, // Allow emitting code even if there are type errors
     "noImplicitAny": false, // Allow implicit 'any' types
-    "strictNullChecks": false, // Disable strict null checks
+    "strictNullChecks": false, // Disable strict null checking
     "strictFunctionTypes": false, // Disable strict function types
-    "strict": false, // Disable all strict checks
-    "jsx": "react-jsx"
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": false, // Disable isolated modules checking
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": false, // Disable all strict mode options
+    "noUnusedLocals": false, // Disable unused locals check
+    "noUnusedParameters": false, // Disable unused parameters check
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src",
     "global.d.ts" // Ensure this file is included
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  ]
 }
