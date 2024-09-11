@@ -24,7 +24,7 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
   const { data } = useQuery({
     queryKey: ["choose_utopia"],
     queryFn: fetchChooseUtopia,
-    // suspense: true,
+    suspense: true,
   });
   console.log("🚀 ~ data:", data);
 
