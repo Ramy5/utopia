@@ -14,7 +14,6 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 
 const BookConsultation = ({ data }) => {
-  console.log("🚀 ~ BookConsultation ~ data:", data);
 
   const BookContent = [
     {
