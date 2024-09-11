@@ -11,7 +11,7 @@ const Register = lazy(() => import("./pages/Register"));
 const ChooseUtopia = lazy(
   () => import("./components/LandingPage/ChooseUtopia")
 );
-const successStoryPage = lazy(() => import("./pages/successStoryPage"));
+const SuccessStoryPage = lazy(() => import("./pages/successStoryPage"));
 
 function App() {
   const isRTL = useRTL();
@@ -32,7 +32,7 @@ function App() {
             <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
-          <Route path="/successStory" element={<successStoryPage />} />
+          <Route path="/successStory" element={<SuccessStoryPage />} />
         </Routes>
       </LoadingWrapper>
     </BrowserRouter>

@@ -11,6 +11,7 @@ export type BaseInput_TP = {
   className?: string;
   labelProps?: string;
   name: string;
+  value?: any;
   placeholder?: string;
   ref?: any;
   disabled?: boolean;
@@ -48,8 +49,7 @@ const BaseInput = ({
       [key: string]: any;
     }>();
 
-  const GeneralInputClass: string =
-    "form-input px-4 py-2.5 w-full shadows";
+  const GeneralInputClass: string = "form-input px-4 py-2.5 w-full shadows";
 
   const baseInput = tv({
     base: `rounded-3xl border-2 border-[#BEC8CF] focus:!border-2 focus:!border-black`,
@@ -94,7 +94,7 @@ const BaseInput = ({
           type={type}
           autoFocus={autoFocus}
           id={id}
-          value={props.value || values[props.name]}
+          value={props?.value || values[props.name]}
           error={touched[props.name] && !!errors[props.name]}
           placeholder={placeholder ? `${t(placeholder)}` : ""}
           autoComplete="off"
