@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* GLOBAL ANIMATION */
 .animation_delay-3 {
   animation-delay: 0.3s !important;
