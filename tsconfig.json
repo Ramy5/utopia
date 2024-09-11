@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "target": "ES2020",
     "module": "ESNext",
+    "lib": ["ES2020", "DOM"],
+    "moduleResolution": "Node",
+    "allowJs": true,
     "skipLibCheck": true,
     "noEmitOnError": false, // Allow emitting code even if there are type errors
     "noImplicitAny": false, // Allow implicit 'any' types
     "strictNullChecks": false, // Disable strict null checking
     "strictFunctionTypes": false, // Disable strict function types
+    "allowImportingTsExtensions": false,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "isolatedModules": false, // Disable isolated modules checking
