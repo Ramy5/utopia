@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "jsxImportSource": "react", // For React 18+ JSX runtime
     "noEmitOnError": false, // Allow emitting code even if there are type errors
     "noImplicitAny": false, // Allow implicit 'any' types
     "strictNullChecks": false, // Disable strict null checking
@@ -25,5 +26,8 @@
     "noUnusedParameters": false, // Disable unused parameters check
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "global.d.ts" // Ensure this file is included
+  ]
 }
