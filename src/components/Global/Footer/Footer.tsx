@@ -296,9 +296,14 @@ const Footer = () => {
                     <span>❯</span>
                   </Link>
                 </li>
-                <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
-                  <span>قصص نجاح</span>
-                  <span>❯</span>
+                <li>
+                  <Link
+                    to={"/successStory"}
+                    className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
+                  >
+                    <span>قصص نجاح</span>
+                    <span>❯</span>
+                  </Link>
                 </li>
                 <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
                   <span>الحسابات البنكية</span>

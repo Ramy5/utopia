@@ -1,49 +1,77 @@
 import { t } from "i18next";
-import React from "react";
-import ChooseUtopia_1 from "../../assets/LandingPage/chooseUtopia_1.png";
-import ChooseUtopia_2 from "../../assets/LandingPage/chooseUtopia_2.png";
-import ChooseUtopia_3 from "../../assets/LandingPage/chooseUtopia_3.png";
+import { apiRequest } from "../../utils/axios";
+import { useQuery } from "@tanstack/react-query";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-const ChooseUtopia = ({ data, isInFooter }) => {
-  const chooseUtopiaData = [
-    {
-      image: ChooseUtopia_1,
-      title: "تقدر تقدم بنفسك وقبولك يوصلك في أسرع وقت",
-    },
-    {
-      image: ChooseUtopia_2,
-      title: "متابعة كاملة للطالب من بداية الكورس لنهايته",
-    },
-    { image: ChooseUtopia_3, title: "خطة دراسية خاصة لكل طالب بناء علي هدفه" },
-  ];
+interface ChooseUtopia_TP {
+  isFootered?: boolean;
+}
+
+const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
+  const fetchChooseUtopia = async () => {
+    try {
+      const data = await apiRequest({
+        url: "/api/student/why-choose-utopia",
+        method: "GET",
+      });
+      return data?.data;
+    } catch (error) {
+      console.error("Error fetching items:", error.message);
+    }
+  };
+
+  const { data } = useQuery({
+    queryKey: ["choose_utopia"],
+    queryFn: fetchChooseUtopia,
+    suspense: true,
+  });
+  console.log("🚀 ~ data:", data);
+
   return (
-    <div className="hidden mx-4 mb-20 sm:mb-28 md:mx-0 sm:block">
-      <div className="mb-40 text-3xl font-medium">
-        {t("Why choose Utopia?")}
+    <div
+      className={`${
+        isFootered ? "block my-8" : "hidden sm:block"
+      }  mx-4 mb-20 sm:mb-28 md:mx-0 `}
+    >
+      <div className="flex justify-between">
+        {isFootered && (
+          <Link to={"/"}>
+            <FaArrowRightLong className="mt-4 cursor-pointer justify-self-start" />
+          </Link>
+        )}
+
+        <div
+          className={`${
+            !isFootered ? "mb-40" : "mb-20 text-center"
+          }  text-3xl font-medium`}
+        >
+          {t("Why choose Utopia?")}
+        </div>
       </div>
-      <div className="flex items-center justify-between gap-5">
-        {chooseUtopiaData?.map((item, index) => (
+      <div
+        className={`${
+          isFootered ? "flex-col gap-20" : "flex-row gap-5"
+        } flex items-center justify-between`}
+      >
+        {data?.map((item, index) => (
           <div
             key={index}
-            className="relative bg-[#1B0924] px-6 lg:px-12 pb-10 rounded-3xl h-44"
+            className={`relative bg-[#1B0924] px-6 lg:px-12 pb-10 rounded-3xl ${
+              isFootered ? "h-[8rem]" : "h-40"
+            } `}
           >
             <div
-              className={`${
-                index === 0
-                  ? "bg-mainColor"
-                  : index === 1
-                  ? "bg-[#FFB6BF]"
-                  : "bg-[#FFCC1A]"
-              } rounded-full p-6 lg:p-8 absolute -top-16 md:-top-20 lg:-top-24 left-1/2 -translate-x-1/2`}
+              className={`rounded-full absolute -top-12 md:-top-20 lg:-top-[5.5rem] left-1/2 -translate-x-1/2`}
             >
               <img
                 src={item.image}
                 alt="choose"
-                className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20"
+                className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32"
               />
             </div>
             <p className="flex items-end w-full h-full m-auto text-center text-white lg:w-3/4">
-              {item.title}
+              {item.name}
             </p>
           </div>
         ))}

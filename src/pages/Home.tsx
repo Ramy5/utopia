@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-8 mx-auto">
         <BookConsultation data={data} />
 
         <ProgramsType data={data} />
@@ -40,7 +40,7 @@ const Home = () => {
 
         <ProgramTypePackages data={data} />
 
-        <ChooseUtopia data={data} />
+        <ChooseUtopia />
 
         <UniversityAdmissions data={data} />
       </div>
