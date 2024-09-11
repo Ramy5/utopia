@@ -8,13 +8,16 @@ import "swiper/css";
 
 const ProgramTypePackages = ({ data }) => {
   return (
-    <div className="mb-20 sm:mb-28 sm:pt-20 pt-0 mx-4 md:mx-0">
+    <div
+      id="englishSection"
+      className="pt-0 mx-4 mb-20 sm:mb-28 sm:pt-20 md:mx-0"
+    >
       <div className="flex items-center justify-between mb-12">
-        <h2 className="font-semibold text-xl">
+        <h2 className="text-xl font-semibold">
           {t("english language study packages")}
         </h2>
-        <div className="hidden md:grid grid-cols-5 gap-3">
-          <div className="col-span-3 max-w-full">
+        <div className="hidden grid-cols-5 gap-3 md:grid">
+          <div className="max-w-full col-span-3">
             <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
               <Form>
                 <div className="relative w-full">
@@ -37,11 +40,11 @@ const ProgramTypePackages = ({ data }) => {
             {t("design your own course")}
           </Button>
         </div>
-        <p className="block md:hidden text-mainColor font-medium text-2xl">
+        <p className="block text-2xl font-medium md:hidden text-mainColor">
           {t("More")}
         </p>
       </div>
-      <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="hidden grid-cols-2 gap-5 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {data?.englishPackages?.map((packages, index) => (
           <div
             key={index}
@@ -50,17 +53,17 @@ const ProgramTypePackages = ({ data }) => {
             <div>
               <img
                 src={packages.packageImage[0].image}
-                className="w-full h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none duration-700 object-cover"
+                className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
               />
             </div>
             <div className="relative">
               <div className="absolute w-full h-full bg-mainColor translate-y-[82%] group-hover:translate-y-0 rounded-t-2xl group-hover:rounded-t-none duration-300 -z-10"></div>
 
-              <h2 className="pt-4 text-2xl font-medium relative text-black group-hover:text-white duration-300">
+              <h2 className="relative pt-4 text-2xl font-medium text-black duration-300 group-hover:text-white">
                 {packages.partner_name}
               </h2>
               <p
-                className="overflow-hidden text-ellipsis max-w-full max-h-48 my-4 px-3 text-black group-hover:text-white duration-300"
+                className="max-w-full px-3 my-4 overflow-hidden text-black duration-300 text-ellipsis max-h-48 group-hover:text-white"
                 style={{
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",
@@ -69,7 +72,7 @@ const ProgramTypePackages = ({ data }) => {
               >
                 {packages.desc}
               </p>
-              <h3 className=" text-white font-medium text-2xl rounded-2xl py-3">
+              <h3 className="py-3 text-2xl font-medium text-white  rounded-2xl">
                 {packages.g_price} <span>{packages.unit}</span>
               </h3>
             </div>
@@ -85,14 +88,14 @@ const ProgramTypePackages = ({ data }) => {
                 <div>
                   <img
                     src={packages.packageImage[0].image}
-                    className="w-full h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none duration-700 object-cover"
+                    className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
                   />
                 </div>
                 <div className="flex items-center justify-between px-4 py-5">
-                  <h2 className="font-semibold text-xl relative text-black group-hover:text-white duration-300">
+                  <h2 className="relative text-xl font-semibold text-black duration-300 group-hover:text-white">
                     {packages.partner_name}
                   </h2>
-                  <h3 className="text-mainColor font-medium text-xl rounded-2xl py-3">
+                  <h3 className="py-3 text-xl font-medium text-mainColor rounded-2xl">
                     {packages.g_price} <span>{packages.unit}</span>
                   </h3>
                 </div>
@@ -101,8 +104,8 @@ const ProgramTypePackages = ({ data }) => {
           ))}
         </Swiper>
       </div>
-      <div className="mt-7 block sm:hidden ">
-        <Button className="rounded-3xl py-4 text-2xl col-span-2 w-full">
+      <div className="block mt-7 sm:hidden ">
+        <Button className="w-full col-span-2 py-4 text-2xl rounded-3xl">
           {t("design your own course")}
         </Button>
       </div>
