@@ -33,7 +33,7 @@ const ProgramsType = ({ data }) => {
                 {index === 0 && (
                   <>
                     <p className="mt-3 text-[15px] font-base">
-                      <div
+                      <span
                         dangerouslySetInnerHTML={{ __html: categorie?.desc }}
                       />
                     </p>
