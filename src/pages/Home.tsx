@@ -8,6 +8,8 @@ import ProgramTypePackages from "../components/LandingPage/ProgramTypePackages";
 import ChooseUtopia from "../components/LandingPage/ChooseUtopia";
 import UniversityAdmissions from "../components/LandingPage/UniversityAdmissions";
 import SuccessStories from "../components/LandingPage/SuccessStories";
+import Brands from "../components/LandingPage/Brands";
+import SummerPrograms from "../components/LandingPage/SummerPrograms";
 
 const fetchItems = async () => {
   try {
@@ -43,9 +45,13 @@ const Home = () => {
         <ChooseUtopia />
 
         <UniversityAdmissions data={data} />
+
+        <SummerPrograms data={data} />
       </div>
 
       <SuccessStories />
+
+      <Brands />
     </div>
   );
 };
