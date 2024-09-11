@@ -1,8 +1,14 @@
 {
   "login": "تسجيل الدخول",
   "email": "البريد الإلكتروني",
-  "book consultation": "حجز استشاره", 
-  "contact us":"اتصل بنا",
-  "learn more":"اعرف اكثر",
-  "latest offers and features":"احدث العروض والمميزات"
+  "book consultation": "حجز استشاره",
+  "contact us": "اتصل بنا",
+  "learn more": "اعرف اكثر",
+  "latest offers and features": "احدث العروض والمميزات",
+  "english language study packages": "بكدجات دراسة اللغة الانجليزية",
+  "design your own course": "صمم كورسك الخاص",
+  "search by city or institute name": "بحث باسم المدينة او المعهد",
+  "More": "المزيد",
+  "Why choose Utopia?": "لماذا تختار يوتوبيا؟",
+  "University admissions": "القبولات الجامعية"
 }
