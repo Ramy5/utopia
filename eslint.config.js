@@ -29,6 +29,8 @@ export default [
       ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react/jsx-no-target-blank": "off",
+      "@typescript-eslint/no-explicit-any": "off", // Allow 'any' type
+      "@typescript-eslint/explicit-module-boundary-types": "off", // Allow missing return type
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
