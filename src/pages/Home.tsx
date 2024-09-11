@@ -27,7 +27,7 @@ const Home = () => {
   const { data } = useQuery({
     queryKey: ["landing-page-data"],
     queryFn: fetchItems,
-    // suspense: true,
+    suspense: true,
   });
   console.log("🚀 ~ fetchItems ~ data:", data);
 

@@ -22,7 +22,7 @@ const Brands = () => {
   const { data = [] } = useQuery({
     queryKey: ["brands"],
     queryFn: fetchBrands,
-    // suspense: true,
+    suspense: true,
   });
 
   return (

@@ -28,7 +28,7 @@ const SuccessStories = () => {
   const { data = [] } = useQuery({
     queryKey: ["success_stories"],
     queryFn: fetchSuccessStories,
-    // suspense: true,
+    suspense: true,
   });
 
   const handleImageClick = (index) => {
@@ -40,9 +40,7 @@ const SuccessStories = () => {
 
   return (
     <div className="bg-[#1B0924] px-8 pb-36 hidden md:block">
-      <h2 className="py-20 text-6xl text-white">
-        {t("success stories")}
-      </h2>
+      <h2 className="py-20 text-6xl text-white">{t("success stories")}</h2>
       <div className="grid grid-cols-10 gap-8">
         <div className="col-span-5 lg:col-span-6">
           <Swiper
