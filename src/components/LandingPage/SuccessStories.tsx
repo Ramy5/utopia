@@ -28,7 +28,7 @@ const SuccessStories = () => {
   const { data = [] } = useQuery({
     queryKey: ["success_stories"],
     queryFn: fetchSuccessStories,
-    suspense: true,
+    // suspense: true,
   });
 
   const handleImageClick = (index) => {
@@ -40,7 +40,7 @@ const SuccessStories = () => {
 
   return (
     <div className="bg-[#1B0924] px-8 pb-36 hidden md:block">
-      <h2 className="text-6xl text-white py-20">
+      <h2 className="py-20 text-6xl text-white">
         {t("success stories")}
       </h2>
       <div className="grid grid-cols-10 gap-8">
@@ -67,7 +67,7 @@ const SuccessStories = () => {
                 <SwiperSlide key={index}>
                   <div className="p-4 cursor-pointer">
                     <div
-                      className="relative w-44 h-44 rounded-full"
+                      className="relative rounded-full w-44 h-44"
                       onClick={() => handleImageClick(index)}
                     >
                       <div
@@ -89,10 +89,10 @@ const SuccessStories = () => {
           </Swiper>
         </div>
         <div className="relative col-span-5 lg:col-span-4">
-          <div className="absolute -top-36 -right-20 z-10">
+          <div className="absolute z-10 -top-36 -right-20">
             <img
               src={data?.[selectedStoryIndex]?.image}
-              className="w-44 h-44 rounded-full group-hover:rounded-b-none object-cover transition-all duration-1000 ease-in-out"
+              className="object-cover transition-all duration-1000 ease-in-out rounded-full w-44 h-44 group-hover:rounded-b-none"
             />
           </div>
           <Swiper
@@ -113,7 +113,7 @@ const SuccessStories = () => {
               <SwiperSlide key={index}>
                 <div className="shadow-xl rounded-2xl bg-[#FFB6BF] relative h-full z-0 py-10 px-8">
                   <div className="px-4 py-5">
-                    <h2 className="font-normal text-3xl relative text-black group-hover:text-white duration-300 mb-1">
+                    <h2 className="relative mb-1 text-3xl font-normal text-black duration-300 group-hover:text-white">
                       {storie.name}
                     </h2>
                     <p className="text-[15px]">{storie.title}</p>
@@ -122,7 +122,7 @@ const SuccessStories = () => {
                         dangerouslySetInnerHTML={{ __html: storie?.desc }}
                       />
                     </h3>
-                    <Button className="bg-white text-black">
+                    <Button className="text-black bg-white">
                       {t("learn more")}
                     </Button>
                   </div>
