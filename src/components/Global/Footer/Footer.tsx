@@ -305,13 +305,25 @@ const Footer = () => {
                     <span>❯</span>
                   </Link>
                 </li>
-                <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
-                  <span>الحسابات البنكية</span>
-                  <span>❯</span>
+                <li>
+                  <Link
+                    onClick={() => setIsMoreOpen(false)}
+                    className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
+                    to={"/bankAccounts"}
+                  >
+                    <span>الحسابات البنكية</span>
+                    <span>❯</span>
+                  </Link>
                 </li>
-                <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
-                  <span>شركائنا</span>
-                  <span>❯</span>
+                <li>
+                  <Link
+                    onClick={() => setIsMoreOpen(false)}
+                    className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
+                    to={"/ourPartners"}
+                  >
+                    <span>شركائنا</span>
+                    <span>❯</span>
+                  </Link>
                 </li>
                 <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
                   <span>تسجيل الخروج</span>
