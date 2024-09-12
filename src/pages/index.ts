@@ -4,7 +4,7 @@ import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
 import StructurePages from "./StructurePages";
-import successStoryPage from "./SuccessStoryPage";
+import SuccessStoryPage from "./successStoryPage";
 
 export {
   StructurePages,
@@ -12,6 +12,6 @@ export {
   BePartner,
   Login,
   Register,
-  successStoryPage,
   BookConsultant,
+  SuccessStoryPage,
 };

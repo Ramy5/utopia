@@ -29,7 +29,7 @@ const successCardData: SuccessStoryCardProps[] = [
   },
 ];
 
-const successStoryPage = () => {
+const SuccessStoryPage = () => {
   return (
     <div className="px-6 py-4">
       <div
@@ -64,4 +64,4 @@ const successStoryPage = () => {
   );
 };
 
-export default successStoryPage;
+export default SuccessStoryPage;
