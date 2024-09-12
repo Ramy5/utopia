@@ -26,7 +26,7 @@ const Brands = () => {
   });
 
   return (
-    <div className="py-5 hidden sm:block">
+    <div className="hidden py-5 sm:block">
       <Swiper
         slidesPerView={5}
         loop={true}
@@ -38,7 +38,7 @@ const Brands = () => {
         }}
         modules={[Autoplay, Pagination, Navigation]}
         speed={600}
-        effect="liner" 
+        effect="liner"
       >
         <div>
           {data?.map((brand, index) => (

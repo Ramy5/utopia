@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import BookConsultation from "../components/LandingPage/BookConsultation";
-import LatestOffersFeatures from "../components/LandingPage/latestOffersFeatures";
+import LatestOffersFeatures from "../components/LandingPage/LatestOffersFeatures";
 import ProgramsType from "../components/LandingPage/ProgramsType";
 import { apiRequest } from "../utils/axios";
 import { useQuery } from "@tanstack/react-query";
