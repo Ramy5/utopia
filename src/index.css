@@ -6,6 +6,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.bookConsultantBg {
+  background-image: url("./assets/personLandingPage.png");
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 /* GLOBAL ANIMATION */
 .animation_delay-3 {
   animation-delay: 0.3s !important;
