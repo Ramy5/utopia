@@ -48,7 +48,7 @@ const SuccessStories = () => {
             slidesPerView={3}
             breakpoints={{
               768: {
-                slidesPerView: 2,
+                slidesPerView: 3,
               },
               1024: {
                 slidesPerView: 3,
@@ -65,11 +65,11 @@ const SuccessStories = () => {
                 <SwiperSlide key={index}>
                   <div className="p-4 cursor-pointer">
                     <div
-                      className="relative rounded-full w-44 h-44"
+                      className="relative rounded-full w-40 h-40"
                       onClick={() => handleImageClick(index)}
                     >
                       <div
-                        className={`absolute top-0 left-0 w-44 h-44 rounded-full duration-300 ${
+                        className={`absolute top-0 left-0 w-40 h-40 rounded-full duration-300 ${
                           index === selectedStoryIndex
                             ? "opacity-100"
                             : "bg-black opacity-55"
@@ -77,7 +77,7 @@ const SuccessStories = () => {
                       ></div>
                       <img
                         src={story.image}
-                        className={`w-44 h-44 rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
+                        className={`w-40 h-40 rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
                       />
                     </div>
                   </div>
@@ -96,7 +96,7 @@ const SuccessStories = () => {
           <Swiper
             spaceBetween={50}
             slidesPerView={1}
-            className="h-[450px]"
+            className="h-[400px]"
             pagination={{
               clickable: true,
             }}
@@ -109,13 +109,13 @@ const SuccessStories = () => {
           >
             {data?.map((storie, index) => (
               <SwiperSlide key={index}>
-                <div className="shadow-xl rounded-2xl bg-[#FFB6BF] relative h-full z-0 py-10 px-8">
+                <div className="shadow-xl rounded-2xl bg-[#FFB6BF] relative h-full z-0 pt-10 pb-6 px-8">
                   <div className="px-4 py-5">
                     <h2 className="relative mb-1 text-3xl font-normal text-black duration-300 group-hover:text-white">
                       {storie.name}
                     </h2>
                     <p className="text-[15px]">{storie.title}</p>
-                    <h3 className="text-[15px] py-12">
+                    <h3 className="text-[15px] py-10">
                       <span
                         dangerouslySetInnerHTML={{ __html: storie?.desc }}
                       />

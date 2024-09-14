@@ -33,7 +33,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-8 mx-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
         <BookConsultation data={data} />
 
         <ProgramsType data={data} />
