@@ -12,6 +12,7 @@ import { PiChatCircleThin } from "react-icons/pi";
 import { useRTL } from "../../../hooks/useRTL";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { t } from "i18next";
 
 const currentPages = [
   {
@@ -106,7 +107,7 @@ const Footer = () => {
         <div className="max-w-full py-4 md:px-8 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
           <div className="container grid grid-cols-1 gap-24 px-4 py-32 mx-auto lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
             <div className="text-center md:text-right">
-              <h4 className="pb-4 font-bold border-b">الدورات</h4>
+              <h4 className="pb-4 font-bold border-b">{t("courses")}</h4>
               <ul className="pt-6 space-y-2">
                 <li>دورة اللغة الإنجليزية العامة</li>
                 <li>دورة التحضير للأيلتس</li>
@@ -115,7 +116,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className="text-center md:text-right">
-              <h4 className="pb-4 font-bold border-b">الوجهات</h4>
+              <h4 className="pb-4 font-bold border-b">{t("destinations")}</h4>
               <ul className="pt-6 space-y-2">
                 <li>المملكة المتحدة</li>
                 <li>الولايات المتحدة الأمريكية</li>
@@ -125,27 +126,31 @@ const Footer = () => {
               </ul>
             </div>
             <div className="text-center md:text-right">
-              <h4 className="pb-4 font-bold border-b ">فرص</h4>
+              <h4 className="pb-4 font-bold border-b ">{t("opportunities")}</h4>
               <ul className="pt-6 space-y-2">
                 <li>
-                  <Link to={"/bePartner"}>أصبح شريك </Link>
+                  <Link to={"/bePartner"}>{t("become partner")}</Link>
                 </li>
                 <li>يوتوبيا ستدي أعمال</li>
-                <li>الوظائف</li>
+                <li>{t("jobs")}</li>
               </ul>
             </div>
             <div className="text-center md:text-right">
-              <h4 className="pb-4 font-bold border-b">تواصل معنا</h4>
+              <h4 className="pb-4 font-bold border-b">{t("contact us")}</h4>
               <ul className="pt-6 space-y-2">
-                <li>+966550808636</li>
-                <li>Admin@Utopia.com</li>
+                <li>
+                  <a href="tel:966550808636">+966550808636</a>
+                </li>
+                <li>
+                  <a href="mailto:Admin@Utopia.com">Admin@Utopia.com</a>
+                </li>
               </ul>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-4 pb-2 mt-8 text-center md:flex-row lg:justify-between">
-            <p>جميع الحقوق محفوظة</p>
+            <p>{t("all rights reserved")}</p>
             <img src={logoFooter} alt="logo footer" />
-            <p className="">الشروط والأحكام سياسة الخصوصية</p>
+            <p className="">{t("terms and conditions privacy police")}</p>
           </div>
         </div>
       </footer>
@@ -185,7 +190,7 @@ const Footer = () => {
                   setCurrentPage("الرئيسية");
                 }}
               />
-              <h4 className="text-center">الاشعارات</h4>
+              <h4 className="text-center">{t("notifications")}</h4>
             </div>
             <div className="min-h-screen py-4">
               {notifications.map((notification, index: number) => (
@@ -223,7 +228,7 @@ const Footer = () => {
             </header>
 
             <button className="flex items-center justify-center px-4 py-2 mb-4 text-white rounded-lg bg-mainColor">
-              + إضافة طلب
+              {t("add request +")}
             </button>
 
             <CourseCard
@@ -263,12 +268,14 @@ const Footer = () => {
             <div className="mx-auto my-8">
               {/* Language Toggle */}
               <div className="flex items-center justify-between mb-4">
-                <span className="font-medium">اللغة</span>
+                <span className="font-medium">{t("language")}</span>
                 <div className="flex items-center gap-4">
                   <button
                     onClick={toggleLang}
-                    className={`p-1 pb-2 border text-xs text-white rounded-md ${
-                      isRTL ? "bg-mainColor" : "bg-white text-gray-600"
+                    className={`p-1 pb-2 border text-xs rounded-md ${
+                      isRTL
+                        ? "bg-mainColor text-white"
+                        : "bg-white text-gray-600"
                     } border-gray-300`}
                   >
                     عربي
@@ -276,7 +283,9 @@ const Footer = () => {
                   <button
                     onClick={toggleLang}
                     className={`p-1 pb-2 border text-xs  rounded-md ${
-                      !isRTL ? "bg-mainColor" : "bg-white text-gray-600"
+                      !isRTL
+                        ? "bg-mainColor text-white"
+                        : "bg-white text-gray-600"
                     } border-gray-300`}
                   >
                     EN
@@ -292,7 +301,7 @@ const Footer = () => {
                     className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
                     to={"/whyUs"}
                   >
-                    <span>لماذا تختار يوتوبيا؟</span>
+                    <span>{t("Why choose Utopia?")}</span>
                     <span>❯</span>
                   </Link>
                 </li>
@@ -301,32 +310,20 @@ const Footer = () => {
                     to={"/successStory"}
                     className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
                   >
-                    <span>قصص نجاح</span>
-                    <span>❯</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    onClick={() => setIsMoreOpen(false)}
-                    className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
-                    to={"/bankAccounts"}
-                  >
-                    <span>الحسابات البنكية</span>
-                    <span>❯</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    onClick={() => setIsMoreOpen(false)}
-                    className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
-                    to={"/ourPartners"}
-                  >
-                    <span>شركائنا</span>
+                    <span>{t("success stories")}</span>
                     <span>❯</span>
                   </Link>
                 </li>
                 <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
-                  <span>تسجيل الخروج</span>
+                  <span>{t("bank accounts")}</span>
+                  <span>❯</span>
+                </li>
+                <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
+                  <span>{t("partners")}</span>
+                  <span>❯</span>
+                </li>
+                <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
+                  <span>{t("logout")}</span>
                   <span>❯</span>
                 </li>
               </ul>

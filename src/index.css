@@ -6,6 +6,12 @@ html {
   scroll-behavior: smooth;
 }
 
+.bookConsultantBg {
+  background: url(./assets/bookConsultation/downloadApp.webp) center center
+    no-repeat fixed;
+  background-size: cover;
+}
+
 /* GLOBAL ANIMATION */
 .animation_delay-3 {
   animation-delay: 0.3s !important;
