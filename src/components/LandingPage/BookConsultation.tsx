@@ -137,9 +137,9 @@ const BookConsultation = ({ data }) => {
               </a>
             </div>
           </div>
-          <div className="col-span-5">
+          <Link to={"/bookConsultant"} className="col-span-5">
             <Button className="mt-4">{t("book consultation")}</Button>
-          </div>
+          </Link>
         </div>
       </div>
 

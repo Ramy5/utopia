@@ -61,7 +61,7 @@ const notifications = [
   },
 ];
 
-const Footer = () => {
+const Footer = ({ hidden }: { hidden: boolean }) => {
   const [currentPage, setCurrentPage] = useState("الرئيسية");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
@@ -101,9 +101,13 @@ const Footer = () => {
   };
 
   return (
-    <div>
+    <div className={hidden ? "hidden md:block" : ""}>
       {/* Desktop Footer */}
-      <footer className="hidden text-white bg-mainColor md:block">
+      <footer
+        className={`hidden text-white bg-mainColor md:block ${
+          hidden ? "hidden md:block" : ""
+        }`}
+      >
         <div className="max-w-full py-4 md:px-8 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
           <div className="container grid grid-cols-1 gap-24 px-4 py-32 mx-auto lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
             <div className="text-center md:text-right">

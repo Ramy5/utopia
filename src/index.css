@@ -12,6 +12,14 @@ html {
   background-size: cover;
 }
 
+.phoneBgGradient {
+  background-image: linear-gradient(to bottom, #fff, #e7dffc);
+}
+
+.phoneWave {
+  clip-path: ellipse(180% 100% at 50% 100%);
+}
+
 /* GLOBAL ANIMATION */
 .animation_delay-3 {
   animation-delay: 0.3s !important;

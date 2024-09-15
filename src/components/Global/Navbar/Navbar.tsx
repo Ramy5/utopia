@@ -3,11 +3,15 @@ import Logo from "../../../assets/logo.png";
 import { CiHeart } from "react-icons/ci";
 import { PiChatCircleThin } from "react-icons/pi";
 
-const Navbar = () => {
+interface Navbar_TP {
+  hidden: boolean;
+}
+
+const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   const isLogin = false;
 
   return (
-    <nav>
+    <nav className={hidden ? "hidden md:block" : ""}>
       {isLogin ? (
         <header className="flex items-center justify-between px-4 py-2">
           <div className="flex items-center gap-2">
