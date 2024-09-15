@@ -7,10 +7,8 @@ html {
 }
 
 .bookConsultantBg {
-  background-image: url("./assets/personLandingPage.png");
-  height: 100%;
-  width: 100%;
-  background-repeat: no-repeat;
+  background: url(./assets/bookConsultation/downloadApp.webp) center center
+    no-repeat fixed;
   background-size: cover;
 }
 

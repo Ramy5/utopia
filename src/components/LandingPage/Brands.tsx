@@ -26,7 +26,7 @@ const Brands = () => {
   });
 
   return (
-    <div className="hidden py-5 sm:block">
+    <div className="hidden sm:block">
       <Swiper
         slidesPerView={5}
         loop={true}
@@ -43,8 +43,8 @@ const Brands = () => {
         <div>
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
-              <div className="p-4 cursor-pointer">
-                <img src={brand.image} alt="brand" />
+              <div className="py-6 cursor-pointer">
+                <img src={brand.image} alt="brand" className="w-16 h-16" />
               </div>
             </SwiperSlide>
           ))}
