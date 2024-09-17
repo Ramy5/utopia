@@ -37,11 +37,11 @@ function App() {
           <Route path="/" element={<StructurePages />}>
             <Route index element={<Home />} />
             <Route path="/bePartner" element={<BePartner />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/programs" element={<ProgramsTypeDetails />} />
             <Route path="/programs/details" element={<ProgramDetails />} />
           </Route>
+          <Route path="/login" element={<Login />} />
           <Route path="/bookConsultant" element={<BookConsultant />} />
           <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
           <Route path="/successStory" element={<SuccessStoriesPage />} />

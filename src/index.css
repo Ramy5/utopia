@@ -12,6 +12,12 @@ html {
   background-size: cover;
 }
 
+.logInBg {
+  background: url(./assets/loginBg.jpg) center center no-repeat fixed;
+  background-size: cover;
+  clip-path: ellipse(180% 100% at 50% 0%);
+}
+
 .phoneBgGradient {
   background-image: linear-gradient(to bottom, #fff, #e7dffc);
 }

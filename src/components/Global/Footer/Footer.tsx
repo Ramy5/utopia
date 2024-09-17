@@ -61,7 +61,7 @@ const notifications = [
   },
 ];
 
-const Footer = ({ hidden }: { hidden: boolean }) => {
+const Footer = ({ hidden }: { hidden?: boolean }) => {
   const [currentPage, setCurrentPage] = useState("الرئيسية");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);

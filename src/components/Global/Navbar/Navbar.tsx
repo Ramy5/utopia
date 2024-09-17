@@ -4,7 +4,7 @@ import { CiHeart } from "react-icons/ci";
 import { PiChatCircleThin } from "react-icons/pi";
 
 interface Navbar_TP {
-  hidden: boolean;
+  hidden?: boolean;
 }
 
 const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {

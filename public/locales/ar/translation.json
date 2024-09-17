@@ -49,5 +49,10 @@
   "send": "ارسال",
   "thank you for contacting us. we will contact you as soon as possible": "شكرا لتواصلك، سوف نقوم بالتواصل معك في أقرب وقت",
   "have a nice day": "نتمنى لك يوما سعيد",
-  "back to home": "العودة الي الصفحة الرئيسية"
+  "back to home": "العودة الي الصفحة الرئيسية",
+  "student login": "دخول الطالب",
+  "partner login": "دخول الشركاء",
+  "register": "انشاء حساب",
+  "password": "كلمة السر",
+  "you don't have account?": "ليس لديك حساب؟"
 }
