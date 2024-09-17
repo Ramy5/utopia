@@ -15,6 +15,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const BookConsultation = ({ data }) => {
+  console.log("🚀 ~ BookConsultation ~ data:", data);
   const BookContent = [
     {
       title: "حجوزات الطيران",
@@ -146,21 +147,33 @@ const BookConsultation = ({ data }) => {
       <div className="relative block sm:hidden">
         <img src={PhoneHeader} alt="Landing" className="w-full" />
         <div className="absolute w-full px-5 mt-4 -translate-y-1/2 top-full">
-          <div className="grid w-full grid-cols-3 gap-4">
+          <div className="grid w-full grid-cols-3 gap-4 ">
             {data?.categories?.map((categorie, index) => (
-              <div
-                key={index}
-                className="px-2 py-4 rounded-2xl"
-                style={{ backgroundColor: BookCards[index]?.bg }}
-              >
-                <div className="text-center">
-                  <img
-                    src={BookCards[index]?.image}
-                    alt="Landing"
-                    className="w-20 h-20 m-auto"
-                  />
-                  <h2 className="mt-3 font-medium">{categorie.name}</h2>
-                </div>
+              <div key={index} className="!cursor-pointer">
+                <Link
+                  to={`${
+                    categorie.id === 1
+                      ? "/programsSummer"
+                      : categorie.id === 2
+                      ? "/universityAdmissions"
+                      : "/englishLanguage"
+                  } `}
+                  
+                >
+                  <div
+                    className="px-2 py-4 rounded-2xl"
+                    style={{ backgroundColor: BookCards[index]?.bg }}
+                  >
+                    <div className="text-center">
+                      <img
+                        src={BookCards[index]?.image}
+                        alt="Landing"
+                        className="w-20 h-20 m-auto"
+                      />
+                      <h2 className="mt-3 font-medium">{categorie.name}</h2>
+                    </div>
+                  </div>
+                </Link>
               </div>
             ))}
           </div>

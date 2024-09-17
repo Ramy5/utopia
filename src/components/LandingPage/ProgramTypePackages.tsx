@@ -88,7 +88,7 @@ const ProgramTypePackages = ({ data }) => {
                 <div>
                   <img
                     src={packages.packageImage[0].image}
-                    className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
+                    className="object-cover w-full duration-700 h-56 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
                   />
                 </div>
                 <div className="flex items-center justify-between px-4 py-5">
