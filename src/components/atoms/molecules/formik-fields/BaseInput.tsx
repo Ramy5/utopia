@@ -43,6 +43,7 @@ const BaseInput = ({
   ref,
   disabled,
   autoFocus,
+  onChange,
   min,
   max,
   onKeyDown,
