@@ -1,8 +1,11 @@
-import { lazy, useLayoutEffect } from "react";
+import { lazy, useEffect, useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useRTL } from "./hooks/useRTL";
 import LoadingWrapper from "./components/Global/Loading/LoadingWrapper";
 import { BookConsultant } from "./pages";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "./context/AuthContext";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -15,11 +18,12 @@ const ChooseUtopia = lazy(
 const SuccessStoriesPage = lazy(() => import("./pages/SuccessStoriesPage"));
 const BankAccounts = lazy(() => import("./pages/BankAccounts"));
 const OurPartners = lazy(() => import("./pages/OurPartners"));
-const ProgramsTypeDetails = lazy(
-  () => import("./pages/ProgramsType/ProgramsTypeDetails")
-);
-const ProgramDetails = lazy(
-  () => import("./pages/ProgramsType/ProgramDetails")
+// const ProgramsTypeDetails = lazy(() =>
+//   import("./pages/ProgramsType/ProgramsTypeDetails")
+// );
+// const ProgramDetails = lazy(() =>
+//   import("./pages/ProgramsType/ProgramDetails")
+// );
 const SummerProgramsPage = lazy(
   () => import("./pages/ProgramsType/SummerProgramsPage")
 );
@@ -55,41 +59,53 @@ function App() {
 
   return (
     <BrowserRouter>
-      <LoadingWrapper>
-        <Routes>
-          <Route path="/" element={<StructurePages />}>
-            <Route index element={<Home />} />
-            <Route path="/bePartner" element={<BePartner />} />
+      <AuthProvider>
+        <LoadingWrapper>
+          <Routes>
+            <Route path="/" element={<StructurePages />}>
+              <Route index element={<Home />} />
+              <Route path="/bePartner" element={<BePartner />} />
+              <Route path="/programsSummer" element={<SummerProgramsPage />} />
+              <Route
+                path="/programsSummer/details"
+                element={<SummerProgramDetails />}
+              />
+              <Route
+                path="/universityAdmissions"
+                element={<UniversityAdmissionPage />}
+              />
+              <Route
+                path="/universityAdmissions/details"
+                element={<UniversityAdmissionsDetails />}
+              />
+              <Route
+                path="/englishLanguage"
+                element={<EnglishLanguagePage />}
+              />
+              <Route
+                path="/englishLanguage/details"
+                element={<EnglishLanguageDetails />}
+              />
+              <Route
+                path="/listSpecializations"
+                element={<ListSpecializations />}
+              />
+              <Route
+                path="/specializations"
+                element={<SpecializationsPage />}
+              />
+            </Route>
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/programsSummer" element={<SummerProgramsPage />} />
-            <Route
-              path="/programsSummer/details"
-              element={<SummerProgramDetails />}
-            />
-            <Route
-              path="/universityAdmissions"
-              element={<UniversityAdmissionPage />}
-            />
-            <Route
-              path="/universityAdmissions/details"
-              element={<UniversityAdmissionsDetails />}
-            />
-            <Route path="/englishLanguage" element={<EnglishLanguagePage />} />
-            <Route
-              path="/englishLanguage/details"
-              element={<EnglishLanguageDetails />}
-            />
-            <Route path="/listSpecializations" element={<ListSpecializations />} />
-            <Route path="/specializations" element={<SpecializationsPage />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/bookConsultant" element={<BookConsultant />} />
-          <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
-          <Route path="/successStory" element={<SuccessStoriesPage />} />
-          <Route path="/bankAccounts" element={<BankAccounts />} />
-          <Route path="/ourPartners" element={<OurPartners />} />
-        </Routes>
-      </LoadingWrapper>
+            <Route path="/bookConsultant" element={<BookConsultant />} />
+            <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
+            <Route path="/successStory" element={<SuccessStoriesPage />} />
+            <Route path="/bankAccounts" element={<BankAccounts />} />
+            <Route path="/ourPartners" element={<OurPartners />} />
+          </Routes>
+          <ToastContainer />
+        </LoadingWrapper>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

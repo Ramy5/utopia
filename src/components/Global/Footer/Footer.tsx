@@ -11,8 +11,9 @@ import { CiHeart } from "react-icons/ci";
 import { PiChatCircleThin } from "react-icons/pi";
 import { useRTL } from "../../../hooks/useRTL";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { t } from "i18next";
+import { useAuth } from "../../../context/AuthContext";
 
 const currentPages = [
   {
@@ -67,8 +68,16 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const isRTL = useRTL();
+  const navigate = useNavigate();
+  const { clearAuth, user } = useAuth();
 
   const { i18n } = useTranslation();
+
+  const handleLogout = () => {
+    clearAuth();
+    setCurrentPage("الرئيسية");
+    setIsMoreOpen(false);
+  };
 
   useEffect(() => {
     document.documentElement.dir = isRTL ? "rtl" : "ltr";
@@ -218,12 +227,12 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 overflow-hidden rounded-full">
                   <img
-                    src="https://via.placeholder.com/40"
-                    alt="Profile"
+                    src={user?.image}
+                    alt={user?.name}
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <p className="font-semibold">مرحبا احمد</p>
+                <p className="font-semibold">{user?.name}</p>
               </div>
               <div className="flex items-center gap-2">
                 <CiHeart className="text-xl" />
@@ -261,12 +270,12 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 overflow-hidden rounded-full">
                 <img
-                  src="https://via.placeholder.com/40"
-                  alt="Profile"
+                  src={user?.image}
+                  alt={user?.name}
                   className="object-cover w-full h-full"
                 />
               </div>
-              <p className="font-semibold">مرحبا احمد</p>
+              <p className="font-semibold">{user?.name}</p>
             </div>
 
             <div className="mx-auto my-8">
@@ -326,7 +335,10 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
                   <span>{t("partners")}</span>
                   <span>❯</span>
                 </li>
-                <li className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100">
+                <li
+                  onClick={handleLogout}
+                  className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
+                >
                   <span>{t("logout")}</span>
                   <span>❯</span>
                 </li>

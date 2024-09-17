@@ -1,0 +1,148 @@
+import React from "react";
+import Button from "../../atoms/Button/Button";
+import { t } from "i18next";
+import BaseInput from "../../atoms/molecules/formik-fields/BaseInput";
+import { useFormikContext } from "formik";
+import DownLoadApp from "../../atoms/molecules/downLoad-app/DownLoadApp";
+import { Link } from "react-router-dom";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { IoMdPhonePortrait } from "react-icons/io";
+import { useRTL } from "../../../hooks/useRTL";
+
+interface RegisterForm_TP {
+  isPending: boolean;
+  handleSubmit: any;
+}
+
+const RegisterForm = ({ isPending, handleSubmit }) => {
+  const { setFieldValue, values } = useFormikContext();
+  const isRTL = useRTL();
+
+  return (
+    <div>
+      {/* DESKTOP */}
+      <div className="hidden md:block">
+        <div className="w-[45%] mx-auto my-16">
+          <div className="flex flex-col gap-3 mb-6">
+            <h2 className="text-4xl">{t("register form")}</h2>
+            <p>{t("create account")}</p>
+          </div>
+          <div className="flex flex-col px-10 py-12 rounded-2xl bg-mainColor">
+            <div
+              style={{ gridTemplateColumns: "100px 1fr" }}
+              className="grid gap-4 mb-6 animate_from_bottom"
+            >
+              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
+                {t("name")}
+              </Button>
+              <BaseInput
+                id="name"
+                name="name"
+                type="text"
+                className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+              />
+            </div>
+            <div
+              style={{ gridTemplateColumns: "100px 1fr" }}
+              className="grid gap-4 mb-6 animate_from_top"
+            >
+              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
+                {t("phone number")}
+              </Button>
+              <BaseInput
+                id="phone"
+                name="phone"
+                type="text"
+                className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+              />
+            </div>
+
+            <div className="flex flex-col gap-4 mt-16">
+              <Button
+                disabled={isPending}
+                action={() => handleSubmit(values)}
+                className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal"
+              >
+                {t("next")}
+              </Button>
+              <p className="flex justify-center gap-1">
+                <span>{t("you have account already?")}</span>
+                <Link to={"/login"} className="underline text-mainColor ms-1">
+                  {t("login")}
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <DownLoadApp />
+      </div>
+
+      {/* MOBIL */}
+      <div className="block h-[90vh] md:hidden logInBg">
+        <div
+          style={{ gridTemplateColumns: "20px 1fr" }}
+          className="grid items-center justify-center py-6 mx-6"
+        >
+          <Link to={"/"} className="">
+            <FaArrowRightLong className="cursor-pointer justify-self-start" />
+          </Link>
+          <h4 className="text-xl text-center">{t("signup")}</h4>
+        </div>
+
+        <div className="flex flex-col px-4 py-6 w-[95%] mx-auto bg-white">
+          <div className="">
+            <label htmlFor="phone">{t("phone number")}</label>
+            <div className="relative">
+              <BaseInput
+                id="phone"
+                name="phone"
+                type="text"
+                className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+              />
+              <IoMdPhonePortrait
+                className={`absolute top-4 text-gray-700 ${
+                  isRTL ? "left-4" : "right-4"
+                }`}
+              />
+            </div>
+          </div>
+          <div className="">
+            <label htmlFor="name">{t("name")}</label>
+            <div className="relative">
+              <BaseInput
+                id="name"
+                name="name"
+                type="text"
+                className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+              />
+              <IoMdPhonePortrait
+                className={`absolute top-4 text-gray-700 ${
+                  isRTL ? "left-4" : "right-4"
+                }`}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 mt-16">
+            <Button
+              disabled={isPending}
+              action={() => handleSubmit(values)}
+              className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left"
+            >
+              {t("next")}
+            </Button>
+            <p className="flex justify-center gap-1">
+              <span>{t("you have account already?")}</span>
+              <Link to={"/login"} className="underline text-mainColor ms-1">
+                {t("login")}
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RegisterForm;
