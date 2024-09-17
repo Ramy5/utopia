@@ -19,7 +19,7 @@ const UniversityAdmissions = ({ data }) => {
                 <div>
                   <img
                     src={packages.image}
-                    className="w-full h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none duration-700 object-cover"
+                    className="w-full h-52 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none duration-700 object-cover"
                   />
                 </div>
                 <div className="flex items-center justify-between px-4 py-5">

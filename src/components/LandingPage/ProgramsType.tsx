@@ -38,7 +38,7 @@ const ProgramsType = ({ data }) => {
                         dangerouslySetInnerHTML={{ __html: categorie?.desc }}
                       />
                     </p>
-                    <Link to="/programs">
+                    <Link to="/programsSummer">
                       <Button className="bg-white text-mainColor mt-5">
                         {t("learn more")}
                       </Button>

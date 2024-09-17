@@ -9,7 +9,7 @@ const Brands = () => {
   const fetchBrands = async () => {
     try {
       const response = await apiRequest({
-        url: "/api/student/banks-account",
+        url: "/api/student/partner-images",
         method: "GET",
       });
 
@@ -20,7 +20,7 @@ const Brands = () => {
   };
 
   const { data = [] } = useQuery({
-    queryKey: ["brands"],
+    queryKey: ["partner-images"],
     queryFn: fetchBrands,
     suspense: true,
   });
