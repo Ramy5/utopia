@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import DownLoadApp from "../../components/atoms/molecules/downLoad-app/DownLoadApp";
 
-const ProgramsTypeDetails = () => {
+const SummerProgramsPage = () => {
   const navigate = useNavigate();
   const fetchProgramsTypeDetails = async () => {
     try {
@@ -37,7 +37,7 @@ const ProgramsTypeDetails = () => {
               <div
                 key={index}
                 className="cursor-pointer group"
-                onClick={() => navigate("/programs/details", {state: item})}
+                onClick={() => navigate("/programsSummer/details", { state: item })}
               >
                 <h2 className="bg-[#EAEAEA] rounded-2xl py-3 px-2 text-xl text-center">
                   {item.name}
@@ -80,7 +80,11 @@ const ProgramsTypeDetails = () => {
           </div>
           <div className="mt-8">
             {data?.map((item, index) => (
-              <div key={index} className="relative mb-24">
+              <div
+                key={index}
+                className="relative mb-24"
+                onClick={() => navigate("/programsSummer/details", { state: item })}
+              >
                 <div className="h-64">
                   <img
                     src={item.cityData.image}
@@ -118,4 +122,4 @@ const ProgramsTypeDetails = () => {
   );
 };
 
-export default ProgramsTypeDetails;
+export default SummerProgramsPage;
