@@ -35,13 +35,13 @@ export const getTokenAsync = async (setFcmToken, toast) => {
         setFcmToken(token);
         console.log("FCM Token: ", token);
       } else {
-        toast.warn("No registration token available.");
+        console.log("No registration token available.");
       }
     } else {
-      toast.warn("Notification permission denied.");
+      console.log("Notification permission denied.");
     }
   } catch (error) {
-    toast.error(`Error fetching FCM token: ${error}`);
+    console.log(`Error fetching FCM token: ${error}`);
     console.error("Error fetching FCM token:", error);
   }
 };

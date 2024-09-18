@@ -99,5 +99,9 @@
   "verification code": "رمز التحقق",
   "verify": "تحقق",
   "new password": "اعادة كلمة السر",
-  "create password": "انشاء كلمة المرور"
+  "create password": "انشاء كلمة المرور",
+  "signup": "تسجيل الخروج",
+  "notification was deleted successfully": "تم حذف الاشعار بنجاح",
+  "close": "الغاء",
+  "add image": "حفظ الصورة"
 }

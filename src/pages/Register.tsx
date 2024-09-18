@@ -36,7 +36,6 @@ const Register = () => {
   const [userId, setUserId] = useState(null);
   const { setAuthData } = useAuth();
   const navigate = useNavigate();
-  const [otp, setOtp] = useState("");
 
   const initialValues = {
     name: "",
@@ -49,7 +48,6 @@ const Register = () => {
     mutationKey: ["student-signup"],
     mutationFn: (data) => signupPost(data),
     onSuccess: (data) => {
-      setOtp(data?.otp);
       setUserId(data?.user?.id);
       setStep(2);
       setTimeout(() => {

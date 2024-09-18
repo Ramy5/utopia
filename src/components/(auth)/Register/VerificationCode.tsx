@@ -5,22 +5,22 @@ import Button from "../../atoms/Button/Button";
 import { t } from "i18next";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../../utils/axios";
+import cn from "../../../utils/cn";
 
 type VerificationCode_TP = {
   setStep?: React.Dispatch<React.SetStateAction<number>>;
   userId?: number;
-  registerState?: any;
 };
 
 const VerificationCode: React.FC<VerificationCode_TP> = ({
   userId,
   setStep,
-  registerState,
 }) => {
   const [otp, setOtp] = useState<string[]>(Array(4).fill(""));
   const { token, user } = useAuth();
   console.log("🚀 ~ user:", user);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [isPending, setIsPending] = useState(false);
 
   const [timer, setTimer] = useState(() => {
     const storedVerification = localStorage.getItem("verification");
@@ -67,18 +67,21 @@ const VerificationCode: React.FC<VerificationCode_TP> = ({
 
   const verifyOTP = async (otp: string) => {
     try {
+      setIsPending(true);
       const data = await apiRequest({
         url: "/api/student/checkOtp",
         method: "POST",
         data: {
           user_id: userId,
-          code: 1111,
+          code: otp,
         },
       });
       setStep?.(3);
       toast.success("verify is completed");
+      setIsPending(false);
       return data?.data;
     } catch (error) {
+      setIsPending(false);
       console.error("Error fetching items:", error.message);
     }
   };
@@ -86,7 +89,7 @@ const VerificationCode: React.FC<VerificationCode_TP> = ({
   const handleVerify = () => verifyOTP(otp.join(""));
 
   return (
-    <div className="flex flex-col items-center my-32">
+    <div className="flex flex-col items-center px-4 my-32">
       <div className="w-full max-w-sm">
         <Button className="w-full text-sm text-white cursor-auto hover:scale-100">
           {t("please type the OTP sent to your phone number")}
@@ -105,7 +108,12 @@ const VerificationCode: React.FC<VerificationCode_TP> = ({
             />
           ))}
         </div>
-        <Button action={handleVerify} className="w-full py-2 mt-10">
+        <Button
+          className={cn("w-full py-2 mt-10", {
+            "opacity-40 cursor-not-allowed": isPending,
+          })}
+          action={handleVerify}
+        >
           Verify
         </Button>
       </div>

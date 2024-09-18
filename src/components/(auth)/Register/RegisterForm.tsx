@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
+import cn from "../../../utils/cn";
 
 interface RegisterForm_TP {
   isPending: boolean;
@@ -130,15 +131,20 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
             <Button
               disabled={isPending}
               action={() => handleSubmit(values)}
-              className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left"
+              className={cn(
+                "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left",
+                {
+                  "opacity-40 cursor-not-allowed": isPending,
+                }
+              )}
             >
               {t("next")}
             </Button>
             <p className="flex justify-center gap-1">
-              <span className="text-white underline cursor-pointer">
+              <span className="text-gray-700 cursor-pointer ">
                 {t("you have account already?")}
               </span>
-              <Link to={"/login"} className="text-blue-700 underline ms-1">
+              <Link to={"/login"} className="underline text-mainColor ms-1">
                 {t("login")}
               </Link>
             </p>

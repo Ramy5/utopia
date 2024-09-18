@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { messaging, getToken, getTokenAsync } from "../../firebase";
 import { useAuth } from "../context/AuthContext";
+import cn from "../utils/cn";
 
 const loginPost = async (postData) => {
   try {
@@ -97,21 +98,24 @@ const Login = () => {
               <div className="w-[45%] mx-auto my-16">
                 <div className="flex justify-center w-full gap-4 my-6">
                   <Button
-                    className={`${
-                      role === "student"
-                        ? "bg-[#FFCC1A]"
-                        : "bg-transparent border border-mainColor"
-                    } text-black animate_scale font-normal `}
+                    className={cn("text-black animate_scale font-normal", {
+                      "bg-[#FFCC1A]": role === "student",
+                      "bg-transparent border border-mainColor":
+                        role !== "student",
+                    })}
                     action={() => setRole("student")}
                   >
                     {t("student login")}
                   </Button>
                   <Button
-                    className={`${
-                      role === "partner"
-                        ? "bg-[#FFCC1A]"
-                        : "bg-transparent border border-mainColor"
-                    } text-black animate_scale animation_delay-3 font-normal `}
+                    className={cn(
+                      "text-black animate_scale animation_delay-3 font-normal",
+                      {
+                        "bg-[#FFCC1A]": role === "partner",
+                        "bg-transparent border border-mainColor":
+                          role !== "partner",
+                      }
+                    )}
                     action={() => setRole("partner")}
                   >
                     {t("partner login")}
@@ -152,7 +156,12 @@ const Login = () => {
                       <Button
                         disabled={isPending}
                         action={() => handleStudentSubmit(values)}
-                        className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal"
+                        className={cn(
+                          "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal",
+                          {
+                            "opacity-40 cursor-not-allowed": isPending,
+                          }
+                        )}
                       >
                         {t("login")}
                       </Button>
@@ -197,7 +206,14 @@ const Login = () => {
                       />
                     </div>
                     <div className="flex flex-col gap-4 mt-16">
-                      <Button className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_scale text-black font-normal">
+                      <Button
+                        className={cn(
+                          "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_scale text-black font-normal",
+                          {
+                            "opacity-40 cursor-not-allowed": isPending,
+                          }
+                        )}
+                      >
                         {t("login")}
                       </Button>
                     </div>
@@ -221,21 +237,22 @@ const Login = () => {
               </div>
               <div className="flex justify-center w-full gap-4 my-6">
                 <Button
-                  className={`${
-                    role === "student"
-                      ? "bg-[#FFCC1A]"
-                      : "bg-transparent border border-black"
-                  } text-black animate_scale font-normal `}
+                  className={cn("text-black animate_scale font-normal", {
+                    "bg-[#FFCC1A]": role === "student",
+                    "bg-transparent border border-black": role !== "student",
+                  })}
                   action={() => setRole("student")}
                 >
                   {t("student login")}
                 </Button>
                 <Button
-                  className={`${
-                    role === "partner"
-                      ? "bg-[#FFCC1A]"
-                      : "bg-transparent border border-black"
-                  } text-black animate_scale animation_delay-3 font-normal `}
+                  className={cn(
+                    "text-black animate_scale animation_delay-3 font-normal",
+                    {
+                      "bg-[#FFCC1A]": role === "partner",
+                      "bg-transparent border border-black": role !== "partner",
+                    }
+                  )}
                   action={() => setRole("partner")}
                 >
                   {t("partner login")}
@@ -281,7 +298,12 @@ const Login = () => {
                     <Button
                       disabled={isPending}
                       action={() => handleStudentSubmit(values)}
-                      className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left"
+                      className={cn(
+                        "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left",
+                        {
+                          "opacity-40 cursor-not-allowed": isPending,
+                        }
+                      )}
                     >
                       {t("login")}
                     </Button>
@@ -332,7 +354,14 @@ const Login = () => {
                   </div>
 
                   <div className="flex flex-col gap-4 mt-16">
-                    <Button className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 hover:bg animate_from_left">
+                    <Button
+                      className={cn(
+                        "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 hover:bg animate_from_left",
+                        {
+                          "opacity-40 cursor-not-allowed": isPending,
+                        }
+                      )}
+                    >
                       {t("login")}
                     </Button>
                     {/* <p className="flex justify-center gap-1">

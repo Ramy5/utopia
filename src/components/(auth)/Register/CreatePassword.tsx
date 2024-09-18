@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
+import cn from "../../../utils/cn";
 
 const setPasswordPost = async (postData) => {
   try {
@@ -121,7 +122,12 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
               <Button
                 disabled={isPending}
                 action={() => handleSubmit(values)}
-                className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal"
+                className={cn(
+                  "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal",
+                  {
+                    "opacity-40 cursor-not-allowed": isPending,
+                  }
+                )}
               >
                 {t("next")}
               </Button>
@@ -160,7 +166,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
             </div>
           </div>
           <div className="">
-            <label htmlFor="newPassword">{t("newPassword")}</label>
+            <label htmlFor="newPassword">{t("new password")}</label>
             <div className="relative">
               <BaseInput
                 id="newPassword"
@@ -180,7 +186,12 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
             <Button
               disabled={isPending}
               action={() => handleSubmit(values)}
-              className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left"
+              className={cn(
+                "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left",
+                {
+                  "opacity-40 cursor-not-allowed": isPending,
+                }
+              )}
             >
               {t("next")}
             </Button>

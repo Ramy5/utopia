@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const setAuthData = (data: initialState_TP) => {
     setToken(data?.token);
-    setToken(data?.user);
+    setUser(data?.user);
 
     localStorage.setItem(TOKEN, data.token);
     localStorage.setItem(USER, JSON.stringify(data.user));
@@ -64,7 +64,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem(USER);
 
     navigate("/");
-    toast.success(t("logout successful, see you later 👋"));
+
+    setTimeout(() => {
+      toast.success(t("logout successful, see you later 👋"));
+    }, 100);
   };
 
   const value: initialState_TP = { token, user, setAuthData, clearAuth };
