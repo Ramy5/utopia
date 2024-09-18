@@ -93,5 +93,11 @@
   "register form": "نموذج التسجيل",
   "create account": "انشاء حساب",
   "next": "التالي",
-  "otp was send": "تم ارسال رمز التحقق"
+  "otp was send": "تم ارسال رمز التحقق",
+  "you have account already?": "لديك حساب بالفعل؟",
+  "please type the OTP sent to your phone number": "ادخل رمز التحقق المرسل إلى رقم الجوال",
+  "verification code": "رمز التحقق",
+  "verify": "تحقق",
+  "new password": "اعادة كلمة السر",
+  "create password": "انشاء كلمة المرور"
 }

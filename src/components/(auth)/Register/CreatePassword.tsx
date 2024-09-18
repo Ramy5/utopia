@@ -1,31 +1,91 @@
-import React from "react";
-import Button from "../../atoms/Button/Button";
 import { t } from "i18next";
+import React, { useEffect, useState } from "react";
+import Button from "../../atoms/Button/Button";
 import BaseInput from "../../atoms/molecules/formik-fields/BaseInput";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "../../../utils/axios";
+import { toast } from "react-toastify";
+import { useAuth } from "../../../context/AuthContext";
+import { getTokenAsync } from "../../../../firebase";
 import { useFormikContext } from "formik";
-import DownLoadApp from "../../atoms/molecules/downLoad-app/DownLoadApp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
 
-interface RegisterForm_TP {
-  isPending: boolean;
-  handleSubmit: any;
-}
+const setPasswordPost = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/create-password",
+      method: "POST",
+      data: postData,
+    });
+    return data?.data;
+  } catch (errors) {
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
 
-const RegisterForm = ({ isPending, handleSubmit }) => {
-  const { setFieldValue, values } = useFormikContext();
+type CreatePassword_TP = {
+  setStep?: React.Dispatch<React.SetStateAction<number>>;
+  userId: number;
+};
+
+const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
+  const { setAuthData, user } = useAuth();
+  const [fcmToken, setFcmToken] = useState(null);
+  const { values, setFieldValue } = useFormikContext();
   const isRTL = useRTL();
+  const navigate = useNavigate();
+
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationKey: ["password"],
+    mutationFn: (data) => setPasswordPost(data),
+    onSuccess: (data) => {
+      console.log(data);
+      // setOtp(data?.otp);
+      setAuthData(data);
+      navigate("/studentRequest");
+      setTimeout(() => {
+        toast.success(t(`password was created`));
+      }, 100);
+    },
+  });
+
+  useEffect(() => {
+    getTokenAsync(setFcmToken, toast);
+  }, []);
+
+  const handleSubmit = async (values: any) => {
+    if (values?.password === "") {
+      toast.error(t("password is empty"));
+      return;
+    }
+
+    if (values?.newPassword === "") {
+      toast.error(t("new password is empty"));
+      return;
+    }
+
+    const data = {
+      user_id: userId,
+      password: values?.password,
+      password_confirmation: values?.newPassword,
+      fcm_token: fcmToken,
+    };
+    console.log("🚀 ~ onSubmit={ ~ values:", data);
+
+    await mutate(data);
+  };
 
   return (
-    <div>
+    <>
       {/* DESKTOP */}
       <div className="hidden md:block">
         <div className="w-[45%] mx-auto my-16">
           <div className="flex flex-col gap-3 mb-6">
             <h2 className="text-4xl">{t("register form")}</h2>
-            <p>{t("create account")}</p>
+            <p>{t("create password")}</p>
           </div>
           <div className="flex flex-col px-10 py-12 rounded-2xl bg-mainColor">
             <div
@@ -33,12 +93,12 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
               className="grid gap-4 mb-6 animate_from_bottom"
             >
               <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                {t("name")}
+                {t("password")}
               </Button>
               <BaseInput
-                id="name"
-                name="name"
-                type="text"
+                id="password"
+                name="password"
+                type="password"
                 className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
               />
             </div>
@@ -47,12 +107,12 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
               className="grid gap-4 mb-6 animate_from_top"
             >
               <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                {t("phone number")}
+                {t("new password")}
               </Button>
               <BaseInput
-                id="phone"
-                name="phone"
-                type="text"
+                id="newPassword"
+                name="newPassword"
+                type="password"
                 className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
               />
             </div>
@@ -65,19 +125,9 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
               >
                 {t("next")}
               </Button>
-              <p className="flex justify-center gap-1">
-                <span className="text-white underline cursor-pointer">
-                  {t("you have account already?")}
-                </span>
-                <Link to={"/login"} className="text-blue-700 underline ms-1">
-                  {t("login")}
-                </Link>
-              </p>
             </div>
           </div>
         </div>
-
-        <DownLoadApp />
       </div>
 
       {/* MOBIL */}
@@ -94,12 +144,12 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
 
         <div className="flex flex-col px-4 py-6 w-[95%] mx-auto bg-white">
           <div className="">
-            <label htmlFor="phone">{t("phone number")}</label>
+            <label htmlFor="password">{t("password")}</label>
             <div className="relative">
               <BaseInput
-                id="phone"
-                name="phone"
-                type="text"
+                id="password"
+                name="password"
+                type="password"
                 className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
               />
               <IoMdPhonePortrait
@@ -110,11 +160,11 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
             </div>
           </div>
           <div className="">
-            <label htmlFor="name">{t("name")}</label>
+            <label htmlFor="newPassword">{t("newPassword")}</label>
             <div className="relative">
               <BaseInput
-                id="name"
-                name="name"
+                id="newPassword"
+                name="newPassword"
                 type="text"
                 className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
               />
@@ -134,19 +184,11 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
             >
               {t("next")}
             </Button>
-            <p className="flex justify-center gap-1">
-              <span className="text-white underline cursor-pointer">
-                {t("you have account already?")}
-              </span>
-              <Link to={"/login"} className="text-blue-700 underline ms-1">
-                {t("login")}
-              </Link>
-            </p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default RegisterForm;
+export default CreatePassword;

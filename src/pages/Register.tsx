@@ -14,6 +14,8 @@ import DownLoadApp from "../components/atoms/molecules/downLoad-app/DownLoadApp"
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import RegisterForm from "../components/(auth)/Register/RegisterForm";
+import RegisterOtp from "../components/(auth)/Register/VerificationCode";
+import CreatePassword from "../components/(auth)/Register/CreatePassword";
 
 const signupPost = async (postData) => {
   try {
@@ -31,6 +33,7 @@ const signupPost = async (postData) => {
 const Register = () => {
   const isRTL = useRTL();
   const [step, setStep] = useState(1);
+  const [userId, setUserId] = useState(null);
   const { setAuthData } = useAuth();
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
@@ -38,15 +41,16 @@ const Register = () => {
   const initialValues = {
     name: "",
     phone: "",
+    password: "",
+    newPassword: "",
   };
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationKey: ["student-signup"],
     mutationFn: (data) => signupPost(data),
     onSuccess: (data) => {
-      console.log(data);
       setOtp(data?.otp);
-      // setAuthData(data);
+      setUserId(data?.user?.id);
       setStep(2);
       setTimeout(() => {
         toast.success(t(`otp was send`));
@@ -90,7 +94,9 @@ const Register = () => {
               <RegisterForm handleSubmit={handleSubmit} isPending={isPending} />
             )}
 
-            {step === 2 && <></>}
+            {step === 2 && <RegisterOtp userId={userId} setStep={setStep} />}
+
+            {step === 3 && <CreatePassword userId={userId} setStep={setStep} />}
             <Footer hidden />
           </Form>
         );
