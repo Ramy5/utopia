@@ -15,6 +15,11 @@ const ChooseUtopia = lazy(
 const SuccessStoriesPage = lazy(() => import("./pages/SuccessStoriesPage"));
 const BankAccounts = lazy(() => import("./pages/BankAccounts"));
 const OurPartners = lazy(() => import("./pages/OurPartners"));
+const ProgramsTypeDetails = lazy(
+  () => import("./pages/ProgramsType/ProgramsTypeDetails")
+);
+const ProgramDetails = lazy(
+  () => import("./pages/ProgramsType/ProgramDetails")
 const SummerProgramsPage = lazy(
   () => import("./pages/ProgramsType/SummerProgramsPage")
 );
@@ -55,8 +60,6 @@ function App() {
           <Route path="/" element={<StructurePages />}>
             <Route index element={<Home />} />
             <Route path="/bePartner" element={<BePartner />} />
-            <Route path="/bookConsultant" element={<BookConsultant />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/programsSummer" element={<SummerProgramsPage />} />
             <Route
@@ -79,6 +82,8 @@ function App() {
             <Route path="/listSpecializations" element={<ListSpecializations />} />
             <Route path="/specializations" element={<SpecializationsPage />} />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/bookConsultant" element={<BookConsultant />} />
           <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
           <Route path="/successStory" element={<SuccessStoriesPage />} />
           <Route path="/bankAccounts" element={<BankAccounts />} />
