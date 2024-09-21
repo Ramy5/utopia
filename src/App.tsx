@@ -15,11 +15,6 @@ const ChooseUtopia = lazy(
 const SuccessStoriesPage = lazy(() => import("./pages/SuccessStoriesPage"));
 const BankAccounts = lazy(() => import("./pages/BankAccounts"));
 const OurPartners = lazy(() => import("./pages/OurPartners"));
-const ProgramsTypeDetails = lazy(
-  () => import("./pages/ProgramsType/ProgramsTypeDetails")
-);
-const ProgramDetails = lazy(
-  () => import("./pages/ProgramsType/ProgramDetails")
 const SummerProgramsPage = lazy(
   () => import("./pages/ProgramsType/SummerProgramsPage")
 );
@@ -79,7 +74,10 @@ function App() {
               path="/englishLanguage/details"
               element={<EnglishLanguageDetails />}
             />
-            <Route path="/listSpecializations" element={<ListSpecializations />} />
+            <Route
+              path="/listSpecializations"
+              element={<ListSpecializations />}
+            />
             <Route path="/specializations" element={<SpecializationsPage />} />
           </Route>
           <Route path="/login" element={<Login />} />
