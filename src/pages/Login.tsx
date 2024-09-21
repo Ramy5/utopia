@@ -1,18 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/atoms/Button/Button";
 import { t } from "i18next";
 import BaseInput from "../components/atoms/molecules/formik-fields/BaseInput";
 import { Form, Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DownLoadApp from "../components/atoms/molecules/downLoad-app/DownLoadApp";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../hooks/useRTL";
 import { Footer, Navbar } from "../components";
+import { apiRequest } from "../utils/axios";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { messaging, getToken, getTokenAsync } from "../../firebase";
+import { useAuth } from "../context/AuthContext";
+import cn from "../utils/cn";
+
+const loginPost = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/login",
+      method: "POST",
+      data: postData,
+    });
+    return data?.data;
+  } catch (errors) {
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
 
 const Login = () => {
   const [role, setRole] = useState("student");
+  const [fcmToken, setFcmToken] = useState(null);
   const isRTL = useRTL();
+  const { setAuthData } = useAuth();
+  const navigate = useNavigate();
 
   const initialValues = {
     phone: "",
@@ -21,9 +43,50 @@ const Login = () => {
     studentPassword: "",
   };
 
+  useEffect(() => {
+    getTokenAsync(setFcmToken, toast);
+  }, []);
+
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationKey: ["student-login"],
+    mutationFn: (data) => loginPost(data),
+    onSuccess: (data) => {
+      console.log(data);
+      setAuthData(data);
+      navigate("/studentRequest");
+      setTimeout(() => {
+        toast.success(t(`login was successful`));
+      }, 100);
+    },
+  });
+
+  const handleStudentSubmit = async (values: any) => {
+    if (values?.phone === "") {
+      toast.error(t("phone number is empty"));
+      return;
+    }
+
+    if (values?.studentPassword === "") {
+      toast.error(t("password is empty"));
+      return;
+    }
+
+    const data = {
+      phone: values?.phone,
+      password: values?.studentPassword,
+      fcm_token: fcmToken,
+    };
+    console.log("🚀 ~ onSubmit={ ~ values:", values);
+
+    await mutate(data);
+  };
+
   return (
-    <Formik initialValues={initialValues} onSubmit={() => {}}>
-      {({}) => {
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values, { setSubmitting }) => {}}
+    >
+      {({ values }) => {
         return (
           <Form>
             <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
@@ -35,21 +98,24 @@ const Login = () => {
               <div className="w-[45%] mx-auto my-16">
                 <div className="flex justify-center w-full gap-4 my-6">
                   <Button
-                    className={`${
-                      role === "student"
-                        ? "bg-[#FFCC1A]"
-                        : "bg-transparent border border-mainColor"
-                    } text-black animate_scale font-normal `}
+                    className={cn("text-black animate_scale font-normal", {
+                      "bg-[#FFCC1A]": role === "student",
+                      "bg-transparent border border-mainColor":
+                        role !== "student",
+                    })}
                     action={() => setRole("student")}
                   >
                     {t("student login")}
                   </Button>
                   <Button
-                    className={`${
-                      role === "partner"
-                        ? "bg-[#FFCC1A]"
-                        : "bg-transparent border border-mainColor"
-                    } text-black animate_scale animation_delay-3 font-normal `}
+                    className={cn(
+                      "text-black animate_scale animation_delay-3 font-normal",
+                      {
+                        "bg-[#FFCC1A]": role === "partner",
+                        "bg-transparent border border-mainColor":
+                          role !== "partner",
+                      }
+                    )}
                     action={() => setRole("partner")}
                   >
                     {t("partner login")}
@@ -69,7 +135,7 @@ const Login = () => {
                         id="phone"
                         name="phone"
                         type="text"
-                        className="p-3 text-right bg-transparent border border-white rounded-lg"
+                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
                       />
                     </div>
                     <div
@@ -83,11 +149,20 @@ const Login = () => {
                         id="studentPassword"
                         name="studentPassword"
                         type="password"
-                        className="p-3 text-right bg-transparent border border-white rounded-lg"
+                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
                       />
                     </div>
                     <div className="flex flex-col gap-4 mt-16">
-                      <Button className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal">
+                      <Button
+                        disabled={isPending}
+                        action={() => handleStudentSubmit(values)}
+                        className={cn(
+                          "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal",
+                          {
+                            "opacity-40 cursor-not-allowed": isPending,
+                          }
+                        )}
+                      >
                         {t("login")}
                       </Button>
                       <Link
@@ -113,7 +188,7 @@ const Login = () => {
                         id="email"
                         name="email"
                         type="email"
-                        className="p-3 text-right bg-transparent border border-white rounded-lg"
+                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
                       />
                     </div>
                     <div
@@ -127,21 +202,20 @@ const Login = () => {
                         id="password"
                         name="password"
                         type="text"
-                        className="p-3 text-right bg-transparent border border-white rounded-lg"
+                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
                       />
                     </div>
                     <div className="flex flex-col gap-4 mt-16">
-                      <Button className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_scale text-black font-normal">
+                      <Button
+                        className={cn(
+                          "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_scale text-black font-normal",
+                          {
+                            "opacity-40 cursor-not-allowed": isPending,
+                          }
+                        )}
+                      >
                         {t("login")}
                       </Button>
-                      <Link
-                        to={"/register"}
-                        className="text-white underline ms-1"
-                      >
-                        <Button className="w-full font-normal bg-transparent border border-white animate_scale animation_delay-3">
-                          {t("register")}
-                        </Button>
-                      </Link>
                     </div>
                   </div>
                 )}
@@ -163,21 +237,22 @@ const Login = () => {
               </div>
               <div className="flex justify-center w-full gap-4 my-6">
                 <Button
-                  className={`${
-                    role === "student"
-                      ? "bg-[#FFCC1A]"
-                      : "bg-transparent border border-black"
-                  } text-black animate_scale font-normal `}
+                  className={cn("text-black animate_scale font-normal", {
+                    "bg-[#FFCC1A]": role === "student",
+                    "bg-transparent border border-black": role !== "student",
+                  })}
                   action={() => setRole("student")}
                 >
                   {t("student login")}
                 </Button>
                 <Button
-                  className={`${
-                    role === "partner"
-                      ? "bg-[#FFCC1A]"
-                      : "bg-transparent border border-black"
-                  } text-black animate_scale animation_delay-3 font-normal `}
+                  className={cn(
+                    "text-black animate_scale animation_delay-3 font-normal",
+                    {
+                      "bg-[#FFCC1A]": role === "partner",
+                      "bg-transparent border border-black": role !== "partner",
+                    }
+                  )}
                   action={() => setRole("partner")}
                 >
                   {t("partner login")}
@@ -220,7 +295,16 @@ const Login = () => {
                   </div>
 
                   <div className="flex flex-col gap-4 mt-16">
-                    <Button className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left">
+                    <Button
+                      disabled={isPending}
+                      action={() => handleStudentSubmit(values)}
+                      className={cn(
+                        "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left",
+                        {
+                          "opacity-40 cursor-not-allowed": isPending,
+                        }
+                      )}
+                    >
                       {t("login")}
                     </Button>
                     <p className="flex justify-center gap-1">
@@ -270,7 +354,14 @@ const Login = () => {
                   </div>
 
                   <div className="flex flex-col gap-4 mt-16">
-                    <Button className="font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 hover:bg animate_from_left">
+                    <Button
+                      className={cn(
+                        "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 hover:bg animate_from_left",
+                        {
+                          "opacity-40 cursor-not-allowed": isPending,
+                        }
+                      )}
+                    >
                       {t("login")}
                     </Button>
                     {/* <p className="flex justify-center gap-1">
