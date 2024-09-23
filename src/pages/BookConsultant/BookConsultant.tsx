@@ -17,7 +17,7 @@ const BookConsultant = () => {
       {/* DESKTOP */}
       <div className="bookConsultantBg">
         <div className="">
-          <div className="flex items-center justify-between w-full px-12 pb-10 mt-20 bg-white ">
+          <div className="flex items-center justify-between w-full px-12 pb-20 mt-20 bg-white ">
             <div>
               <h2 className="hidden mb-12 text-6xl md:block">
                 {t("book consultant")}

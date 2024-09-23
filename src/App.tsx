@@ -2,7 +2,6 @@ import { lazy, useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useRTL } from "./hooks/useRTL";
 import LoadingWrapper from "./components/Global/Loading/LoadingWrapper";
-import { BookConsultant } from "./pages";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -15,6 +14,9 @@ const ChooseUtopia = lazy(
 const SuccessStoriesPage = lazy(() => import("./pages/SuccessStoriesPage"));
 const BankAccounts = lazy(() => import("./pages/BankAccounts"));
 const OurPartners = lazy(() => import("./pages/OurPartners"));
+const BookConsultant = lazy(
+  () => import("./pages/BookConsultant/BookConsultant")
+);
 
 function App() {
   const isRTL = useRTL();
