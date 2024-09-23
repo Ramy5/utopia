@@ -8,6 +8,7 @@ export const apiRequest = async ({
   params = {},
   data = {},
   headers = {},
+  token,
 }) => {
   try {
     const response = await axios({
@@ -17,6 +18,7 @@ export const apiRequest = async ({
       data: method !== "GET" ? data : {},
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
         ...headers,
       },
     });

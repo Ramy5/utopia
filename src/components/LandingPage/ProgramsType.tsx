@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../atoms/Button/Button";
 import { t } from "i18next";
 
@@ -37,9 +38,11 @@ const ProgramsType = ({ data }) => {
                         dangerouslySetInnerHTML={{ __html: categorie?.desc }}
                       />
                     </p>
-                    <Button className="bg-white text-mainColor mt-5">
-                      {t("learn more")}
-                    </Button>
+                    <Link to="/programsSummer">
+                      <Button className="bg-white text-mainColor mt-5">
+                        {t("learn more")}
+                      </Button>
+                    </Link>
                   </>
                 )}
               </div>

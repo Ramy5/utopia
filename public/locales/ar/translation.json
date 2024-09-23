@@ -37,5 +37,71 @@
   "consultant": "استشاره",
   "name": "الاسم",
   "phone number": "رقم الجوال",
-  "download the app now": "حمل التطبيق الأن"
+  "download the app now": "حمل التطبيق الأن",
+  "package includes": "الباكج يشمل",
+  "age group": "الفئة العمرية",
+  "family accommodation": "سكن عائلي",
+  "student accommodation": "سكن الطلاب",
+  "general english": "انجليزي عام",
+  "IELTS course": "دورة الآيلتس",
+  "available": "متاح",
+  "unavailable": "غير متاح",
+  "send": "ارسال",
+  "thank you for contacting us. we will contact you as soon as possible": "شكرا لتواصلك، سوف نقوم بالتواصل معك في أقرب وقت",
+  "have a nice day": "نتمنى لك يوما سعيد",
+  "back to home": "العودة الي الصفحة الرئيسية",
+  "student login": "دخول الطالب",
+  "partner login": "دخول الشركاء",
+  "register": "انشاء حساب",
+  "password": "كلمة السر",
+  "you don't have account?": "ليس لديك حساب؟",
+  "duration and price": "المدة والسعر",
+  "register now": "سجل الان",
+  "mounth": "شهر",
+  "mounths": "اشهر",
+  "list of universities": "قائمة باسماء الجامعات",
+  "sort by country": "فرز على حسب الدولة",
+  "everyone": "الكل",
+  "search for university name": "ابحث عن اسم الجامعة",
+  "research": "بحث",
+  "show more": "عرض المزيد",
+  "search by university name": "البحث باسم الجامعة",
+  "certified": "معتمد",
+  "list of majors": "قائمة التخصصات",
+  "list of majors that you can study at the university": "قائمة بالتخصصات التي يمكنك دراستها بالجامعه",
+  "sort by academic degree": "فرز علي حسب الدجه العلمية",
+  "sort by specialization": "فرز علي حسب التخصص",
+  "brief about the university": "نبذة مختصرة عن الجامعة",
+  "explore the list of specializations": "استكشف قائمة التخصصات",
+  "certified in:": "معتمدة في :",
+  "No results found": "لم يتم العثور على النتائج",
+  "requirements": "المتطلبات",
+  "estimated time to receive admission:": "الوقت المقدر للحصول على القبول:",
+  "day": "يوم",
+  "application fee": "رسوم تقديم الطلب",
+  "reyal": "ريال",
+  "apply now": "قدم الآن",
+  "brief about the major": "نبذة مختصرة عن التخصص",
+  "list of specializations": "قائمة التخصصات",
+  "explore": "استكشف",
+  "find out the list of majors you can study at the university": "تعرف علي قائمة التخصصات التي يمكنك دراستها بالجامعة",
+  "english language packages": "بكدجات اللغة الانجليزية",
+  "search by institute name": "البحث باسم المعهد",
+  "login was successful": "تم تسجيل الدخول بنجاح",
+  "logout successful, see you later 👋": "تم تسجيل الخروج بنجاح, نراك لاحقا 👋",
+  "dashboard": "لوحة المعلومات",
+  "register form": "نموذج التسجيل",
+  "create account": "انشاء حساب",
+  "next": "التالي",
+  "otp was send": "تم ارسال رمز التحقق",
+  "you have account already?": "لديك حساب بالفعل؟",
+  "please type the OTP sent to your phone number": "ادخل رمز التحقق المرسل إلى رقم الجوال",
+  "verification code": "رمز التحقق",
+  "verify": "تحقق",
+  "new password": "اعادة كلمة السر",
+  "create password": "انشاء كلمة المرور",
+  "signup": "تسجيل الخروج",
+  "notification was deleted successfully": "تم حذف الاشعار بنجاح",
+  "close": "الغاء",
+  "add image": "حفظ الصورة"
 }

@@ -7,11 +7,11 @@ import "swiper/css";
 
 const LatestOffersFeatures = ({ data }) => {
   return (
-    <div className="mb-20 sm:mb-28 pt-20 sm:pt-0 mx-4 md:mx-0">
+    <div className="mb-14 sm:mb-28 pt-20 sm:pt-0 mx-4 md:mx-0">
       <h2 className="font-semibold text-xl sm:text-3xl mb-12">
         {t("latest offers and features")}
       </h2>
-      <div className="hidden sm:grid grid-cols-6 gap-4">
+      <div className="hidden sm:grid grid-cols-6 gap-3">
         <div className="col-span-1">
           <img
             src={LatestOffersFeatures_1}
@@ -39,7 +39,7 @@ const LatestOffersFeatures = ({ data }) => {
           {data?.offers?.map((offer, index) => (
             <SwiperSlide key={index}>
               <div>
-                <img src={offer.image} alt="offers" className="w-full h-80" />
+                <img src={offer.image} alt="offers" className="w-full h-60" />
               </div>
             </SwiperSlide>
           ))}

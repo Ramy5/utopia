@@ -16,12 +16,15 @@ export type BaseInput_TP = {
   ref?: any;
   disabled?: boolean;
   autoFocus?: any;
+  onChange?: () => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   type?:
     | "text"
     | "number"
     | "password"
     | "email"
     | "checkbox"
+    | "radio"
     | "text"
     | "date"
     | "time";
@@ -40,8 +43,10 @@ const BaseInput = ({
   ref,
   disabled,
   autoFocus,
+  onChange,
   min,
   max,
+  onKeyDown,
   ...props
 }: BaseInput_TP) => {
   const { setFieldValue, setFieldTouched, errors, touched, values } =
@@ -61,7 +66,7 @@ const BaseInput = ({
         checkbox:
           "w-4 h-4 text-mainGreen border-gray-300 rounded focus:ring-mainColor form-checkbox shadow-none",
         radio:
-          "w-5 h-5 form-radio rounded-full focus:ring-mainGreen border-gray-300",
+          "w-6 h-6 form-radio rounded-full focus:ring-mainGreen border-gray-300",
         text: GeneralInputClass,
         email: GeneralInputClass,
         password: GeneralInputClass,
@@ -105,6 +110,11 @@ const BaseInput = ({
             props.onChange && props.onChange(e);
             if (props.value === undefined) {
               setFieldValue(props.name, e.target.value);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && onKeyDown) {
+              onKeyDown(e);
             }
           }}
           className={baseInput({
