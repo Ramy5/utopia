@@ -170,7 +170,7 @@ const UniversityAdmissionPage = () => {
             >
               {({ values, resetForm }) => (
               <Form className="grid grid-cols-10 gap-28 my-12">
-                <div className="my-5 col-span-3">
+                <div className="col-span-3">
                   <BaseSelect
                     id="country_id"
                     name="country_id"
@@ -184,16 +184,15 @@ const UniversityAdmissionPage = () => {
                     className="pt-2"
                   />
                 </div>
-                <div className="my-5 flex items-end gap-2 col-span-5 w-full">
+                <div className="flex items-end gap-2 col-span-5 w-full">
                   <IoIosSearch size={45} className="mb-3" />
                   <BaseInput
                     id="research"
                     name="research"
                     placeholder={t("research")}
                     label={t("search for university name")}
-                    className="py-5 w-72 mt-2"
+                    className="py-3.5 w-72 mt-2"
                     onKeyDown={(e) => {
-                      console.log("🚀 ~ UniversityAdmissionPage ~ e:", e);
                       if (e.key === "Enter") {
                         setUniversityName(e.target.value);
                         e.target.value = "";
