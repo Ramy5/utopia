@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAw9QWG9eoWB_TtONDVdOszhMD7tX7S1gM",
@@ -44,6 +44,14 @@ export const getTokenAsync = async (setFcmToken, toast) => {
     console.log(`Error fetching FCM token: ${error}`);
     console.error("Error fetching FCM token:", error);
   }
+};
+
+export const onMessageListener = () => {
+  return new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      resolve(payload);
+    });
+  });
 };
 
 export { messaging, getToken };
