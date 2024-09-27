@@ -122,15 +122,15 @@ function App() {
               element={<ListSpecializations />}
             />
             <Route path="/specializations" element={<SpecializationsPage />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/bookConsultant" element={<BookConsultant />} />
-          <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
-          <Route path="/successStory" element={<SuccessStoriesPage />} />
-          <Route path="/bankAccounts" element={<BankAccounts />} />
-          <Route path="/ourPartners" element={<OurPartners />} />
-        </Routes>
-      </LoadingWrapper>
+            <Route path="/login" element={<Login />} />
+            <Route path="/bookConsultant" element={<BookConsultant />} />
+            <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
+            <Route path="/successStory" element={<SuccessStoriesPage />} />
+            <Route path="/bankAccounts" element={<BankAccounts />} />
+            <Route path="/ourPartners" element={<OurPartners />} />
+          </Routes>
+        </LoadingWrapper>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
