@@ -105,6 +105,30 @@ function App() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/programsSummer" element={<SummerProgramsPage />} />
+            <Route
+              path="/programsSummer/details"
+              element={<SummerProgramDetails />}
+            />
+            <Route
+              path="/universityAdmissions"
+              element={<UniversityAdmissionPage />}
+            />
+            <Route
+              path="/universityAdmissions/details"
+              element={<UniversityAdmissionsDetails />}
+            />
+            <Route path="/englishLanguage" element={<EnglishLanguagePage />} />
+            <Route
+              path="/englishLanguage/details"
+              element={<EnglishLanguageDetails />}
+            />
+            <Route
+              path="/listSpecializations"
+              element={<ListSpecializations />}
+            />
+            <Route path="/specializations" element={<SpecializationsPage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/bookConsultant" element={<BookConsultant />} />
             <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
             <Route path="/successStory" element={<SuccessStoriesPage />} />
