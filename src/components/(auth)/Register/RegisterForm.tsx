@@ -9,6 +9,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
 import cn from "../../../utils/cn";
+import { IoPersonSharp } from "react-icons/io5";
 
 interface RegisterForm_TP {
   isPending: boolean;
@@ -119,7 +120,7 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
                 type="text"
                 className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
-              <IoMdPhonePortrait
+              <IoPersonSharp
                 className={`absolute top-4 text-gray-700 ${
                   isRTL ? "left-4" : "right-4"
                 }`}

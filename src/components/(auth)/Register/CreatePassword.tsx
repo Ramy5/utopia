@@ -13,6 +13,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
 import cn from "../../../utils/cn";
+import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 
 const setPasswordPost = async (postData) => {
   try {
@@ -38,6 +39,9 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
   const { values, setFieldValue } = useFormikContext();
   const isRTL = useRTL();
   const navigate = useNavigate();
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showConfirmCurrentPassword, setShowConfirmCurrentPassword] =
+    useState(false);
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationKey: ["password"],
@@ -155,14 +159,24 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
               <BaseInput
                 id="password"
                 name="password"
-                type="password"
+                type={showCurrentPassword ? "text" : "password"}
                 className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
-              <IoMdPhonePortrait
-                className={`absolute top-4 text-gray-700 ${
-                  isRTL ? "left-4" : "right-4"
-                }`}
-              />
+              {showCurrentPassword ? (
+                <IoEyeSharp
+                  onClick={() => setShowCurrentPassword((prev) => !prev)}
+                  className={`absolute top-4 text-gray-700 ${
+                    isRTL ? "left-4" : "right-4"
+                  }`}
+                />
+              ) : (
+                <IoEyeOffSharp
+                  onClick={() => setShowCurrentPassword((prev) => !prev)}
+                  className={`absolute top-4 text-gray-700 ${
+                    isRTL ? "left-4" : "right-4"
+                  }`}
+                />
+              )}
             </div>
           </div>
           <div className="">
@@ -171,14 +185,24 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
               <BaseInput
                 id="newPassword"
                 name="newPassword"
-                type="text"
+                type={showConfirmCurrentPassword ? "text" : "password"}
                 className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
-              <IoMdPhonePortrait
-                className={`absolute top-4 text-gray-700 ${
-                  isRTL ? "left-4" : "right-4"
-                }`}
-              />
+              {showConfirmCurrentPassword ? (
+                <IoEyeSharp
+                  onClick={() => setShowConfirmCurrentPassword((prev) => !prev)}
+                  className={`absolute top-4 text-gray-700 ${
+                    isRTL ? "left-4" : "right-4"
+                  }`}
+                />
+              ) : (
+                <IoEyeOffSharp
+                  onClick={() => setShowConfirmCurrentPassword((prev) => !prev)}
+                  className={`absolute top-4 text-gray-700 ${
+                    isRTL ? "left-4" : "right-4"
+                  }`}
+                />
+              )}
             </div>
           </div>
 
