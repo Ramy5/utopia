@@ -4,9 +4,10 @@ import { useRTL } from "./hooks/useRTL";
 import LoadingWrapper from "./components/Global/Loading/LoadingWrapper";
 import { BookConsultant } from "./pages";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext";
 import StudentRequest from "./pages/StudentRequest";
+import { onMessageListener } from "../firebase";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -58,6 +59,17 @@ function App() {
     document.documentElement.lang = isRTL ? "ar" : "en";
   }, [isRTL]);
 
+  onMessageListener()
+    .then((payload: any) => {
+      toast(
+        <div>
+          <p>{payload?.notification?.title}</p>
+          <p>{payload?.notification?.body}</p>
+        </div>
+      );
+    })
+    .catch((err) => console.log("err"));
+
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -65,48 +77,66 @@ function App() {
           <Routes>
             <Route path="/" element={<StructurePages />}>
               <Route index element={<Home />} />
-              <Route path="/bePartner" element={<BePartner />} />
-              <Route path="/programsSummer" element={<SummerProgramsPage />} />
+              <Route path="bePartner" element={<BePartner />} />
+              <Route path="programsSummer" element={<SummerProgramsPage />} />
               <Route
-                path="/programsSummer/details"
+                path="programsSummer/details"
                 element={<SummerProgramDetails />}
               />
               <Route
-                path="/universityAdmissions"
+                path="universityAdmissions"
                 element={<UniversityAdmissionPage />}
               />
               <Route
-                path="/universityAdmissions/details"
+                path="universityAdmissions/details"
                 element={<UniversityAdmissionsDetails />}
               />
+              <Route path="englishLanguage" element={<EnglishLanguagePage />} />
               <Route
-                path="/englishLanguage"
-                element={<EnglishLanguagePage />}
-              />
-              <Route
-                path="/englishLanguage/details"
+                path="englishLanguage/details"
                 element={<EnglishLanguageDetails />}
               />
               <Route
-                path="/listSpecializations"
+                path="listSpecializations"
                 element={<ListSpecializations />}
               />
-              <Route
-                path="/specializations"
-                element={<SpecializationsPage />}
-              />
-              <Route path="/studentRequest" element={<StudentRequest />} />
+              <Route path="specializations" element={<SpecializationsPage />} />
+              <Route path="studentRequest" element={<StudentRequest />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/programsSummer" element={<SummerProgramsPage />} />
+            <Route
+              path="/programsSummer/details"
+              element={<SummerProgramDetails />}
+            />
+            <Route
+              path="/universityAdmissions"
+              element={<UniversityAdmissionPage />}
+            />
+            <Route
+              path="/universityAdmissions/details"
+              element={<UniversityAdmissionsDetails />}
+            />
+            <Route path="/englishLanguage" element={<EnglishLanguagePage />} />
+            <Route
+              path="/englishLanguage/details"
+              element={<EnglishLanguageDetails />}
+            />
+            <Route
+              path="/listSpecializations"
+              element={<ListSpecializations />}
+            />
+            <Route path="/specializations" element={<SpecializationsPage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/bookConsultant" element={<BookConsultant />} />
             <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
             <Route path="/successStory" element={<SuccessStoriesPage />} />
             <Route path="/bankAccounts" element={<BankAccounts />} />
             <Route path="/ourPartners" element={<OurPartners />} />
           </Routes>
-          <ToastContainer />
         </LoadingWrapper>
+        <ToastContainer />
       </AuthProvider>
     </BrowserRouter>
   );
