@@ -103,5 +103,9 @@
   "signup": "تسجيل الخروج",
   "notification was deleted successfully": "تم حذف الاشعار بنجاح",
   "close": "الغاء",
-  "add image": "حفظ الصورة"
+  "add image": "حفظ الصورة",
+  "home": "الرئيسية",
+  "notification": "الاشعارات",
+  "account": "الحسابات",
+  "more": "المزيد"
 }

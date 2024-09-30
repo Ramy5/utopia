@@ -152,9 +152,11 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                 onClick={openImageModal}
               />
             </div>
-            <p className="mx-2 font-semibold">{profile?.name?.split(" ")[0]}</p>
+            <p className="mx-2 font-semibold cursor-pointer">
+              {profile?.name?.split(" ")[0]}
+            </p>
             {isOpen && (
-              <div className="absolute right-0 z-40 w-48 mt-2 rounded-md top-10 focus:outline-none">
+              <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
                 <div className="">
                   <Link
                     to="/dashboard"

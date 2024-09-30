@@ -100,7 +100,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
                 id="password"
                 name="password"
                 type="password"
-                className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+                className="p-3 text-white bg-transparent border border-white rounded-lg text-start"
               />
             </div>
             <div
@@ -114,7 +114,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
                 id="newPassword"
                 name="newPassword"
                 type="password"
-                className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+                className="p-3 text-white bg-transparent border border-white rounded-lg text-start"
               />
             </div>
 
@@ -156,7 +156,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
                 id="password"
                 name="password"
                 type="password"
-                className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
               <IoMdPhonePortrait
                 className={`absolute top-4 text-gray-700 ${
@@ -172,7 +172,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
                 id="newPassword"
                 name="newPassword"
                 type="text"
-                className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
               <IoMdPhonePortrait
                 className={`absolute top-4 text-gray-700 ${

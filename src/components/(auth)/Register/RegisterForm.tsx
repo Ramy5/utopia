@@ -101,7 +101,7 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
                 id="phone"
                 name="phone"
                 type="text"
-                className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
               <IoMdPhonePortrait
                 className={`absolute top-4 text-gray-700 ${
@@ -117,7 +117,7 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
                 id="name"
                 name="name"
                 type="text"
-                className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                className="px-3 py-1 mt-2 bg-transparent border rounded-lg text-start border-black/50"
               />
               <IoMdPhonePortrait
                 className={`absolute top-4 text-gray-700 ${
