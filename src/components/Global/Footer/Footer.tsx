@@ -20,18 +20,18 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 
 const currentPages = [
-  { id: 1, text: "الرئيسية", icon: <IoHomeOutline className="text-xl" /> },
+  { id: 1, text: "home", icon: <IoHomeOutline className="text-xl" /> },
   {
     id: 2,
-    text: "الاشعارات",
+    text: "notification",
     icon: <IoIosNotificationsOutline className="text-xl" />,
   },
-  { id: 3, text: "الحساب", icon: <FaRegUser className="text-xl" /> },
-  { id: 4, text: "المزيد", icon: <FaBars className="text-xl" /> },
+  { id: 3, text: "account", icon: <FaRegUser className="text-xl" /> },
+  { id: 4, text: "more", icon: <FaBars className="text-xl" /> },
 ];
 
 const Footer = ({ hidden }: { hidden?: boolean }) => {
-  const [currentPage, setCurrentPage] = useState("الرئيسية");
+  const [currentPage, setCurrentPage] = useState(1);
   const [notificationState, setNotificationState] = useState([]);
   console.log("🚀 ~ Footer ~ notificationState:", notificationState);
   const [isSidebarOpen, setIsSidebarOpen] = useState({
@@ -103,7 +103,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
 
   const handleLogout = () => {
     clearAuth();
-    setCurrentPage("الرئيسية");
+    setCurrentPage(1);
     setIsSidebarOpen({ ...isSidebarOpen, more: false });
   };
 
@@ -111,12 +111,12 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
     i18n.changeLanguage(isRTL ? "en" : "ar");
   };
 
-  const handlePageChange = (page: string) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
     setIsSidebarOpen({
-      notifications: page === "الاشعارات",
-      account: page === "الحساب",
-      more: page === "المزيد",
+      notifications: page === 2,
+      account: page === 3,
+      more: page === 4,
     });
   };
 
@@ -202,16 +202,16 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
         <div className="flex justify-around text-gray-500">
           {currentPages.map((currPage) => (
             <button
-              onClick={() => handlePageChange(currPage.text)}
+              onClick={() => handlePageChange(currPage.id)}
               key={currPage.id}
               className={`flex flex-col items-center py-3 px-4 gap-1 text-xs ${
-                currPage.text === currentPage
+                currPage.id === currentPage
                   ? "text-mainColor border-t-2 border-t-mainColor"
                   : "border-t-2 border-t-transparent"
               }`}
             >
               {currPage.icon}
-              <span>{currPage.text}</span>
+              <span>{`${t(currPage.text)}`}</span>
             </button>
           ))}
         </div>

@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext";
 import StudentRequest from "./pages/StudentRequest";
 import { onMessageListener } from "../firebase";
+import Chat from "./pages/chat/Chat";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -102,6 +103,7 @@ function App() {
               />
               <Route path="specializations" element={<SpecializationsPage />} />
               <Route path="studentRequest" element={<StudentRequest />} />
+              <Route path="/chat" element={<Chat />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

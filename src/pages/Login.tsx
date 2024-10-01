@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { messaging, getToken, getTokenAsync } from "../../firebase";
 import { useAuth } from "../context/AuthContext";
 import cn from "../utils/cn";
+import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 
 const loginPost = async (postData) => {
   try {
@@ -35,6 +36,7 @@ const Login = () => {
   const isRTL = useRTL();
   const { setAuthData } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const initialValues = {
     phone: "",
@@ -76,7 +78,6 @@ const Login = () => {
       password: values?.studentPassword,
       fcm_token: fcmToken,
     };
-    console.log("🚀 ~ onSubmit={ ~ values:", values);
 
     await mutate(data);
   };
@@ -135,7 +136,7 @@ const Login = () => {
                         id="phone"
                         name="phone"
                         type="text"
-                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+                        className="border-[#C9C5CA] p-3 text-white bg-transparent border rounded-lg text-start"
                       />
                     </div>
                     <div
@@ -149,7 +150,7 @@ const Login = () => {
                         id="studentPassword"
                         name="studentPassword"
                         type="password"
-                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+                        className="border-[#C9C5CA] p-3 text-white bg-transparent border rounded-lg text-start"
                       />
                     </div>
                     <div className="flex flex-col gap-4 mt-16">
@@ -188,7 +189,7 @@ const Login = () => {
                         id="email"
                         name="email"
                         type="email"
-                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+                        className="border-[#C9C5CA] p-3 text-right text-white bg-transparent border rounded-lg"
                       />
                     </div>
                     <div
@@ -202,7 +203,7 @@ const Login = () => {
                         id="password"
                         name="password"
                         type="text"
-                        className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
+                        className="border-[#C9C5CA] p-3 text-right text-white bg-transparent border rounded-lg"
                       />
                     </div>
                     <div className="flex flex-col gap-4 mt-16">
@@ -262,13 +263,15 @@ const Login = () => {
               {role === "student" ? (
                 <div className="flex flex-col px-4 py-6 w-[95%] mx-auto bg-white">
                   <div className="">
-                    <label htmlFor="phone">{t("phone number")}</label>
+                    <label htmlFor="phone" className="text-[#100D10]">
+                      {t("phone number")}
+                    </label>
                     <div className="relative">
                       <BaseInput
                         id="phone"
                         name="phone"
                         type="text"
-                        className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                        className="border-[#C9C5CA] px-3 py-1 mt-2 bg-transparent border rounded-lg text-start "
                       />
                       <IoMdPhonePortrait
                         className={`absolute top-4 text-gray-700 ${
@@ -278,19 +281,31 @@ const Login = () => {
                     </div>
                   </div>
                   <div className="">
-                    <label htmlFor="studentPassword">{t("password")}</label>
+                    <label htmlFor="studentPassword" className="text-[#100D10]">
+                      {t("password")}
+                    </label>
                     <div className="relative">
                       <BaseInput
                         id="studentPassword"
                         name="studentPassword"
-                        type="password"
-                        className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                        type={showPassword ? "text" : "password"}
+                        className="border-[#C9C5CA] px-3 py-1 mt-2 bg-transparent border rounded-lg text-start "
                       />
-                      <IoMdPhonePortrait
-                        className={`absolute top-4 text-gray-700 ${
-                          isRTL ? "left-4" : "right-4"
-                        }`}
-                      />
+                      {showPassword ? (
+                        <IoEyeSharp
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          className={`absolute top-4 text-gray-700 ${
+                            isRTL ? "left-4" : "right-4"
+                          }`}
+                        />
+                      ) : (
+                        <IoEyeOffSharp
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          className={`absolute top-4 text-gray-700 ${
+                            isRTL ? "left-4" : "right-4"
+                          }`}
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -321,13 +336,15 @@ const Login = () => {
               ) : (
                 <div className="flex flex-col px-4 py-6 w-[95%] mx-auto bg-white">
                   <div className="">
-                    <label htmlFor="email">{t("email")}</label>
+                    <label htmlFor="email" className="text-[#100D10]">
+                      {t("email")}
+                    </label>
                     <div className="relative">
                       <BaseInput
                         id="email"
                         name="email"
                         type="email"
-                        className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                        className="border-[#C9C5CA] px-3 py-1 mt-2 bg-transparent border rounded-lg text-start "
                       />
                       <IoMdPhonePortrait
                         className={`absolute top-4 text-gray-700 ${
@@ -337,13 +354,15 @@ const Login = () => {
                     </div>
                   </div>
                   <div className="">
-                    <label htmlFor="password">{t("password")}</label>
+                    <label htmlFor="password" className="text-[#100D10]">
+                      {t("password")}
+                    </label>
                     <div className="relative">
                       <BaseInput
                         id="password"
                         name="password"
                         type="password"
-                        className="px-3 py-1 mt-2 text-right bg-transparent border rounded-lg border-black/50"
+                        className="border-[#C9C5CA] px-3 py-1 mt-2 bg-transparent border rounded-lg text-start "
                       />
                       <IoMdPhonePortrait
                         className={`absolute top-4 text-gray-700 ${
