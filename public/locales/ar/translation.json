@@ -110,5 +110,10 @@
   "study duration": "مدة الدراسة",
   "study start date": "تاريخ بداية الدراسة",
   "available institutes":"المعاهد المتاحة",
-  "Weeks":"اسابيع"
+  "Weeks":"اسابيع",
+  "home": "الرئيسية",
+  "notification": "الاشعارات",
+  "type a message...": "رسالة...",
+  "account": "الحسابات",
+  "more": "المزيد"
 }

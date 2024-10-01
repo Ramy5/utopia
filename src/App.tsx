@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext";
 import StudentRequest from "./pages/StudentRequest";
 import { onMessageListener } from "../firebase";
+import Chat from "./pages/chat/Chat";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -56,9 +57,9 @@ const DesignYourOwnCourse = lazy(
 const DesignYourOwnCourseDetails = lazy(
   () => import("./pages/DesignCourse/DesignYourOwnCourseDetails")
 );
-const DesignYourOwnCourseRegister = lazy(
-  () => import("./pages/DesignCourse/DesignYourOwnCourseRegister")
-);
+// const DesignYourOwnCourseRegister = lazy(
+//   () => import("./pages/DesignCourse/DesignYourOwnCourseRegister")
+// );
 
 function App() {
   const isRTL = useRTL();
@@ -116,12 +117,12 @@ function App() {
                 path="/designCourse/details"
                 element={<DesignYourOwnCourseDetails />}
               />
-              <Route
+              {/* <Route
                 path="/designCourse/register"
                 element={<DesignYourOwnCourseRegister />}
-              />
+              /> */}
+              <Route path="/chat" element={<Chat />} />
             </Route>
-            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/programsSummer" element={<SummerProgramsPage />} />
             <Route
