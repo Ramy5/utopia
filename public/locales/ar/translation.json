@@ -103,5 +103,12 @@
   "signup": "تسجيل الخروج",
   "notification was deleted successfully": "تم حذف الاشعار بنجاح",
   "close": "الغاء",
-  "add image": "حفظ الصورة"
+  "add image": "حفظ الصورة",
+  "select country": "اختر الدولة",
+  "search by city name": "البحث باسم المدينة",
+  "A week": "أســـــــــبوع",
+  "study duration": "مدة الدراسة",
+  "study start date": "تاريخ بداية الدراسة",
+  "available institutes":"المعاهد المتاحة",
+  "Weeks":"اسابيع"
 }

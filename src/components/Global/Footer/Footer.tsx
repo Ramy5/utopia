@@ -144,7 +144,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
         }`}
       >
         <div className="max-w-full py-4 md:px-8 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
-          <div className="container grid grid-cols-1 gap-24 px-4 py-32 mx-auto lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
+          <div className="container grid grid-cols-1 gap-24 px-4 py-20 mx-auto lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
             {["courses", "destinations", "opportunities", "contact us"].map(
               (section, index) => (
                 <div key={index} className="text-center md:text-right">
@@ -198,7 +198,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
       </footer>
 
       {/* Mobile Footer */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-lg rounded-t-3xl md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-custom rounded-t-3xl md:hidden">
         <div className="flex justify-around text-gray-500">
           {currentPages.map((currPage) => (
             <button

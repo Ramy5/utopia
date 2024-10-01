@@ -5,8 +5,10 @@ import { IoIosSearch } from "react-icons/io";
 import Button from "../atoms/Button/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useNavigate } from "react-router-dom";
 
 const ProgramTypePackages = ({ data }) => {
+  const navigate = useNavigate()
   return (
     <div
       id="englishSection"
@@ -36,11 +38,11 @@ const ProgramTypePackages = ({ data }) => {
               </Form>
             </Formik>
           </div>
-          <Button className="rounded-3xl py-2.5 col-span-2">
+          <Button className="rounded-3xl py-2.5 col-span-2" action={() => navigate("/designCourse")}>
             {t("design your own course")}
           </Button>
         </div>
-        <p className="block text-2xl font-medium md:hidden text-mainColor">
+        <p className="block text-xl font-medium md:hidden text-mainColor">
           {t("More")}
         </p>
       </div>
@@ -105,7 +107,7 @@ const ProgramTypePackages = ({ data }) => {
         </Swiper>
       </div>
       <div className="block mt-7 sm:hidden ">
-        <Button className="w-full col-span-2 py-4 text-2xl rounded-3xl">
+        <Button className="w-full col-span-2 py-4 text-2xl rounded-2xl" action={() => navigate("/designCourse")}>
           {t("design your own course")}
         </Button>
       </div>

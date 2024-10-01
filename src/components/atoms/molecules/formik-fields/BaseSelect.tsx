@@ -51,7 +51,6 @@ const BaseSelect = ({
         value={props.value}
         onChange={onChange}
         isLoading={isLoading}
-        // disabled={disabled}
         isDisabled={disabled}
         components={{ LoadingIndicator }}
       />

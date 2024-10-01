@@ -50,7 +50,7 @@ const BookConsultation = ({ data }) => {
                 <img
                   src={offer?.image}
                   alt="Book"
-                  className={`${index === 2 ? "h-full" : "max-h-56 w-full"}`}
+                  className={`${index === 2 ? "h-full" : "max-h-60 w-full"}`}
                 />
               </div>
               <div className="mt-6">

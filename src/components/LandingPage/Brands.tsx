@@ -25,6 +25,8 @@ const Brands = () => {
     suspense: true,
   });
 
+  console.log("🚀 ~ Brands ~ data:", data);
+
   return (
     <div className="hidden sm:block">
       <Swiper
@@ -32,13 +34,12 @@ const Brands = () => {
         loop={true}
         centeredSlides={true}
         autoplay={{
-          delay: 1,
+          delay: 0,
           pauseOnMouseEnter: true,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        speed={600}
-        effect="liner"
+        speed={550}
       >
         <div>
           {data?.map((brand, index) => (

@@ -188,9 +188,9 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
           </Link>
         </header>
       ) : (
-        <div className="flex items-center justify-between px-4 py-2 text-sm xl:text-base">
+        <div className="flex items-center justify-between px-4 py-3 sm:py-2 text-sm xl:text-base">
           {/* Language and Auth */}
-          <div className="items-center hidden gap-3 lg:flex xl:gap-6">
+          <div className="items-center hidden gap-3 lg:flex xl:gap-6 ">
             <Link to="/login" className="hover:text-mainColor">
               تسجيل الدخول
             </Link>
@@ -222,7 +222,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
           {/* Hamburger Menu for Mobile */}
           <Link to={"/login"} className="lg:hidden">
-            <button className="px-2 pt-1 pb-2 text-sm border text-mainColor border-mainColor rounded-xl focus:outline-none">
+            <button className="px-3 pt-2 pb-3 text-sm border text-mainColor border-mainColor rounded-xl focus:outline-none font-semibold">
               {t("login")}
             </button>
           </Link>

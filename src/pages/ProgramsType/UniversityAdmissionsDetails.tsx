@@ -210,6 +210,7 @@ const UniversityAdmissionsDetails = () => {
                   labelStyle="text-white"
                   className="pt-2"
                   selectStyle={selectStyle}
+                  
                 />
               </div>
               <div className="my-5 flex items-end gap-2 col-span-4 w-full">

@@ -20,7 +20,7 @@ const ProgramsType = ({ data }) => {
                 <img
                   src={categorie?.image}
                   alt="Book"
-                  className="w-full h-60"
+                  className="w-full h-64"
                 />
               </div>
               <div
@@ -30,7 +30,7 @@ const ProgramsType = ({ data }) => {
                     : index === 1
                     ? "bg-[#FFB6BF]"
                     : "bg-[#FFCC1A]"
-                } mt-6 rounded-3xl text-white px-4 lg:px-5 py-5 text-center cursor-pointer`}
+                } mt-6 rounded-2xl text-white px-4 lg:px-5 py-5 text-center cursor-pointer`}
                 onClick={() => setIndexCategory(categorie.id)}
               >
                 <h2 className="font-medium text-lg lg:text-xl">

@@ -44,11 +44,11 @@ const SuccessStories = () => {
       <div className="grid grid-cols-10 gap-8">
         <div className="col-span-5 lg:col-span-6">
           <Swiper
-            spaceBetween={20}
+            spaceBetween={0}
             slidesPerView={3}
             breakpoints={{
               768: {
-                slidesPerView: 3,
+                slidesPerView: 2,
               },
               1024: {
                 slidesPerView: 3,
@@ -110,12 +110,12 @@ const SuccessStories = () => {
             {data?.map((storie, index) => (
               <SwiperSlide key={index}>
                 <div className="shadow-xl rounded-2xl bg-[#FFB6BF] relative h-full z-0 pt-10 pb-6 px-8">
-                  <div className="px-4 py-5">
+                  <div className="pb-5 pt-2 lg:pt-3">
                     <h2 className="relative mb-1 text-3xl font-normal text-black duration-300 group-hover:text-white">
                       {storie.name}
                     </h2>
                     <p className="text-[15px]">{storie.title}</p>
-                    <h3 className="text-[15px] py-10">
+                    <h3 className="text-[15px] py-6 lg:py-8">
                       <span
                         dangerouslySetInnerHTML={{ __html: storie?.desc }}
                       />
