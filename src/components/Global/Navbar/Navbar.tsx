@@ -182,7 +182,9 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
           <div className="flex items-center gap-2 mx-2">
             <CiHeart className="text-xl" />
-            <PiChatCircleThin className="text-xl" />
+            <Link to={"/chat"}>
+              <PiChatCircleThin className="text-xl" />
+            </Link>
           </div>
           {/* Logo */}
           <Link to={"/"} className="ms-auto">

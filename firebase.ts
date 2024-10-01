@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAw9QWG9eoWB_TtONDVdOszhMD7tX7S1gM",
@@ -14,6 +15,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
+const db = getFirestore(app);
 
 export const getTokenAsync = async (setFcmToken, toast) => {
   try {
@@ -54,4 +56,4 @@ export const onMessageListener = () => {
   });
 };
 
-export { messaging, getToken };
+export { messaging, getToken, db };
