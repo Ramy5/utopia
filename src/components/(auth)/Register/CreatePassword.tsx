@@ -14,6 +14,7 @@ import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
 import cn from "../../../utils/cn";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
+import DownLoadAppSecondImg from "../../atoms/molecules/downLoad-app/DownLoadAppSecondImg";
 
 const setPasswordPost = async (postData) => {
   try {
@@ -87,47 +88,49 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
     <>
       {/* DESKTOP */}
       <div className="hidden md:block">
-        <div className="w-[45%] mx-auto my-16">
+        <div className="w-[45%] mx-auto translate-y-1/3">
           <div className="flex flex-col gap-3 mb-6">
             <h2 className="text-4xl">{t("register form")}</h2>
             <p>{t("create password")}</p>
           </div>
-          <div className="flex flex-col px-10 py-12 rounded-2xl bg-mainColor">
-            <div
-              style={{ gridTemplateColumns: "100px 1fr" }}
-              className="grid gap-4 mb-6 animate_from_bottom"
-            >
-              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                {t("password")}
-              </Button>
-              <BaseInput
-                id="password"
-                name="password"
-                type="password"
-                className="p-3 text-white bg-transparent border border-white rounded-lg text-start"
-              />
-            </div>
-            <div
-              style={{ gridTemplateColumns: "100px 1fr" }}
-              className="grid gap-4 mb-6 animate_from_top"
-            >
-              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                {t("new password")}
-              </Button>
-              <BaseInput
-                id="newPassword"
-                name="newPassword"
-                type="password"
-                className="p-3 text-white bg-transparent border border-white rounded-lg text-start"
-              />
+          <div className="flex flex-col rounded-2xl bg-mainColor">
+            <div className="px-20 py-20 ">
+              <div
+                style={{ gridTemplateColumns: "100px 1fr" }}
+                className="grid gap-4 mb-6 animate_from_bottom"
+              >
+                <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                  {t("password")}
+                </Button>
+                <BaseInput
+                  id="password"
+                  name="password"
+                  type="password"
+                  className="p-4 text-black bg-white border border-white rounded-2xl text-start"
+                />
+              </div>
+              <div
+                style={{ gridTemplateColumns: "100px 1fr" }}
+                className="grid gap-4 mb-6 animate_from_top"
+              >
+                <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                  {t("new password")}
+                </Button>
+                <BaseInput
+                  id="newPassword"
+                  name="newPassword"
+                  type="password"
+                  className="p-4 text-black bg-white border border-white rounded-2xl text-start"
+                />
+              </div>
             </div>
 
-            <div className="flex flex-col gap-4 mt-16">
+            <div className="flex flex-col gap-4">
               <Button
                 disabled={isPending}
                 action={() => handleSubmit(values)}
                 className={cn(
-                  "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal",
+                  "bg-[#FFB6BF] py-4 hover:bg-[#FFCC1A] animate_from_left rounded-2xl text-black font-normal",
                   {
                     "opacity-40 cursor-not-allowed": isPending,
                   }
@@ -138,6 +141,8 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
             </div>
           </div>
         </div>
+
+        <DownLoadAppSecondImg />
       </div>
 
       {/* MOBIL */}
