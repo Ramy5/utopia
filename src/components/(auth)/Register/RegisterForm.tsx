@@ -24,62 +24,64 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
     <div>
       {/* DESKTOP */}
       <div className="hidden md:block">
-        <div className="w-[45%] mx-auto my-16">
+        <div className="w-[45%] mx-auto translate-y-1/3">
           <div className="flex flex-col gap-3 mb-6">
             <h2 className="text-4xl">{t("register form")}</h2>
             <p>{t("create account")}</p>
           </div>
-          <div className="flex flex-col px-10 py-12 rounded-2xl bg-mainColor">
-            <div
-              style={{ gridTemplateColumns: "100px 1fr" }}
-              className="grid gap-4 mb-6 animate_from_bottom"
-            >
-              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                {t("name")}
-              </Button>
-              <BaseInput
-                id="name"
-                name="name"
-                type="text"
-                className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
-              />
-            </div>
-            <div
-              style={{ gridTemplateColumns: "100px 1fr" }}
-              className="grid gap-4 mb-6 animate_from_top"
-            >
-              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                {t("phone number")}
-              </Button>
-              <BaseInput
-                id="phone"
-                name="phone"
-                type="text"
-                className="p-3 text-right text-white bg-transparent border border-white rounded-lg"
-              />
+          <div className="flex flex-col rounded-3xl bg-mainColor">
+            <div className="px-24 py-24 ">
+              <div
+                style={{ gridTemplateColumns: "100px 1fr" }}
+                className="grid gap-4 mb-6 animate_from_bottom"
+              >
+                <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                  {t("name")}
+                </Button>
+                <BaseInput
+                  id="name"
+                  name="name"
+                  type="text"
+                  className="p-4 text-right text-black bg-white border border-white rounded-2xl"
+                />
+              </div>
+              <div
+                style={{ gridTemplateColumns: "100px 1fr" }}
+                className="grid gap-4 mb-6 animate_from_top"
+              >
+                <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                  {t("phone number")}
+                </Button>
+                <BaseInput
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  className="p-4 text-right text-black bg-transparent bg-white border border-white rounded-2xl"
+                />
+              </div>
             </div>
 
-            <div className="flex flex-col gap-4 mt-16">
+            <div className="flex flex-col gap-4">
               <Button
                 disabled={isPending}
                 action={() => handleSubmit(values)}
-                className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal"
+                className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left py-4 rounded-3xl text-black font-normal"
               >
                 {t("next")}
               </Button>
-              <p className="flex justify-center gap-1">
+              {/* <p className="flex justify-center gap-1">
                 <span className="text-white underline cursor-pointer">
                   {t("you have account already?")}
                 </span>
                 <Link to={"/login"} className="text-blue-700 underline ms-1">
                   {t("login")}
                 </Link>
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
 
-        <DownLoadApp />
+        <div className="hidden items-center logInBgWithOutClip h-[22rem] md:flex "></div>
       </div>
 
       {/* MOBIL */}

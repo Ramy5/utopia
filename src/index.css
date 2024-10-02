@@ -18,6 +18,11 @@ html {
   clip-path: ellipse(180% 100% at 50% 0%);
 }
 
+.logInBgWithOutClip {
+  background: url(./assets/loginBg.jpg) center center no-repeat fixed;
+  background-size: cover;
+}
+
 .phoneBgGradient {
   background-image: linear-gradient(to bottom, #fff, #e7dffc);
 }
