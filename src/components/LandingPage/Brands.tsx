@@ -39,13 +39,20 @@ const Brands = () => {
           disableOnInteraction: true,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        speed={550}
+        speed={1000}
       >
         <div>
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
-              <div className="py-6 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-16 h-16" />
+              <div className="py-12 cursor-pointer">
+                <img src={brand.image} alt="brand" className="w-20 h-20" />
+              </div>
+            </SwiperSlide>
+          ))}
+                    {data?.map((brand, index) => (
+            <SwiperSlide key={index}>
+              <div className="py-12 cursor-pointer">
+                <img src={brand.image} alt="brand" className="w-20 h-20" />
               </div>
             </SwiperSlide>
           ))}

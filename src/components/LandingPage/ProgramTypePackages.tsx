@@ -8,6 +8,7 @@ import "swiper/css";
 import { useNavigate } from "react-router-dom";
 
 const ProgramTypePackages = ({ data }) => {
+  console.log("🚀 ~ ProgramTypePackages ~ data:", data)
   const navigate = useNavigate()
   return (
     <div
@@ -15,7 +16,7 @@ const ProgramTypePackages = ({ data }) => {
       className="pt-0 mx-4 mb-20 sm:mb-28 sm:pt-20 md:mx-0"
     >
       <div className="flex items-center justify-between mb-12">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-[23px]">
           {t("english language study packages")}
         </h2>
         <div className="hidden grid-cols-5 gap-3 md:grid">
@@ -50,16 +51,19 @@ const ProgramTypePackages = ({ data }) => {
         {data?.englishPackages?.map((packages, index) => (
           <div
             key={index}
-            className="text-center group cursor-pointer border border-[#707070] rounded-2xl overflow-hidden"
+            className="text-center group cursor-pointer border border-[#707070] rounded-2xl  relative"
           >
+            {packages?.is_note === 1 && (
+              <p className="absolute bg-[#FFCC1A] px-3 py-1.5 text-[13px] rounded-full left-1/2 w-fit whitespace-nowrap -translate-x-1/2 -top-3.5">{packages.note}</p>
+            )}
             <div>
               <img
                 src={packages.packageImage[0].image}
                 className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
               />
             </div>
-            <div className="relative">
-              <div className="absolute w-full h-full bg-mainColor translate-y-[82%] group-hover:translate-y-0 rounded-t-2xl group-hover:rounded-t-none duration-300 -z-10"></div>
+            <div className="relative overflow-hidden rounded-b-2xl">
+              <div className="absolute w-full h-full bg-mainColor rounded-b-2xl translate-y-[82%] group-hover:translate-y-0 rounded-t-2xl group-hover:rounded-t-none duration-300 -z-10"></div>
 
               <h2 className="relative pt-4 text-2xl font-medium text-black duration-300 group-hover:text-white">
                 {packages.partner_name}

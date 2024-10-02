@@ -8,7 +8,7 @@ import "swiper/css";
 const LatestOffersFeatures = ({ data }) => {
   return (
     <div className="mb-14 pt-20 sm:pt-0 mx-4 md:mx-0">
-      <h2 className="font-semibold text-xl sm:text-3xl mb-12">
+      <h2 className=" text-xl sm:text-5xl mb-16">
         {t("latest offers and features")}
       </h2>
       <div className="hidden sm:grid grid-cols-6 gap-3">

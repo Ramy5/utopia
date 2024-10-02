@@ -43,8 +43,8 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
 
         <div
           className={`${
-            !isFootered ? "mb-40" : "mb-20 text-center"
-          }  text-3xl font-medium`}
+            !isFootered ? "mb-52" : "mb-20 text-center"
+          }  text-6xl`}
         >
           {t("Why choose Utopia?")}
         </div>
@@ -57,20 +57,20 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
         {data?.map((item, index) => (
           <div
             key={index}
-            className={`relative bg-[#1B0924] px-6 lg:px-12 pb-10 rounded-3xl ${
+            className={`relative bg-[#1B0924] px-6 lg:px-8 pb-8 rounded-3xl ${
               isFootered ? "h-[8rem]" : "h-40"
             } `}
           >
             <div
-              className={`rounded-full absolute -top-12 md:-top-20 lg:-top-[5.5rem] left-1/2 -translate-x-1/2`}
+              className={`rounded-full absolute -top-[4.5rem] md:-top-24 lg:-top-28 left-1/2 -translate-x-1/2`}
             >
               <img
                 src={item.image}
                 alt="choose"
-                className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32"
+                className="w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40"
               />
             </div>
-            <p className="flex items-end w-full h-full m-auto text-center text-white lg:w-3/4">
+            <p className="flex items-end w-full h-full m-auto text-center text-base lg:text-lg text-white lg:w-3/4">
               {item.name}
             </p>
           </div>

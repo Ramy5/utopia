@@ -136,11 +136,11 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
   );
 
   return (
-    <div className={hidden ? "hidden md:block" : ""}>
+    <div className={hidden ? "hidden sm:block" : ""}>
       {/* Desktop Footer */}
       <footer
-        className={`hidden text-white bg-mainColor md:block ${
-          hidden ? "hidden md:block" : ""
+        className={`hidden text-white bg-mainColor sm:block ${
+          hidden ? "hidden sm:block" : ""
         }`}
       >
         <div className="max-w-full py-4 md:px-8 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
@@ -148,7 +148,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             {["courses", "destinations", "opportunities", "contact us"].map(
               (section, index) => (
                 <div key={index} className="text-center md:text-right">
-                  <h4 className="pb-4 font-bold border-b">{t(section)}</h4>
+                  <h4 className="pb-4 font-bold border-b w-3/5 md:w-full m-auto">{t(section)}</h4>
                   <ul className="pt-6 space-y-2">
                     {section === "courses" &&
                       [
@@ -198,7 +198,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
       </footer>
 
       {/* Mobile Footer */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-custom rounded-t-3xl md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-custom rounded-t-3xl sm:hidden">
         <div className="flex justify-around text-gray-500">
           {currentPages.map((currPage) => (
             <button
