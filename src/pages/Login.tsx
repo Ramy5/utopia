@@ -16,6 +16,7 @@ import { messaging, getToken, getTokenAsync } from "../../firebase";
 import { useAuth } from "../context/AuthContext";
 import cn from "../utils/cn";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
+import DownLoadAppSecondImg from "../components/atoms/molecules/downLoad-app/DownLoadAppSecondImg";
 
 const loginPost = async (postData) => {
   try {
@@ -96,21 +97,24 @@ const Login = () => {
 
             {/* DESKTOP */}
             <div className="hidden md:block">
-              <div className="w-[45%] mx-auto my-16">
+              <div className="w-[45%] translate-y-1/3 mx-auto">
                 <div className="flex justify-center w-full gap-4 my-6">
                   <Button
-                    className={cn("text-black animate_scale font-normal", {
-                      "bg-[#FFCC1A]": role === "student",
-                      "bg-transparent border border-mainColor":
-                        role !== "student",
-                    })}
+                    className={cn(
+                      "text-black animate_scale rounded-xl font-normal",
+                      {
+                        "bg-[#FFCC1A]": role === "student",
+                        "bg-transparent border border-mainColor":
+                          role !== "student",
+                      }
+                    )}
                     action={() => setRole("student")}
                   >
                     {t("student login")}
                   </Button>
                   <Button
                     className={cn(
-                      "text-black animate_scale animation_delay-3 font-normal",
+                      "text-black animate_scale animation_delay-3 rounded-xl font-normal",
                       {
                         "bg-[#FFCC1A]": role === "partner",
                         "bg-transparent border border-mainColor":
@@ -124,41 +128,51 @@ const Login = () => {
                 </div>
 
                 {role === "student" ? (
-                  <div className="flex flex-col px-10 py-12 bg-mainColor">
-                    <div
-                      style={{ gridTemplateColumns: "100px 1fr" }}
-                      className="grid gap-4 mb-6 animate_from_top"
-                    >
-                      <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                        {t("phone number")}
-                      </Button>
-                      <BaseInput
-                        id="phone"
-                        name="phone"
-                        type="text"
-                        className="border-[#C9C5CA] p-3 text-white bg-transparent border rounded-lg text-start"
-                      />
+                  <div className="flex flex-col bg-mainColor rounded-3xl">
+                    <div className="px-20 py-20 ">
+                      <div
+                        style={{ gridTemplateColumns: "100px 1fr" }}
+                        className="grid gap-4 mb-6 animate_from_top"
+                      >
+                        <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                          {t("phone number")}
+                        </Button>
+                        <BaseInput
+                          id="phone"
+                          name="phone"
+                          type="text"
+                          className="border-[#C9C5CA] p-3 text-black bg-white border rounded-2xl text-start"
+                        />
+                      </div>
+                      <div
+                        style={{ gridTemplateColumns: "100px 1fr" }}
+                        className="grid gap-4 mb-6 animate_from_bottom"
+                      >
+                        <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                          {t("password")}
+                        </Button>
+                        <BaseInput
+                          id="studentPassword"
+                          name="studentPassword"
+                          type="password"
+                          className="border-[#C9C5CA] p-3 text-black bg-white border rounded-2xl text-start"
+                        />
+                      </div>
+                      <Link
+                        to={"/register"}
+                        className="mt-16 text-white underline ms-1"
+                      >
+                        <span className="w-full font-light bg-transparent animate_from_right animation_delay-3">
+                          {t("register")}
+                        </span>
+                      </Link>
                     </div>
-                    <div
-                      style={{ gridTemplateColumns: "100px 1fr" }}
-                      className="grid gap-4 mb-6 animate_from_bottom"
-                    >
-                      <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                        {t("password")}
-                      </Button>
-                      <BaseInput
-                        id="studentPassword"
-                        name="studentPassword"
-                        type="password"
-                        className="border-[#C9C5CA] p-3 text-white bg-transparent border rounded-lg text-start"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-4 mt-16">
+                    <div className="flex flex-col gap-4 ">
                       <Button
                         disabled={isPending}
                         action={() => handleStudentSubmit(values)}
                         className={cn(
-                          "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left text-black font-normal",
+                          "bg-[#FFB6BF] rounded-2xl hover:bg-[#FFCC1A] animate_from_left py-3 text-black font-normal",
                           {
                             "opacity-40 cursor-not-allowed": isPending,
                           }
@@ -166,50 +180,44 @@ const Login = () => {
                       >
                         {t("login")}
                       </Button>
-                      <Link
-                        to={"/register"}
-                        className="text-white underline ms-1"
-                      >
-                        <Button className="w-full font-normal bg-transparent border border-white animate_from_right animation_delay-3">
-                          {t("register")}
-                        </Button>
-                      </Link>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col px-10 py-12 bg-mainColor">
-                    <div
-                      style={{ gridTemplateColumns: "100px 1fr" }}
-                      className="grid gap-4 mb-6 animate_from_right"
-                    >
-                      <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                        {t("email")}
-                      </Button>
-                      <BaseInput
-                        id="email"
-                        name="email"
-                        type="email"
-                        className="border-[#C9C5CA] p-3 text-right text-white bg-transparent border rounded-lg"
-                      />
+                  <div className="flex flex-col bg-mainColor rounded-3xl">
+                    <div className="px-20 py-20 ">
+                      <div
+                        style={{ gridTemplateColumns: "100px 1fr" }}
+                        className="grid gap-4 mb-6 animate_from_right"
+                      >
+                        <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                          {t("email")}
+                        </Button>
+                        <BaseInput
+                          id="email"
+                          name="email"
+                          type="email"
+                          className="border-[#C9C5CA] p-3 rounded-2xl text-right text-black bg-white border"
+                        />
+                      </div>
+                      <div
+                        style={{ gridTemplateColumns: "100px 1fr" }}
+                        className="grid gap-4 mb-6 animate_from_left"
+                      >
+                        <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
+                          {t("password")}
+                        </Button>
+                        <BaseInput
+                          id="password"
+                          name="password"
+                          type="text"
+                          className="border-[#C9C5CA] p-3 rounded-2xl text-right text-black bg-white border"
+                        />
+                      </div>
                     </div>
-                    <div
-                      style={{ gridTemplateColumns: "100px 1fr" }}
-                      className="grid gap-4 mb-6 animate_from_left"
-                    >
-                      <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                        {t("password")}
-                      </Button>
-                      <BaseInput
-                        id="password"
-                        name="password"
-                        type="text"
-                        className="border-[#C9C5CA] p-3 text-right text-white bg-transparent border rounded-lg"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-4 mt-16">
+                    <div className="flex flex-col gap-4">
                       <Button
                         className={cn(
-                          "bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_scale text-black font-normal",
+                          "bg-[#FFB6BF] py-3 rounded-2xl hover:bg-[#FFCC1A] animate_scale text-black font-normal",
                           {
                             "opacity-40 cursor-not-allowed": isPending,
                           }
@@ -222,7 +230,7 @@ const Login = () => {
                 )}
               </div>
 
-              <DownLoadApp />
+              <div className="hidden items-center logInBgWithOutClip h-[22rem] md:flex "></div>
             </div>
 
             {/* MOBIL */}
@@ -274,7 +282,7 @@ const Login = () => {
                         className="border-[#C9C5CA] px-3 py-1 mt-2 bg-transparent border rounded-lg text-start "
                       />
                       <IoMdPhonePortrait
-                        className={`absolute top-4 text-gray-700 ${
+                        className={`absolute top-4 text-[#C9C5CA] ${
                           isRTL ? "left-4" : "right-4"
                         }`}
                       />
@@ -294,14 +302,14 @@ const Login = () => {
                       {showPassword ? (
                         <IoEyeSharp
                           onClick={() => setShowPassword((prev) => !prev)}
-                          className={`absolute top-4 text-gray-700 ${
+                          className={`absolute top-4 text-[#C9C5CA] ${
                             isRTL ? "left-4" : "right-4"
                           }`}
                         />
                       ) : (
                         <IoEyeOffSharp
                           onClick={() => setShowPassword((prev) => !prev)}
-                          className={`absolute top-4 text-gray-700 ${
+                          className={`absolute top-4 text-[#C9C5CA] ${
                             isRTL ? "left-4" : "right-4"
                           }`}
                         />

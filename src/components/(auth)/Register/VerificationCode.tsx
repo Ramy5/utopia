@@ -6,6 +6,7 @@ import { t } from "i18next";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../../utils/axios";
 import cn from "../../../utils/cn";
+import DownLoadApp from "../../atoms/molecules/downLoad-app/DownLoadApp";
 
 type VerificationCode_TP = {
   setStep?: React.Dispatch<React.SetStateAction<number>>;
@@ -89,34 +90,40 @@ const VerificationCode: React.FC<VerificationCode_TP> = ({
   const handleVerify = () => verifyOTP(otp.join(""));
 
   return (
-    <div className="flex flex-col items-center px-4 my-32">
-      <div className="w-full max-w-sm">
-        <Button className="w-full text-sm text-white cursor-auto hover:scale-100">
-          {t("please type the OTP sent to your phone number")}
-        </Button>
-        <div className="flex justify-between mb-4 font-bold text-mainColor my-14">
-          {otp.map((digit, index) => (
-            <input
-              key={index}
-              id={`otp-input-${index}`}
-              type="text"
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleOtpChange(e, index)}
-              className="w-20 h-20 text-2xl text-center border rounded-lg border-mainColor/80 focus:outline-none"
-              ref={(el) => (inputRefs.current[index] = el)}
-            />
-          ))}
+    <div>
+      <div className="flex flex-col items-center px-4 my-32">
+        <div className="w-full max-w-sm">
+          <Button className="w-full py-4 text-sm text-white cursor-auto rounded-2xl hover:scale-100">
+            {t("please type the OTP sent to your phone number")}
+          </Button>
+          <div className="flex justify-between mb-4 font-bold text-mainColor my-14">
+            {otp.map((digit, index) => (
+              <input
+                key={index}
+                id={`otp-input-${index}`}
+                type="text"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleOtpChange(e, index)}
+                className="w-20 h-20 text-2xl text-center border rounded-2xl border-mainColor/80 focus:outline-none"
+                ref={(el) => (inputRefs.current[index] = el)}
+              />
+            ))}
+          </div>
+          <p
+            className={cn(
+              "w-full cursor-pointer text-center underline py-2 mt-10",
+              {
+                "opacity-40 cursor-not-allowed": isPending,
+              }
+            )}
+            onClick={handleVerify}
+          >
+            {t("next")}
+          </p>
         </div>
-        <Button
-          className={cn("w-full py-2 mt-10", {
-            "opacity-40 cursor-not-allowed": isPending,
-          })}
-          action={handleVerify}
-        >
-          Verify
-        </Button>
       </div>
+      <DownLoadApp />
     </div>
   );
 };
