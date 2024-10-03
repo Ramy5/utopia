@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface MainPopup_TP {
   children: ReactNode;
-  className: string;
+  className?: string;
 }
 
 const MainPopup: React.FC<MainPopup_TP> = ({ children, className }) => {

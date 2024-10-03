@@ -25,6 +25,8 @@ const Brands = () => {
     suspense: true,
   });
 
+  console.log("🚀 ~ Brands ~ data:", data);
+
   return (
     <div className="hidden sm:block">
       <Swiper
@@ -32,19 +34,25 @@ const Brands = () => {
         loop={true}
         centeredSlides={true}
         autoplay={{
-          delay: 1,
+          delay: 0,
           pauseOnMouseEnter: true,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        speed={600}
-        effect="liner"
+        speed={1000}
       >
         <div>
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
-              <div className="py-6 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-16 h-16" />
+              <div className="py-12 cursor-pointer">
+                <img src={brand.image} alt="brand" className="w-20 h-20" />
+              </div>
+            </SwiperSlide>
+          ))}
+                    {data?.map((brand, index) => (
+            <SwiperSlide key={index}>
+              <div className="py-12 cursor-pointer">
+                <img src={brand.image} alt="brand" className="w-20 h-20" />
               </div>
             </SwiperSlide>
           ))}

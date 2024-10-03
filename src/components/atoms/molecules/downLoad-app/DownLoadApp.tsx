@@ -5,7 +5,7 @@ import { t } from "i18next";
 
 const DownLoadApp = () => {
   return (
-    <div className="hidden items-center bookConsultantBg h-[22rem] md:flex ">
+    <div className="hidden items-center bookConsultantBg h-[22rem] sm:flex ">
       <div className="px-8">
         <h2 className="text-white text-3xl mb-10">
           {t("download the app now")}

@@ -51,6 +51,15 @@ const ListSpecializations = lazy(
 const SpecializationsPage = lazy(
   () => import("./pages/ProgramsType/SpecializationsPage")
 );
+const DesignYourOwnCourse = lazy(
+  () => import("./pages/DesignCourse/DesignYourOwnCourse")
+);
+const DesignYourOwnCourseDetails = lazy(
+  () => import("./pages/DesignCourse/DesignYourOwnCourseDetails")
+);
+// const DesignYourOwnCourseRegister = lazy(
+//   () => import("./pages/DesignCourse/DesignYourOwnCourseRegister")
+// );
 
 function App() {
   const isRTL = useRTL();
@@ -103,9 +112,17 @@ function App() {
               />
               <Route path="specializations" element={<SpecializationsPage />} />
               <Route path="studentRequest" element={<StudentRequest />} />
+              <Route path="/designCourse" element={<DesignYourOwnCourse />} />
+              <Route
+                path="/designCourse/details"
+                element={<DesignYourOwnCourseDetails />}
+              />
+              {/* <Route
+                path="/designCourse/register"
+                element={<DesignYourOwnCourseRegister />}
+              /> */}
               <Route path="/chat" element={<Chat />} />
             </Route>
-            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/programsSummer" element={<SummerProgramsPage />} />
             <Route

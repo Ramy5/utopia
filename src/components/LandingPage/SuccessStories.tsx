@@ -39,16 +39,19 @@ const SuccessStories = () => {
   };
 
   return (
-    <div className="bg-[#1B0924] px-8 pb-36 hidden md:block">
-      <h2 className="py-20 text-6xl text-white">{t("success stories")}</h2>
-      <div className="grid grid-cols-10 gap-8">
+    <div className="bg-[#1B0924] px-8 pb-36 hidden sm:block">
+      <h2 className="pt-20 mb-20 md:mb-36 text-6xl font-base text-white">{t("success stories")}</h2>
+      <div className="grid grid-cols-2 md:grid-cols-10 gap-8">
         <div className="col-span-5 lg:col-span-6">
           <Swiper
-            spaceBetween={20}
+            spaceBetween={0}
             slidesPerView={3}
             breakpoints={{
+              // 646: {
+              //   slidesPerView: 1,
+              // },
               768: {
-                slidesPerView: 3,
+                slidesPerView: 2,
               },
               1024: {
                 slidesPerView: 3,
@@ -58,18 +61,18 @@ const SuccessStories = () => {
               rows: 2,
             }}
             modules={[Grid]}
-            className="h-[450px] mySwiper"
+            className="h-[350px] md:h-[450px] mySwiper mb-20 md:mb-0"
           >
             <div>
               {data?.map((story, index) => (
                 <SwiperSlide key={index}>
-                  <div className="p-4 cursor-pointer">
+                  <div className="md:p-4 cursor-pointer">
                     <div
-                      className="relative rounded-full w-40 h-40"
+                      className="relative rounded-full w-36 h-36 md:w-40 md:h-40"
                       onClick={() => handleImageClick(index)}
                     >
                       <div
-                        className={`absolute top-0 left-0 w-40 h-40 rounded-full duration-300 ${
+                        className={`absolute top-0 left-0 w-36 h-36 md:w-40 md:h-40 rounded-full duration-300 ${
                           index === selectedStoryIndex
                             ? "opacity-100"
                             : "bg-black opacity-55"
@@ -77,7 +80,7 @@ const SuccessStories = () => {
                       ></div>
                       <img
                         src={story.image}
-                        className={`w-40 h-40 rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
+                        className={`w-36 h-36 md:w-40 md:h-40 rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
                       />
                     </div>
                   </div>
@@ -87,10 +90,10 @@ const SuccessStories = () => {
           </Swiper>
         </div>
         <div className="relative col-span-5 lg:col-span-4">
-          <div className="absolute z-10 -top-36 -right-20">
+          <div className="absolute z-10 -top-[112px] -right-6 md:-top-32 md:-right-14">
             <img
               src={data?.[selectedStoryIndex]?.image}
-              className="object-cover transition-all duration-1000 ease-in-out rounded-full w-44 h-44 group-hover:rounded-b-none"
+              className="object-cover transition-all duration-1000 ease-in-out rounded-full w-36 h-36 md:w-40 md:h-40 group-hover:rounded-b-none"
             />
           </div>
           <Swiper
@@ -110,12 +113,12 @@ const SuccessStories = () => {
             {data?.map((storie, index) => (
               <SwiperSlide key={index}>
                 <div className="shadow-xl rounded-2xl bg-[#FFB6BF] relative h-full z-0 pt-10 pb-6 px-8">
-                  <div className="px-4 py-5">
+                  <div className="pb-5 pt-2 lg:pt-3">
                     <h2 className="relative mb-1 text-3xl font-normal text-black duration-300 group-hover:text-white">
                       {storie.name}
                     </h2>
                     <p className="text-[15px]">{storie.title}</p>
-                    <h3 className="text-[15px] py-10">
+                    <h3 className="text-[15px] py-6 lg:py-8">
                       <span
                         dangerouslySetInnerHTML={{ __html: storie?.desc }}
                       />

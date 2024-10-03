@@ -9,7 +9,8 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import cn from "../../../utils/cn";
 import { useAuth } from "../../../context/AuthContext";
-
+import Shop from "../../../assets/shop.png";
+import Star from "../../../assets/star.png";
 interface Navbar_TP {
   hidden?: boolean;
 }
@@ -137,9 +138,9 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   };
 
   return (
-    <nav className={hidden ? "hidden md:block" : ""}>
+    <nav className={hidden ? "hidden sm:block" : ""}>
       {token ? (
-        <header className="flex items-center px-4 py-2 lg:justify-start">
+        <header className="flex items-center px-4 py-2 sm:justify-start">
           <div
             onClick={toggleDropdown}
             className="relative flex items-center gap-2"
@@ -192,20 +193,24 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
           </Link>
         </header>
       ) : (
-        <div className="flex items-center justify-between px-4 py-2 text-sm xl:text-base">
+        <div className="flex items-center justify-between px-4 py-3 sm:py-4 text-sm xl:text-base">
           {/* Language and Auth */}
-          <div className="items-center hidden gap-3 lg:flex xl:gap-6">
-            <Link to="/login" className="hover:text-mainColor">
+          <div className="items-center hidden gap-3 sm:flex xl:gap-6 ">
+            <div className="flex gap-4">
+              <img src={Star} alt="star" className="w-6" />
+              <img src={Shop} alt="shop" className="w-6 " />
+            </div>
+            <Link to="/login" className="hover:text-mainColor text-lg">
               تسجيل الدخول
             </Link>
-            <Link to="/register" className="hover:text-mainColor">
+            <Link to="/register" className="hover:text-mainColor text-lg">
               إنشاء حساب
             </Link>
-            <button className="hover:text-mainColor">عربي EN</button>
+            <button className="hover:text-mainColor text-lg">عربي EN</button>
           </div>
 
           {/* Nav Links */}
-          <ul className="hidden gap-3 text-gray-700 xl:gap-6 lg:flex">
+          {/* <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
             <li className="cursor-pointer hover:text-mainColor">
               الباكجات السياحية
             </li>
@@ -222,18 +227,18 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
             <li className="cursor-pointer hover:text-mainColor">
               <a href={"/#englishSection"}>اللغة الانجليزية</a>
             </li>
-          </ul>
+          </ul> */}
 
           {/* Hamburger Menu for Mobile */}
-          <Link to={"/login"} className="lg:hidden">
-            <button className="px-2 pt-1 pb-2 text-sm border text-mainColor border-mainColor rounded-xl focus:outline-none">
+          <Link to={"/login"} className="sm:hidden">
+            <button className="px-3 pt-2 pb-3 text-sm border text-mainColor border-mainColor rounded-xl focus:outline-none font-semibold">
               {t("login")}
             </button>
           </Link>
 
           {/* Logo */}
           <Link to={"/"}>
-            <img src={Logo} alt="logo" className="hidden w-32 h-10 lg:block" />
+            <img src={Logo} alt="logo" className="hidden w-32 h-10 sm:block" />
           </Link>
         </div>
       )}
@@ -241,7 +246,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
       {/* Image upload modal */}
       {profileImgIsEdit && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="w-full max-w-sm p-4 bg-white rounded-md shadow-lg lg:max-w-xl">
+          <div className="w-full max-w-sm p-4 bg-white rounded-md shadow-lg sm:max-w-xl">
             <h2 className="mb-4 text-lg font-semibold">{t("add image")}</h2>
             <input
               type="file"
@@ -253,7 +258,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
               <img
                 src={previewImage}
                 alt="Preview"
-                className="object-cover w-full h-64 mb-4 rounded-md lg:h-72"
+                className="object-cover w-full h-64 mb-4 rounded-md sm:h-72"
               />
             )}
             <div className="flex justify-end gap-2">

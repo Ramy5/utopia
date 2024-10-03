@@ -106,7 +106,7 @@ const UniversityAdmissionPage = () => {
   });
 
   const renderCards = (items) => (
-    <div className="grid grid-cols-4 gap-12">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
       {items?.map((item, index) => (
         <div
           key={index}
@@ -159,8 +159,8 @@ const UniversityAdmissionPage = () => {
 
   return (
     <>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
-        <div className="my-16 md:block hidden">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] px-4 mx-auto">
+        <div className="my-16 sm:block hidden px-4 md:px-0">
           <h2 className="text-5xl mb-5">{t("University admissions")}</h2>
           <p className="text-xl">{t("list of universities")}</p>
           <div>
@@ -169,8 +169,8 @@ const UniversityAdmissionPage = () => {
               onSubmit={() => {}}
             >
               {({ values, resetForm }) => (
-              <Form className="grid grid-cols-10 gap-28 my-12">
-                <div className="col-span-3">
+              <Form className="grid grid-cols-10 gap-12 md:gap-28 my-12">
+                <div className="col-span-4 md:col-span-3">
                   <BaseSelect
                     id="country_id"
                     name="country_id"
@@ -184,14 +184,14 @@ const UniversityAdmissionPage = () => {
                     className="pt-2"
                   />
                 </div>
-                <div className="flex items-end gap-2 col-span-5 w-full">
+                <div className="flex items-end gap-2 col-span-6 md:col-span-5 w-full">
                   <IoIosSearch size={45} className="mb-3" />
                   <BaseInput
                     id="research"
                     name="research"
                     placeholder={t("research")}
                     label={t("search for university name")}
-                    className="py-3.5 w-72 mt-2"
+                    className="py-3.5 md:w-72 mt-2"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         setUniversityName(e.target.value);

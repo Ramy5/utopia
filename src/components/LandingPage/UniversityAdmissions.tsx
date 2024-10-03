@@ -7,7 +7,7 @@ const UniversityAdmissions = ({ data }) => {
     <div className="mb-20 sm:mb-28 mx-4 md:mx-0 block sm:hidden">
       <div className="flex items-center justify-between mb-12">
         <h2 className="font-semibold text-xl">{t("University admissions")}</h2>
-        <p className="block md:hidden text-mainColor font-medium text-2xl">
+        <p className="block md:hidden text-mainColor font-medium text-xl">
           {t("More")}
         </p>
       </div>

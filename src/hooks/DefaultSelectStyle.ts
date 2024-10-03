@@ -13,8 +13,8 @@ const DefaultSelectStyle: StylesConfig<
   control: (provided) => ({
     ...provided,
     // backgroundColor: "#9F85F3",
-    borderRadius: "18px",
     // boxShadow: "0px 4px 4px 0px #ddd",
+    borderRadius: "15px",
     border: "1",
     borderColor: "#C9C5CA",
     minHeight: "44px",
@@ -42,7 +42,7 @@ const DefaultSelectStyle: StylesConfig<
   },
   singleValue: (provided) => ({
     ...provided,
-    color: "white",
+    color: "black",
     fontWeight: "500",
   }),
   valueContainer: (provided) => ({
@@ -61,7 +61,7 @@ const DefaultSelectStyle: StylesConfig<
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: "white",
+    color: "black",
   }),
 };
 

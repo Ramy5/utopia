@@ -13,12 +13,11 @@ const selectStyle: StylesConfig<
   control: (provided) => ({
     ...provided,
     backgroundColor: "#9F85F3",
-    borderRadius: "26px",
-    // boxShadow: "0px 4px 4px 0px #ddd",
+    borderRadius: "22px",
     border: "0",
     minHeight: "44px",
     cursor: "pointer",
-    padding: "16px 8px",
+    padding: "15px 8px",
   }),
   option: (provided, state) => {
     let backgroundColor = "";
