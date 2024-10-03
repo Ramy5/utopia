@@ -85,8 +85,12 @@ const BaseInput = ({
   });
 
   return (
-    <div className={noMb ? "col-span-1 relative" : "col-span-1 relative"}>
-      <div className="relative flex flex-col gap-1">
+    <div
+      className={
+        noMb ? "col-span-1 relative w-full" : "col-span-1 relative w-full"
+      }
+    >
+      <div className="relative flex flex-col w-full gap-1">
         {label && (
           <label
             className={`${labelProps} text-base font-normal text-black`}
