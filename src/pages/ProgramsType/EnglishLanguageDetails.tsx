@@ -171,12 +171,12 @@ const EnglishLanguageDetails = () => {
             <h2 className="text-2xl mb-4">
               {EnglishLanguageDetails?.cityData.name}
             </h2>
-            <div className="md:h-96 rounded-3xl overflow-hidden cursor-pointer h-52">
+            <div className="rounded-3xl overflow-hidden cursor-pointer h-64 md:h-80 lg:h-96">
               <Link to={EnglishLanguageDetails?.cityData.url}>
                 <img
                   src={EnglishLanguageDetails?.cityData.image}
                   alt="youtube"
-                  className="hover:scale-[1.03] duration-300 w-full h-full"
+                  className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
                 />
               </Link>
             </div>
@@ -185,12 +185,12 @@ const EnglishLanguageDetails = () => {
             <h2 className="text-2xl mb-4">
               {EnglishLanguageDetails?.cityData.name}
             </h2>
-            <div className="h-52 md:h-96 rounded-3xl overflow-hidden cursor-pointer">
+            <div className="rounded-3xl overflow-hidden cursor-pointer h-64 md:h-80 lg:h-96">
               <Link to={EnglishLanguageDetails?.partner_url}>
                 <img
                   src={EnglishLanguageDetails?.partner_image}
                   alt="youtube"
-                  className="hover:scale-[1.03] duration-300 w-full h-full"
+                  className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
                 />
               </Link>
             </div>
@@ -212,7 +212,7 @@ const EnglishLanguageDetails = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 w-full md:w-4/5 lg:w-3/4 gap-y-5">
                 {EnglishLanguageDetails?.packagePlans?.map((plan, index) => (
                   <div key={index} className="flex items-center gap-4">
-                    <BaseInput id="mounth" name="mounth" type="radio" />
+                    <BaseInput id="mounth" name="mounth" type="radio" className="p-2"/>
                     <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
                       {plan.duration === 1
                         ? `${t("mounth")}`

@@ -57,9 +57,12 @@ const DesignYourOwnCourse = lazy(
 const DesignYourOwnCourseDetails = lazy(
   () => import("./pages/DesignCourse/DesignYourOwnCourseDetails")
 );
-// const DesignYourOwnCourseRegister = lazy(
-//   () => import("./pages/DesignCourse/DesignYourOwnCourseRegister")
-// );
+const DesignYourOwnCourseRegister = lazy(
+  () => import("./pages/DesignCourse/DesignYourOwnCourseRegister")
+);
+const DesignCourseRegistration = lazy(
+  () => import("./pages/DesignCourse/DesignCourseRegistration")
+);
 
 function App() {
   const isRTL = useRTL();
@@ -117,10 +120,14 @@ function App() {
                 path="/designCourse/details"
                 element={<DesignYourOwnCourseDetails />}
               />
-              {/* <Route
+              <Route
                 path="/designCourse/register"
                 element={<DesignYourOwnCourseRegister />}
-              /> */}
+              />
+              <Route
+                path="/designCourse/registration"
+                element={<DesignCourseRegistration />}
+              />
               <Route path="/chat" element={<Chat />} />
             </Route>
             <Route path="/register" element={<Register />} />

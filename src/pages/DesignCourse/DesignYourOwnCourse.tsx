@@ -169,7 +169,7 @@ const DesignYourOwnCourse = () => {
   return (
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
-        <div className="my-16 md:block hidden">
+        <div className="my-16 sm:block hidden px-4 md:px-0">
           <h2 className="text-5xl mb-12">{t("design your own course")}</h2>
 
           <div className="flex items-center justify-between mb-12">
@@ -178,8 +178,8 @@ const DesignYourOwnCourse = () => {
             </h2>
             <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
               {({ resetForm }) => (
-                <Form className="hidden md:flex gap-4 items-end justify-end">
-                  <div className="w-56 lg:w-64">
+                <Form className="hidden sm:flex gap-2 md:gap-4 items-end justify-end">
+                  <div className="w-48 md:w-56 lg:w-64">
                     <BaseSelect
                       id="country_id"
                       name="country_id"
@@ -190,11 +190,11 @@ const DesignYourOwnCourse = () => {
                       }}
                       options={countriesOption}
                       isLoading={isLoading || isFetching}
-                      className="pt-1.5 w-56 lg:w-64 text-black"
+                      className="pt-1.5 w-48 md:w-56 lg:w-64 text-black"
                     />
                   </div>
 
-                  <div className="relative">
+                  <div className="relative ">
                     <IoIosSearch
                       size={30}
                       className="mb-3 fill-[#707070] absolute top-1/2 -translate-x-1/2 z-10 mt-1"
@@ -204,7 +204,7 @@ const DesignYourOwnCourse = () => {
                       name="research"
                       placeholder={t("search by city or institute name")}
                       label={t("search by city or institute name")}
-                      className="py-[13px] w-56 lg:w-64 mt-2 ps-12 rounded-2xl"
+                      className="py-[13px] w-48 md:w-56 lg:w-64 mt-2 ps-12 rounded-2xl"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           setCityName(e.target.value);
@@ -232,7 +232,7 @@ const DesignYourOwnCourse = () => {
           )}
         </div>
 
-        <div className="md:hidden block px-4">
+        <div className="sm:hidden block px-4">
           <div className="relative">
             <div className="absolute top-1/2 -translate-y-1/2 ">
               <Link to={"/"}>
