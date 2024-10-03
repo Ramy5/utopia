@@ -5,7 +5,7 @@ import { t } from "i18next";
 
 const DownLoadAppSecondImg = () => {
   return (
-    <div className="hidden items-center logInBgWithOutClip h-[22rem] md:flex "></div>
+    <div className="hidden items-center logInBgWithOutClip h-[22rem] sm:flex "></div>
   );
 };
 

@@ -87,8 +87,8 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden md:block">
-        <div className="w-[45%] mx-auto translate-y-1/3">
+      <div className="hidden sm:block">
+        <div className="sm:w-[90%] lg:w-[70%] xl:w-[45%] mx-auto translate-y-1/3">
           <div className="flex flex-col gap-3 mb-6">
             <h2 className="text-4xl">{t("register form")}</h2>
             <p>{t("create password")}</p>
@@ -146,7 +146,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
       </div>
 
       {/* MOBIL */}
-      <div className="block h-[90vh] md:hidden logInBg">
+      <div className="block h-[90vh] sm:hidden logInBg">
         <div
           style={{ gridTemplateColumns: "20px 1fr" }}
           className="grid items-center justify-center py-6 mx-6"

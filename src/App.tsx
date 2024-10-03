@@ -121,8 +121,8 @@ function App() {
                 path="/designCourse/register"
                 element={<DesignYourOwnCourseRegister />}
               /> */}
-              <Route path="/chat" element={<Chat />} />
             </Route>
+            <Route path="/chat" element={<Chat />} />
             <Route path="/register" element={<Register />} />
             <Route path="/programsSummer" element={<SummerProgramsPage />} />
             <Route

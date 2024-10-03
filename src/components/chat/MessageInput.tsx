@@ -1,11 +1,20 @@
+import { Form, Formik } from "formik";
 import { t } from "i18next";
 import React, { useState } from "react";
+import BaseInput from "../atoms/molecules/formik-fields/BaseInput";
+import { BsFillSendFill } from "react-icons/bs";
+import Button from "../atoms/Button/Button";
+import cn from "../../utils/cn";
 
 interface MessageInputProps {
   onSendMessage: (text: string) => void;
+  isMobail?: boolean;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
+const MessageInput: React.FC<MessageInputProps> = ({
+  onSendMessage,
+  isMobail,
+}) => {
   const [text, setText] = useState("");
 
   const handleSend = () => {
@@ -14,34 +23,51 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   };
 
   return (
-    <div className="flex items-center p-4 mt-4">
-      <input
-        type="text"
-        placeholder={t("type a message...")}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="p-2 placeholder-white bg-transparent outline-none text-start !bg-mainColor"
-      />
-      <button
-        onClick={handleSend}
-        className="flex items-center justify-center p-2 ml-2 text-white rounded-full bg-mainColor"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 12h14m-7-7l7 7-7 7"
+    <Formik
+      initialValues={{}}
+      onSubmit={(values, { resetForm }) => {
+        handleSend();
+        resetForm();
+      }}
+    >
+      <Form className={`${isMobail ? " w-[100vw]" : " w-[40vw]"}`}>
+        <div className="flex w-full gap-2 p-4 mt-8">
+          <Button
+            type="submit"
+            className={cn(
+              "flex items-center justify-center py-3 text-white rounded-2xl",
+              {
+                "bg-mainColor order-2 p-4 w-12 h-12 rounded-full": isMobail,
+                "bg-[#FFB6BF]": !isMobail,
+              }
+            )}
+          >
+            <BsFillSendFill className="text-2xl -rotate-90" />
+          </Button>
+          <input
+            type="text"
+            placeholder={t("type a message...")}
+            name="message"
+            id="message"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+            className={cn(
+              "p-2 placeholder-white py-3 caret-mainColor rounded-2xl focus-within:outline-none w-full focus:border-none border-none  outline-none text-start ",
+              {
+                "!bg-mainColor/50": isMobail,
+                "!bg-[#FFB6BF]": !isMobail,
+              }
+            )}
           />
-        </svg>
-      </button>
-    </div>
+        </div>
+      </Form>
+    </Formik>
   );
 };
 
