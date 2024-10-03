@@ -68,7 +68,7 @@ const SummerProgramsDetails = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 my-16">
           <div className="order-2 md:order-1">
             <div>
-              <h2 className="text-2xl md:text-5xl font-medium md:font-normal mb-5 md:mb-0">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl mb-5 md:mb-0">
                 {programDetails?.name}
               </h2>
               <div className="hidden md:flex gap-1 my-6">
@@ -159,35 +159,35 @@ const SummerProgramsDetails = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-3 gap-y-8 items-end mt-8 md:mt-24 mb-12 md:mb-20">
-          <div className="md:col-span-6">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-x-3 gap-y-8 items-end mt-8 md:mt-24 mb-12 md:mb-20 ">
+          <div className="sm:col-span-5 md:col-span-6">
             <h2 className="text-2xl mb-4">{programDetails?.cityData.name}</h2>
-            <div className="md:h-96 rounded-3xl overflow-hidden cursor-pointer h-52">
+            <div className="rounded-3xl overflow-hidden cursor-pointer h-64 md:h-80 lg:h-96">
               <Link to={programDetails?.cityData.url}>
                 <img
                   src={programDetails?.cityData.image}
                   alt="youtube"
-                  className="hover:scale-[1.03] duration-300 w-full h-full"
+                  className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
                 />
               </Link>
             </div>
           </div>
-          <div className="md:col-span-4">
+          <div className="sm:col-span-5 md:col-span-4 ">
             <h2 className="text-2xl mb-4">{programDetails?.cityData.name}</h2>
-            <div className="h-52 md:h-96 rounded-3xl overflow-hidden cursor-pointer">
+            <div className="rounded-3xl overflow-hidden cursor-pointer h-64 md:h-80 lg:h-96">
               <Link to={programDetails?.partner_url}>
                 <img
                   src={programDetails?.partner_image}
                   alt="youtube"
-                  className="hover:scale-[1.03] duration-300 w-full h-full"
+                  className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
                 />
               </Link>
             </div>
           </div>
-          <div className="md:col-span-2 mr-auto md:mr-0 ">
+          <div className="sm:col-span-2 mr-auto md:mr-0 ">
             <Link
               to={programDetails?.instagram}
-              className="bg-mainColor w-20 h-20 rounded-full md:rounded-2xl flex justify-center items-center cursor-pointer"
+              className="bg-mainColor w-20 h-20 rounded-full sm:rounded-2xl flex justify-center items-center cursor-pointer"
             >
               <FaInstagram size={50} className="text-white" />
             </Link>
@@ -198,10 +198,10 @@ const SummerProgramsDetails = () => {
           <h2 className="text-2xl mb-8">{t("duration and price")}</h2>
           <Formik initialValues={{}} onSubmit={() => {}}>
             <Form>
-              <div className="grid grid-cols-1 sm:grid-cols-2 w-3/4 gap-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 e-full lg:w-3/4">
                 {programDetails?.packagePlans?.map((plan, index) => (
                   <div key={index} className="flex items-center gap-4">
-                    <BaseInput id="mounth" name="mounth" type="radio" />
+                    <BaseInput id="mounth" name="mounth" type="radio" className="p-2"/>
                     <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
                       {plan.duration === 1
                         ? `${t("mounth")}`

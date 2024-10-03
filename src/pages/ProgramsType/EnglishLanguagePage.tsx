@@ -152,7 +152,7 @@ const EnglishLanguagePage = () => {
   return (
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
-        <div className="md:block hidden">
+        <div className="sm:block hidden">
           <div
             id="englishSection"
             className="pt-0 mx-4 mb-20 sm:mb-28 sm:pt-20 md:mx-0"
@@ -161,7 +161,7 @@ const EnglishLanguagePage = () => {
               <h2 className="text-xl font-semibold">
                 {t("english language study packages")}
               </h2>
-              <div className="hidden grid-cols-5 gap-3 md:grid">
+              <div className="hidden grid-cols-5 gap-3 sm:grid">
                 <div className="max-w-full col-span-3">
                   <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
                     {({ resetForm }) => (
@@ -194,7 +194,7 @@ const EnglishLanguagePage = () => {
                   {t("design your own course")}
                 </Button>
               </div>
-              <p className="block text-2xl font-medium md:hidden text-mainColor">
+              <p className="block text-2xl font-medium sm:hidden text-mainColor">
                 {t("More")}
               </p>
             </div>
@@ -237,11 +237,49 @@ const EnglishLanguagePage = () => {
                   </div>
                 </div>
               ))}
+                            {data?.map((packages, index) => (
+                <div
+                  key={index}
+                  className="text-center group cursor-pointer border border-[#707070] rounded-2xl overflow-hidden"
+                  onClick={() =>
+                    navigate("/englishLanguage/details", {
+                      state: packages,
+                    })
+                  }
+                >
+                  <div>
+                    <img
+                      src={packages.packageImage[0].image}
+                      className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
+                    />
+                  </div>
+                  <div className="relative">
+                    <div className="absolute w-full h-full bg-mainColor translate-y-[82%] group-hover:translate-y-0 rounded-t-2xl group-hover:rounded-t-none duration-300 -z-10"></div>
+
+                    <h2 className="relative pt-4 text-2xl font-medium text-black duration-300 group-hover:text-white">
+                      {packages.partner_name}
+                    </h2>
+                    <p
+                      className="max-w-full px-3 my-4 overflow-hidden text-black duration-300 text-ellipsis max-h-48 group-hover:text-white"
+                      style={{
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 8,
+                      }}
+                    >
+                      {packages.desc}
+                    </p>
+                    <h3 className="py-3 text-2xl font-medium text-white  rounded-2xl">
+                      {packages.g_price} <span>{packages.unit}</span>
+                    </h3>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="md:hidden block px-4">
+        <div className="sm:hidden block px-4">
           <div className="relative">
             <div className="absolute top-1/2 -translate-y-1/2 ">
               <Link to={"/"}>

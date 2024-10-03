@@ -38,7 +38,7 @@ const SpecializationsPage = () => {
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
-        <div className="relative block md:hidden">
+        <div className="relative block sm:hidden">
           <div className="absolute top-1/2 -translate-y-1/2 ">
             <Link to={"/"}>
               <FaArrowRightLong
@@ -52,8 +52,8 @@ const SpecializationsPage = () => {
           </h2>
         </div>
 
-        <div className="my-6 md:my-20 w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20">
+        <div className="my-6 sm:my-20 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 lg:gap-20">
             <div className="order-2 md:order-1">
               <div>
                 <h2 className="text-2xl font-medium mb-3 md:mb-8 mt-3 hidden md:block">
@@ -65,7 +65,7 @@ const SpecializationsPage = () => {
                 <p className="w-full ">{specializations?.desc}</p>
               </div>
 
-              <div className="my-8 md:my-20 flex flex-wrap gap-x-16 gap-y-6">
+              <div className="my-8 md:my-20 flex flex-wrap gap-x-16 gap-y-5">
                 <div>
                   <h2 className="text-lg font-medium mb-3">
                     {t("requirements")}
@@ -86,15 +86,15 @@ const SpecializationsPage = () => {
                 </div>
               </div>
 
-              <div className="gap-4 md:flex hidden">
-                <Button bordered className="border-[#707070] text-black">
+              <div className="gap-3 lg:gap-4 sm:flex hidden">
+                <Button bordered className="border-[#707070] text-black px-3 lg:px-5">
                   <span>{t("application fee")}</span>{" "}
                   {specializations?.order_price} <span>{t("reyal")}</span>
                 </Button>
                 <Button>{t("apply now")}</Button>
               </div>
 
-              <div className="flex md:hidden justify-between items-center mb-4">
+              <div className="flex sm:hidden justify-between items-center mb-4">
                 <h2 className="text-xl font-medium">{t("application fee")}</h2>
                 <p className="text-mainColor text-lg font-medium">{specializations?.order_price} <span>{t("reyal")}</span></p>
               </div>
@@ -114,7 +114,7 @@ const SpecializationsPage = () => {
           </div>
         </div>
 
-        <Button className="md:hidden block w-full py-4 rounded-2xl mb-28">
+        <Button className="sm:hidden block w-full py-4 rounded-2xl mb-28">
           {t("apply now")}
         </Button>
       </div>

@@ -64,7 +64,7 @@ const UniversityAdmissionsDetails = () => {
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
-        <div className="relative block md:hidden">
+        <div className="relative block sm:hidden">
           <div className="absolute top-1/2 -translate-y-1/2 ">
             <Link to={"/"}>
               <FaArrowRightLong
@@ -89,7 +89,7 @@ const UniversityAdmissionsDetails = () => {
                   {t("brief about the university")}
                 </h2>
                 <p className="w-full ">{universityData?.desc}</p>
-                <div className="my-6 md:hidden block">
+                <div className="my-6 sm:hidden block">
                   <h2 className="font-medium text-2xl mb-4">
                     {t("certified in:")}
                   </h2>
@@ -122,7 +122,7 @@ const UniversityAdmissionsDetails = () => {
                   </p>
                 </div>
               </div>
-              <div className="my-6 md:block hidden">
+              <div className="my-6 sm:block hidden">
                 <h2 className="font-medium text-2xl mb-4">
                   {t("certified in:")}
                 </h2>
@@ -179,7 +179,7 @@ const UniversityAdmissionsDetails = () => {
         </div>
 
         <Button
-          className="md:hidden block w-full py-4 rounded-2xl mb-28"
+          className="sm:hidden block w-full py-4 rounded-2xl mb-28"
           action={() =>
             navigate("/listSpecializations", { state: universityData?.id })
           }
@@ -188,7 +188,7 @@ const UniversityAdmissionsDetails = () => {
         </Button>
       </div>
 
-      <div className="bg-[#1B0924] px-8 pb-32 hidden md:block">
+      <div className="bg-[#1B0924] px-8 pb-32 hidden sm:block">
         <h2 className="pt-20 mb-4 text-6xl text-white">
           {t("list of majors")}
         </h2>
@@ -200,8 +200,8 @@ const UniversityAdmissionsDetails = () => {
             initialValues={{ country_id: "", research: "" }}
             onSubmit={() => {}}
           >
-            <Form className="grid grid-cols-10 gap-28 my-10">
-              <div className="my-5 col-span-2">
+            <Form className="grid grid-cols-10 gap-16 md:gap-24 my-10">
+              <div className="my-5 col-span-4 md:col-span-3">
                 <BaseSelect
                   id="country_id"
                   name="country_id"
@@ -210,10 +210,9 @@ const UniversityAdmissionsDetails = () => {
                   labelStyle="text-white"
                   className="pt-2"
                   selectStyle={selectStyle}
-                  
                 />
               </div>
-              <div className="my-5 flex items-end gap-2 col-span-4 w-full">
+              <div className="my-5 flex items-end gap-2 col-span-6 md:col-span-5 w-full">
                 <IoIosSearch size={45} className="mb-3 text-white" />
                 <BaseSelect
                   id="country_id"
@@ -221,7 +220,7 @@ const UniversityAdmissionsDetails = () => {
                   placeholder={t("everyone")}
                   label={t("sort by academic degree")}
                   labelStyle="text-white"
-                  className="pt-2"
+                  className="pt-2 w-60"
                   selectStyle={selectStyle}
                 />
               </div>
@@ -229,20 +228,20 @@ const UniversityAdmissionsDetails = () => {
           </Formik>
         </div>
 
-        <div className="grid grid-cols-3 gap-32">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 lg:gap-32">
           {universityData?.specializations.map((item, index) => (
             <div
               key={index}
-              className="relative bg-[#FFB6BF] rounded-2xl h-48 flex flex-col justify-center items-center cursor-pointer group"
+              className="relative bg-[#FFB6BF] rounded-2xl h-44 lg:h-48 flex flex-col justify-center items-center cursor-pointer group"
               onClick={() => navigate("/specializations", { state: item.id })}
             >
-              <div className="bg-mainColor text-white absolute -left-3 top-14 flex justify-center items-center rounded-full w-8 h-8 group-hover:rotate-180 duration-300">
+              <div className="bg-mainColor text-white absolute -left-3 top-12 lg:top-14 flex justify-center items-center rounded-full w-8 h-8 group-hover:rotate-180 duration-300">
                 <RiArrowLeftSLine size={28} className="text-white" />
               </div>
-              <h2 className="text-2xl font-medium mb-3">{item.name}</h2>
+              <h2 className="text-[20px] lg:text-2xl font-medium mb-3">{item.name}</h2>
               <p className="">{item.title}</p>
             </div>
-          ))}
+          ))}      
         </div>
 
         <Button

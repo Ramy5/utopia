@@ -30,9 +30,9 @@ const SummerProgramsPage = () => {
   return (
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
-        <div className="my-16 md:block hidden">
+        <div className="my-16 sm:block hidden px-4 md:px-0">
           <h2 className="text-5xl mb-12">{t("summer programs")}</h2>
-          <div className="grid grid-cols-3 gap-8 lg:gap-16">
+          <div className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-16">
             {data?.map((item, index) => (
               <div
                 key={index}
@@ -42,7 +42,7 @@ const SummerProgramsPage = () => {
                 <h2 className="bg-[#EAEAEA] rounded-2xl py-3 px-2 text-xl text-center">
                   {item.name}
                 </h2>
-                <div className="flex gap-1 mt-5 mb-12">
+                <div className="flex gap-1 mt-5 mb-10">
                   <div className="bg-mainColor rounded-full p-1">
                     <IoLocationOutline
                       fill="white"
@@ -57,14 +57,14 @@ const SummerProgramsPage = () => {
                   <img
                     src={item.cityData.image}
                     alt="summer programs"
-                    className="w-full h-full group-hover:scale-[1.03] duration-300"
+                    className="w-full h-52 md:h-60 lg:h-full group-hover:scale-[1.03] duration-300"
                   />
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-3 mb-44 px-4 md:hidden block">
+        <div className="mt-3 mb-44 px-4 sm:hidden block">
           <div className="relative">
             <div className="absolute top-1/2 -translate-y-1/2 ">
               <Link to={"/"}>
