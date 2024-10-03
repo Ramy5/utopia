@@ -87,7 +87,7 @@ const BaseInput = ({
   return (
     <div
       className={
-        noMb ? "col-span-1 relative w-full" : "col-span-1 relative w-full"
+        type === "radio" ? "col-span-1 relative w-fit" :  "col-span-1 relative w-full" 
       }
     >
       <div className="relative flex flex-col w-full gap-1">
