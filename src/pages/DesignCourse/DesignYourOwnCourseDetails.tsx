@@ -129,75 +129,6 @@ const DesignYourOwnCourseDetails = () => {
     value: i + 1,
   }));
 
-  //   const fetchCountries = async () => {
-  //     try {
-  //       const data = await apiRequest({
-  //         url: "/api/student/counties",
-  //         method: "GET",
-  //       });
-  //       return data?.data;
-  //     } catch (error) {
-  //       console.error("Error fetching items:", error.message);
-  //     }
-  //   };
-
-  //   const {
-  //     data: countriesOption,
-  //     isFetching,
-  //     isLoading,
-  //   } = useQuery({
-  //     queryKey: ["countries"],
-  //     queryFn: fetchCountries,
-  //     select: (data) => {
-  //       return data?.map((program) => {
-  //         return {
-  //           id: program?.id,
-  //           label: program?.name || `${t("select country")}`,
-  //           value: program?.name || `${t("select country")}`,
-  //         };
-  //       });
-  //     },
-  //     suspense: true,
-  //   });
-
-  //   const fetchFilterCountries = async (id) => {
-  //     try {
-  //       const data = await apiRequest({
-  //         url: `/api/student/filter-city-by-county/${id}`,
-  //         method: "GET",
-  //       });
-  //       return data?.data;
-  //     } catch (error) {
-  //       console.error("Error fetching items:", error.message);
-  //     }
-  //   };
-
-  //   const { data: countriesFilter } = useQuery({
-  //     queryKey: ["filter-city-by-count", countryID],
-  //     queryFn: () => fetchFilterCountries(countryID),
-  //     suspense: true,
-  //     enabled: !!countryID,
-  //   });
-
-  //   const fetchFilterByCity = async (name) => {
-  //     try {
-  //       const data = await apiRequest({
-  //         url: `/api/student/filter-city-name?query=${name}&per_page=10000`,
-  //         method: "GET",
-  //       });
-  //       return data?.data;
-  //     } catch (error) {
-  //       console.error("Error fetching items:", error.message);
-  //     }
-  //   };
-
-  //   const { data: cityNameFilter } = useQuery({
-  //     queryKey: ["university_name_filter", cityName],
-  //     queryFn: () => fetchFilterByCity(cityName),
-  //     suspense: true,
-  //     enabled: !!cityName,
-  //   });
-
   const isActive = [
     { label: "age group", value: 25 },
     {
@@ -225,7 +156,7 @@ const DesignYourOwnCourseDetails = () => {
   return (
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
-        <div className="relative block md:hidden">
+        <div className="relative block sm:hidden">
           <div className="absolute top-1/2 -translate-y-1/2 ">
             <Link to={"/"}>
               <FaArrowRightLong
@@ -239,7 +170,7 @@ const DesignYourOwnCourseDetails = () => {
           </h2>
         </div>
 
-        <div className="my-16 md:block hidden">
+        <div className="my-16 sm:block hidden">
           {!data?.partners?.length ? (
             <div>
               <h2 className="text-5xl mb-8">{location?.state.city_name}</h2>
@@ -251,7 +182,7 @@ const DesignYourOwnCourseDetails = () => {
                   }}
                 >
                   {({ setFieldValue }) => (
-                    <Form className="hidden md:grid grid-cols-10 gap-4 items-end mt-20 mb-[26rem]">
+                    <Form className="hidden sm:grid grid-cols-10 gap-4 items-end mt-20 mb-[26rem]">
                       <div className="relative col-span-4">
                         <BaseSelect
                           id="week"
@@ -315,8 +246,8 @@ const DesignYourOwnCourseDetails = () => {
                       setIsSubmit(true);
                     }}
                   >
-                    <Form className="hidden md:grid grid-cols-10 gap-3 items-end mt-20 mb-24">
-                      <div className="relative col-span-2">
+                    <Form className="hidden sm:grid grid-cols-10 gap-3 items-end mt-20 mb-20 md:mb-24">
+                      <div className="relative col-span-3 lg:col-span-2">
                         <BaseSelect
                           id="week"
                           name="week"
@@ -339,7 +270,7 @@ const DesignYourOwnCourseDetails = () => {
                           disabled
                         />
                       </div>
-                      <div className="col-span-3 relative">
+                      <div className="col-span-4 lg:col-span-3 relative">
                         <label htmlFor="start_date">
                           {t("study start date")}
                         </label>
@@ -369,7 +300,7 @@ const DesignYourOwnCourseDetails = () => {
 
                 <div>
                   {data?.partners.map((item, index) => (
-                    <div key={index} className="grid grid-cols-10 mb-28 gap-4">
+                    <div key={index} className="grid grid-cols-1 md:grid-cols-10 mb-28 gap-y-8 gap-x-4">
                       <div
                         className={`col-span-5 lg:col-span-4 ${
                           index % 2 !== 0 ? "order-2" : "order-1"
@@ -401,16 +332,16 @@ const DesignYourOwnCourseDetails = () => {
                           )}
                         </ul>
 
-                        <div className="hidden md:flex justify-between items-center gap-1 md:gap-2 pt-5">
+                        <div className="hidden sm:flex justify-between items-center gap-1 sm:gap-2 pt-5">
                           {isActive?.map((item, index) => (
                             <div
                               key={index}
-                              className="border border-[#C9C5CA] md:border-none text-center px-2 md:px-0 rounded-2xl"
+                              className="border border-[#C9C5CA] sm:border-none text-center px-2 sm:px-0 rounded-2xl"
                             >
                               <h2 className="lg:text-[15px]">
                                 {t(item.label)}
                               </h2>
-                              <p className="md:border border-[#707070] py-1 rounded-lg text-center mt-2 text-[15px] text-mainColor md:text-black">
+                              <p className="sm:border border-[#707070] py-1 rounded-lg text-center mt-2 text-[15px] text-mainColor sm:text-black">
                                 {item.value}
                               </p>
                             </div>
@@ -438,7 +369,7 @@ const DesignYourOwnCourseDetails = () => {
                           />
                         </div>
                         <div className="flex gap-3">
-                          <Button className="bg-white text-[#1B0924]">
+                          <Button className="bg-white text-[#1B0924]" action={() => navigate("/designCourse/register", {state:item.id })}>
                             {t("register now")}
                           </Button>
                           <div className="bg-[#1B0924] text-white rounded-xl px-6 py-1.5">
@@ -454,7 +385,7 @@ const DesignYourOwnCourseDetails = () => {
           )}
         </div>
 
-        <div className="my-5 md:hidden block">
+        <div className="my-5 sm:hidden block">
           <div>
             {!data?.partners?.length ? (
               <div className="chooseCourse mt-12">
