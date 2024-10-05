@@ -34,24 +34,28 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
         isFootered ? "block my-8" : "hidden sm:block"
       }  mx-4 mb-20 sm:mb-28 md:mx-0 `}
     >
-      <div className="flex justify-between">
-        {isFootered && (
-          <Link to={"/"}>
-            <FaArrowRightLong className="mt-4 cursor-pointer justify-self-start" />
-          </Link>
-        )}
-
-        <div
+      <div className="relative">
+        <div className="absolute top-1/2 -translate-y-1/2 ">
+          {isFootered && (
+            <Link to={"/"}>
+              <FaArrowRightLong
+                size={22}
+                className="mt-4 cursor-pointer justify-self-start"
+              />
+            </Link>
+          )}
+        </div>
+        <h2
           className={`${
-            !isFootered ? "mb-52" : "mb-20 text-center"
-          }  text-6xl`}
+            !isFootered ? "mb-52" : "text-center"
+          } text-2xl font-medium sm:font-normal sm:text-6xl`}
         >
           {t("Why choose Utopia?")}
-        </div>
+        </h2>
       </div>
       <div
         className={`${
-          isFootered ? "flex-col gap-20" : "flex-row gap-5"
+          isFootered ? "flex-col gap-20 mt-32" : "flex-row gap-5"
         } flex items-center justify-between`}
       >
         {data?.map((item, index) => (

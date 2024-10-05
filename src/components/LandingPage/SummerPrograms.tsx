@@ -6,7 +6,7 @@ const SummerPrograms = ({ data }) => {
     <div className="mb-24 sm:mb-28 mx-4 md:mx-0 block sm:hidden">
       <div className="flex items-center justify-between mb-12">
         <h2 className="font-semibold text-xl">{t("summer programs")}</h2>
-        <p className="block md:hidden text-mainColor font-medium text-xl">
+        <p className="block md:hidden text-mainColor text-base underline">
           {t("More")}
         </p>
       </div>
@@ -19,7 +19,7 @@ const SummerPrograms = ({ data }) => {
             <div
               className={`${
                 index === 0 ? "bg-[#FFB6BF]" : index === 1 ? "bg-[#FFCC1A]" : "bg-[#E8DEFF]"
-              } rounded-xl col-span-2 flex items-center justify-center text-lg font-medium h-full w-full p-2`}
+              } rounded-xl col-span-2 flex items-center justify-center font-medium h-full w-full p-2`}
             >
               {summer.name}
             </div>

@@ -241,3 +241,7 @@ html {
   width: 90% !important;
 }
 /* CUSTOM DATE PICKER */
+
+.css-1u9des2-indicatorSeparator {
+  display: none !important;
+}

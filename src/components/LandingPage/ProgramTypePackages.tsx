@@ -15,35 +15,35 @@ const ProgramTypePackages = ({ data }) => {
       id="englishSection"
       className="pt-0 mx-4 mb-20 sm:mb-28 sm:pt-20 md:mx-0"
     >
-      <div className="flex items-center justify-between mb-12">
-        <h2 className="text-[23px]">
+      <div className="flex items-center justify-between mb-5 sm:mb-12">
+        <h2 className="text-xl font-medium sm:font-normal sm:text-[23px]">
           {t("english language study packages")}
         </h2>
-        <div className="hidden grid-cols-5 gap-3 md:grid">
+        <div className="hidden grid-cols-5 gap-1 md:gap-3 sm:grid">
           <div className="max-w-full col-span-3">
             <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
               <Form>
                 <div className="relative w-full">
                   <IoIosSearch
                     size={32}
-                    className="fill-[#BEC8CF] absolute z-10 top-1/2 -translate-y-1/2 start-4"
+                    className="fill-[#BEC8CF] absolute z-10 top-1/2 -translate-y-1/2 start-3"
                   />
                   <BaseInput
                     id="search"
                     name="search"
                     type="text"
                     placeholder="search by city or institute name"
-                    className="px-12"
+                    className="ps-11"
                   />
                 </div>
               </Form>
             </Formik>
           </div>
-          <Button className="rounded-3xl py-2.5 col-span-2" action={() => navigate("/designCourse")}>
+          <Button className="rounded-3xl py-2.5 col-span-2 lg:px-8 sm:px-2 text-base" action={() => navigate("/designCourse")}>
             {t("design your own course")}
           </Button>
         </div>
-        <p className="block text-xl font-medium md:hidden text-mainColor">
+        <p className="block text-base underline font-medium sm:hidden text-mainColor">
           {t("More")}
         </p>
       </div>
@@ -87,21 +87,21 @@ const ProgramTypePackages = ({ data }) => {
       </div>
 
       <div className="flex items-center justify-between sm:hidden">
-        <Swiper spaceBetween={20} slidesPerView={1.2}>
+        <Swiper spaceBetween={15} slidesPerView={1.5}>
           {data?.englishPackages?.map((packages, index) => (
             <SwiperSlide key={index}>
               <div className="shadow-xl rounded-2xl">
                 <div>
                   <img
                     src={packages.packageImage[0].image}
-                    className="object-cover w-full duration-700 h-56 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
+                    className="object-cover w-full duration-700 h-52 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
                   />
                 </div>
                 <div className="flex items-center justify-between px-4 py-5">
-                  <h2 className="relative text-xl font-semibold text-black duration-300 group-hover:text-white">
+                  <h2 className="relative text-base font-semibold text-black duration-300 group-hover:text-white">
                     {packages.partner_name}
                   </h2>
-                  <h3 className="py-3 text-xl font-medium text-mainColor rounded-2xl">
+                  <h3 className="py-3 text-base font-semibold text-mainColor rounded-2xl whitespace-nowrap">
                     {packages.g_price} <span>{packages.unit}</span>
                   </h3>
                 </div>
@@ -111,7 +111,7 @@ const ProgramTypePackages = ({ data }) => {
         </Swiper>
       </div>
       <div className="block mt-7 sm:hidden ">
-        <Button className="w-full col-span-2 py-4 text-2xl rounded-2xl" action={() => navigate("/designCourse")}>
+        <Button className="w-full col-span-2 py-3.5 text-lg rounded-xl" action={() => navigate("/designCourse")}>
           {t("design your own course")}
         </Button>
       </div>
