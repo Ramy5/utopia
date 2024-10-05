@@ -10,7 +10,7 @@ const ProgramsType = ({ data }) => {
   return (
     <div className="mb-20 sm:mb-28">
       <div className="hidden sm:block my-12 mx-4 md:mx-0">
-        <div className="grid grid-cols-10 gap-5">
+        <div className="grid grid-cols-10 gap-3">
           {data?.categories?.map((categorie, index) => (
             <div
               key={index}
@@ -30,7 +30,7 @@ const ProgramsType = ({ data }) => {
                     : index === 1
                     ? "bg-[#FFB6BF]"
                     : "bg-[#FFCC1A]"
-                } mt-4 rounded-2xl text-white px-4 lg:px-5 py-5 text-center cursor-pointer h-60 flex flex-col justify-between items-center`}
+                } mt-4 rounded-2xl text-white px-4 lg:px-5 py-4 text-center cursor-pointer h-60 flex flex-col justify-between items-center`}
                 onClick={() => setIndexCategory(categorie.id)}
               >
                 <h2 className="font-medium text-lg lg:text-xl">
