@@ -40,7 +40,7 @@ const BookConsultation = ({ data }) => {
   return (
     <div className="mb-24 sm:mb-28">
       <div className="hidden mx-4 my-12 sm:block md:mx-0">
-        <div className="grid grid-cols-11 gap-2">
+        <div className="grid grid-cols-11 gap-2 lg:gap-4">
           {data?.offers?.map((offer, index) => (
             <div
               key={index}
