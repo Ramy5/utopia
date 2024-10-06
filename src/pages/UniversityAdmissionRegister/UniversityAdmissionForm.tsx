@@ -1064,7 +1064,7 @@ const UniversityAdmissionForm = () => {
                         id="specialRequests"
                         name="specialRequests"
                         rows={6}
-                        className={`mb-1 border w-96  rounded-2xl border-[#BEC8CF] ${
+                        className={`mb-1 border w-full  rounded-2xl border-[#BEC8CF] ${
                           touched.address && errors.address && "border-red-700"
                         }`}
                         placeholder={t("enter special requests")}
@@ -1085,7 +1085,7 @@ const UniversityAdmissionForm = () => {
                       <select
                         id="heardAboutUs"
                         name="heardAboutUs"
-                        className={`mb-1 border w-96  rounded-2xl border-[#BEC8CF] ${
+                        className={`mb-1 border w-full rounded-2xl border-[#BEC8CF] ${
                           touched.address && errors.address && "border-red-700"
                         }`}
                         onChange={(e) =>
@@ -1139,7 +1139,7 @@ const UniversityAdmissionForm = () => {
 
                     {/* File Uploads */}
                     <div className="mb-6">
-                      <div className=" mb-6 w-screen sm:w-[60vw] lg:w-[45vw] xl:w-[40vw]">
+                      <div className=" mb-6 w-full sm:w-[60vw] lg:w-[45vw] xl:w-[40vw]">
                         <p className="mb-2 text-xl font-semibold">
                           {t("upload requirements")}
                         </p>
