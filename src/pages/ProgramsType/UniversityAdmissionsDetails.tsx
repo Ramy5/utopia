@@ -65,7 +65,7 @@ const UniversityAdmissionsDetails = () => {
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
         <div className="relative block sm:hidden">
-          <div className="absolute top-1/2 -translate-y-1/2 ">
+          <div className="absolute -translate-y-1/2 top-1/2 ">
             <Link to={"/"}>
               <FaArrowRightLong
                 size={22}
@@ -73,24 +73,24 @@ const UniversityAdmissionsDetails = () => {
               />
             </Link>
           </div>
-          <h2 className="text-3xl font-medium text-center py-6">
+          <h2 className="py-6 text-3xl font-medium text-center">
             {universityData.name}
           </h2>
         </div>
 
-        <div className="my-6 md:my-20 w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20">
+        <div className="w-full my-6 md:my-20">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:gap-20">
             <div className="order-2 md:order-1">
               <div>
-                <h2 className="text-2xl font-medium mb-3 md:mb-4 hidden md:block">
+                <h2 className="hidden mb-3 text-2xl font-medium md:mb-4 md:block">
                   {universityData?.name}
                 </h2>
-                <h2 className="text-2xl font-medium mb-3 md:mb-4 block md:hidden">
+                <h2 className="block mb-3 text-2xl font-medium md:mb-4 md:hidden">
                   {t("brief about the university")}
                 </h2>
                 <p className="w-full ">{universityData?.desc}</p>
-                <div className="my-6 sm:hidden block">
-                  <h2 className="font-medium text-2xl mb-4">
+                <div className="block my-6 sm:hidden">
+                  <h2 className="mb-4 text-2xl font-medium">
                     {t("certified in:")}
                   </h2>
                   <p className="text-[15px] font-base">
@@ -98,12 +98,12 @@ const UniversityAdmissionsDetails = () => {
                   </p>
                 </div>
               </div>
-              <div className="mt-8 md:mt-12 gap-20 hidden md:flex">
+              <div className="hidden gap-20 mt-8 md:mt-12 md:flex">
                 <div className="flex gap-1 mb-5">
-                  <div className="bg-mainColor rounded-full p-1">
+                  <div className="p-1 rounded-full bg-mainColor">
                     <IoLocationOutline
                       fill="white"
-                      className="text-white w-6 h-6"
+                      className="w-6 h-6 text-white"
                     />
                   </div>
                   <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
@@ -111,10 +111,10 @@ const UniversityAdmissionsDetails = () => {
                   </p>
                 </div>
                 <div className="flex gap-1 mb-5">
-                  <div className="bg-mainColor rounded-full p-1">
+                  <div className="p-1 rounded-full bg-mainColor">
                     <IoMdCheckmark
                       fill="white"
-                      className="text-white w-6 h-6"
+                      className="w-6 h-6 text-white"
                     />
                   </div>
                   <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
@@ -122,8 +122,8 @@ const UniversityAdmissionsDetails = () => {
                   </p>
                 </div>
               </div>
-              <div className="my-6 sm:block hidden">
-                <h2 className="font-medium text-2xl mb-4">
+              <div className="hidden my-6 sm:block">
+                <h2 className="mb-4 text-2xl font-medium">
                   {t("certified in:")}
                 </h2>
                 <p className="text-[15px] font-base">
@@ -131,7 +131,7 @@ const UniversityAdmissionsDetails = () => {
                 </p>
               </div>
             </div>
-            <div className="flex justify-center md:justify-end order-1 md:order-2">
+            <div className="flex justify-center order-1 md:justify-end md:order-2">
               <div className="md:border border-[#707070] rounded-3xl w-full">
                 <div className="rounded-3xl  overflow-hidden h-72 md:h-[500px] relative">
                   <Swiper slidesPerView={1} spaceBetween={8}>
@@ -149,12 +149,12 @@ const UniversityAdmissionsDetails = () => {
                     </div>
                   </Swiper>
                 </div>
-                <div className="mt-12 md:mt-12 gap-20 flex md:hidden">
+                <div className="flex gap-20 mt-12 md:mt-12 md:hidden">
                   <div className="flex gap-1 mb-5">
-                    <div className="bg-mainColor rounded-full p-1">
+                    <div className="p-1 rounded-full bg-mainColor">
                       <IoLocationOutline
                         fill="white"
-                        className="text-white w-6 h-6"
+                        className="w-6 h-6 text-white"
                       />
                     </div>
                     <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
@@ -162,10 +162,10 @@ const UniversityAdmissionsDetails = () => {
                     </p>
                   </div>
                   <div className="flex gap-1 mb-5">
-                    <div className="bg-mainColor rounded-full p-1">
+                    <div className="p-1 rounded-full bg-mainColor">
                       <IoMdCheckmark
                         fill="white"
-                        className="text-white w-6 h-6"
+                        className="w-6 h-6 text-white"
                       />
                     </div>
                     <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
@@ -179,9 +179,14 @@ const UniversityAdmissionsDetails = () => {
         </div>
 
         <Button
-          className="sm:hidden block w-full py-4 rounded-2xl mb-28"
+          className="block w-full py-4 sm:hidden rounded-2xl mb-28"
           action={() =>
-            navigate("/listSpecializations", { state: universityData?.id })
+            navigate("/listSpecializations", {
+              state: {
+                id: universityData?.id,
+                universityName: universityData.name,
+              },
+            })
           }
         >
           {t("explore the list of specializations")}
@@ -192,7 +197,7 @@ const UniversityAdmissionsDetails = () => {
         <h2 className="pt-20 mb-4 text-6xl text-white">
           {t("list of majors")}
         </h2>
-        <p className="text-white text-lg font-medium">
+        <p className="text-lg font-medium text-white">
           {t("list of majors that you can study at the university")}
         </p>
         <div>
@@ -200,8 +205,8 @@ const UniversityAdmissionsDetails = () => {
             initialValues={{ country_id: "", research: "" }}
             onSubmit={() => {}}
           >
-            <Form className="grid grid-cols-10 gap-16 md:gap-24 my-10">
-              <div className="my-5 col-span-4 md:col-span-3">
+            <Form className="grid grid-cols-10 gap-16 my-10 md:gap-24">
+              <div className="col-span-4 my-5 md:col-span-3">
                 <BaseSelect
                   id="country_id"
                   name="country_id"
@@ -212,7 +217,7 @@ const UniversityAdmissionsDetails = () => {
                   selectStyle={selectStyle}
                 />
               </div>
-              <div className="my-5 flex items-end gap-2 col-span-6 md:col-span-5 w-full">
+              <div className="flex items-end w-full col-span-6 gap-2 my-5 md:col-span-5">
                 <IoIosSearch size={45} className="mb-3 text-white" />
                 <BaseSelect
                   id="country_id"
@@ -228,25 +233,31 @@ const UniversityAdmissionsDetails = () => {
           </Formik>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 lg:gap-32">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-12 lg:gap-32">
           {universityData?.specializations.map((item, index) => (
             <div
               key={index}
               className="relative bg-[#FFB6BF] rounded-2xl h-44 lg:h-48 flex flex-col justify-center items-center cursor-pointer group"
-              onClick={() => navigate("/specializations", { state: item.id })}
+              onClick={() =>
+                navigate("/specializations", {
+                  state: { id: item.id, universityName: item.name },
+                })
+              }
             >
-              <div className="bg-mainColor text-white absolute -left-3 top-12 lg:top-14 flex justify-center items-center rounded-full w-8 h-8 group-hover:rotate-180 duration-300">
+              <div className="absolute flex items-center justify-center w-8 h-8 text-white duration-300 rounded-full bg-mainColor -left-3 top-12 lg:top-14 group-hover:rotate-180">
                 <RiArrowLeftSLine size={28} className="text-white" />
               </div>
-              <h2 className="text-[20px] lg:text-2xl font-medium mb-3">{item.name}</h2>
+              <h2 className="text-[20px] lg:text-2xl font-medium mb-3">
+                {item.name}
+              </h2>
               <p className="">{item.title}</p>
             </div>
-          ))}      
+          ))}
         </div>
 
         <Button
           bordered
-          className="rounded-full bg-transparent border-white text-white mt-16"
+          className="mt-16 text-white bg-transparent border-white rounded-full"
         >
           {t("show more")}
         </Button>

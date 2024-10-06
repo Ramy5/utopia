@@ -65,17 +65,17 @@ const SummerProgramsDetails = () => {
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 my-16">
+        <div className="grid grid-cols-1 gap-2 my-16 md:grid-cols-2">
           <div className="order-2 md:order-1">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl mb-5 md:mb-0">
+              <h2 className="mb-5 text-3xl sm:text-4xl md:text-5xl md:mb-0">
                 {programDetails?.name}
               </h2>
-              <div className="hidden md:flex gap-1 my-6">
-                <div className="bg-mainColor rounded-full p-1">
+              <div className="hidden gap-1 my-6 md:flex">
+                <div className="p-1 rounded-full bg-mainColor">
                   <IoLocationOutline
                     fill="white"
-                    className="text-white w-6 h-6"
+                    className="w-6 h-6 text-white"
                   />
                 </div>
                 <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
@@ -85,14 +85,14 @@ const SummerProgramsDetails = () => {
               <p className="w-full md:w-4/5 lg:w-3/4">{programDetails?.desc}</p>
             </div>
             <div className="mt-8 md:mt-20">
-              <h2 className="text-2xl font-medium mb-3 md:mb-0 md:hidden block">
+              <h2 className="block mb-3 text-2xl font-medium md:mb-0 md:hidden">
                 {t("package includes")}
               </h2>
-              <div className="hidden md:flex gap-1 mb-5">
-                <div className="bg-mainColor rounded-full p-1">
+              <div className="hidden gap-1 mb-5 md:flex">
+                <div className="p-1 rounded-full bg-mainColor">
                   <IoLocationOutline
                     fill="white"
-                    className="text-white w-6 h-6"
+                    className="w-6 h-6 text-white"
                   />
                 </div>
                 <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
@@ -107,22 +107,22 @@ const SummerProgramsDetails = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-center md:justify-end order-1 md:order-2">
+          <div className="flex justify-center order-1 md:justify-end md:order-2">
             <div className="md:border border-[#707070] rounded-3xl w-full md:w-auto">
-              <div className="rounded-3xl overflow-hidden h-60 md:h-full relative">
+              <div className="relative overflow-hidden rounded-3xl h-60 md:h-full">
                 <img
                   src={programDetails?.cityData.image}
-                  className="w-full h-full md:h-auto m-auto rounded-3xl"
+                  className="w-full h-full m-auto md:h-auto rounded-3xl"
                 />
                 <div className="absolute bottom-3 right-3 md:hidden">
                   <Link
                     to={programDetails?.instagram}
-                    className="bg-mainColor w-12 h-12 rounded-2xl flex justify-center items-center cursor-pointer"
+                    className="flex items-center justify-center w-12 h-12 cursor-pointer bg-mainColor rounded-2xl"
                   >
                     <FaInstagram size={32} className="text-white" />
                   </Link>
                 </div>
-                <div className="hidden md:flex justify-between items-center gap-1 md:gap-4 px-4 py-3">
+                <div className="items-center justify-between hidden gap-1 px-4 py-3 md:flex md:gap-4">
                   {isActive?.map((item, index) => (
                     <div
                       key={index}
@@ -136,7 +136,7 @@ const SummerProgramsDetails = () => {
                   ))}
                 </div>
               </div>
-              <div className="mt-5 block md:hidden">
+              <div className="block mt-5 md:hidden">
                 <Swiper slidesPerView={3} spaceBetween={8}>
                   <div>
                     {isActive?.map((item, index) => (
@@ -159,10 +159,10 @@ const SummerProgramsDetails = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-x-3 gap-y-8 items-end mt-8 md:mt-24 mb-12 md:mb-20 ">
+        <div className="grid items-end grid-cols-1 mt-8 mb-12 sm:grid-cols-12 gap-x-3 gap-y-8 md:mt-24 md:mb-20 ">
           <div className="sm:col-span-5 md:col-span-6">
-            <h2 className="text-2xl mb-4">{programDetails?.cityData.name}</h2>
-            <div className="rounded-3xl overflow-hidden cursor-pointer h-64 md:h-80 lg:h-96">
+            <h2 className="mb-4 text-2xl">{programDetails?.cityData.name}</h2>
+            <div className="h-64 overflow-hidden cursor-pointer rounded-3xl md:h-80 lg:h-96">
               <Link to={programDetails?.cityData.url}>
                 <img
                   src={programDetails?.cityData.image}
@@ -173,8 +173,8 @@ const SummerProgramsDetails = () => {
             </div>
           </div>
           <div className="sm:col-span-5 md:col-span-4 ">
-            <h2 className="text-2xl mb-4">{programDetails?.cityData.name}</h2>
-            <div className="rounded-3xl overflow-hidden cursor-pointer h-64 md:h-80 lg:h-96">
+            <h2 className="mb-4 text-2xl">{programDetails?.cityData.name}</h2>
+            <div className="h-64 overflow-hidden cursor-pointer rounded-3xl md:h-80 lg:h-96">
               <Link to={programDetails?.partner_url}>
                 <img
                   src={programDetails?.partner_image}
@@ -184,10 +184,10 @@ const SummerProgramsDetails = () => {
               </Link>
             </div>
           </div>
-          <div className="sm:col-span-2 mr-auto md:mr-0 ">
+          <div className="mr-auto sm:col-span-2 md:mr-0 ">
             <Link
               to={programDetails?.instagram}
-              className="bg-mainColor w-20 h-20 rounded-full sm:rounded-2xl flex justify-center items-center cursor-pointer"
+              className="flex items-center justify-center w-20 h-20 rounded-full cursor-pointer bg-mainColor sm:rounded-2xl"
             >
               <FaInstagram size={50} className="text-white" />
             </Link>
@@ -195,13 +195,18 @@ const SummerProgramsDetails = () => {
         </div>
 
         <div className="mb-28">
-          <h2 className="text-2xl mb-8">{t("duration and price")}</h2>
+          <h2 className="mb-8 text-2xl">{t("duration and price")}</h2>
           <Formik initialValues={{}} onSubmit={() => {}}>
             <Form>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 e-full lg:w-3/4">
                 {programDetails?.packagePlans?.map((plan, index) => (
                   <div key={index} className="flex items-center gap-4">
-                    <BaseInput id="mounth" name="mounth" type="radio" className="p-2"/>
+                    <BaseInput
+                      id="mounth"
+                      name="mounth"
+                      type="radio"
+                      className="p-2"
+                    />
                     <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
                       {plan.duration === 1
                         ? `${t("mounth")}`
@@ -213,9 +218,18 @@ const SummerProgramsDetails = () => {
                   </div>
                 ))}
               </div>
-              <Button className="mt-8 w-full sm:w-fit">
-                {t("register now")}
-              </Button>
+              <Link
+                to={"/EnglishAdmissionRegister"}
+                state={{
+                  englishName: programDetails?.name,
+                  partnerId: programDetails?.partner_id,
+                  packageId: programDetails?.category_id,
+                }}
+              >
+                <Button className="w-full mt-8 sm:w-fit">
+                  {t("register now")}
+                </Button>
+              </Link>
             </Form>
           </Formik>
         </div>
@@ -231,7 +245,7 @@ const SummerProgramsDetails = () => {
 export default SummerProgramsDetails;
 
 {
-  /* <ul className="flex flex-wrap gap-4 w-3/4">
+  /* <ul className="flex flex-wrap w-3/4 gap-4">
 <li className="border border-[#707070] px-4 py-1 rounded-lg text-[15px]">
   رسوم التأشيرة.
 </li>

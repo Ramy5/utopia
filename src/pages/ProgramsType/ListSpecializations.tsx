@@ -11,7 +11,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const ListSpecializations = () => {
   const location = useLocation();
-  const listSpecializationsID = location.state;
+  const { id: listSpecializationsID } = location.state;
   const navigate = useNavigate();
 
   const fetchListSpecializations = async (id) => {
@@ -39,7 +39,7 @@ const ListSpecializations = () => {
   return (
     <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto md:hidden block">
       <div className="relative block md:hidden">
-        <div className="absolute top-1/2 -translate-y-1/2 ">
+        <div className="absolute -translate-y-1/2 top-1/2 ">
           <Link to={"/"}>
             <FaArrowRightLong
               size={22}
@@ -47,17 +47,19 @@ const ListSpecializations = () => {
             />
           </Link>
         </div>
-        <h2 className="text-3xl font-medium text-center py-6">
+        <h2 className="py-6 text-3xl font-medium text-center">
           {t("list of specializations")}
         </h2>
       </div>
-      <p className="font-medium my-4">{t("find out the list of majors you can study at the university")}</p>
+      <p className="my-4 font-medium">
+        {t("find out the list of majors you can study at the university")}
+      </p>
       <div>
         <Formik
           initialValues={{ country_id: "", research: "" }}
           onSubmit={() => {}}
         >
-          <Form className="grid grid-cols-2 gap-2 items-center my-6">
+          <Form className="grid items-center grid-cols-2 gap-2 my-6">
             <div>
               <BaseSelect
                 id="country_id"
@@ -86,16 +88,20 @@ const ListSpecializations = () => {
           <div
             key={index}
             className="relative bg-[#FFB6BF] rounded-2xl h-[155px] cursor-pointer group text-center flex flex-col justify-center pb-2"
-            onClick={() => navigate("/specializations", { state: item.id })}
+            onClick={() =>
+              navigate("/specializations", {
+                state: { id: item.id, universityName: item.name },
+              })
+            }
           >
-            <div className="bg-mainColor text-white absolute left-1/2 -translate-x-1/2 -bottom-3 flex justify-center items-center rounded-xl px-4 py-1">
+            <div className="absolute flex items-center justify-center px-4 py-1 text-white -translate-x-1/2 bg-mainColor left-1/2 -bottom-3 rounded-xl">
               <RiArrowLeftSLine
                 size={28}
-                className="text-white rotate-180 group-hover:rotate-90 duration-300"
+                className="text-white duration-300 rotate-180 group-hover:rotate-90"
               />
               <p className="font-medium">{t("explore")}</p>
             </div>
-            <h2 className="text-xl font-medium mb-3">{item.name}</h2>
+            <h2 className="mb-3 text-xl font-medium">{item.name}</h2>
             <p className="">{item.title}</p>
           </div>
         ))}
