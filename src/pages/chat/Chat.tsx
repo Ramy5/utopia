@@ -19,7 +19,6 @@ import { Footer, Navbar } from "../../components";
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<any[]>([]);
-  console.log("🚀 ~ messages:", messages);
   const [fcmToken, setFcmToken] = useState<string | null>(null);
   const { user } = useAuth();
 

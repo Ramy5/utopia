@@ -55,7 +55,7 @@ const BookConsultant = () => {
           <Navbar hidden />
 
           {/* DESKTOP */}
-          <div className="hidden md:block">
+          <div className="hidden sm:block">
             <div>
               {isSuccess ? (
                 <div>
@@ -86,21 +86,21 @@ const BookConsultant = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center justify-between w-full px-12 pb-16 mt-20 bg-white ">
-                  <div>
-                    <h2 className={`hidden mb-12 text-6xl md:block `}>
+                <div className="flex flex-wrap items-center justify-center w-full px-12 pb-16 mt-20 bg-white md:justify-between ">
+                  <div className="w-full md:w-auto">
+                    <h2 className={`hidden mb-12 text-6xl sm:block `}>
                       {t("book consultant")}
                     </h2>
-                    <div className="flex items-center justify-center ">
-                      <div className="relative p-8 py-12 rounded-lg shadow-xl bg-mainColor">
+                    <div className="flex items-center justify-center w-full ">
+                      <div className="relative w-full p-8 py-12 rounded-lg shadow-xl bg-mainColor">
                         <h2 className="mb-4 text-lg text-white ">
                           {t("consultant")}
                         </h2>
 
-                        <div className="flex flex-col space-y-4">
+                        <div className="flex flex-col w-full space-y-4">
                           <div
                             style={{ gridTemplateColumns: "100px 1fr" }}
-                            className="grid gap-4"
+                            className="grid w-full gap-4"
                           >
                             <Button className="px-2 text-xs border cursor-auto hover:scale-100">
                               {t("name")}
@@ -109,12 +109,12 @@ const BookConsultant = () => {
                               id="name"
                               name="name"
                               type="text"
-                              className="w-[536px] p-3 text-right bg-white rounded-lg"
+                              className="w-full md:w-[536px] p-3 text-right bg-white rounded-lg"
                             />
                           </div>
                           <div
                             style={{ gridTemplateColumns: "100px 1fr" }}
-                            className="grid gap-4"
+                            className="grid w-full gap-4"
                           >
                             <Button className="px-2 text-xs border cursor-auto hover:scale-100">
                               {t("phone number")}
@@ -123,7 +123,7 @@ const BookConsultant = () => {
                               id="phone"
                               name="phone"
                               type="text"
-                              className="w-[536px] p-3 text-right bg-white rounded-lg"
+                              className="w-full md:w-[536px] p-3 text-right bg-white rounded-lg"
                             />
                           </div>
 
@@ -139,7 +139,7 @@ const BookConsultant = () => {
                     </div>
                   </div>
                   <img
-                    className="w-[350px] h-[350px]"
+                    className="w-[200px] h-[200px] hidden lg:block xl:w-[350px] xl:h-[350px]"
                     src={PhoneIcon}
                     alt="phone"
                   />
@@ -151,7 +151,7 @@ const BookConsultant = () => {
           </div>
 
           {/* MOBIL */}
-          <div className="block md:hidden">
+          <div className="block sm:hidden">
             <div
               style={{ gridTemplateColumns: "20px 1fr" }}
               className="grid items-center justify-center mx-6 my-6"

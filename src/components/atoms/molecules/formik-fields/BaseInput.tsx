@@ -2,6 +2,7 @@ import { t } from "i18next";
 import { tv } from "tailwind-variants";
 import { useFormikContext } from "formik";
 import { FormikError } from "./FormikError";
+import { useRTL } from "../../../../hooks/useRTL";
 
 export type BaseInput_TP = {
   label?: string;
@@ -87,7 +88,9 @@ const BaseInput = ({
   return (
     <div
       className={
-        type === "radio" ? "col-span-1 relative w-fit" :  "col-span-1 relative w-full" 
+        type === "radio"
+          ? "col-span-1 relative w-fit"
+          : "col-span-1 relative w-full"
       }
     >
       <div className="relative flex flex-col w-full gap-1">
@@ -132,7 +135,10 @@ const BaseInput = ({
           max={max}
         />
       </div>
-      <FormikError name={props.name} className="absolute whitespace-nowrap" />
+      {/* <FormikError
+        name={props.name}
+        className="absolute text-red-600 whitespace-nowrap"
+      /> */}
     </div>
   );
 };

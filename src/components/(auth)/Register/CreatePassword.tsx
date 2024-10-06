@@ -10,7 +10,6 @@ import { getTokenAsync } from "../../../../firebase";
 import { useFormikContext } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { IoMdPhonePortrait } from "react-icons/io";
 import { useRTL } from "../../../hooks/useRTL";
 import cn from "../../../utils/cn";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
