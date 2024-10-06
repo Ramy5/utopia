@@ -14,8 +14,8 @@ import Button from "../../components/atoms/Button/Button";
 const DesignYourOwnCourseRegister = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("🚀 ~ DesignYourOwnCourseRegister ~ location:", location);
-  const AvailableCourseID = location.state;
+
+  const AvailableCourseID = location.state.id;
 
   const fetchPartnerDetails = async () => {
     try {
@@ -186,7 +186,9 @@ const DesignYourOwnCourseRegister = () => {
       </div>
       <Button
         className="mb-28 w-full bg-mainColor sm:hidden"
-        action={() => navigate("/designCourse/registration")}
+        action={() => navigate("/designCourse/registration", 
+          {state: location.state}
+        )}
       >
         {t("next")}
       </Button>

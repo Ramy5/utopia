@@ -40,7 +40,7 @@ const BookConsultation = ({ data }) => {
   return (
     <div className="mb-24 sm:mb-28">
       <div className="hidden mx-4 my-12 sm:block md:mx-0">
-        <div className="grid grid-cols-11 gap-3">
+        <div className="grid grid-cols-11 gap-2">
           {data?.offers?.map((offer, index) => (
             <div
               key={index}
@@ -146,7 +146,7 @@ const BookConsultation = ({ data }) => {
 
       <div className="relative block sm:hidden">
         <img src={PhoneHeader} alt="Landing" className="w-full" />
-        <div className="absolute w-full px-5 mt-4 -translate-y-1/2 top-full">
+        <div className="absolute w-full px-4 mt-4 -translate-y-1/2 top-full">
           <div className="grid w-full grid-cols-3 gap-4 ">
             {data?.categories?.map((categorie, index) => (
               <div key={index} className="!cursor-pointer">

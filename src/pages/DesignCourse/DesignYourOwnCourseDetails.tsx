@@ -81,7 +81,7 @@ const OwnCoursSelectStyle: StylesConfig<
 
 const DesignYourOwnCourseDetails = () => {
   const [isSubmit, setIsSubmit] = useState(false);
-  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isSubmit:", isSubmit) 
+  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isSubmit:", isSubmit);
   const [numberOfWeeks, setNumberOfWeeks] = useState(null);
   console.log(
     "🚀 ~ DesignYourOwnCourseDetails ~ numberOfWeeks:",
@@ -106,7 +106,7 @@ const DesignYourOwnCourseDetails = () => {
     }
     try {
       const data = await apiRequest({
-        url: `/api/student/filter-package-by-weeks/${location?.state.city_id}/${numberOfWeeks}/${formattedDate}?per_page=10000`,
+        url: `/api/student/filter-package-by-weeks/${location?.state.city_id}/${numberOfWeeks?.id}/${formattedDate}?per_page=10000`,
         method: "GET",
       });
       return data?.data;
@@ -191,7 +191,7 @@ const DesignYourOwnCourseDetails = () => {
                           label={t("study duration")}
                           options={weekOptions}
                           onChange={(option) => {
-                            setFieldValue("week", option.id)
+                            setFieldValue("week", option.id);
                             setNumberOfWeeks({
                               id: option.id,
                               label: `${option.label} ${
@@ -254,17 +254,17 @@ const DesignYourOwnCourseDetails = () => {
                           placeholder={t("study duration")}
                           label={t("study duration")}
                           options={weekOptions}
-                          onChange={(option) => {
-                            setNumberOfWeeks({
-                              id: option.id,
-                              label: `${option.label} ${
-                                !isRTL ? "A week" : "أســـــــــبوع"
-                              }`,
-                              value: `${option.value} ${
-                                !isRTL ? "A week" : "أســـــــــبوع"
-                              }`,
-                            });
-                          }}
+                          // onChange={(option) => {
+                          //   setNumberOfWeeks({
+                          //     id: option.id,
+                          //     label: `${option.label} ${
+                          //       !isRTL ? "A week" : "أســـــــــبوع"
+                          //     }`,
+                          //     value: `${option.value} ${
+                          //       !isRTL ? "A week" : "أســـــــــبوع"
+                          //     }`,
+                          //   });
+                          // }}
                           className="pt-1.5 w-full text-black text-center"
                           value={numberOfWeeks}
                           disabled
@@ -300,7 +300,10 @@ const DesignYourOwnCourseDetails = () => {
 
                 <div>
                   {data?.partners.map((item, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-10 mb-28 gap-y-8 gap-x-4">
+                    <div
+                      key={index}
+                      className="grid grid-cols-1 md:grid-cols-10 mb-28 gap-y-8 gap-x-4"
+                    >
                       <div
                         className={`col-span-5 lg:col-span-4 ${
                           index % 2 !== 0 ? "order-2" : "order-1"
@@ -369,7 +372,18 @@ const DesignYourOwnCourseDetails = () => {
                           />
                         </div>
                         <div className="flex gap-3">
-                          <Button className="bg-white text-[#1B0924]" action={() => navigate("/designCourse/register", {state:item.id })}>
+                          <Button
+                            className="bg-white text-[#1B0924]"
+                            action={() =>
+                              navigate("/designCourse/register", {
+                                state: {
+                                  id: item.id,
+                                  numberOfWeeks: data?.numberOfWeeks,
+                                  startDate: data?.start_date,
+                                },
+                              })
+                            }
+                          >
                             {t("register now")}
                           </Button>
                           <div className="bg-[#1B0924] text-white rounded-xl px-6 py-1.5">
@@ -454,7 +468,18 @@ const DesignYourOwnCourseDetails = () => {
                   {formattedDate}
                 </div>
                 {data?.partners.map((item, index) => (
-                  <div key={index}>
+                  <div
+                    key={index}
+                    onClick={() => {
+                      navigate("/designCourse/register", {
+                        state: {
+                          id: item.id,
+                          numberOfWeeks: data?.numberOfWeeks,
+                          startDate: data?.start_date,
+                        },
+                      })
+                    }}
+                  >
                     <div className="flex shadow-card rounded-2xl overflow-hidden mb-8 h-40 cursor-pointer group">
                       <div className="rounded-2xl overflow-hidden h-40 w-[800px] sm:w-[550px]">
                         <img
