@@ -1780,7 +1780,7 @@ const EnglishAdmissionForm = () => {
 
                     {/* File Uploads */}
                     <div className="mb-6">
-                      <div className=" mb-6 w-screen sm:w-[60vw] lg:w-[45vw] xl:w-[40vw]">
+                      <div className=" mb-6 sm:w-[60vw] lg:w-[45vw] xl:w-[40vw]">
                         <p className="mb-2 text-xl font-semibold">
                           {t("upload requirements")}
                         </p>
