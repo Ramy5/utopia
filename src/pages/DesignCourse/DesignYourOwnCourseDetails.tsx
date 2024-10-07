@@ -1,7 +1,7 @@
 import { t } from "i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { apiRequest } from "../../utils/axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IoLocationOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowRightLong, FaChevronDown } from "react-icons/fa6";
@@ -15,6 +15,7 @@ import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import State_flag from "../../assets/State_flag.png";
 import MainPopup from "../../components/UI/MainPopup";
+import Loading from "../../components/Global/Loading/Loading";
 
 interface CustomOption {
   label: string;
@@ -90,15 +91,18 @@ const DesignYourOwnCourseDetails = () => {
   const [startDate, setStartDate] = useState(null);
   console.log("🚀 ~ DesignYourOwnCourseDetails ~ startDate:", startDate);
   const formattedDate = startDate?.toISOString().split("T")[0];
+  console.log(
+    "🚀 ~ DesignYourOwnCourseDetails ~ formattedDate:",
+    formattedDate
+  );
+
+  const [courseDetails, setCourseDetails] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isRTL = useRTL();
 
-  const isEnabled =
-    !!isSubmit &&
-    !!location?.state.city_id &&
-    !!numberOfWeeks &&
-    !!formattedDate;
+  const isEnabled = courseDetails?.cityId && courseDetails?.weeksId && courseDetails?.formattedDate
+  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isEnabled:", isEnabled);
 
   const fetchDesignYourOwnCourseDetails = async () => {
     if (!isEnabled) {
@@ -106,7 +110,7 @@ const DesignYourOwnCourseDetails = () => {
     }
     try {
       const data = await apiRequest({
-        url: `/api/student/filter-package-by-weeks/${location?.state.city_id}/${numberOfWeeks?.id}/${formattedDate}?per_page=10000`,
+        url: `/api/student/filter-package-by-weeks/${courseDetails?.cityId}/${courseDetails?.weeksId}/${courseDetails?.formattedDate}?per_page=10000`,
         method: "GET",
       });
       return data?.data;
@@ -115,7 +119,7 @@ const DesignYourOwnCourseDetails = () => {
     }
   };
 
-  const { data } = useQuery({
+  const { data, isFetching, refetch, isRefetching, isLoading } = useQuery({
     queryKey: ["design_your_own_course_details", isEnabled],
     queryFn: fetchDesignYourOwnCourseDetails,
     suspense: true,
@@ -123,10 +127,17 @@ const DesignYourOwnCourseDetails = () => {
   });
   console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
 
-  const weekOptions = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    label: i + 1,
-    value: i + 1,
+  // useEffect(() => {
+  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isLoading:", isLoading);
+  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isRefetching:", isRefetching);
+  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isFetching:", isFetching);
+  //   refetch()
+  // }, [isFetching])
+
+  const weekOptions = [1, 2, 3, 4, 12].map((num) => ({
+    id: num,
+    label: num,
+    value: num,
   }));
 
   const isActive = [
@@ -153,6 +164,8 @@ const DesignYourOwnCourseDetails = () => {
     return date.getDay() === 1;
   };
 
+  if (isFetching || isRefetching || isLoading) return <Loading />;
+
   return (
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
@@ -171,14 +184,18 @@ const DesignYourOwnCourseDetails = () => {
         </div>
 
         <div className="my-16 sm:block hidden">
-          {!data?.partners?.length ? (
+          {!!!data?.partners?.length ? (
             <div>
               <h2 className="text-5xl mb-8">{location?.state.city_name}</h2>
               <div>
                 <Formik
                   initialValues={{ week: "", start_date: "" }}
-                  onSubmit={() => {
-                    setIsSubmit(true);
+                  onSubmit={(value) => {
+                    setCourseDetails({
+                      cityId: location?.state.city_id,
+                      weeksId: value.week,
+                      formattedDate: value.start_date,
+                    });
                   }}
                 >
                   {({ setFieldValue }) => (
@@ -216,7 +233,13 @@ const DesignYourOwnCourseDetails = () => {
                           id="start_date"
                           className="bg-mainColor pt-1.5 w-full h-[4.7rem] rounded-[14px] border-none relative mt-3"
                           selected={startDate}
-                          onChange={(date) => setStartDate(date)}
+                          onChange={(date) => {
+                            setStartDate(date);
+                            const formatdDate = date
+                              ?.toISOString()
+                              .split("T")[0];
+                            setFieldValue("start_date", formatdDate);
+                          }}
                           filterDate={isMonday}
                           disabledKeyboardNavigation
                           placeholderText={t("study start date")}
@@ -227,6 +250,7 @@ const DesignYourOwnCourseDetails = () => {
                       <Button
                         type="submit"
                         className="col-span-2 h-[4.7rem] rounded-[14px] bg-[#1B0924] text-white text-2xl font-normal"
+                        loading={isLoading}
                       >
                         {t("research")}
                       </Button>
@@ -242,59 +266,74 @@ const DesignYourOwnCourseDetails = () => {
                 <div className="chooseCourse">
                   <Formik
                     initialValues={{ week: "", start_date: "" }}
-                    onSubmit={() => {
-                      setIsSubmit(true);
+                    onSubmit={(value) => {
+                      setCourseDetails({
+                        cityId: location?.state.city_id,
+                        weeksId: value.week,
+                        formattedDate: value.start_date,
+                      });
                     }}
                   >
-                    <Form className="hidden sm:grid grid-cols-10 gap-3 items-end mt-20 mb-20 md:mb-24">
-                      <div className="relative col-span-3 lg:col-span-2">
-                        <BaseSelect
-                          id="week"
-                          name="week"
-                          placeholder={t("study duration")}
-                          label={t("study duration")}
-                          options={weekOptions}
-                          // onChange={(option) => {
-                          //   setNumberOfWeeks({
-                          //     id: option.id,
-                          //     label: `${option.label} ${
-                          //       !isRTL ? "A week" : "أســـــــــبوع"
-                          //     }`,
-                          //     value: `${option.value} ${
-                          //       !isRTL ? "A week" : "أســـــــــبوع"
-                          //     }`,
-                          //   });
-                          // }}
-                          className="pt-1.5 w-full text-black text-center"
-                          value={numberOfWeeks}
-                          disabled
-                        />
-                      </div>
-                      <div className="col-span-4 lg:col-span-3 relative">
-                        <label htmlFor="start_date">
-                          {t("study start date")}
-                        </label>
-                        <DatePicker
-                          showIcon
-                          id="start_date"
-                          className="pt-1.5 w-full h-[3.4rem] rounded-[14px] relative mt-3 border-1 border-[#C9C5CA]"
-                          selected={startDate}
-                          onChange={(date) => setStartDate(date)}
-                          filterDate={isMonday}
-                          disabledKeyboardNavigation
-                          placeholderText={t("study start date")}
-                          icon={<FaChevronDown />}
-                          disabled
-                        />
-                      </div>
+                    {({ setFieldValue }) => {
+                      return (
+                        <Form className="hidden sm:grid grid-cols-10 gap-3 items-end mt-20 mb-20 md:mb-24">
+                          <div className="relative col-span-3 lg:col-span-2">
+                            <BaseSelect
+                              id="week"
+                              name="week"
+                              placeholder={t("study duration")}
+                              label={t("study duration")}
+                              options={weekOptions}
+                              onChange={(option) => {
+                                setFieldValue("week", option.id);
+                                setNumberOfWeeks({
+                                  id: option.id,
+                                  label: `${option.label} ${
+                                    !isRTL ? "A week" : "أســـــــــبوع"
+                                  }`,
+                                  value: `${option.value} ${
+                                    !isRTL ? "A week" : "أســـــــــبوع"
+                                  }`,
+                                });
+                              }}
+                              className="pt-1.5 w-full text-black text-center"
+                              value={numberOfWeeks}
+                              // disabled
+                            />
+                          </div>
+                          <div className="col-span-4 lg:col-span-3 relative">
+                            <label htmlFor="start_date">
+                              {t("study start date")}
+                            </label>
+                            <DatePicker
+                              showIcon
+                              id="start_date"
+                              className="pt-1.5 w-full h-[3.4rem] rounded-[14px] relative mt-3 border-1 border-[#C9C5CA]"
+                              selected={startDate}
+                              onChange={(date) => {
+                                setStartDate(date);
+                                const formatdDate = date
+                                  ?.toISOString()
+                                  .split("T")[0];
+                                setFieldValue("start_date", formatdDate);
+                              }}
+                              filterDate={isMonday}
+                              disabledKeyboardNavigation
+                              placeholderText={t("study start date")}
+                              icon={<FaChevronDown />}
+                              // disabled
+                            />
+                          </div>
 
-                      {/* <Button
-                          type="submit"
-                          className="col-span-1 w-44 h-[3.4rem] rounded-[14px] bg-[#1B0924] text-white text-xl font-normal"
-                        >
-                          {t("research")}
-                        </Button> */}
-                    </Form>
+                          <Button
+                            type="submit"
+                            className="col-span-1 w-44 h-[3.4rem] rounded-[14px] bg-[#1B0924] text-white text-xl font-normal"
+                          >
+                            {t("research")}
+                          </Button>
+                        </Form>
+                      );
+                    }}
                   </Formik>
                 </div>
 
@@ -477,7 +516,7 @@ const DesignYourOwnCourseDetails = () => {
                           numberOfWeeks: data?.numberOfWeeks,
                           startDate: data?.start_date,
                         },
-                      })
+                      });
                     }}
                   >
                     <div className="flex shadow-card rounded-2xl overflow-hidden mb-8 h-40 cursor-pointer group">

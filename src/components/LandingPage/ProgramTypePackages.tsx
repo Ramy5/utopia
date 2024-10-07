@@ -6,6 +6,7 @@ import Button from "../atoms/Button/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useNavigate } from "react-router-dom";
+import { BsChevronDown } from "react-icons/bs";
 
 const ProgramTypePackages = ({ data }) => {
   console.log("🚀 ~ ProgramTypePackages ~ data:", data)
@@ -85,6 +86,13 @@ const ProgramTypePackages = ({ data }) => {
           </div>
         ))}
       </div>
+
+      <Button className="sm:flex font-normal hidden bg-transparent m-auto text-black hover:text-mainColor duration-300 mt-8">
+        <div>
+          <p className="text-2xl mb-1">{t("more")}</p>
+          <BsChevronDown size={28} className="m-auto"/>
+        </div>
+      </Button>
 
       <div className="flex items-center justify-between sm:hidden">
         <Swiper spaceBetween={15} slidesPerView={1.5}>

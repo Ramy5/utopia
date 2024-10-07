@@ -144,12 +144,17 @@ const DesignCourseForm = () => {
   });
   console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
 
-  const weekOptions = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    label: i + 1,
-    value: i + 1,
-  }));
+  // const weekOptions = Array.from({ length: 12 }, (_, i) => ({
+  //   id: i + 1,
+  //   label: i + 1,
+  //   value: i + 1,
+  // }));
 
+  const weekOptions = [1, 2, 3, 4, 12].map((num) => ({
+    id: num,
+    label: num,
+    value: num,
+  }));
   const postCourseData = async (postData) => {
     try {
       const response = await apiRequest({
