@@ -1,1 +1,1 @@
-export const BASE_URL = "https://utopia.sa";
+export const BASE_URL = "https://sa.utopia.sa";
