@@ -10,14 +10,20 @@ import Button from "../../components/atoms/Button/Button";
 import DownLoadApp from "../../components/atoms/molecules/downLoad-app/DownLoadApp";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useAuth } from "../../context/AuthContext";
 
 const SummerProgramsDetails = () => {
   const [styledHtml, setStyledHtml] = useState("");
   console.log("🚀 ~ ProgramDetails ~ styledHtml:", styledHtml);
   const location = useLocation();
+  const [planId, setPlanId] = useState(null);
+  const { user } = useAuth();
   const programDetails = location.state;
   const isRTL = useRTL();
-  console.log("🚀 ~ ProgramDetails ~ programDetails:", programDetails);
+
+  const handleSelectedPlanId = (event) => {
+    setPlanId(event.target.id);
+  };
 
   useEffect(() => {
     const htmlWithStyles = programDetails?.includes
@@ -201,11 +207,12 @@ const SummerProgramsDetails = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 e-full lg:w-3/4">
                 {programDetails?.packagePlans?.map((plan, index) => (
                   <div key={index} className="flex items-center gap-4">
-                    <BaseInput
-                      id="mounth"
-                      name="mounth"
+                    <input
+                      id={plan?.id}
+                      name={`packagePlan`}
                       type="radio"
                       className="p-2"
+                      onChange={handleSelectedPlanId}
                     />
                     <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
                       {plan.duration === 1
@@ -219,11 +226,12 @@ const SummerProgramsDetails = () => {
                 ))}
               </div>
               <Link
-                to={"/EnglishAdmissionRegister"}
+                to={user ? "/EnglishAdmissionRegister" : "/login"}
                 state={{
                   englishName: programDetails?.name,
                   partnerId: programDetails?.partner_id,
                   packageId: programDetails?.category_id,
+                  planId: planId,
                 }}
               >
                 <Button className="w-full mt-8 sm:w-fit">
