@@ -51,6 +51,7 @@ const EnglishAdmissionForm = () => {
     partnerId = null,
     packageId = null,
     englishName = "",
+    planId = null,
   } = location.state || {};
   console.log(location);
   const [step, setStep] = useState(1);
@@ -159,7 +160,7 @@ const EnglishAdmissionForm = () => {
       contact_you_to_book: values?.contactForBooking === "yes" ? 1 : 0,
       partner_id: partnerId,
       package_id: packageId, // BUG: FIX THIS WHEN YOU KNOW HOW TO GET IT
-      plan_id: 1, // BUG: WHAT IS THIS PLAN ID, WHERE I GET IT
+      plan_id: planId,
       passport: values?.documents?.passportPhoto,
       school_certificate: values?.documents?.highSchoolCertificate,
       image: values?.documents?.passportSizePhoto,
