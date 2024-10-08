@@ -18,6 +18,8 @@ import { apiRequest } from "../../../utils/axios";
 import FormatDate from "../../../utils/FormatDate";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import Loading from "../Loading/Loading";
+import Button from "../../atoms/Button/Button";
 
 const currentPages = [
   { id: 1, text: "home", icon: <IoHomeOutline className="text-xl" /> },
@@ -33,7 +35,7 @@ const currentPages = [
 const Footer = ({ hidden }: { hidden?: boolean }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [notificationState, setNotificationState] = useState([]);
-  console.log("🚀 ~ Footer ~ notificationState:", notificationState);
+  const [requestTypeOpen, setRequestTypeOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState({
     notifications: false,
     account: false,
@@ -43,6 +45,23 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
   const navigate = useNavigate();
   const { clearAuth, user, token } = useAuth();
   const { i18n } = useTranslation();
+  const [requests, setRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchRequests = async () => {
+    try {
+      setIsLoading(true);
+      const data = await apiRequest({
+        url: `/api/student/orders`,
+        method: "GET",
+      });
+      setRequests(data?.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Error fetching items:", error.message);
+    }
+  };
 
   const getAllNotifications = async () => {
     try {
@@ -60,6 +79,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
   useEffect(() => {
     if (token) {
       getAllNotifications();
+      fetchRequests();
     }
   }, []);
 
@@ -135,6 +155,8 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
     </div>
   );
 
+  if (isLoading) return <Loading />;
+
   return (
     <div className={hidden ? "hidden sm:block" : ""}>
       {/* Desktop Footer */}
@@ -148,7 +170,9 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             {["courses", "destinations", "opportunities", "contact us"].map(
               (section, index) => (
                 <div key={index} className="text-center md:text-right">
-                  <h4 className="pb-4 font-bold border-b w-3/5 md:w-full m-auto">{t(section)}</h4>
+                  <h4 className="w-3/5 pb-4 m-auto font-bold border-b md:w-full">
+                    {t(section)}
+                  </h4>
                   <ul className="pt-6 space-y-2">
                     {section === "courses" &&
                       [
@@ -260,21 +284,15 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
                 <PiChatCircleThin className="text-xl" />
               </div>
             </header>
-            <button className="flex items-center justify-center px-4 py-2 mb-4 text-white rounded-lg bg-mainColor">
+            <Button
+              action={() => setRequestTypeOpen(true)}
+              className="flex items-center justify-center px-4 py-2 mb-4 text-white rounded-lg bg-mainColor"
+            >
               {t("add request +")}
-            </button>
-            {Array(2)
-              .fill()
-              .map((_, index) => (
-                <CourseCard
-                  key={index}
-                  name="عبد العزيز البحيا"
-                  institute="ليڤربول"
-                  course="انجليزي عام"
-                  lessonsCount={20}
-                  startDate="22 مارس 2024"
-                />
-              ))}
+            </Button>
+            {requests?.map((request, index) => (
+              <CourseCard {...request} />
+            ))}
           </div>
         </Sidebar>
       )}
@@ -340,6 +358,45 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             </div>
           </div>
         </Sidebar>
+      )}
+
+      {/* REQUEST TYPE */}
+      {requestTypeOpen && (
+        <div>
+          <div
+            onClick={() => setRequestTypeOpen(false)}
+            className="fixed z-[600] top-0 left-0 w-full h-full bg-black/30"
+          ></div>
+          <div className="px-4 fixed w-full top-1/2 -translate-y-1/2 mx-auto z-[800]">
+            <div className="flex flex-col px-8 py-8 space-y-6 bg-white shadow-lg rounded-xl">
+              <p>{t("choose the type of order you want to add")}</p>
+              <Link
+                onClick={() => {
+                  setRequestTypeOpen(false);
+                  setIsSidebarOpen({ ...isSidebarOpen, account: false });
+                }}
+                to={"/englishLanguage"}
+                className="w-full"
+              >
+                <Button className="w-full text-white bg-mainColor">
+                  {t("english")}
+                </Button>
+              </Link>
+              <Link
+                onClick={() => {
+                  setRequestTypeOpen(false);
+                  setIsSidebarOpen({ ...isSidebarOpen, account: false });
+                }}
+                to={"/universityAdmissions"}
+                className="w-full"
+              >
+                <Button className="w-full bg-[#FFB6BF] text-black">
+                  {t("University admissions")}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
