@@ -7,10 +7,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
+import { IoSearchOutline } from "react-icons/io5";
 
 const ProgramTypePackages = ({ data }) => {
-  console.log("🚀 ~ ProgramTypePackages ~ data:", data)
-  const navigate = useNavigate()
+  console.log("🚀 ~ ProgramTypePackages ~ data:", data);
+  const navigate = useNavigate();
   return (
     <div
       id="englishSection"
@@ -20,27 +21,30 @@ const ProgramTypePackages = ({ data }) => {
         <h2 className="text-xl font-medium sm:font-normal sm:text-[23px]">
           {t("english language study packages")}
         </h2>
-        <div className="hidden grid-cols-5 gap-1 md:gap-3 sm:grid">
+        <div className="hidden grid-cols-6 gap-1 md:gap-3 sm:grid">
           <div className="max-w-full col-span-3">
             <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
               <Form>
                 <div className="relative w-full">
-                  <IoIosSearch
-                    size={32}
-                    className="fill-[#BEC8CF] absolute z-10 top-1/2 -translate-y-1/2 start-3"
+                  <IoSearchOutline 
+                    size={23}
+                    className="fill-[#212529] absolute z-10 top-1/2 -translate-y-1/2 start-3"
                   />
                   <BaseInput
                     id="search"
                     name="search"
                     type="text"
                     placeholder="search by city or institute name"
-                    className="ps-11"
+                    className="ps-11 border border-[#D1CBCB] placeholder:text-[#212529] py-4 rounded-full placeholder:text-[15px]"
                   />
                 </div>
               </Form>
             </Formik>
           </div>
-          <Button className="rounded-3xl py-2.5 col-span-2 lg:px-8 sm:px-2 text-base" action={() => navigate("/designCourse")}>
+          <Button
+            className="py-2.5 lg:px-10 sm:px-2 rounded-full text-xl col-span-3 font-normal"
+            action={() => navigate("/designCourse")}
+          >
             {t("design your own course")}
           </Button>
         </div>
@@ -48,40 +52,42 @@ const ProgramTypePackages = ({ data }) => {
           {t("More")}
         </p>
       </div>
-      <div className="hidden grid-cols-2 gap-5 sm:grid md:grid-cols-3 lg:grid-cols-4">
+      <div className="hidden grid-cols-2 gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {data?.englishPackages?.map((packages, index) => (
           <div
             key={index}
-            className="text-center group cursor-pointer border border-[#707070] rounded-2xl  relative"
+            className="text-center group cursor-pointer border border-[#707070] rounded-2xl  relative packege"
           >
             {packages?.is_note === 1 && (
-              <p className="absolute bg-[#FFCC1A] px-3 py-1.5 text-[13px] rounded-full left-1/2 w-fit whitespace-nowrap -translate-x-1/2 -top-3.5">{packages.note}</p>
+              <p className="absolute bg-[#FFCC1A] px-4 pt-2.5 pb-2 text-xs rounded-full left-1/2 w-fit whitespace-nowrap -translate-x-1/2 -top-4 z-20">
+                {packages.note}
+              </p>
             )}
-            <div>
-              <img
-                src={packages.packageImage[0].image}
-                className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
-              />
+            <div className="h-[17.5vw]">
+              <div className="flex rounded-2xl overflow-hidden max-h-full">
+                <img
+                  src={packages.packageImage[0].image}
+                  className="rounded-t-2xl w-full h-[17.5vw] group-hover:h-[13vw] duration-300 object-cover rounded-b-2xl group-hover:rounded-b-none"
+                />
+              </div>
             </div>
-            <div className="relative overflow-hidden rounded-b-2xl">
-              <div className="absolute w-full h-full bg-mainColor rounded-b-2xl translate-y-[82%] group-hover:translate-y-0 rounded-t-2xl group-hover:rounded-t-none duration-300 -z-10"></div>
-
-              <h2 className="relative pt-4 text-2xl font-medium text-black duration-300 group-hover:text-white">
+            <div className="body-packege relative">
+              <p className="relative pt-4 text-[25px] text-black duration-300 ">
                 {packages.partner_name}
-              </h2>
+              </p>
               <p
-                className="max-w-full px-3 my-4 overflow-hidden text-black duration-300 text-ellipsis max-h-48 group-hover:text-white"
+                className="max-w-full px-2.5 my-5 overflow-hidden text-black duration-300 text-ellipsis max-h-48 text-[15px]"
                 style={{
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 8,
+                  WebkitLineClamp: 6,
                 }}
               >
                 {packages.desc}
               </p>
-              <h3 className="py-3 text-2xl font-medium text-white  rounded-2xl">
+              <p className="pt-[1.3rem] pb-3 text-xl text-white bg-mainColor rounded-2xl">
                 {packages.g_price} <span>{packages.unit}</span>
-              </h3>
+              </p>
             </div>
           </div>
         ))}
@@ -89,8 +95,8 @@ const ProgramTypePackages = ({ data }) => {
 
       <Button className="sm:flex font-normal hidden bg-transparent m-auto text-black hover:text-mainColor duration-300 mt-8">
         <div>
-          <p className="text-2xl mb-1">{t("more")}</p>
-          <BsChevronDown size={28} className="m-auto"/>
+          <p className="text-xl mb-1">{t("more")}</p>
+          <BsChevronDown size={28} className="m-auto" />
         </div>
       </Button>
 
@@ -119,7 +125,10 @@ const ProgramTypePackages = ({ data }) => {
         </Swiper>
       </div>
       <div className="block mt-7 sm:hidden ">
-        <Button className="w-full col-span-2 py-3.5 text-lg rounded-xl" action={() => navigate("/designCourse")}>
+        <Button
+          className="w-full col-span-2 py-3.5 text-lg rounded-xl"
+          action={() => navigate("/designCourse")}
+        >
           {t("design your own course")}
         </Button>
       </div>

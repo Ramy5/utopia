@@ -50,20 +50,20 @@ const BookConsultation = ({ data }) => {
                 <img
                   src={offer?.image}
                   alt="Book"
-                  className={`${index === 2 ? "h-full" : "max-h-60 w-full"}`}
+                  className={`${index === 2 ? "h-full" : "max-h-[275px] w-full"}`}
                 />
               </div>
               <div className="mt-6">
                 <h2
                   className={`${
                     index === 2
-                      ? "text-2xl lg:text-4xl w-full lg:w-2/3"
-                      : "font-bold text-base"
+                      ? "text-2xl lg:text-4xl font-normal w-full lg:w-2/3 !leading-[3.5rem]"
+                      : "font-semibold text-sm"
                   }`}
                 >
                   {BookContent[index]?.title}
                 </h2>
-                <p className="mt-2 w-full lg:w-2/3 text-[15px] lg:text-base">
+                <p className="mt-2 w-full text-[15px] lg:text-sm">
                   {BookContent[index]?.desc}
                 </p>
               </div>
@@ -139,7 +139,7 @@ const BookConsultation = ({ data }) => {
             </div>
           </div>
           <Link to={"/bookConsultant"} className="col-span-5">
-            <Button className="mt-4">{t("book consultation")}</Button>
+            <Button className="mt-4 py-2 rounded-3xl font-normal text-xl">{t("book consultation")}</Button>
           </Link>
         </div>
       </div>

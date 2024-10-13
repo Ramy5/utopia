@@ -56,7 +56,7 @@ const DesignYourOwnCourseRegister = () => {
     },
   ];
   return (
-    <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
+    <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
       <h2 className="text-3xl sm:text-4xl md:text-5xl mb-5 md:mb-0 mt-12 hidden sm:block md:hidden">
         {t("register now")}
       </h2>

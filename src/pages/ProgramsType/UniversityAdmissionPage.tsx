@@ -11,6 +11,9 @@ import BaseInput from "../../components/atoms/molecules/formik-fields/BaseInput"
 import { IoIosSearch } from "react-icons/io";
 import Button from "../../components/atoms/Button/Button";
 import { TbFilter } from "react-icons/tb";
+import DefaultSelectStyle from "../../hooks/DefaultSelectStyle";
+import selectStyle from "../../hooks/selectStyle";
+import { IoSearchOutline } from "react-icons/io5";
 
 const UniversityAdmissionPage = () => {
   const navigate = useNavigate();
@@ -159,10 +162,10 @@ const UniversityAdmissionPage = () => {
 
   return (
     <>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] px-4 mx-auto">
-        <div className="my-16 sm:block hidden px-4 md:px-0">
-          <h2 className="text-5xl mb-5">{t("University admissions")}</h2>
-          <p className="text-xl">{t("list of universities")}</p>
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] px-4 mx-auto">
+        <div className="mt-16  sm:block hidden px-4 md:px-0">
+          <h2 className="text-6xl mb-5">{t("University admissions")}</h2>
+          <p className="text-xl font-medium">{t("list of universities")}</p>
           <div>
             <Formik
               initialValues={{ country_id: "", research: "" }}
@@ -182,16 +185,17 @@ const UniversityAdmissionPage = () => {
                     options={countriesOption}
                     isLoading={isLoading || isFetching}
                     className="pt-2"
+                    selectStyle={selectStyle}
                   />
                 </div>
                 <div className="flex items-end gap-2 col-span-6 md:col-span-5 w-full">
-                  <IoIosSearch size={45} className="mb-3" />
+                  <IoSearchOutline  size={45} className="text-[#c8ced3]" />
                   <BaseInput
                     id="research"
                     name="research"
                     placeholder={t("research")}
                     label={t("search for university name")}
-                    className="py-3.5 md:w-72 mt-2"
+                    className="py-[1.15rem] md:w-72 mt-2"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         setUniversityName(e.target.value);
@@ -224,7 +228,7 @@ const UniversityAdmissionPage = () => {
 
           <Button
             bordered
-            className="rounded-full mt-20 mb-12 border-[#707070] text-[#707070] py-2.5"
+            className="rounded-full mt-20 mb-12 border-2 border-[#BEC8CF] text-[#BEC8CF] text-lg px-6 py-3.5"
           >
             {t("show more")}
           </Button>

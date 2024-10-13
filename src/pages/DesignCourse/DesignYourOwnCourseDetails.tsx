@@ -43,8 +43,8 @@ const OwnCoursSelectStyle: StylesConfig<
       backgroundColor = "#9F85F3";
       color = "white";
     } else if (state.isFocused) {
-      backgroundColor = "white";
-      color = "#000";
+      backgroundColor = "#9F85F3";
+      color = "white";
     }
 
     return {
@@ -72,7 +72,7 @@ const OwnCoursSelectStyle: StylesConfig<
   }),
   loadingIndicator: (provided) => ({
     ...provided,
-    color: "#393D94",
+    color: "#9F85F3",
   }),
   placeholder: (provided) => ({
     ...provided,
@@ -168,7 +168,7 @@ const DesignYourOwnCourseDetails = () => {
 
   return (
     <>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
         <div className="relative block sm:hidden">
           <div className="absolute top-1/2 -translate-y-1/2 ">
             <Link to={"/"}>
@@ -249,7 +249,7 @@ const DesignYourOwnCourseDetails = () => {
 
                       <Button
                         type="submit"
-                        className="col-span-2 h-[4.7rem] rounded-[14px] bg-[#1B0924] text-white text-2xl font-normal"
+                        className="col-span-2 h-[4.7rem] hover:bg-[#FACC1F] duration-300 rounded-[14px] bg-[#1B0924] text-white text-2xl font-normal"
                         loading={isLoading}
                       >
                         {t("research")}
@@ -327,7 +327,7 @@ const DesignYourOwnCourseDetails = () => {
 
                           <Button
                             type="submit"
-                            className="col-span-1 w-44 h-[3.4rem] rounded-[14px] bg-[#1B0924] text-white text-xl font-normal"
+                            className="col-span-1 w-44 h-[3.4rem] rounded-[14px] hover:bg-[#FACC1F] duration-300 bg-[#1B0924] text-white text-xl font-normal"
                           >
                             {t("research")}
                           </Button>

@@ -81,7 +81,7 @@ const EnglishLanguageDetails = () => {
 
   return (
     <div>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
         <div className="grid grid-cols-1 gap-2 my-16 md:grid-cols-2">
           <div className="order-2 md:order-1">
             <div>

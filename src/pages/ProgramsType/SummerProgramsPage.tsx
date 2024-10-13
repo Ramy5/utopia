@@ -29,35 +29,37 @@ const SummerProgramsPage = () => {
 
   return (
     <>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
         <div className="my-16 sm:block hidden px-4 md:px-0">
-          <h2 className="text-5xl mb-12">{t("summer programs")}</h2>
-          <div className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-16">
+          <h2 className="text-6xl mb-20">{t("summer programs")}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-16 md:gap-8 lg:gap-28">
             {data?.map((item, index) => (
               <div
                 key={index}
                 className="cursor-pointer group"
-                onClick={() => navigate("/programsSummer/details", { state: item })}
+                onClick={() =>
+                  navigate("/programsSummer/details", { state: item })
+                }
               >
-                <h2 className="bg-[#EAEAEA] rounded-2xl py-3 px-2 text-xl text-center">
+                <h2 className="bg-[#EAEAEA] rounded-2xl py-3 px-2 text-xl lg:text-2xl text-center">
                   {item.name}
                 </h2>
                 <div className="flex gap-1 mt-5 mb-10">
                   <div className="bg-mainColor rounded-full p-1">
                     <IoLocationOutline
                       fill="white"
-                      className="text-white w-7 h-7"
+                      className="text-white w-6 h-6"
                     />
                   </div>
-                  <p className="bg-mainColor rounded-full px-8 py-1 text-white">
+                  <p className="bg-mainColor rounded-full px-7 pt-1 text-[15px] text-white">
                     {item.city_name}
                   </p>
                 </div>
-                <div className="h-80">
+                <div className="h-64 rounded-3xl overflow-hidden">
                   <img
                     src={item.cityData.image}
                     alt="summer programs"
-                    className="w-full h-52 md:h-60 lg:h-full group-hover:scale-[1.03] duration-300"
+                    className="h-full md:h-full lg:h-full group-hover:scale-[1.03] duration-300"
                   />
                 </div>
               </div>
@@ -83,7 +85,9 @@ const SummerProgramsPage = () => {
               <div
                 key={index}
                 className="relative mb-24"
-                onClick={() => navigate("/programsSummer/details", { state: item })}
+                onClick={() =>
+                  navigate("/programsSummer/details", { state: item })
+                }
               >
                 <div className="h-64">
                   <img
