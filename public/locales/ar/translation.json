@@ -207,5 +207,13 @@
   "dad": "اب",
   "uncle": "عم او خال",
   "brother": "شقيق",
-  "cousin": "ابن عم او ابن اخ"
+  "cousin": "ابن عم او ابن اخ",
+  "institute": "معهد",
+  "course": "الكورس",
+  "course start date": "تاريخ بداية الدراسة",
+  "request number": "رقم الطلب",
+  "under process": "تحت الاجراء",
+  "add request": "اضافة طلب",
+  "english": "اللغة الانجليزية",
+  "choose the type of order you want to add": "اختر نوع الطلب الذي تريد اضافتة"
 }
