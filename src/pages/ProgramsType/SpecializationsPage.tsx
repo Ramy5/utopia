@@ -10,10 +10,12 @@ import Button from "../../components/atoms/Button/Button";
 import DownLoadApp from "../../components/atoms/molecules/downLoad-app/DownLoadApp";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useAuth } from "../../context/AuthContext";
 
 const SpecializationsPage = () => {
   const location = useLocation();
   console.log("🚀 ~ SpecializationsPage ~ location:", location);
+  const { user } = useAuth();
   const { id: specializationID = "", universityName = "" } =
     location.state || {};
 
@@ -95,7 +97,7 @@ const SpecializationsPage = () => {
                   {specializations?.order_price} <span>{t("reyal")}</span>
                 </Button>
                 <Link
-                  to={"/UniversityAdmissionRegister"}
+                  to={user ? "/UniversityAdmissionRegister" : "/login"}
                   state={{
                     partnerId: specializations?.partner_id,
                     specializationID: specializationID,
@@ -134,7 +136,7 @@ const SpecializationsPage = () => {
             specializationID: specializationID,
             universityName: universityName,
           }}
-          to={"/UniversityAdmissionRegister"}
+          to={user ? "/UniversityAdmissionRegister" : "/login"}
         >
           <Button className="block w-full py-4 sm:hidden rounded-2xl mb-28">
             {t("apply now")}

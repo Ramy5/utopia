@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthContext";
 import StudentRequest from "./pages/StudentRequest";
 import { onMessageListener } from "../firebase";
 import Chat from "./pages/chat/Chat";
+import AddRequest from "./pages/Request/AddRequest";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -122,6 +123,7 @@ return (
               />
               <Route path="specializations" element={<SpecializationsPage />} />
               <Route path="studentRequest" element={<StudentRequest />} />
+              <Route path="/addRequest" element={<AddRequest />} />
               <Route path="/designCourse" element={<DesignYourOwnCourse />} />
               <Route
                 path="/designCourse/details"
@@ -135,7 +137,6 @@ return (
                 path="/designCourse/registration"
                 element={<DesignCourseRegistration />}
               />
-              <Route path="/chat" element={<Chat />} />
             </Route>
             <Route path="/chat" element={<Chat />} />
             <Route path="/register" element={<Register />} />
