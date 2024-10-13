@@ -168,7 +168,7 @@ const DesignYourOwnCourse = () => {
 
   return (
     <>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
         <div className="my-16 sm:block hidden px-4 md:px-0">
           <h2 className="text-5xl mb-12">{t("design your own course")}</h2>
 

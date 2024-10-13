@@ -55,26 +55,26 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
       </div>
       <div
         className={`${
-          isFootered ? "flex-col gap-20 mt-32" : "flex-row gap-5"
+          isFootered ? "flex-col gap-20 mt-32" : "flex-row gap-2 md:gap-4 lg:gap-5"
         } flex items-center justify-between`}
       >
         {data?.map((item, index) => (
           <div
             key={index}
-            className={`relative bg-[#1B0924] px-6 lg:px-8 pb-8 rounded-3xl ${
-              isFootered ? "h-[8rem]" : "h-40"
+            className={`relative bg-[#1B0924] px-4 lg:px-8 pb-8 rounded-3xl ${
+              isFootered ? "h-40 mb-8" : "h-40 lg:h-44"
             } `}
           >
             <div
-              className={`rounded-full absolute -top-[4.5rem] md:-top-24 lg:-top-28 left-1/2 -translate-x-1/2`}
+              className={`rounded-full absolute -top-[4.5rem] md:-top-[7.3rem] lg:-top-32 left-1/2 -translate-x-1/2 ${isFootered ? "w-[8.5rem]  h-[8.5rem]" :"w-[8rem]  h-[8rem]"}  md:w-44 md:h-44 lg:w-48 lg:h-48`}
             >
               <img
                 src={item.image}
                 alt="choose"
-                className="w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40"
+                className="w-full h-full"
               />
             </div>
-            <p className="flex items-end w-full h-full m-auto text-center text-base lg:text-lg text-white lg:w-3/4">
+            <p className={`flex items-end h-full m-auto text-center text-base md:text-xl lg:text-xl text-white ${isFootered ? "w-3/4" :"w-full"}` }>
               {item.name}
             </p>
           </div>

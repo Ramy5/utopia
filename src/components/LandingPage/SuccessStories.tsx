@@ -40,7 +40,9 @@ const SuccessStories = () => {
 
   return (
     <div className="bg-[#1B0924] px-8 pb-36 hidden sm:block">
-      <h2 className="pt-20 mb-20 md:mb-36 text-6xl font-base text-white">{t("success stories")}</h2>
+      <h2 className="pt-20 mb-20 md:mb-36 text-6xl font-base text-white">
+        {t("success stories")}
+      </h2>
       <div className="grid grid-cols-2 md:grid-cols-10 gap-8">
         <div className="col-span-5 lg:col-span-6">
           <Swiper
@@ -66,13 +68,13 @@ const SuccessStories = () => {
             <div>
               {data?.map((story, index) => (
                 <SwiperSlide key={index}>
-                  <div className="md:p-4 cursor-pointer">
+                  <div className="cursor-pointer w-fit">
                     <div
-                      className="relative rounded-full w-36 h-36 md:w-40 md:h-40"
+                      className="relative rounded-full"
                       onClick={() => handleImageClick(index)}
                     >
                       <div
-                        className={`absolute top-0 left-0 w-36 h-36 md:w-40 md:h-40 rounded-full duration-300 ${
+                        className={`absolute top-0 left-0 w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full duration-300 ${
                           index === selectedStoryIndex
                             ? "opacity-100"
                             : "bg-black opacity-55"
@@ -80,7 +82,29 @@ const SuccessStories = () => {
                       ></div>
                       <img
                         src={story.image}
-                        className={`w-36 h-36 md:w-40 md:h-40 rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
+                        className={`w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48  rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
+                      />
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+              {data?.map((story, index) => (
+                <SwiperSlide key={index}>
+                  <div className="cursor-pointer w-fit">
+                    <div
+                      className="relative rounded-full"
+                      onClick={() => handleImageClick(index)}
+                    >
+                      <div
+                        className={`absolute top-0 left-0 w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full duration-300 ${
+                          index === selectedStoryIndex
+                            ? "opacity-100"
+                            : "bg-black opacity-55"
+                        }`}
+                      ></div>
+                      <img
+                        src={story.image}
+                        className={`w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48  rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
                       />
                     </div>
                   </div>

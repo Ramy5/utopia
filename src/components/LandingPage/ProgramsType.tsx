@@ -43,7 +43,7 @@ const ProgramsType = ({ data }) => {
                     <img
                       src={categorie?.image}
                       alt="Book"
-                      className="w-full h-64"
+                      className="w-full h-64 lg:h-[19rem]"
                     />
                   </div>
                   <div
@@ -53,21 +53,21 @@ const ProgramsType = ({ data }) => {
                         : index === 1
                         ? "bg-[#FFB6BF]"
                         : "bg-[#FFCC1A]"
-                    } mt-4 rounded-2xl text-white px-4 lg:px-5 py-4 text-center cursor-pointer h-60 flex flex-col justify-between items-center`}
+                    } mt-4 rounded-2xl text-white px-4 lg:px-5 py-4 text-center cursor-pointer h-56 flex flex-col justify-between items-center`}
                     onClick={() => setIndexCategory(categorie.id)}
                   >
-                    <h2 className="font-medium text-lg lg:text-xl">
+                    <h2 className="text-lg lg:text-xl">
                       {categorie?.name}
                     </h2>
                     <div className="duration-500 ease-in-out">
-                      <p className="mt-3 text-[15px] font-base line-clamp-4">
+                      <p className="mt-3 text-sm font-base line-clamp-4">
                         <span
                           dangerouslySetInnerHTML={{ __html: categorie?.desc }}
                         />
                       </p>
                     </div>
                     <Button
-                      className="bg-white text-mainColor mt-5 w-fit"
+                      className="bg-white text-black text-xl px-3.5 rounded-3xl font-normal mt-5 w-fit"
                       action={() => {
                         const categoryType =
                           categorie.id === 1

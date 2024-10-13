@@ -37,7 +37,7 @@ const ListSpecializations = () => {
     listSpecializations
   );
   return (
-    <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 px-4 m-auto md:hidden block">
+    <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto md:hidden block">
       <div className="relative block md:hidden">
         <div className="absolute -translate-y-1/2 top-1/2 ">
           <Link to={"/"}>

@@ -15,6 +15,9 @@ export default {
         custom: "-2px -1px 4px 0px rgba(148, 123, 224, 0.25)",
         card: "0px 4px 4px 0px #9F85F31A",
       },
+      fontFamily: {
+        Rubik: ['Rubik', 'sans-serif'], // Fallback to sans-serif
+      },
       keyframes: {
         spin: {
           "0%": { transform: "rotate(0deg)" },

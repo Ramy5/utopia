@@ -197,16 +197,16 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
           {/* Language and Auth */}
           <div className="items-center hidden gap-3 sm:flex xl:gap-6 ">
             <div className="flex gap-4">
-              <img src={Star} alt="star" className="w-6" />
-              <img src={Shop} alt="shop" className="w-6 " />
+              <img src={Star} alt="star" className="w-5" />
+              <img src={Shop} alt="shop" className="w-5 " />
             </div>
-            <Link to="/login" className="hover:text-mainColor text-lg">
+            <Link to="/login" className="hover:text-mainColor text-[17px]">
               تسجيل الدخول
             </Link>
-            <Link to="/register" className="hover:text-mainColor text-lg">
+            <Link to="/register" className="hover:text-mainColor text-[17px]">
               إنشاء حساب
             </Link>
-            <button className="hover:text-mainColor text-lg">عربي EN</button>
+            <button className="hover:text-mainColor text-[17px]">عربي EN</button>
           </div>
 
           {/* Nav Links */}

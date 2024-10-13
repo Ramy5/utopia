@@ -5,7 +5,7 @@ const StructurePages = () => {
   return (
     <div>
       <div>
-        <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
+        <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto">
           <Navbar />
         </div>
 

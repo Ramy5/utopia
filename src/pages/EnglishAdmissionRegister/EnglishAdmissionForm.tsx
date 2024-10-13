@@ -180,7 +180,7 @@ const EnglishAdmissionForm = () => {
         return (
           <Form className="">
             {/* DESKTOP */}
-            <div className="p-4 my-12 hidden sm:block max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
+            <div className="p-4 my-12 hidden sm:block max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto">
               <div className="mb-24 space-y-4">
                 <h1 className="text-4xl font-bold ">
                   {t("registration form")}

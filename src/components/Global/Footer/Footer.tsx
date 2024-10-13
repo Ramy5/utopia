@@ -143,13 +143,13 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
           hidden ? "hidden sm:block" : ""
         }`}
       >
-        <div className="max-w-full py-4 md:px-8 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
-          <div className="container grid grid-cols-1 gap-24 px-4 py-20 mx-auto lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
+        <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
+          <div className="container grid grid-cols-1 gap-24 py-20 lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
             {["courses", "destinations", "opportunities", "contact us"].map(
               (section, index) => (
                 <div key={index} className="text-center md:text-right">
-                  <h4 className="pb-4 font-bold border-b w-3/5 md:w-full m-auto">{t(section)}</h4>
-                  <ul className="pt-6 space-y-2">
+                  <h4 className="pb-4 font-semibold text-xl border-b w-3/5 md:w-full m-auto">{t(section)}</h4>
+                  <ul className="pt-6 space-y-6 text-sm">
                     {section === "courses" &&
                       [
                         "دورة اللغة الإنجليزية العامة",

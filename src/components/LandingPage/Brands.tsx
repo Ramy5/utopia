@@ -30,16 +30,17 @@ const Brands = () => {
   return (
     <div className="hidden sm:block">
       <Swiper
-        slidesPerView={5}
+        slidesPerView={8}
+        spaceBetween={60}
         loop={true}
         centeredSlides={true}
         autoplay={{
           delay: 0,
           pauseOnMouseEnter: true,
-          disableOnInteraction: true,
+          disableOnInteraction: false,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        speed={1000}
+        speed={2000}
       >
         <div>
           {data?.map((brand, index) => (
@@ -49,7 +50,14 @@ const Brands = () => {
               </div>
             </SwiperSlide>
           ))}
-                    {data?.map((brand, index) => (
+          {data?.map((brand, index) => (
+            <SwiperSlide key={index}>
+              <div className="py-12 cursor-pointer">
+                <img src={brand.image} alt="brand" className="w-20 h-20" />
+              </div>
+            </SwiperSlide>
+          ))}
+          {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
                 <img src={brand.image} alt="brand" className="w-20 h-20" />

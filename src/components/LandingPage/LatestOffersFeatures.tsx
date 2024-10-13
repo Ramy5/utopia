@@ -11,22 +11,22 @@ const LatestOffersFeatures = ({ data }) => {
       <h2 className="font-medium sm:font-normal text-xl sm:text-5xl mb-5 sm:mb-16">
         {t("latest offers and features")}
       </h2>
-      <div className="hidden sm:grid grid-cols-6 gap-3">
-        <div className="col-span-1">
+      <div className="hidden sm:grid grid-cols-10 gap-3">
+        <div className="col-span-2">
           <img
             src={LatestOffersFeatures_1}
             alt="Offers"
             className="h-[450px] w-full"
           />
         </div>
-        <div className="col-span-1">
+        <div className="col-span-2">
           <img
             src={LatestOffersFeatures_2}
             alt="Offers"
             className="h-[450px] w-full"
           />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-6">
           <img
             src={LatestOffersFeatures_3}
             alt="Offers"

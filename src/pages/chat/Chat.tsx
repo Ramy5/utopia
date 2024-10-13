@@ -59,12 +59,12 @@ const Chat: React.FC = () => {
 
   return (
     <div>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] mx-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto">
         <Navbar hidden />
       </div>
 
       {/* DESKTOP */}
-      <div className="hidden sm:flex bg-[#F7F7F7] max-w-full sm:max-w-5xl flex-col justify-between items-center md:max-w-6xl lg:max-w-[90rem] p-24 rounded-[150px] shadow-lg mx-auto h-[85vh] my-10">
+      <div className="hidden sm:flex bg-[#F7F7F7] max-w-full sm:max-w-5xl flex-col justify-between items-center md:max-w-6xl lg:max-w-[80rem] p-24 rounded-[150px] shadow-lg mx-auto h-[85vh] my-10">
         <MessageList messages={messages} />
         <MessageInput onSendMessage={handleSendMessage} />
       </div>

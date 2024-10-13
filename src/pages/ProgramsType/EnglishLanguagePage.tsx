@@ -151,7 +151,7 @@ const EnglishLanguagePage = () => {
 
   return (
     <>
-      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
+      <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
         <div className="sm:block hidden">
           <div
             id="englishSection"
@@ -198,42 +198,48 @@ const EnglishLanguagePage = () => {
                 {t("More")}
               </p>
             </div>
-            <div className="hidden grid-cols-2 gap-5 sm:grid md:grid-cols-3 lg:grid-cols-4">
+
+            <div className="hidden grid-cols-2 gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
               {data?.map((packages, index) => (
                 <div
                   key={index}
-                  className="text-center group cursor-pointer border border-[#707070] rounded-2xl overflow-hidden"
+                  className="text-center group cursor-pointer border border-[#707070] rounded-2xl  relative packege"
                   onClick={() =>
                     navigate("/englishLanguage/details", {
                       state: packages,
                     })
                   }
                 >
-                  <div>
-                    <img
-                      src={packages.packageImage[0].image}
-                      className="object-cover w-full duration-700 h-60 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
-                    />
+                  {packages?.is_note === 1 && (
+                    <p className="absolute bg-[#FFCC1A] px-4 pt-2.5 pb-2 text-xs rounded-full left-1/2 w-fit whitespace-nowrap -translate-x-1/2 -top-4 z-20">
+                      {packages.note}
+                    </p>
+                  )}
+                  <div className="h-[17.5vw]">
+                    <div className="flex rounded-2xl overflow-hidden max-h-full">
+                      <img
+                        src={packages.packageImage[0].image}
+                        className="rounded-t-2xl w-full h-[17.5vw] group-hover:h-[13vw] duration-300 object-cover rounded-b-2xl group-hover:rounded-b-none"
+                      />
+                    </div>
                   </div>
-                  <div className="relative">
-                    <div className="absolute w-full h-full bg-mainColor translate-y-[82%] group-hover:translate-y-0 rounded-t-2xl group-hover:rounded-t-none duration-300 -z-10"></div>
-
-                    <h2 className="relative pt-4 text-2xl font-medium text-black duration-300 group-hover:text-white">
+                  <div className="body-packege relative">
+                    <p className="relative pt-4 text-[25px] text-black duration-300 ">
                       {packages.partner_name}
-                    </h2>
+                    </p>
                     <p
-                      className="max-w-full px-3 my-4 overflow-hidden text-black duration-300 text-ellipsis max-h-48 group-hover:text-white"
+                      className="max-w-full px-2.5 my-5 overflow-hidden text-black duration-300 text-ellipsis max-h-48 text-[15px]"
                       style={{
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 8,
+                        WebkitLineClamp: 6,
                       }}
                     >
                       {packages.desc}
                     </p>
-                    <h3 className="py-3 text-2xl font-medium text-white  rounded-2xl">
+                    <p className="pt-[1.3rem] pb-3 text-xl text-white bg-mainColor rounded-2xl">
                       {packages.g_price} <span>{packages.unit}</span>
-                    </h3>
+                    </p>
                   </div>
                 </div>
               ))}
