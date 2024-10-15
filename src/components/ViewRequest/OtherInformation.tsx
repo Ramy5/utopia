@@ -2,6 +2,7 @@ import { t } from "i18next";
 import LoginBg from "../../assets/loginBg.jpg";
 import Button from "../atoms/Button/Button";
 import { IoChevronDown } from "react-icons/io5";
+import cn from "../../utils/cn";
 
 const OtherInformation = () => {
   const CourseData = [
@@ -45,9 +46,10 @@ const OtherInformation = () => {
             <div className="flex justify-between items-center">
               <p className="text-xs">{t("Accommodation")}</p>
               <span
-                className={`text-xs py-1.5 rounded-2xl ${
+                className={cn(
+                  "text-xs py-1.5 rounded-2xl",
                   item.isConfirmed ? "bg-[#39FF0A] px-8" : "bg-[#D1CBCB] px-4"
-                }`}
+                )}
               >
                 {item.isConfirmed ? t("Confirmed") : t("Under process")}
               </span>
