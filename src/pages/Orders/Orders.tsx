@@ -3,7 +3,7 @@ import React from "react";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import cn from "../../utils/cn";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const navigate = useNavigate()
@@ -39,12 +39,12 @@ const Orders = () => {
   return (
     <section className="my-20 max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
       <div className="flex gap-x-2 mb-5">
-        <p className="bg-mainColor text-white rounded-xl px-6 pt-2 pb-1.5 text-lg">
+        <Link to={"/addRequest"} className="bg-mainColor text-white rounded-xl px-6 pt-2 pb-1.5 text-lg">
           {t("add a request")}
-        </p>
-        <p className="bg-mainColor text-white rounded-xl text-2xl px-4 pt-2 ">
+        </Link>
+        <Link to={"/addRequest"} className="bg-mainColor text-white rounded-xl text-2xl px-4 pt-2 ">
           +
-        </p>
+        </Link>
       </div>
 
 

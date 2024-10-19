@@ -50,7 +50,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
       console.log(data);
       // setOtp(data?.otp);
       setAuthData(data);
-      navigate("/studentRequest");
+      navigate("/orders");
       setTimeout(() => {
         toast.success(t(`password was created`));
       }, 100);
