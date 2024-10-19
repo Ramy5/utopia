@@ -56,7 +56,7 @@ const Login = () => {
     onSuccess: (data) => {
       console.log(data);
       setAuthData(data);
-      navigate("/studentRequest");
+      navigate("/orders");
       setTimeout(() => {
         toast.success(t(`login was successful`));
       }, 100);

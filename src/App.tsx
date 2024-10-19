@@ -72,6 +72,7 @@ const EnglishAdmissionRegister = lazy(
   () => import("./pages/EnglishAdmissionRegister/EnglishAdmissionRegister")
 );
 const ViewRequest = lazy(() => import("./pages/ViewRequest"));
+const Orders = lazy(() => import("./pages/Orders/Orders"));
 
 // PARTNER
 const PartnerBookingList = lazy(
@@ -156,6 +157,7 @@ function App() {
                 element={<DesignCourseRegistration />}
               />
               <Route path="/viewRequest/:id" element={<ViewRequest />} />
+              <Route path="/orders" element={<Orders />} />
 
               {/* PARTNER */}
               <Route
