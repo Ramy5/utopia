@@ -1,16 +1,17 @@
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../../assets/logo.png";
+import { apiRequest } from "../../../utils/axios";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { t } from "i18next";
+import cn from "../../../utils/cn";
 import { CiHeart } from "react-icons/ci";
 import { PiChatCircleThin } from "react-icons/pi";
-import { t } from "i18next";
-import { useState, useEffect } from "react";
-import { apiRequest } from "../../../utils/axios";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import cn from "../../../utils/cn";
-import { useAuth } from "../../../context/AuthContext";
-import Shop from "../../../assets/shop.png";
-import Star from "../../../assets/star.png";
+import Logo from "../../../assets/logo.png";
+import { IoMdNotifications } from "react-icons/io";
+import { MdPerson } from "react-icons/md";
+
 interface Navbar_TP {
   hidden?: boolean;
 }
@@ -22,7 +23,7 @@ interface UserProfile {
   image: string;
 }
 
-const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
+const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
   const { token, clearAuth } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +32,11 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   const [newImage, setNewImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const pathName = location.pathname;
 
   const fetchProfile = async () => {
     try {
-      const response = await apiRequest({
+      const response: any = await apiRequest({
         url: "/api/student/getProfile",
         method: "GET",
         token,
@@ -85,7 +87,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
       try {
         setIsPendingManual(true);
-        const response = await apiRequest({
+        const response: any = await apiRequest({
           url: "/api/student/editProfile",
           method: "POST",
           data: formData,
@@ -112,7 +114,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
   const logOutPost = async (postData) => {
     try {
-      const data = await apiRequest({
+      const data: any = await apiRequest({
         url: "/api/student/logout",
         method: "POST",
         data: postData,
@@ -133,117 +135,110 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
     },
   });
 
-  const handleLogout = () => {
-    mutate({});
-  };
+  const handleLogout = () => mutate();
 
   return (
     <nav className={hidden ? "hidden sm:block" : ""}>
-      {token ? (
-        <header className="flex items-center px-4 py-2 sm:justify-start">
-          <div
-            onClick={toggleDropdown}
-            className="relative flex items-center gap-2"
-          >
-            <div className="w-10 h-10 overflow-hidden rounded-full">
+      <header className="flex items-center justify-between px-4 py-2">
+        {/* Logo */}
+        <Link to={"/"} className="">
+          <img src={Logo} alt="logo" className="w-32 h-10" />
+        </Link>
+
+        {/* Nav Links */}
+        <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerBookingList",
+              })}
+              to={"/partnerBookingList"}
+            >
+              Booking List
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerUsers",
+              })}
+              to={"/partnerUsers"}
+            >
+              Users
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerSnatches",
+              })}
+              to={"/partnerSnatches"}
+            >
+              Snatches
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerContact",
+              })}
+              to={"/partnerContact"}
+            >
+              Contact Utopia
+            </Link>
+          </li>
+        </ul>
+
+        <div
+          onClick={toggleDropdown}
+          className="relative flex items-center gap-6"
+        >
+          <p className="relative mx-2 font-semibold cursor-pointer">
+            <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-600 rounded-full">
+              1
+            </span>
+            <IoMdNotifications className="text-[#7070708c] text-4xl" />
+          </p>
+          <div className="w-12 h-12 overflow-hidden rounded-xl">
+            {!profile?.image ? (
               <img
                 src={profile?.image}
                 alt={profile?.name}
                 className="object-cover w-full h-full cursor-pointer"
                 onClick={openImageModal}
               />
-            </div>
-            <p className="mx-2 font-semibold cursor-pointer">
-              {profile?.name?.split(" ")[0]}
-            </p>
-            {isOpen && (
-              <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
-                <div className="">
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
-                  >
-                    {t("dashboard")}
-                  </Link>
-                  <p
-                    onClick={handleLogout}
-                    className={cn(
-                      "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
-                      {
-                        "cursor-not-allowed": isPending,
-                      }
-                    )}
-                  >
-                    {t("logout")}{" "}
-                  </p>
-                </div>
+            ) : (
+              <div className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor">
+                <MdPerson className="text-4xl text-white" />
               </div>
             )}
           </div>
 
-          <div className="flex items-center gap-2 mx-2">
-            <CiHeart className="text-xl" />
-            <Link to={"/chat"}>
-              <PiChatCircleThin className="text-xl" />
-            </Link>
-          </div>
-          {/* Logo */}
-          <Link to={"/"} className="ms-auto">
-            <img src={Logo} alt="logo" className="w-32 h-10" />
-          </Link>
-        </header>
-      ) : (
-        <div className="flex items-center justify-between px-4 py-3 text-sm sm:py-4 xl:text-base">
-          {/* Language and Auth */}
-          <div className="items-center hidden gap-3 sm:flex xl:gap-6 ">
-            <div className="flex gap-4">
-              <img src={Star} alt="star" className="w-5" />
-              <img src={Shop} alt="shop" className="w-5 " />
+          {isOpen && (
+            <div className="absolute z-40 w-48 mt-6 rounded-md start-0 top-10 focus:outline-none">
+              <div className="">
+                <p
+                  onClick={openImageModal}
+                  className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                >
+                  Add Pic
+                </p>
+                <p
+                  onClick={handleLogout}
+                  className={cn(
+                    "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
+                    {
+                      "cursor-not-allowed": isPending,
+                    }
+                  )}
+                >
+                  Sign Out
+                </p>
+              </div>
             </div>
-            <Link to="/login" className="hover:text-mainColor text-[17px]">
-              تسجيل الدخول
-            </Link>
-            <Link to="/register" className="hover:text-mainColor text-[17px]">
-              إنشاء حساب
-            </Link>
-            <button className="hover:text-mainColor text-[17px]">
-              عربي EN
-            </button>
-          </div>
-
-          {/* Nav Links */}
-          {/* <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
-            <li className="cursor-pointer hover:text-mainColor">
-              الباكجات السياحية
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">
-              الانشطه السياحية
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">
-              السياحة الفاخرة
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">
-              تذاكر الطيران
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">الفنادق</li>
-            <li className="cursor-pointer hover:text-mainColor">
-              <a href={"/#englishSection"}>اللغة الانجليزية</a>
-            </li>
-          </ul> */}
-
-          {/* Hamburger Menu for Mobile */}
-          <Link to={"/login"} className="sm:hidden">
-            <button className="px-3 pt-2 pb-3 text-sm font-semibold border text-mainColor border-mainColor rounded-xl focus:outline-none">
-              {t("login")}
-            </button>
-          </Link>
-
-          {/* Logo */}
-          <Link to={"/"}>
-            <img src={Logo} alt="logo" className="hidden w-32 h-10 sm:block" />
-          </Link>
+          )}
         </div>
-      )}
+      </header>
 
       {/* Image upload modal */}
       {profileImgIsEdit && (
@@ -286,4 +281,4 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   );
 };
 
-export default Navbar;
+export default PartnerNavbar;

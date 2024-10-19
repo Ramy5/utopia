@@ -16,6 +16,7 @@ export type BaseInput_TP = {
   placeholder?: string;
   ref?: any;
   disabled?: boolean;
+  notEnglith?: boolean;
   autoFocus?: any;
   onChange?: () => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -45,6 +46,7 @@ const BaseInput = ({
   disabled,
   autoFocus,
   onChange,
+  notEnglith,
   min,
   max,
   onKeyDown,
@@ -108,7 +110,9 @@ const BaseInput = ({
           id={id}
           value={props?.value || values[props.name]}
           error={touched[props.name] && !!errors[props.name]}
-          placeholder={placeholder ? `${t(placeholder)}` : ""}
+          placeholder={
+            placeholder && !notEnglith ? `${t(placeholder)}` : placeholder
+          }
           autoComplete="off"
           onBlur={() => {
             setFieldTouched(props.name, true);

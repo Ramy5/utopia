@@ -17,7 +17,7 @@ const ViewRequest = () => {
         <div className="px-4 md:px-0">
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-medium">{t("The order")}</h2>
-            <Button className="rounded-2xl text-base">{t("return")}</Button>
+            <Button className="text-base rounded-2xl">{t("return")}</Button>
           </div>
 
           <div>
@@ -37,14 +37,14 @@ const ViewRequest = () => {
           </div>
 
           <div className="">
-            <div className="flex items-center gap-x-3 mb-6">
+            <div className="flex items-center mb-6 gap-x-3">
               <h2 className="text-3xl">{t("Contact the institute")}</h2>
-              <div className="w-7 h-7 rounded-full bg-mainColor flex items-center justify-center">
+              <div className="flex items-center justify-center rounded-full w-7 h-7 bg-mainColor">
                 <IoChevronDown size={18} className="text-white" />
               </div>
             </div>
 
-            <ChatForm className="rounded-none shadow-none mb-0"/>
+            <ChatForm className="mb-0 rounded-none shadow-none" />
           </div>
         </div>
       </div>
