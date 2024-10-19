@@ -14,7 +14,6 @@ interface MessageItemProps {
 const MessageItem: React.FC<MessageItemProps> = ({ message, isMobail }) => {
   const [profileImg, setProfileImg] = useState(null);
   const { user } = useAuth();
-  console.log("🚀 ~ user:", user);
 
   useEffect(() => {
     setProfileImg(user.image);

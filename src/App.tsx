@@ -71,9 +71,8 @@ const UniversityAdmissionRegister = lazy(
 const EnglishAdmissionRegister = lazy(
   () => import("./pages/EnglishAdmissionRegister/EnglishAdmissionRegister")
 );
-const ViewRequest = lazy(
-  () => import("./pages/ViewRequest")
-);
+const ViewRequest = lazy(() => import("./pages/ViewRequest"));
+const Orders = lazy(() => import("./pages/Orders/Orders"));
 
 function App() {
   const isRTL = useRTL();
@@ -140,10 +139,8 @@ function App() {
                 path="/designCourse/registration"
                 element={<DesignCourseRegistration />}
               />
-              <Route
-                path="/viewRequest/:id"
-                element={<ViewRequest />}
-              />
+              <Route path="/viewRequest/:id" element={<ViewRequest />} />
+              <Route path="/orders" element={<Orders />} />
             </Route>
 
             <Route path="/chat" element={<Chat />} />
