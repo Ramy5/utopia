@@ -25,7 +25,7 @@ const PersonalInformation = ({ steps }: any) => {
   const renderDataItem = (label, value) => {
     return (
       <div className="">
-        <h3 className="text-sm mb-2">{t(label)}</h3>
+        <h3 className="mb-2 text-sm">{t(label)}</h3>
         <p className="text-mainColor">{value}</p>
       </div>
     );
@@ -55,16 +55,17 @@ const PersonalInformation = ({ steps }: any) => {
       <div className="bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4 sm:block hidden">
         <div className="">
           <h2 className="text-3xl mb-20 ms-14">{personalData.name}</h2>
+
           <div className="grid grid-cols-12">
             <div className="col-span-4 md:col-span-3 lg:col-span-2">
               <img
                 src={PersonalImage}
                 alt="Personal"
-                className="w-32 h-32 rounded-full overflow-hidden mx-auto -mt-8"
+                className="w-32 h-32 mx-auto -mt-8 overflow-hidden rounded-full"
               />
             </div>
 
-            <div className="col-span-8 md:col-span-9 lg:col-span-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8">
+            <div className="grid grid-cols-2 col-span-8 md:col-span-9 lg:col-span-10 md:grid-cols-3 lg:grid-cols-4 gap-y-8">
               {renderDataItem("Student number", personalData.student_number)}
               {renderDataItem("Gender", personalData.gender)}
               {renderDataItem("Date of birth", personalData.birth_date)}

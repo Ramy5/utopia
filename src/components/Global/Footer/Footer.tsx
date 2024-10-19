@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import logoFooter from "../../../assets/logo-footer.svg";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
@@ -47,11 +47,12 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
   const { i18n } = useTranslation();
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const role = ""; // ROLE
 
   const fetchRequests = async () => {
     try {
       setIsLoading(true);
-      const data = await apiRequest({
+      const data: any = await apiRequest({
         url: `/api/student/orders`,
         method: "GET",
       });
@@ -65,7 +66,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
 
   const getAllNotifications = async () => {
     try {
-      const data = await apiRequest({
+      const data: any = await apiRequest({
         url: "/api/student/notifications",
         method: "GET",
         token,
@@ -83,10 +84,15 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
     }
   }, []);
 
-  useEffect(() => {
-    document.documentElement.dir = isRTL ? "rtl" : "ltr";
-    document.documentElement.lang = isRTL ? "ar" : "en";
-  }, [isRTL]);
+  useLayoutEffect(() => {
+    if (role === "Partner") {
+      document.documentElement.dir = "ltr";
+      document.documentElement.lang = "en";
+    } else {
+      document.documentElement.dir = isRTL ? "rtl" : "ltr";
+      document.documentElement.lang = isRTL ? "ar" : "en";
+    }
+  }, [isRTL, role]);
 
   const notifications = notificationState?.map((notification: any) => {
     const date = new Date(notification?.created_at?.replace(" ", "T"));
@@ -170,7 +176,9 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             {["courses", "destinations", "opportunities", "contact us"].map(
               (section, index) => (
                 <div key={index} className="text-center md:text-right">
-                  <h4 className="pb-4 font-semibold text-xl border-b w-3/5 md:w-full m-auto">{t(section)}</h4>
+                  <h4 className="w-3/5 pb-4 m-auto text-xl font-semibold border-b md:w-full">
+                    {t(section)}
+                  </h4>
                   <ul className="pt-6 space-y-6 text-sm">
                     {section === "courses" &&
                       [

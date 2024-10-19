@@ -44,7 +44,7 @@ const ViewRequest = () => {
         <div className="px-4 md:px-0">
           <div className="hidden sm:flex items-center justify-between">
             <h2 className="text-3xl font-medium">{t("The order")}</h2>
-            <Button className="rounded-2xl text-base">{t("return")}</Button>
+            <Button className="text-base rounded-2xl">{t("return")}</Button>
           </div>
 
           <div className="relative sm:hidden block">
@@ -66,27 +66,45 @@ const ViewRequest = () => {
           </div>
 
           <div className="sm:hidden flex items-center justify-between mt-8 mb-10 gap-x-1">
-            <Button bordered={steps !== 1} action={() => setSteps(1)} className="text-sm font-medium px-2 py-2.5">{t("Personal information")}</Button>
-            <Button bordered={steps !== 2} action={() => setSteps(2)} className="text-sm font-medium px-2 py-2.5">{t("Course information")}</Button>
-            <Button bordered={steps !== 3} action={() => setSteps(3)} className="text-sm font-medium px-3 py-2.5">{t("Other")}</Button>
+            <Button
+              bordered={steps !== 1}
+              action={() => setSteps(1)}
+              className="text-sm font-medium px-2 py-2.5"
+            >
+              {t("Personal information")}
+            </Button>
+            <Button
+              bordered={steps !== 2}
+              action={() => setSteps(2)}
+              className="text-sm font-medium px-2 py-2.5"
+            >
+              {t("Course information")}
+            </Button>
+            <Button
+              bordered={steps !== 3}
+              action={() => setSteps(3)}
+              className="text-sm font-medium px-3 py-2.5"
+            >
+              {t("Other")}
+            </Button>
           </div>
 
           <div>
-            <PersonalInformation steps={steps}/>
+            <PersonalInformation steps={steps} />
           </div>
 
           <div>
-            <CourseInformation steps={steps}/>
+            <CourseInformation steps={steps} />
           </div>
 
           <div>
-            <OtherInformation steps={steps}/>
+            <OtherInformation steps={steps} />
           </div>
 
           <div className="sm:block hidden">
             <div className="flex items-center gap-x-3 mb-6">
               <h2 className="text-3xl">{t("Contact the institute")}</h2>
-              <div className="w-7 h-7 rounded-full bg-mainColor flex items-center justify-center">
+              <div className="flex items-center justify-center rounded-full w-7 h-7 bg-mainColor">
                 <IoChevronDown size={18} className="text-white" />
               </div>
             </div>
