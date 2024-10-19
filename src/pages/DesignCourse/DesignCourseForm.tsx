@@ -27,7 +27,7 @@ interface CustomOption {
   value: string;
 }
 
-const DesignCourseSelect: StylesConfig<
+export const DesignCourseSelect: StylesConfig<
   CustomOption,
   false,
   GroupBase<CustomOption>
@@ -201,12 +201,12 @@ const DesignCourseForm = () => {
               <div className="sm:mb-0 mb-28">
                 <div className={`${step === 1 ? "block" : "hidden"} sm:block`}>
                   <div className="mb-8 sm:mb-16">
-                    <div className="flex justify-between items-center mb-4 sm:mb-12">
-                      <div className="flex gap-2 items-center">
+                    <div className="flex items-center justify-between mb-4 sm:mb-12">
+                      <div className="flex items-center gap-2">
                         <img
                           src={Graduation}
                           alt="Graduation"
-                          className="w-16 h-10 hidden sm:block"
+                          className="hidden w-16 h-10 sm:block"
                         />
                         <p className="text-lg font-medium sm:font-normal sm:text-xl">
                           {t("Courses")}
@@ -230,7 +230,7 @@ const DesignCourseForm = () => {
                               }`,
                             });
                           }}
-                          className="w-full text-black text-center"
+                          className="w-full text-center text-black"
                           value={numberOfWeeks}
                           selectStyle={DesignCourseSelect}
                         />
@@ -247,7 +247,7 @@ const DesignCourseForm = () => {
                             } sm:border-t-[1.8px] sm:border-t-[#707070] `}
                           >
                             <div>
-                              <div className="flex items-end gap-2 sm:gap-4 mb-3">
+                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
                                 <input
                                   id={`course_${index}`}
                                   name="courses_id"
@@ -285,10 +285,10 @@ const DesignCourseForm = () => {
                   </div>
 
                   <div className="mb-8 sm:mb-16">
-                    <div className="flex justify-between items-center mb-4 sm:mb-12">
-                      <div className="flex sm:gap-0 gap-1 items-center">
-                        <PiHouseLineThin className="w-16 h-14 hidden sm:block" />
-                        <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                    <div className="flex items-center justify-between mb-4 sm:mb-12">
+                      <div className="flex items-center gap-1 sm:gap-0">
+                        <PiHouseLineThin className="hidden w-16 h-14 sm:block" />
+                        <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                           {t("Housing")}
                         </p>
                       </div>
@@ -310,7 +310,7 @@ const DesignCourseForm = () => {
                               }`,
                             });
                           }}
-                          className="w-full text-black text-center"
+                          className="w-full text-center text-black"
                           value={numberOfWeeks}
                           selectStyle={DesignCourseSelect}
                         />
@@ -327,7 +327,7 @@ const DesignCourseForm = () => {
                             } sm:border-t-[1.8px] sm:border-t-[#707070] `}
                           >
                             <div>
-                              <div className="flex items-end gap-2 sm:gap-4 mb-3">
+                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
                                 <input
                                   id={`living_${index}`}
                                   name="living_id"
@@ -367,14 +367,14 @@ const DesignCourseForm = () => {
 
                 <div className={`${step === 2 ? "block" : "hidden"} sm:block`}>
                   <div className="mb-8 sm:mb-16">
-                    <div className="flex justify-between items-center mb-4 sm:mb-12">
-                      <div className="flex gap-2 items-center">
+                    <div className="flex items-center justify-between mb-4 sm:mb-12">
+                      <div className="flex items-center gap-2">
                         <img
                           src={Car}
                           alt="Car"
-                          className="w-16 h-10 hidden sm:block"
+                          className="hidden w-16 h-10 sm:block"
                         />
-                        <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                        <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                           {t("Airport pick up")}
                         </p>
                       </div>
@@ -390,7 +390,7 @@ const DesignCourseForm = () => {
                             } sm:border-t-[1.8px] sm:border-t-[#707070] `}
                           >
                             <div>
-                              <div className="flex items-end gap-2 sm:gap-4 mb-3">
+                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
                                 <input
                                   id={`pickUp_${index}`}
                                   name="pick_id"
@@ -428,14 +428,14 @@ const DesignCourseForm = () => {
                   </div>
 
                   <div className="mb-8 sm:mb-16">
-                    <div className="flex justify-between items-center mb-4 sm:mb-12">
-                      <div className="flex gap-2 items-center">
+                    <div className="flex items-center justify-between mb-4 sm:mb-12">
+                      <div className="flex items-center gap-2">
                         <img
                           src={StudentMedical}
                           alt="Student Medical"
-                          className="w-14 h-14 hidden sm:block"
+                          className="hidden w-14 h-14 sm:block"
                         />
-                        <p className="text-xl sm:text-xl font-medium sm:font-normal ">
+                        <p className="text-xl font-medium sm:text-xl sm:font-normal ">
                           {t("Student medical insurance")}
                         </p>
                       </div>
@@ -451,7 +451,7 @@ const DesignCourseForm = () => {
                             } sm:border-t-[1.8px] sm:border-t-[#707070] `}
                           >
                             <div>
-                              <div className="flex items-end gap-2 sm:gap-4 mb-3">
+                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
                                 <input
                                   id={`medical_${index}`}
                                   name="medical_id"
@@ -489,14 +489,14 @@ const DesignCourseForm = () => {
                   </div>
 
                   <div className="mb-8 sm:mb-16">
-                    <div className="flex justify-between items-center mb-4 sm:mb-12">
-                      <div className="flex gap-2 items-center">
+                    <div className="flex items-center justify-between mb-4 sm:mb-12">
+                      <div className="flex items-center gap-2">
                         <img
                           src={OtherFees}
                           alt="Other Fees"
-                          className="w-14 h-14 hidden sm:block"
+                          className="hidden w-14 h-14 sm:block"
                         />
-                        <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                        <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                           {t("Other fees")}
                         </p>
                       </div>
@@ -512,7 +512,7 @@ const DesignCourseForm = () => {
                             } sm:border-t-[1.8px] sm:border-t-[#707070] `}
                           >
                             <div>
-                              <div className="flex items-end gap-2 sm:gap-4 mb-3">
+                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
                                 <input
                                   id={`fees_${index}`}
                                   name="fees_id"
@@ -555,14 +555,14 @@ const DesignCourseForm = () => {
                     step === 3 ? "block" : "hidden"
                   } sm:block`}
                 >
-                  <div className="flex justify-between items-center mb-4 sm:mb-12">
-                    <div className="flex gap-3 items-center">
+                  <div className="flex items-center justify-between mb-4 sm:mb-12">
+                    <div className="flex items-center gap-3">
                       <img
                         src={TotalCosts}
                         alt="Total Costs"
-                        className="w-14 h-14 hidden sm:block"
+                        className="hidden w-14 h-14 sm:block"
                       />
-                      <p className="text-lg sm:text-xl font-semibold sm:font-normal">
+                      <p className="text-lg font-semibold sm:text-xl sm:font-normal">
                         {t("Total costs")}
                       </p>
                     </div>
@@ -570,17 +570,17 @@ const DesignCourseForm = () => {
 
                   <div className="sm:bg-[#1B0924] sm:text-white sm:rounded-2xl">
                     <div className="flex justify-between items-center border-b border-b-[#707070] p-4">
-                      <div className="flex gap-3 items-center">
+                      <div className="flex items-center gap-3">
                         <img
                           src={GraduationLight}
                           alt="Graduation"
-                          className="w-20 h-12 sm:block hidden"
+                          className="hidden w-20 h-12 sm:block"
                         />
                         <div>
-                          <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                          <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                             {t("Courses")}
                           </p>
-                          <p className="text-sm mt-2">
+                          <p className="mt-2 text-sm">
                             {t("الدورة التحضيرية لإختبار الآيلتس")}
                           </p>
                         </div>
@@ -592,12 +592,12 @@ const DesignCourseForm = () => {
 
                     <div className="flex justify-between items-center border-b border-b-[#707070] p-4">
                       <div className="flex sm:gap-1.5 items-center">
-                        <PiHouseLineThin className="w-16 h-14 sm:w-20 sm:h-16 sm:block hidden" />
+                        <PiHouseLineThin className="hidden w-16 h-14 sm:w-20 sm:h-16 sm:block" />
                         <div>
-                          <p className="text-xl sm:text-xl font-medium sm:font-normal">
+                          <p className="text-xl font-medium sm:text-xl sm:font-normal">
                             {t("Housing")}
                           </p>
-                          <p className="text-sm mt-2">
+                          <p className="mt-2 text-sm">
                             {t("الإقامة مع عائلة")}
                           </p>
                         </div>
@@ -612,13 +612,13 @@ const DesignCourseForm = () => {
                         <img
                           src={CarLight}
                           alt="Car"
-                          className="w-16 h-10 sm:w-16 sm:h-12 sm:block hidden"
+                          className="hidden w-16 h-10 sm:w-16 sm:h-12 sm:block"
                         />
                         <div>
-                          <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                          <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                             {t("Airport pick up")}
                           </p>
-                          <p className="text-sm mt-2">{t("بدون إستقبال")}</p>
+                          <p className="mt-2 text-sm">{t("بدون إستقبال")}</p>
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
@@ -631,13 +631,13 @@ const DesignCourseForm = () => {
                         <img
                           src={StudentMedicalLight}
                           alt="Student Medical"
-                          className="w-14 h-14 sm:block hidden"
+                          className="hidden w-14 h-14 sm:block"
                         />
                         <div>
-                          <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                          <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                             {t("Student medical insurance")}
                           </p>
-                          <p className="text-sm mt-2">
+                          <p className="mt-2 text-sm">
                             {t("بدون التأمين الطبي")}
                           </p>
                         </div>
@@ -647,18 +647,18 @@ const DesignCourseForm = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center p-4">
+                    <div className="flex items-center justify-between p-4">
                       <div className="flex gap-3.5 items-center">
                         <img
                           src={OtherFeesLight}
                           alt="Other Fees"
-                          className="w-14 h-14 sm:block hidden"
+                          className="hidden w-14 h-14 sm:block"
                         />
                         <div>
-                          <p className="text-lg sm:text-xl font-medium sm:font-normal ">
+                          <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                             {t("Other fees")}
                           </p>
-                          <p className="text-sm mt-2">{t("رسوم صيفية")}</p>
+                          <p className="mt-2 text-sm">{t("رسوم صيفية")}</p>
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
@@ -666,8 +666,8 @@ const DesignCourseForm = () => {
                       </div>
                     </div>
 
-                    <div className="justify-between items-center bg-mainColor px-4 py-3 rounded-2xl sm:flex hidden">
-                      <div className="flex gap-2 items-center">
+                    <div className="items-center justify-between hidden px-4 py-3 bg-mainColor rounded-2xl sm:flex">
+                      <div className="flex items-center gap-2">
                         <p className="text-xl sm:text-2xl">{t("Total")}</p>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
@@ -723,9 +723,9 @@ const DesignCourseForm = () => {
                   </div>
                 </div>
 
-                <div className="hidden sm:block bg-mainColor w-3/4 lg:w-1/2 m-auto rounded-2xl text-white p-8 text-center mb-8 mt-40">
+                <div className="hidden w-3/4 p-8 m-auto mt-40 mb-8 text-center text-white sm:block bg-mainColor lg:w-1/2 rounded-2xl">
                   <h2 className="text-7xl">{t("We are with you")}</h2>
-                  <p className="my-8 w-4/5 m-auto">
+                  <p className="w-4/5 m-auto my-8">
                     {t(
                       "We will stay in contact with you and if any problem occurs with the institute, we will solve it, God willing"
                     )}
@@ -733,7 +733,7 @@ const DesignCourseForm = () => {
                   <img src={Utopia} alt="Utopia" className="m-auto" />
                   <p>{t("utopia team")}</p>
                 </div>
-                <div className="w-3/4 lg:w-1/2 m-auto mb-28 hidden sm:block">
+                <div className="hidden w-3/4 m-auto lg:w-1/2 mb-28 sm:block">
                   <Button
                     action={() => {
                       mutate({
@@ -757,7 +757,7 @@ const DesignCourseForm = () => {
                 </div>
 
                 <Button
-                  className="text-white w-full sm:hidden block "
+                  className="block w-full text-white sm:hidden "
                   loading={isPending}
                   action={() => {
                     if (step === 3) {

@@ -71,17 +71,32 @@ const UniversityAdmissionRegister = lazy(
 const EnglishAdmissionRegister = lazy(
   () => import("./pages/EnglishAdmissionRegister/EnglishAdmissionRegister")
 );
-const ViewRequest = lazy(
-  () => import("./pages/ViewRequest")
+const ViewRequest = lazy(() => import("./pages/ViewRequest"));
+
+// PARTNER
+const PartnerBookingList = lazy(
+  () => import("./pages/Partner/PartnerBookingList/PartnerBookingList")
+);
+const PartnerUsers = lazy(() => import("./pages/Partner/Users/Users"));
+const PartnerContact = lazy(() => import("./pages/Partner/Contact/Contact"));
+const PartnerSnatches = lazy(() => import("./pages/Partner/Snatches/Snatches"));
+const ViewPartnerRequest = lazy(
+  () => import("./pages/Partner/Requests/ViewPartnerRequest")
 );
 
 function App() {
   const isRTL = useRTL();
+  const role = ""; // ROLE
 
   useLayoutEffect(() => {
-    document.documentElement.dir = isRTL ? "rtl" : "ltr";
-    document.documentElement.lang = isRTL ? "ar" : "en";
-  }, [isRTL]);
+    if (role === "Partner") {
+      document.documentElement.dir = "ltr";
+      document.documentElement.lang = "en";
+    } else {
+      document.documentElement.dir = isRTL ? "rtl" : "ltr";
+      document.documentElement.lang = isRTL ? "ar" : "en";
+    }
+  }, [isRTL, role]);
 
   onMessageListener()
     .then((payload: any) => {
@@ -140,10 +155,21 @@ function App() {
                 path="/designCourse/registration"
                 element={<DesignCourseRegistration />}
               />
+              <Route path="/viewRequest/:id" element={<ViewRequest />} />
+
+              {/* PARTNER */}
               <Route
-                path="/viewRequest/:id"
-                element={<ViewRequest />}
+                path="/PartnerBookingList"
+                element={<PartnerBookingList />}
               />
+              <Route path="/partnerUsers" element={<PartnerUsers />} />
+              <Route path="/partnerContact" element={<PartnerContact />} />
+              <Route path="/partnerSnatches" element={<PartnerSnatches />} />
+              <Route
+                path="/viewPartnerRequest/:id"
+                element={<ViewPartnerRequest />}
+              />
+              {/* PARTNER */}
             </Route>
 
             <Route path="/chat" element={<Chat />} />

@@ -31,9 +31,9 @@ const CourseInformation = () => {
   ];
   return (
     <div className="mb-20">
-      <div className="flex items-center gap-x-3 mb-6">
+      <div className="flex items-center mb-6 gap-x-3">
         <h2 className="text-3xl">{t("Course information")}</h2>
-        <div className="w-7 h-7 rounded-full bg-mainColor flex items-center justify-center">
+        <div className="flex items-center justify-center rounded-full w-7 h-7 bg-mainColor">
           <IoChevronDown size={18} className="text-white" />
         </div>
       </div>
@@ -41,12 +41,12 @@ const CourseInformation = () => {
       <div className="bg-[#F7F7F7] rounded-2xl py-16 px-4">
         <div className="grid grid-cols-12 gap-x-5 border-b border-[#D1CBCB] pb-8">
           <div className="col-span-4 lg:col-span-3">
-            <img src={LoginBg} className="w-52 h-40 rounded-2xl" />
+            <img src={LoginBg} className="h-40 w-52 rounded-2xl" />
           </div>
           <div className="col-span-8 lg:col-span-9">
             <div className="flex items-center justify-between border-b border-[#D1CBCB] mb-8 pb-2">
               <h2 className="text-5xl">
-                ليلى <span className="text-mainColor text-sm">ليڤربول</span>
+                ليلى <span className="text-sm text-mainColor">ليڤربول</span>
               </h2>
               <div className="text-sm">
                 <h2>{t("Application date:")}</h2>
@@ -56,7 +56,7 @@ const CourseInformation = () => {
             <div>
               <div className="flex items-center gap-x-2">
                 <div className="border border-[#D1CBCB] rounded-2xl text-center py-4 px-2 lg:px-8 w-3/4 relative">
-                  <span className="text-xs bg-mainColor text-white px-3 py-1 rounded-2xl absolute left-1/2 -translate-x-1/2 -bottom-3">
+                  <span className="absolute px-3 py-1 text-xs text-white -translate-x-1/2 bg-mainColor rounded-2xl left-1/2 -bottom-3">
                     {t("Attach")}
                   </span>
                   <p className="text-sm">
@@ -64,7 +64,7 @@ const CourseInformation = () => {
                   </p>
                 </div>
                 <div className="border border-[#D1CBCB] rounded-2xl text-center py-4 px-4 md:px-8 w-1/2 relative">
-                  <span className="text-xs bg-mainColor text-white px-3 py-1 rounded-2xl absolute left-1/2 -translate-x-1/2 -bottom-3">
+                  <span className="absolute px-3 py-1 text-xs text-white -translate-x-1/2 bg-mainColor rounded-2xl left-1/2 -bottom-3">
                     {t("Download")}
                   </span>
                   <p className="text-sm">{t("Download the invoice")}</p>
@@ -77,7 +77,7 @@ const CourseInformation = () => {
         <div className="grid grid-cols-12 gap-x-5 border-b border-[#D1CBCB] pb-8">
           <div className="col-span-4 lg:col-span-3"></div>
           <div className="col-span-8 lg:col-span-9">
-            <div className="flex items-center justify-between my-8 pb-2">
+            <div className="flex items-center justify-between pb-2 my-8">
               <h2 className="text-3xl">
                 {t("Requirements that have been attached:")}
               </h2>
@@ -90,7 +90,7 @@ const CourseInformation = () => {
                 <div className="border border-[#D1CBCB] rounded-2xl text-center py-4 px-2 md:px-8 w-[45%]">
                   <p className="text-sm">{t("High school diploma")}</p>
                 </div>
-                <p className="text-xs bg-mainColor text-white px-3 py-1 rounded-2xl whitespace-nowrap">
+                <p className="px-3 py-1 text-xs text-white bg-mainColor rounded-2xl whitespace-nowrap">
                   {t("Attach the requirements")}
                 </p>
               </div>
@@ -101,14 +101,14 @@ const CourseInformation = () => {
         <div className="grid grid-cols-12 gap-x-5">
           <div className="col-span-4 lg:col-span-3"></div>
           <div className="col-span-8 lg:col-span-9 ">
-            <h2 className="text-3xl mt-12">{t("Options")}</h2>
-            <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-32 gap-y-8 my-8">
+            <h2 className="mt-12 text-3xl">{t("Options")}</h2>
+            <div className="grid my-8 md:grid-cols-2 gap-x-8 lg:gap-x-32 gap-y-8">
               {CourseData?.map((item, index) => (
                 <div
                   key={index}
                   className="border border-mainColor rounded-3xl py-4 px-4 relative h-[22rem]"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <p className="text-xs">{t("Accommodation")}</p>
                     <span
                       className={cn(
@@ -121,22 +121,22 @@ const CourseInformation = () => {
                       {item.isConfirmed ? t("Confirmed") : t("Under process")}
                     </span>
                   </div>
-                  <h2 className="text-xl text-mainColor my-3">{item.name}</h2>
+                  <h2 className="my-3 text-xl text-mainColor">{item.name}</h2>
                   <div className="border-t border-[#D1CBCB] text-sm pt-4">
                     <div>
                       <h3>{t("type")}</h3>
-                      <p className="text-mainColor mt-1">{item.type}</p>
+                      <p className="mt-1 text-mainColor">{item.type}</p>
                     </div>
                     <div className="my-2">
                       <h3>{t("Duration")}</h3>
-                      <p className="text-mainColor mt-1">{item.duration}</p>
+                      <p className="mt-1 text-mainColor">{item.duration}</p>
                     </div>
                     <div>
                       <h3>{t("Dates")}</h3>
-                      <p className="text-mainColor mt-1">{item.dates}</p>
+                      <p className="mt-1 text-mainColor">{item.dates}</p>
                     </div>
                   </div>
-                  <Button className="absolute w-full left-0 right-0 -bottom-1 rounded-2xl py-3">
+                  <Button className="absolute left-0 right-0 w-full py-3 -bottom-1 rounded-2xl">
                     {t("Download")}
                   </Button>
                 </div>

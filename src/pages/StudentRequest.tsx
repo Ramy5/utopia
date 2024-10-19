@@ -16,7 +16,7 @@ const StudentRequest = () => {
   const fetchRequests = async () => {
     try {
       setIsLoading(true);
-      const data = await apiRequest({
+      const data: any = await apiRequest({
         url: `/api/student/orders`,
         method: "GET",
       });
@@ -38,7 +38,7 @@ const StudentRequest = () => {
     <div>
       {/* DESKTOP */}
       <div>
-        <div className="max-w-full my-32 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
+        <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
           {/* ADD REQUEST */}
           <div className="flex gap-4 mx-4">
             <Link to={"/addRequest"} className="py-4">
