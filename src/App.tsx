@@ -10,6 +10,7 @@ import StudentRequest from "./pages/StudentRequest";
 import { onMessageListener } from "../firebase";
 import Chat from "./pages/chat/Chat";
 import AddRequest from "./pages/Request/AddRequest";
+import { ROLE } from "./constants/LocalStorageKeys";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -87,7 +88,8 @@ const ViewPartnerRequest = lazy(
 
 function App() {
   const isRTL = useRTL();
-  const role = ""; // ROLE
+
+  const role = localStorage.getItem(ROLE); // ROLE
 
   useLayoutEffect(() => {
     if (role === "Partner") {

@@ -6,7 +6,7 @@ import cn from "../../utils/cn";
 import { Link, useNavigate } from "react-router-dom";
 
 const Orders = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const fetchOrders = async () => {
     try {
       const data = await apiRequest({
@@ -31,31 +31,41 @@ const Orders = () => {
     console.log("🚀 ~ renderDataItem ~ label:", label);
     return (
       <div className="flex items-center sm:block">
-        <h3 className="text-sm mb-0 sm:mb-2 flex items-center">{t(label)} <span className="sm:hidden block mx-1">:</span></h3>
+        <h3 className="flex items-center mb-0 text-sm sm:mb-2">
+          {t(label)} <span className="block mx-1 sm:hidden">:</span>
+        </h3>
         <p className="text-mainColor">{value}</p>
       </div>
     );
   };
   return (
     <section className="my-20 max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
-      <div className="flex gap-x-2 mb-5">
-        <Link to={"/addRequest"} className="bg-mainColor text-white rounded-xl px-6 pt-2 pb-1.5 text-lg">
+      <div className="flex mb-5 gap-x-2">
+        <Link
+          to={"/addRequest"}
+          className="bg-mainColor text-white rounded-xl px-6 pt-2 pb-1.5 text-lg"
+        >
           {t("add a request")}
         </Link>
-        <Link to={"/addRequest"} className="bg-mainColor text-white rounded-xl text-2xl px-4 pt-2 ">
+        <Link
+          to={"/addRequest"}
+          className="px-4 pt-2 text-2xl text-white bg-mainColor rounded-xl "
+        >
           +
         </Link>
       </div>
 
-
       {data?.map((item, index) => (
-        <div className="bg-[#F7F7F7] rounded-xl mb-4 py-8 p-4  sm:py-0 sm:p-6 md:p-8 lg:p-12 cursor-pointer" onClick={() => navigate(`/viewRequest/${item.id}`)}>
+        <div
+          className="bg-[#F7F7F7] rounded-xl mb-4 py-8 p-4  sm:py-0 sm:p-6 md:p-8 lg:p-12 cursor-pointer"
+          onClick={() => navigate(`/viewRequest/${item.id}`)}
+        >
           <div className="flex items-center gap-x-4 sm:gap-x-8">
             <div>
-              <img src={item.image} className="rounded-xl h-full" />
+              <img src={item.image} className="h-44 rounded-xl w-44" />
             </div>
             <div className="w-full">
-              <div className="flex sm:block justify-between items-center">
+              <div className="flex items-center justify-between sm:block">
                 <h2 className="text-xl sm:text-2xl">{item.user}</h2>
                 <span
                   className={cn(
