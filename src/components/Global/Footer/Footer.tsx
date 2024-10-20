@@ -352,7 +352,11 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
                           ? "/whyUs"
                           : item === "success stories"
                           ? "/successStory"
-                          : "#"
+                          : item === "bank accounts"
+                          ? "/bankAccounts"
+                          : item === "partners"
+                          ? "/ourPartners"
+                          : ""
                       }
                     >
                       <span>{t(item)}</span>

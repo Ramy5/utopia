@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { IoLocationOutline } from "react-icons/io5";
@@ -13,29 +13,42 @@ import Button from "../../components/atoms/Button/Button";
 import BaseSelect from "../../components/atoms/molecules/formik-fields/BaseSelect";
 import { TbFilter } from "react-icons/tb";
 import selectStyle from "../../hooks/selectStyle";
+import Loading from "../../components/Global/Loading/Loading";
+import Pagination from "../../components/UI/Pagination";
 
 const DesignYourOwnCourse = () => {
   const [dropDown, setdropDown] = useState(false);
   const [countryID, setCountryID] = useState(0);
   const [cityName, setCityName] = useState("");
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  console.log("🚀 ~ DesignYourOwnCourse ~ page:", page);
   const fetchDesignYourOwnCourse = async () => {
     try {
       const data = await apiRequest({
-        url: "/api/student/cities",
+        url: `/api/student/cities?page=${page}`,
         method: "GET",
       });
-      return data?.data;
+      return data;
     } catch (error) {
       console.error("Error fetching items:", error.message);
     }
   };
 
-  const { data } = useQuery({
+  const {
+    data: designOwnCourse,
+    refetch,
+    isFetching: isFetchingDesignOwnCourse,
+    isRefetching: isRefetchingDesignOwnCourse,
+    isLoading: isLoadingDesignOwnCourse,
+  } = useQuery({
     queryKey: ["design_your_own_course"],
     queryFn: fetchDesignYourOwnCourse,
     suspense: true,
   });
+  console.log("🚀 ~ DesignYourOwnCourse ~ designOwnCourse:", designOwnCourse);
+
+  const data = designOwnCourse.data;
   console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
 
   const fetchCountries = async () => {
@@ -141,7 +154,7 @@ const DesignYourOwnCourse = () => {
   );
 
   const renderCardsInSmallScreen = (items) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 sm:gap-8 gap-y-12 mb-24 cursor-pointer">
+    <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 sm:gap-8 gap-y-12 mb-8 cursor-pointer">
       {items?.map((item, index) => (
         <div
           key={index}
@@ -165,6 +178,17 @@ const DesignYourOwnCourse = () => {
       ))}
     </div>
   );
+
+  useEffect(() => {
+    refetch();
+  }, [page]);
+
+  // if (
+  //   isLoadingDesignOwnCourse ||
+  //   isRefetchingDesignOwnCourse ||
+  //   isFetchingDesignOwnCourse
+  // )
+  //   return <Loading />;
 
   return (
     <>
@@ -230,19 +254,26 @@ const DesignYourOwnCourse = () => {
               {t("No results found")}
             </p>
           )}
+
+          <Pagination
+            page={page}
+            setPage={setPage}
+            currentPage={designOwnCourse?.current_page}
+            totalPages={designOwnCourse?.pages}
+          />
         </div>
 
         <div className="sm:hidden block px-4">
           <div className="relative">
             <div className="absolute top-1/2 -translate-y-1/2 ">
-              <Link to={"/"}>
+              <div onClick={() => navigate(-1)}>
                 <FaArrowRightLong
                   size={22}
-                  className="mt-4 cursor-pointer justify-self-start"
+                  className="cursor-pointer justify-self-start"
                 />
-              </Link>
+              </div>
             </div>
-            <h2 className="text-2xl font-medium text-center py-6">
+            <h2 className="text-xl font-semibold text-center py-6">
               {t("design your own course")}
             </h2>
           </div>
@@ -326,6 +357,15 @@ const DesignYourOwnCourse = () => {
                 {t("No results found")}
               </p>
             )}
+
+            <div className="mb-24">
+              <Pagination
+                page={page}
+                setPage={setPage}
+                currentPage={designOwnCourse?.current_page}
+                totalPages={designOwnCourse?.pages}
+              />
+            </div>
           </div>
         </div>
       </div>

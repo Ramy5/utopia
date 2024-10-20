@@ -69,14 +69,14 @@ const SummerProgramsPage = () => {
         <div className="mt-3 mb-44 px-4 sm:hidden block">
           <div className="relative">
             <div className="absolute top-1/2 -translate-y-1/2 ">
-              <Link to={"/"}>
+              <div onClick={() => navigate(-1)}>
                 <FaArrowRightLong
                   size={22}
-                  className="mt-4 cursor-pointer justify-self-start"
+                  className="cursor-pointer justify-self-start"
                 />
-              </Link>
+              </div>
             </div>
-            <h2 className="text-3xl font-medium text-center py-6">
+            <h2 className="text-xl font-semibold text-center py-6">
               {t("summer programs")}
             </h2>
           </div>
@@ -84,7 +84,7 @@ const SummerProgramsPage = () => {
             {data?.map((item, index) => (
               <div
                 key={index}
-                className="relative mb-24"
+                className="relative mb-24 cursor-pointer"
                 onClick={() =>
                   navigate("/programsSummer/details", { state: item })
                 }
@@ -93,7 +93,7 @@ const SummerProgramsPage = () => {
                   <img
                     src={item.cityData.image}
                     alt="summer programs"
-                    className="w-full h-full"
+                    className="w-full h-full rounded-2xl"
                   />
                 </div>
                 <div
@@ -103,14 +103,14 @@ const SummerProgramsPage = () => {
                       : index === 1
                       ? "bg-[#FFCC1A]"
                       : "bg-[#E8DEFF]"
-                  } absolute left-1/2 -translate-x-1/2 py-5 px-16 sm:px-20 rounded-2xl text-black -bottom-16`}
+                  } absolute left-1/2 -translate-x-1/2 py-5 w-[80%]  sm:px-20 rounded-2xl text-black -bottom-16`}
                 >
-                  <h2 className="text-xl text-center font-medium mb-4">
+                  <h2 className="text-lg text-center font-medium mb-4">
                     {item.name}
                   </h2>
-                  <div className="flex items-center bg-white px-5 py-3 rounded-2xl gap-1">
-                    <IoLocationOutline className="w-7 h-7" />
-                    <p className="text-xl">{item.city_name}</p>
+                  <div className="flex items-center justify-center bg-white px-5 py-3 w-fit mx-auto rounded-2xl gap-1">
+                    <IoLocationOutline className="w-6 h-6" />
+                    <p className="text-lg">{item.city_name}</p>
                   </div>
                 </div>
               </div>

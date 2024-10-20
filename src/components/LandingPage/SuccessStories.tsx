@@ -88,28 +88,6 @@ const SuccessStories = () => {
                   </div>
                 </SwiperSlide>
               ))}
-              {data?.map((story, index) => (
-                <SwiperSlide key={index}>
-                  <div className="cursor-pointer w-fit">
-                    <div
-                      className="relative rounded-full"
-                      onClick={() => handleImageClick(index)}
-                    >
-                      <div
-                        className={`absolute top-0 left-0 w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full duration-300 ${
-                          index === selectedStoryIndex
-                            ? "opacity-100"
-                            : "bg-black opacity-55"
-                        }`}
-                      ></div>
-                      <img
-                        src={story.image}
-                        className={`w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48  rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
-                      />
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
             </div>
           </Swiper>
         </div>

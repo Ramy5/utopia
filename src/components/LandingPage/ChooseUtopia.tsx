@@ -2,13 +2,14 @@ import { t } from "i18next";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ChooseUtopia_TP {
   isFootered?: boolean;
 }
 
 const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
+  const navigate = useNavigate()
   const fetchChooseUtopia = async () => {
     try {
       const data = await apiRequest({
@@ -37,18 +38,18 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
       <div className="relative">
         <div className="absolute top-1/2 -translate-y-1/2 ">
           {isFootered && (
-            <Link to={"/"}>
+            <div onClick={() => navigate(-1)}>
               <FaArrowRightLong
                 size={22}
-                className="mt-4 cursor-pointer justify-self-start"
+                className="cursor-pointer justify-self-start"
               />
-            </Link>
+            </div>
           )}
         </div>
         <h2
           className={`${
             !isFootered ? "mb-52" : "text-center"
-          } text-2xl font-medium sm:font-normal sm:text-6xl`}
+          } text-xl font-semibold sm:font-normal sm:text-6xl`}
         >
           {t("Why choose Utopia?")}
         </h2>

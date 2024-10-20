@@ -40,14 +40,14 @@ const ListSpecializations = () => {
     <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto md:hidden block">
       <div className="relative block md:hidden">
         <div className="absolute -translate-y-1/2 top-1/2 ">
-          <Link to={"/"}>
+          <div onClick={() => navigate(-1)}>
             <FaArrowRightLong
               size={22}
-              className="mt-4 cursor-pointer justify-self-start"
+              className="cursor-pointer justify-self-start"
             />
-          </Link>
+          </div>
         </div>
-        <h2 className="py-6 text-3xl font-medium text-center">
+        <h2 className="py-6 text-xl font-semibold text-center">
           {t("list of specializations")}
         </h2>
       </div>

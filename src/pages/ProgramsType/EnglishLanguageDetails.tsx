@@ -14,24 +14,18 @@ import { useAuth } from "../../context/AuthContext";
 
 const EnglishLanguageDetails = () => {
   const [styledHtml, setStyledHtml] = useState("");
-  console.log("🚀 ~ EnglishLanguageDetails ~ styledHtml:", styledHtml);
   const location = useLocation();
   const EnglishLanguageDetails = location.state;
-  console.log(
-    "🚀 ~ EnglishLanguageDetails ~ EnglishLanguageDetails:",
-    EnglishLanguageDetails
-  );
   const [planId, setPlanId] = useState(null);
-  console.log("🚀 ~ EnglishLanguageDetails ~ planId:", planId);
+  const [amount, setAmount] = useState("");
+  console.log("🚀 ~ SummerProgramsDetails ~ amount:", amount);
   const { user } = useAuth();
-  console.log(
-    "🚀 ~ EnglishLanguageDetails ~ EnglishLanguageDetails:",
-    EnglishLanguageDetails
-  );
 
-  const handleSelectedPlanId = (event) => {
-    setPlanId(event.target.id);
+  const handleSelectedPlanId = (id, amount) => {
+    setPlanId(id);
+    setAmount(amount);
   };
+
 
   useEffect(() => {
     const htmlWithStyles = EnglishLanguageDetails?.includes
@@ -229,7 +223,9 @@ const EnglishLanguageDetails = () => {
                       name={`packagePlan`}
                       type="radio"
                       className="p-2"
-                      onChange={handleSelectedPlanId}
+                      onChange={(e) =>
+                        handleSelectedPlanId(e.target.id, plan.price)
+                      }
                     />
                     <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
                       {plan.duration === 1
@@ -249,6 +245,8 @@ const EnglishLanguageDetails = () => {
                   partnerId: EnglishLanguageDetails?.partner_id,
                   packageId: EnglishLanguageDetails?.category_id,
                   planId: planId,
+                  amount: amount,
+                  user_id: user.id
                 }}
               >
                 <Button className="w-full mt-8 sm:w-fit">

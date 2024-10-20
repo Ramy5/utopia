@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DownLoadApp from "../../components/atoms/molecules/downLoad-app/DownLoadApp";
 import { t } from "i18next";
 import { Form, Formik } from "formik";
@@ -6,10 +6,29 @@ import BaseInput from "../../components/atoms/molecules/formik-fields/BaseInput"
 import Button from "../../components/atoms/Button/Button";
 import Utopia from "../../assets/utopia.png";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../../utils/axios";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+
+const postBePartner = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/become-partner",
+      method: "POST",
+      data: postData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data?.data;
+  } catch (errors) {
+    toast.error(errors);
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
 
 const BePartner = () => {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const initialValues = {
     first_name: "",
@@ -23,6 +42,18 @@ const BePartner = () => {
     job_title: "",
     company_name: "",
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationKey: ["BePartner"],
+    mutationFn: (data: any) => postBePartner(data),
+    onSuccess: (data) => {
+      toast.success(t("The data has been added successfully"));
+    },
+  });
 
   return (
     <section>
@@ -62,8 +93,18 @@ const BePartner = () => {
               <Formik
                 initialValues={initialValues}
                 onSubmit={(values) => {
-                  console.log("🚀 ~ BePartner ~ values:", values);
-                  setIsSuccess(true);
+                  mutate({
+                    f_name: values.first_name,
+                    l_name: values.last_name,
+                    phone: values.mobile_number,
+                    email: values.Email,
+                    address: values.address,
+                    post_code: values.postal_code,
+                    county: values.country,
+                    city: values.city,
+                    job_name: values.job_title,
+                    company_name: values.company_name,
+                  });
                 }}
               >
                 <Form className="">
@@ -213,6 +254,7 @@ const BePartner = () => {
                     <Button
                       type="submit"
                       className="bg-mainColor px-12 py-3.5 rounded-2xl ms-auto"
+                      loading={isPending}
                     >
                       {t("send")}
                     </Button>

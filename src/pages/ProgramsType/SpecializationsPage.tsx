@@ -1,6 +1,6 @@
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { t } from "i18next";
@@ -13,6 +13,7 @@ import "swiper/css";
 import { useAuth } from "../../context/AuthContext";
 
 const SpecializationsPage = () => {
+  const navigate = useNavigate()
   const location = useLocation();
   console.log("🚀 ~ SpecializationsPage ~ location:", location);
   const { user } = useAuth();
@@ -36,20 +37,24 @@ const SpecializationsPage = () => {
     queryFn: () => fetchSpecialization(specializationID),
     suspense: true,
   });
+  console.log(
+    "🚀 ~ SpecializationsPage ~ specializations:",
+    specializations.order_price
+  );
 
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
         <div className="relative block sm:hidden">
           <div className="absolute -translate-y-1/2 top-1/2 ">
-            <Link to={"/"}>
+            <div onClick={() => navigate(-1)}>
               <FaArrowRightLong
                 size={22}
-                className="mt-4 cursor-pointer justify-self-start"
+                className="cursor-pointer justify-self-start"
               />
-            </Link>
+            </div>
           </div>
-          <h2 className="py-6 text-3xl font-medium text-center">
+          <h2 className="py-6 text-xl font-semibold text-center">
             {specializations.name}
           </h2>
         </div>
@@ -102,6 +107,9 @@ const SpecializationsPage = () => {
                     partnerId: specializations?.partner_id,
                     specializationID: specializationID,
                     universityName: universityName,
+                    universityId: specializations?.id,
+                    amount: specializations?.order_price,
+                    user_id: user.id,
                   }}
                 >
                   <Button>{t("apply now")}</Button>
@@ -131,12 +139,15 @@ const SpecializationsPage = () => {
         </div>
 
         <Link
+          to={user ? "/UniversityAdmissionRegister" : "/login"}
           state={{
             partnerId: specializations?.partner_id,
             specializationID: specializationID,
             universityName: universityName,
+            universityId: specializations?.id,
+            amount: specializations?.order_price,
+            user_id: user.id,
           }}
-          to={user ? "/UniversityAdmissionRegister" : "/login"}
         >
           <Button className="block w-full py-4 sm:hidden rounded-2xl mb-28">
             {t("apply now")}

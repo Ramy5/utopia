@@ -16,7 +16,42 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { Pagination } from "swiper/modules";
 import "swiper/css/pagination";
 import selectStyle from "../../hooks/selectStyle";
-// import { Pagination } from "swiper";
+
+const fetchUniversityDetails = async (id) => {
+  try {
+    const data = await apiRequest({
+      url: `/api/student/university-packages/${id}`,
+      method: "GET",
+    });
+    return data?.data;
+  } catch (error) {
+    console.error("Error fetching items:", error.message);
+  }
+};
+
+const fetchSpecializations = async () => {
+  try {
+    const data = await apiRequest({
+      url: `/api/student/specializations`,
+      method: "GET",
+    });
+    return data?.data;
+  } catch (error) {
+    console.error("Error fetching items:", error.message);
+  }
+};
+
+const fetchDegree = async () => {
+  try {
+    const data = await apiRequest({
+      url: `/api/student/degree`,
+      method: "GET",
+    });
+    return data?.data;
+  } catch (error) {
+    console.error("Error fetching items:", error.message);
+  }
+};
 
 const UniversityAdmissionsDetails = () => {
   const [styledHtml, setStyledHtml] = useState("");
@@ -24,17 +59,40 @@ const UniversityAdmissionsDetails = () => {
   const isUniversityID = location.state;
   const navigate = useNavigate();
 
-  const fetchUniversityDetails = async (id) => {
-    try {
-      const data = await apiRequest({
-        url: `/api/student/university-packages/${id}`,
-        method: "GET",
+  const { data: specializations, isFetching: isFeatchingSpecializations } =
+    useQuery({
+      queryKey: ["Specializations"],
+      queryFn: fetchSpecializations,
+      select: (data) => {
+        return data?.map((specializations) => {
+          console.log(
+            "🚀 ~ returndata?.map ~ specializations:",
+            specializations
+          );
+          return {
+            id: specializations?.id,
+            label: specializations?.name || `${t("everyone")}`,
+            value: specializations?.name || `${t("everyone")}`,
+          };
+        });
+      },
+      suspense: true,
+    });
+
+  const { data: degreeOption, isFetching: isFeatchingDegree } = useQuery({
+    queryKey: ["degree"],
+    queryFn: fetchDegree,
+    select: (data) => {
+      return data?.map((degree) => {
+        return {
+          id: degree?.id,
+          label: degree?.title || `${t("everyone")}`,
+          value: degree?.title || `${t("everyone")}`,
+        };
       });
-      return data?.data;
-    } catch (error) {
-      console.error("Error fetching items:", error.message);
-    }
-  };
+    },
+    suspense: true,
+  });
 
   const { data: universityData, isFetching: universityIsFeatching } = useQuery({
     queryKey: ["university-details", isUniversityID],
@@ -66,14 +124,14 @@ const UniversityAdmissionsDetails = () => {
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
         <div className="relative block sm:hidden">
           <div className="absolute -translate-y-1/2 top-1/2 ">
-            <Link to={"/"}>
+            <div onClick={() => navigate(-1)}>
               <FaArrowRightLong
                 size={22}
-                className="mt-4 cursor-pointer justify-self-start"
+                className="cursor-pointer justify-self-start"
               />
-            </Link>
+            </div>
           </div>
-          <h2 className="py-6 text-3xl font-medium text-center">
+          <h2 className="py-6 text-xl font-semibold text-center">
             {universityData.name}
           </h2>
         </div>
@@ -210,6 +268,7 @@ const UniversityAdmissionsDetails = () => {
                 <BaseSelect
                   id="country_id"
                   name="country_id"
+                  options={specializations}
                   placeholder={t("everyone")}
                   label={t("sort by specialization")}
                   labelStyle="text-white"
@@ -222,6 +281,7 @@ const UniversityAdmissionsDetails = () => {
                 <BaseSelect
                   id="country_id"
                   name="country_id"
+                  options={degreeOption}
                   placeholder={t("everyone")}
                   label={t("sort by academic degree")}
                   labelStyle="text-white"

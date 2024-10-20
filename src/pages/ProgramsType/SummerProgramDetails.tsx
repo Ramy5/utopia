@@ -14,15 +14,17 @@ import { useAuth } from "../../context/AuthContext";
 
 const SummerProgramsDetails = () => {
   const [styledHtml, setStyledHtml] = useState("");
-  console.log("🚀 ~ ProgramDetails ~ styledHtml:", styledHtml);
   const location = useLocation();
   const [planId, setPlanId] = useState(null);
+  const [amount, setAmount] = useState("");
   const { user } = useAuth();
   const programDetails = location.state;
+  console.log("🚀 ~ SummerProgramsDetails ~ programDetails:", programDetails);
   const isRTL = useRTL();
 
-  const handleSelectedPlanId = (event) => {
-    setPlanId(event.target.id);
+  const handleSelectedPlanId = (id, amount) => {
+    setPlanId(id);
+    setAmount(amount);
   };
 
   useEffect(() => {
@@ -212,7 +214,9 @@ const SummerProgramsDetails = () => {
                       name={`packagePlan`}
                       type="radio"
                       className="p-2"
-                      onChange={handleSelectedPlanId}
+                      onChange={(e) =>
+                        handleSelectedPlanId(e.target.id, plan.price)
+                      }
                     />
                     <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
                       {plan.duration === 1
@@ -232,6 +236,8 @@ const SummerProgramsDetails = () => {
                   partnerId: programDetails?.partner_id,
                   packageId: programDetails?.category_id,
                   planId: planId,
+                  amount: amount,
+                  user_id: user.id
                 }}
               >
                 <Button className="w-full mt-8 sm:w-fit">
