@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Button from "../../../components/atoms/Button/Button";
-import PersonalImage from "../../../assets/jnc6or4k_400x400.png";
+import PersonalImage from "../../../assets/user11.png";
 import { useNavigate, useNavigation } from "react-router-dom";
 import { IoIosArrowBack, IoMdArrowDropdownCircle } from "react-icons/io";
 import cn from "../../../utils/cn";
+import { IoChatbubbleOutline } from "react-icons/io5";
 
 const renderDataItem = (label, value) => {
   console.log("🚀 ~ renderDataItem ~ label:", label);
@@ -15,7 +16,19 @@ const renderDataItem = (label, value) => {
   );
 };
 
-const StudentInfo = () => {
+const renderDataItemMobile = (label, value) => {
+  console.log("🚀 ~ renderDataItem ~ label:", label);
+  return (
+    <div className="flex items-center sm:block">
+      <h3 className="flex items-center mb-0 text-sm sm:mb-2">
+        {label} <span className="block mx-1 sm:hidden">:</span>
+      </h3>
+      <p className="text-[#79767A] text-sm ">{value}</p>
+    </div>
+  );
+};
+
+const StudentInfo = ({ step }: { step?: number }) => {
   const navigate = useNavigate();
   const [showStudentInfo, setShowStudentInfo] = useState(true);
 
@@ -38,8 +51,8 @@ const StudentInfo = () => {
   };
 
   return (
-    <div className="mb-20">
-      <div className="flex items-center justify-between mb-6">
+    <div className="px-4 mb-10">
+      <div className="items-center justify-between hidden mb-6 md:flex">
         <div className="flex gap-6">
           <h2 className="text-3xl">{"Student Info"}</h2>
           <IoMdArrowDropdownCircle
@@ -61,7 +74,7 @@ const StudentInfo = () => {
         </Button>
       </div>
       {showStudentInfo && (
-        <div className="bg-[#F7F7F7] rounded-2xl py-16 px-4">
+        <div className="bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4 md:block hidden">
           <div>
             <h2 className="mb-20 text-3xl ms-14">{personalData.name}</h2>
 
@@ -106,6 +119,118 @@ const StudentInfo = () => {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {step === 1 && (
+        <div className="md:hidden">
+          <div className="md:bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4  mb-6">
+            <div className="">
+              <div className="">
+                <div className="flex items-center gap-x-4 sm:gap-x-8">
+                  <div>
+                    <img
+                      src={PersonalImage}
+                      alt="Personal"
+                      className="h-full w-44 rounded-xl"
+                    />
+                  </div>
+                  <div className="w-full">
+                    <div className="flex items-center justify-between sm:block">
+                      <h2 className="text-xl sm:text-2xl">
+                        {personalData.name}
+                      </h2>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-y-1.5 sm:gap-y-8 mt-2 sm:mt-12">
+                      {renderDataItemMobile(
+                        "Student number",
+                        personalData.student_number
+                      )}
+                      {renderDataItemMobile("Gender", personalData.gender)}
+                      {renderDataItemMobile(
+                        "Date of birth",
+                        personalData.birth_date
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      {renderDataItemMobile(
+                        "Passport number",
+                        personalData.passport_number
+                      )}
+                    </div>
+                    <div>
+                      {renderDataItemMobile(
+                        "Nationality",
+                        personalData.nationality
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    {renderDataItemMobile(
+                      "Passport expiration date",
+                      personalData.passport_expiration
+                    )}
+                  </div>
+
+                  <div className="mb-4">
+                    {renderDataItemMobile(
+                      "Country of passport",
+                      personalData.country_passport
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div>{renderDataItemMobile("City", personalData.city)}</div>
+                    <div>
+                      {renderDataItemMobile(
+                        "English language proficiency level",
+                        personalData.english_level
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    {renderDataItemMobile(
+                      "Postal code",
+                      personalData.postal_code
+                    )}
+                  </div>
+                  <div className="mb-4">
+                    {renderDataItemMobile("Address", personalData.address)}
+                  </div>
+
+                  <div className="mb-4">
+                    {renderDataItemMobile("Email", personalData.email)}
+                  </div>
+                  <div className="mb-4">
+                    {renderDataItemMobile(
+                      "Mobile number",
+                      personalData.mobile_number
+                    )}
+                  </div>
+                  <div className="mb-4">
+                    {renderDataItemMobile(
+                      "Relative's mobile number",
+                      personalData.relative_mobile
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex">
+            <Button className="bg-[#1B0924] flex gap-2 text-base text-white px-3 font-medium rounded-xl">
+              <IoChatbubbleOutline />
+              <span>Contact Student</span>
+            </Button>
           </div>
         </div>
       )}

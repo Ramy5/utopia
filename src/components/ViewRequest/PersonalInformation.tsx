@@ -34,9 +34,9 @@ const PersonalInformation = ({ steps }: any) => {
   const renderDataItemMobile = (label, value) => {
     console.log("🚀 ~ renderDataItem ~ label:", label);
     return (
-      <div className="flex sm:block items-center">
-        <h3 className="text-sm mb-0 sm:mb-2 flex items-center">
-          {t(label)} <span className="sm:hidden block mx-1">:</span>
+      <div className="flex items-center sm:block">
+        <h3 className="flex items-center mb-0 text-sm sm:mb-2">
+          {t(label)} <span className="block mx-1 sm:hidden">:</span>
         </h3>
         <p className="text-[#79767A] text-sm ">{value}</p>
       </div>
@@ -45,7 +45,7 @@ const PersonalInformation = ({ steps }: any) => {
 
   return (
     <div className="mb-20">
-      <div className="sm:flex items-center justify-between mb-6 hidden">
+      <div className="items-center justify-between hidden mb-6 sm:flex">
         <h2 className="text-3xl">{t("Personal information")}</h2>
         <Button className="bg-[#FFB6BF] text-base  rounded-2xl">
           {t("Placement test")}
@@ -54,7 +54,7 @@ const PersonalInformation = ({ steps }: any) => {
 
       <div className="bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4 sm:block hidden">
         <div className="">
-          <h2 className="text-3xl mb-20 ms-14">{personalData.name}</h2>
+          <h2 className="mb-20 text-3xl ms-14">{personalData.name}</h2>
 
           <div className="grid grid-cols-12">
             <div className="col-span-4 md:col-span-3 lg:col-span-2">
@@ -104,7 +104,7 @@ const PersonalInformation = ({ steps }: any) => {
               <img
                 src={PersonalImage}
                 alt="Personal"
-                className="w-32 h-32 rounded-full overflow-hidden mx-auto -mt-8"
+                className="w-32 h-32 mx-auto -mt-8 overflow-hidden rounded-full"
               />
             </div> */}
 
@@ -113,11 +113,11 @@ const PersonalInformation = ({ steps }: any) => {
                   <img
                     src={PersonalImage}
                     alt="Personal"
-                    className="rounded-xl h-full"
+                    className="h-full rounded-xl"
                   />
                 </div>
                 <div className="w-full">
-                  <div className="flex sm:block justify-between items-center">
+                  <div className="flex items-center justify-between sm:block">
                     <h2 className="text-xl sm:text-2xl">{personalData.name}</h2>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-4 gap-y-1.5 sm:gap-y-8 mt-2 sm:mt-12">

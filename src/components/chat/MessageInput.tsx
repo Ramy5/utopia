@@ -5,6 +5,7 @@ import BaseInput from "../atoms/molecules/formik-fields/BaseInput";
 import { BsFillSendFill } from "react-icons/bs";
 import Button from "../atoms/Button/Button";
 import cn from "../../utils/cn";
+import { ROLE } from "../../constants/LocalStorageKeys";
 
 interface MessageInputProps {
   onSendMessage: (text: string) => void;
@@ -16,6 +17,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   isMobail,
 }) => {
   const [text, setText] = useState("");
+  const role = localStorage.getItem(ROLE);
 
   const handleSend = () => {
     onSendMessage(text);
@@ -46,7 +48,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
           </Button>
           <input
             type="text"
-            placeholder={t("type a message...")}
+            placeholder={
+              role === "Partner" ? "type a message..." : t("type a message...")
+            }
             name="message"
             id="message"
             value={text}
