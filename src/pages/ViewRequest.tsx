@@ -42,13 +42,13 @@ const ViewRequest = () => {
     <section>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto sm:mt-16">
         <div className="px-4 md:px-0">
-          <div className="hidden sm:flex items-center justify-between">
+          <div className="items-center justify-between hidden sm:flex">
             <h2 className="text-3xl font-medium">{t("The order")}</h2>
             <Button className="text-base rounded-2xl">{t("return")}</Button>
           </div>
 
-          <div className="relative sm:hidden block">
-            <div className="absolute top-1/2 -translate-y-1/2 ">
+          <div className="relative block sm:hidden">
+            <div className="absolute -translate-y-1/2 top-1/2 ">
               <div onClick={() => navigate(-1)}>
                 <FaArrowRightLong
                   size={22}
@@ -56,7 +56,7 @@ const ViewRequest = () => {
                 />
               </div>
             </div>
-            <h2 className="text-xl font-semibold text-center py-6">
+            <h2 className="py-6 text-xl font-semibold text-center">
               {data?.partner}
             </h2>
           </div>
@@ -65,7 +65,7 @@ const ViewRequest = () => {
             <RequestStatus />
           </div>
 
-          <div className="sm:hidden flex items-center justify-between mt-8 mb-10 gap-x-1">
+          <div className="flex items-center justify-between mt-8 mb-10 sm:hidden gap-x-1">
             <Button
               bordered={steps !== 1}
               action={() => setSteps(1)}
@@ -101,15 +101,15 @@ const ViewRequest = () => {
             <OtherInformation steps={steps} />
           </div>
 
-          <div className="sm:block hidden">
-            <div className="flex items-center gap-x-3 mb-6">
+          <div className="hidden sm:block">
+            <div className="flex items-center mb-6 gap-x-3">
               <h2 className="text-3xl">{t("Contact the institute")}</h2>
               <div className="flex items-center justify-center rounded-full w-7 h-7 bg-mainColor">
                 <IoChevronDown size={18} className="text-white" />
               </div>
             </div>
 
-            <ChatForm className="rounded-none shadow-none mb-0" />
+            <ChatForm className="mb-0 rounded-none shadow-none" />
           </div>
         </div>
       </div>

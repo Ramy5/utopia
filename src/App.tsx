@@ -90,6 +90,7 @@ function App() {
   const isRTL = useRTL();
 
   const role = localStorage.getItem(ROLE); // ROLE
+  console.log("🚀 ~ App ~ role:", role);
 
   useLayoutEffect(() => {
     if (role === "Partner") {

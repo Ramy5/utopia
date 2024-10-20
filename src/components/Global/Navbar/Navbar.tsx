@@ -11,6 +11,8 @@ import cn from "../../../utils/cn";
 import { useAuth } from "../../../context/AuthContext";
 import Shop from "../../../assets/shop.png";
 import Star from "../../../assets/star.png";
+import { IoMdNotifications } from "react-icons/io";
+import { MdPerson } from "react-icons/md";
 interface Navbar_TP {
   hidden?: boolean;
 }
@@ -140,58 +142,165 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   return (
     <nav className={hidden ? "hidden sm:block" : ""}>
       {token ? (
-        <header className="flex items-center px-4 py-2 sm:justify-start">
-          <div
-            onClick={toggleDropdown}
-            className="relative flex items-center gap-2"
-          >
-            <div className="w-10 h-10 overflow-hidden rounded-full">
-              <img
-                src={profile?.image}
-                alt={profile?.name}
-                className="object-cover w-full h-full cursor-pointer"
-                onClick={openImageModal}
-              />
-            </div>
-            <p className="mx-2 font-semibold cursor-pointer">
-              {profile?.name?.split(" ")[0]}
-            </p>
-            {isOpen && (
-              <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
-                <div className="">
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
-                  >
-                    {t("dashboard")}
-                  </Link>
-                  <p
-                    onClick={handleLogout}
-                    className={cn(
-                      "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
-                      {
-                        "cursor-not-allowed": isPending,
-                      }
-                    )}
-                  >
-                    {t("logout")}{" "}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 mx-2">
-            <CiHeart className="text-xl" />
-            <Link to={"/chat"}>
-              <PiChatCircleThin className="text-xl" />
+        <>
+          <header className="items-center justify-between hidden px-4 py-2 md:flex">
+            {/* Nav Links */}
+            {/* <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerBookingList",
+              })}
+              to={"/partnerBookingList"}
+            >
+              Booking List
             </Link>
-          </div>
-          {/* Logo */}
-          <Link to={"/"} className="ms-auto">
-            <img src={Logo} alt="logo" className="w-32 h-10" />
-          </Link>
-        </header>
+          </li>
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerUsers",
+              })}
+              to={"/partnerUsers"}
+            >
+              Users
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerSnatches",
+              })}
+              to={"/partnerSnatches"}
+            >
+              Snatches
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-mainColor">
+            <Link
+              className={cn({
+                "font-bold": pathName === "/partnerContact",
+              })}
+              to={"/partnerContact"}
+            >
+              Contact Utopia
+            </Link>
+          </li>
+        </ul> */}
+
+            <div
+              onClick={toggleDropdown}
+              className="relative flex items-center gap-6"
+            >
+              <div className="w-12 h-12 overflow-hidden rounded-xl">
+                {profile?.image ? (
+                  <img
+                    src={profile?.image}
+                    alt={profile?.name}
+                    className="object-cover w-full h-full cursor-pointer"
+                    onClick={openImageModal}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor">
+                    <MdPerson className="text-4xl text-white" />
+                  </div>
+                )}
+              </div>
+              <p className="relative mx-2 font-semibold cursor-pointer">
+                <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-600 rounded-full">
+                  1
+                </span>
+                <IoMdNotifications className="text-[#7070708c] text-4xl" />
+              </p>
+
+              <Link to={"/orders"}>{t("orders")}</Link>
+              <Link to={"/chat"}>{t("contact utopia")}</Link>
+
+              {isOpen && (
+                <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
+                  <div className="">
+                    <Link
+                      to="/dashboard"
+                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                    >
+                      {t("dashboard")}
+                    </Link>
+                    <p
+                      onClick={handleLogout}
+                      className={cn(
+                        "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
+                        {
+                          "cursor-not-allowed": isPending,
+                        }
+                      )}
+                    >
+                      {t("logout")}{" "}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Logo */}
+            <Link to={"/"} className="">
+              <img src={Logo} alt="logo" className="w-32 h-10" />
+            </Link>
+          </header>
+
+          {/* // mobile */}
+          <header className="flex items-center px-4 py-2 md:hidden sm:justify-start">
+            <div
+              onClick={toggleDropdown}
+              className="relative flex items-center gap-2"
+            >
+              <div className="w-10 h-10 overflow-hidden rounded-full">
+                <img
+                  src={profile?.image}
+                  alt={profile?.name}
+                  className="object-cover w-full h-full cursor-pointer"
+                  onClick={openImageModal}
+                />
+              </div>
+              <p className="mx-2 font-semibold cursor-pointer">
+                {profile?.name?.split(" ")[0]}
+              </p>
+              {isOpen && (
+                <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
+                  <div className="">
+                    <Link
+                      to="/dashboard"
+                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                    >
+                      {t("dashboard")}
+                    </Link>
+                    <p
+                      onClick={handleLogout}
+                      className={cn(
+                        "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
+                        {
+                          "cursor-not-allowed": isPending,
+                        }
+                      )}
+                    >
+                      {t("logout")}{" "}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 mx-2">
+              <CiHeart className="text-xl" />
+              <Link to={"/chat"}>
+                <PiChatCircleThin className="text-xl" />
+              </Link>
+            </div>
+            {/* Logo */}
+            <Link to={"/"} className="ms-auto">
+              <img src={Logo} alt="logo" className="w-32 h-10" />
+            </Link>
+          </header>
+        </>
       ) : (
         <div className="flex items-center justify-between px-4 py-3 text-sm sm:py-4 xl:text-base">
           {/* Language and Auth */}
