@@ -115,7 +115,7 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
   const logOutPost = async (postData) => {
     try {
       const data: any = await apiRequest({
-        url: "/api/student/logout",
+        url: "/api/partner/logout",
         method: "POST",
         data: postData,
         token: token,
@@ -131,7 +131,6 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
     mutationFn: (data) => logOutPost(data),
     onSuccess: (data) => {
       clearAuth();
-      navigate("/");
     },
   });
 
@@ -200,7 +199,7 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
             <IoMdNotifications className="text-[#7070708c] text-4xl" />
           </p>
           <div className="w-12 h-12 overflow-hidden rounded-xl">
-            {!profile?.image ? (
+            {profile?.image ? (
               <img
                 src={profile?.image}
                 alt={profile?.name}

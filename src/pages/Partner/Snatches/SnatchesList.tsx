@@ -30,7 +30,7 @@ const SnatchesList = () => {
     <div>
       {/* DESKTOP */}
       <div>
-        <div className="max-w-full my-16 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
+        <div className="max-w-full md:my-16 sm:max-w-5xl md:max-w-6xl lg:max-w-[90rem] md:px-4 mx-auto">
           {/* LIST OF REQUESTS */}
           <div className="my-6 space-y-4 ">
             {requests?.map((request: any) => {

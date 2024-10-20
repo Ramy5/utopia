@@ -31,6 +31,19 @@ const loginPost = async (postData) => {
   }
 };
 
+const partnerLoginPost = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/partner/login",
+      method: "POST",
+      data: postData,
+    });
+    return data?.data;
+  } catch (errors) {
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
+
 const Login = () => {
   const [role, setRole] = useState("student");
   const [fcmToken, setFcmToken] = useState(null);
@@ -62,6 +75,26 @@ const Login = () => {
         toast.success(t(`login was successful`));
       }, 100);
     },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const {
+    mutate: partnerMutate,
+    isPending: partnerIsPending,
+    isSuccess: partnerIsSuccess,
+  } = useMutation({
+    mutationKey: ["partner-login"],
+    mutationFn: (data) => partnerLoginPost(data),
+    onSuccess: (data) => {
+      console.log({ ...data, role: "Partner" });
+      setAuthData({ ...data, role: "Partner" });
+      navigate("/partnerBookingList");
+      setTimeout(() => {
+        toast.success(t(`login was successful`));
+      }, 100);
+    },
   });
 
   const handleStudentSubmit = async (values: any) => {
@@ -82,6 +115,26 @@ const Login = () => {
     };
 
     await mutate(data);
+  };
+
+  const handlePartnerSubmit = async (values: any) => {
+    if (values?.email === "") {
+      toast.error(t("email is empty"));
+      return;
+    }
+
+    if (values?.password === "") {
+      toast.error(t("password is empty"));
+      return;
+    }
+
+    const data = {
+      email: values?.email,
+      password: values?.password,
+      fcm_token: fcmToken,
+    };
+
+    await partnerMutate(data);
   };
 
   return (
@@ -217,6 +270,8 @@ const Login = () => {
                     </div>
                     <div className="flex flex-col gap-4">
                       <Button
+                        disabled={partnerIsPending}
+                        action={() => handlePartnerSubmit(values)}
                         className={cn(
                           "bg-[#FFB6BF] py-3 rounded-2xl hover:bg-[#FFCC1A] animate_scale text-black font-normal",
                           {
