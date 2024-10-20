@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../utils/axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { t } from "i18next";
 import Copy from "../assets/LandingPage/copy.png";
@@ -12,6 +12,7 @@ const BankAccounts = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   console.log("🚀 ~ BankAccounts ~ selectedIndex:", selectedIndex);
   const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate()
 
   const [copySuccess, setCopySuccess] = useState("");
 
@@ -61,18 +62,18 @@ const BankAccounts = () => {
     <div className="py-3 px-4 relative block sm:hidden">
       <div className="relative">
         <div className="absolute top-1/2 -translate-y-1/2 ">
-          <Link to={"/"}>
+          <div onClick={() => navigate(-1)}>
             <FaArrowRightLong
               size={22}
-              className="mt-4 cursor-pointer justify-self-start"
+              className="cursor-pointer justify-self-start"
             />
-          </Link>
+          </div>
         </div>
-        <h2 className="text-3xl font-medium text-center py-12">
+        <h2 className="text-xl font-semibold text-center py-12">
           {t("bank accounts")}
         </h2>
       </div>
-      <h2 className="font-semibold text-2xl mb-10">
+      <h2 className="font-semibold text-xl mb-10">
         {t("you can now pay by bank transfer to any of the following banks:")}
       </h2>
       <Swiper spaceBetween={50} slidesPerView={4}>

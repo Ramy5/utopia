@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import State_flag from "../../assets/State_flag.png";
 import MainPopup from "../../components/UI/MainPopup";
 import Loading from "../../components/Global/Loading/Loading";
+import { useAuth } from "../../context/AuthContext";
 
 interface CustomOption {
   label: string;
@@ -82,6 +83,7 @@ const OwnCoursSelectStyle: StylesConfig<
 
 const DesignYourOwnCourseDetails = () => {
   const [isSubmit, setIsSubmit] = useState(false);
+  const { user } = useAuth();
   console.log("🚀 ~ DesignYourOwnCourseDetails ~ isSubmit:", isSubmit);
   const [numberOfWeeks, setNumberOfWeeks] = useState(null);
   console.log(
@@ -97,11 +99,18 @@ const DesignYourOwnCourseDetails = () => {
   );
 
   const [courseDetails, setCourseDetails] = useState(null);
+  console.log(
+    "🚀 ~ DesignYourOwnCourseDetails ~ courseDetails:",
+    courseDetails
+  );
   const navigate = useNavigate();
   const location = useLocation();
   const isRTL = useRTL();
 
-  const isEnabled = courseDetails?.cityId && courseDetails?.weeksId && courseDetails?.formattedDate
+  const isEnabled =
+    courseDetails?.cityId &&
+    courseDetails?.weeksId &&
+    courseDetails?.formattedDate;
   console.log("🚀 ~ DesignYourOwnCourseDetails ~ isEnabled:", isEnabled);
 
   const fetchDesignYourOwnCourseDetails = async () => {
@@ -126,13 +135,6 @@ const DesignYourOwnCourseDetails = () => {
     enabled: !!isEnabled,
   });
   console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
-
-  // useEffect(() => {
-  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isLoading:", isLoading);
-  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isRefetching:", isRefetching);
-  console.log("🚀 ~ DesignYourOwnCourseDetails ~ isFetching:", isFetching);
-  //   refetch()
-  // }, [isFetching])
 
   const weekOptions = [1, 2, 3, 4, 12].map((num) => ({
     id: num,
@@ -171,14 +173,14 @@ const DesignYourOwnCourseDetails = () => {
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
         <div className="relative block sm:hidden">
           <div className="absolute top-1/2 -translate-y-1/2 ">
-            <Link to={"/"}>
+            <div onClick={() => navigate(-1)}>
               <FaArrowRightLong
                 size={22}
-                className="mt-4 cursor-pointer justify-self-start"
+                className="cursor-pointer justify-self-start"
               />
-            </Link>
+            </div>
           </div>
-          <h2 className="text-3xl font-medium text-center py-6">
+          <h2 className="text-xl font-semibold text-center py-6">
             {t("available institutes")}
           </h2>
         </div>
@@ -419,6 +421,8 @@ const DesignYourOwnCourseDetails = () => {
                                   id: item.id,
                                   numberOfWeeks: data?.numberOfWeeks,
                                   startDate: data?.start_date,
+                                  amount: item.price,
+                                  user_id: user.id,
                                 },
                               })
                             }
@@ -444,60 +448,79 @@ const DesignYourOwnCourseDetails = () => {
               <div className="chooseCourse mt-12">
                 <Formik
                   initialValues={{ week: "", start_date: "" }}
-                  onSubmit={() => {
+                  onSubmit={(values) => {
+                    console.log(
+                      "🚀 ~ DesignYourOwnCourseDetails ~ value:",
+                      values
+                    );
                     setIsSubmit(true);
+                    setCourseDetails({
+                      cityId: location?.state.city_id,
+                      weeksId: values.week,
+                      formattedDate: values.start_date,
+                    });
                   }}
                 >
-                  <Form className="grid grid-cols-1 gap-3 items-end mb-24">
-                    <div className="relative">
-                      <BaseSelect
-                        id="week"
-                        name="week"
-                        placeholder={t("study duration")}
-                        label={t("study duration")}
-                        options={weekOptions}
-                        onChange={(option) => {
-                          setNumberOfWeeks({
-                            id: option.id,
-                            label: `${option.label} ${
-                              !isRTL ? "A week" : "أســـــــــبوع"
-                            }`,
-                            value: `${option.value} ${
-                              !isRTL ? "A week" : "أســـــــــبوع"
-                            }`,
-                          });
-                        }}
-                        className="pt-1.5 w-full text-black text-center"
-                        value={numberOfWeeks}
-                      />
-                    </div>
-                    <div className="relative">
-                      <label htmlFor="start_date">
-                        {t("study start date")}
-                      </label>
-                      <DatePicker
-                        autoComplete="off"
-                        showIcon
-                        id="start_date"
-                        className="pt-1.5 w-full h-[3.4rem] rounded-[14px] relative mt-3 border-1 border-[#C9C5CA]"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        filterDate={isMonday}
-                        disabledKeyboardNavigation
-                        placeholderText={t("study start date")}
-                        withPortal
-                        portalId="root-portal"
-                        icon={<FaChevronDown />}
-                      />
-                    </div>
+                  {({ setFieldValue }) => (
+                    <Form className="grid grid-cols-1 gap-3 items-end mb-24">
+                      <div className="relative">
+                        <BaseSelect
+                          id="week"
+                          name="week"
+                          placeholder={t("study duration")}
+                          label={t("study duration")}
+                          options={weekOptions}
+                          onChange={(option) => {
+                            setFieldValue("week", option.id);
+                            setNumberOfWeeks({
+                              id: option.id,
+                              label: `${option.label} ${
+                                !isRTL ? "A week" : "أســـــــــبوع"
+                              }`,
+                              value: `${option.value} ${
+                                !isRTL ? "A week" : "أســـــــــبوع"
+                              }`,
+                            });
+                          }}
+                          className="pt-1.5 w-full text-black text-center"
+                          value={numberOfWeeks}
+                        />
+                      </div>
+                      <div className="relative">
+                        <label htmlFor="start_date">
+                          {t("study start date")}
+                        </label>
+                        <DatePicker
+                          autoComplete="off"
+                          showIcon
+                          id="start_date"
+                          className="pt-1.5 w-full h-[3.4rem] rounded-[14px] relative mt-3 border-1 border-[#C9C5CA]"
+                          selected={startDate}
+                          // onChange={(date) => setStartDate(date)}
+                          onChange={(date) => {
+                            setStartDate(date);
+                            const formatdDate = date
+                              ?.toISOString()
+                              .split("T")[0];
+                            setFieldValue("start_date", formatdDate);
+                          }}
+                          filterDate={isMonday}
+                          disabledKeyboardNavigation
+                          placeholderText={t("study start date")}
+                          withPortal
+                          portalId="root-portal"
+                          icon={<FaChevronDown />}
+                        />
+                      </div>
 
-                    <Button
-                      type="submit"
-                      className="col-span-1 w-full mt-4 h-[3.4rem] rounded-[14px] bg-[#1B0924] text-white text-xl font-normal"
-                    >
-                      {t("research")}
-                    </Button>
-                  </Form>
+                      <Button
+                        type="submit"
+                        className="col-span-1 w-full mt-4 h-[3.4rem] rounded-[14px] bg-[#1B0924] text-white text-xl font-normal"
+                      >
+                        {t("research")}
+                      </Button>
+                    </Form>
+                  )}
                 </Formik>
               </div>
             ) : (
@@ -515,6 +538,8 @@ const DesignYourOwnCourseDetails = () => {
                           id: item.id,
                           numberOfWeeks: data?.numberOfWeeks,
                           startDate: data?.start_date,
+                          amount: item.price,
+                          user_id: user.id,
                         },
                       });
                     }}

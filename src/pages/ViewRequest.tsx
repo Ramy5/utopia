@@ -52,11 +52,11 @@ const ViewRequest = () => {
               <div onClick={() => navigate(-1)}>
                 <FaArrowRightLong
                   size={22}
-                  className="mt-4 cursor-pointer justify-self-start"
+                  className="cursor-pointer justify-self-start"
                 />
               </div>
             </div>
-            <h2 className="text-2xl font-medium text-center py-6">
+            <h2 className="text-xl font-semibold text-center py-6">
               {data?.partner}
             </h2>
           </div>

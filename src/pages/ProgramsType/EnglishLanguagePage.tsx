@@ -250,14 +250,14 @@ const EnglishLanguagePage = () => {
         <div className="sm:hidden block px-4">
           <div className="relative">
             <div className="absolute top-1/2 -translate-y-1/2 ">
-              <Link to={"/"}>
+              <div onClick={() => navigate(-1)}>
                 <FaArrowRightLong
                   size={22}
-                  className="mt-4 cursor-pointer justify-self-start"
+                  className="cursor-pointer justify-self-start"
                 />
-              </Link>
+              </div>
             </div>
-            <h2 className="text-3xl font-medium text-center py-6">
+            <h2 className="text-xl font-semibold text-center py-6">
               {t("english language packages")}
             </h2>
           </div>

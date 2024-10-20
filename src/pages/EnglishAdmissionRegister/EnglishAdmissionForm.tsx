@@ -31,6 +31,23 @@ const postEnglishForm = async (postData) => {
   }
 };
 
+const postProcessPayment = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/process-payment",
+      method: "POST",
+      data: postData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data?.data;
+  } catch (errors) {
+    toast.error(errors);
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
+
 const fetchNationalities = async () => {
   try {
     const data = await apiRequest({
@@ -47,13 +64,15 @@ const EnglishAdmissionForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const location = useLocation();
+  console.log("🚀 ~ EnglishAdmissionForm ~ location:", location);
   const {
     partnerId = null,
     packageId = null,
     englishName = "",
     planId = null,
+    amount = "",
+    user_id = null,
   } = location.state || {};
-  console.log(location);
   const [step, setStep] = useState(1);
 
   const initialValues = {
@@ -120,15 +139,34 @@ const EnglishAdmissionForm = () => {
     queryFn: fetchNationalities,
     suspense: true,
   });
-  console.log("🚀 ~ EnglishAdmissionForm ~ nationalities:", nationalities);
+
+  const {
+    mutate: mutateProcessPayment,
+    isPending: isPendingProcessPayment,
+    isSuccess: isSuccessProcessPayment,
+  } = useMutation({
+    mutationKey: ["ProcessPayment"],
+    mutationFn: (data: any) => postProcessPayment(data),
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success(t("registration successful"));
+      window.location.href = data?.redirect_url;
+
+    },
+  });
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationKey: ["englishForm"],
     mutationFn: (data: any) => postEnglishForm(data),
     onSuccess: (data) => {
       console.log(data);
-      navigate("/");
       toast.success(t("registration successful"));
+      mutateProcessPayment({
+        amount: 1200,
+        user_id: user_id,
+        app_id: packageId,
+        total_amount: amount,
+      });
     },
   });
 
@@ -177,7 +215,6 @@ const EnglishAdmissionForm = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, values, touched, setFieldValue, isValid }) => {
-        console.log("🚀 ~ EnglishAdmissionForm ~ validateField:", isValid);
         return (
           <Form className="">
             {/* DESKTOP */}

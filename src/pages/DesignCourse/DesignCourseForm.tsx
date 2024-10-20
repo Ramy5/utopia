@@ -85,6 +85,23 @@ export const DesignCourseSelect: StylesConfig<
   }),
 };
 
+const postProcessPayment = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/process-payment",
+      method: "POST",
+      data: postData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data?.data;
+  } catch (errors) {
+    toast.error(errors);
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
+
 const DesignCourseForm = () => {
   const [step, setStep] = useState(1);
   const location = useLocation();
@@ -95,6 +112,12 @@ const DesignCourseForm = () => {
   const partnersID = location?.state?.id;
   const startDate = location?.state?.startDate;
   const isRTL = useRTL();
+
+  const {
+    packageId = null,
+    amount = "",
+    user_id = null,
+  } = location.state || {};
 
   const isEnabled = !!partnersID && !!startDate && !!numberWeek;
 
@@ -169,6 +192,19 @@ const DesignCourseForm = () => {
   };
 
   const {
+    mutate: mutateProcessPayment,
+    isPending: isPendingProcessPayment,
+    isSuccess: isSuccessProcessPayment,
+  } = useMutation({
+    mutationKey: ["uniProcessPayment"],
+    mutationFn: (data: any) => postProcessPayment(data),
+    onSuccess: (data) => {
+      console.log(data);
+      window.location.href = data?.redirect_url;
+    },
+  });
+
+  const {
     mutate,
     data: CourseData,
     error,
@@ -177,6 +213,13 @@ const DesignCourseForm = () => {
     mutationFn: postCourseData,
     onSuccess: (data) => {
       toast.success(t("The course was designed successfully."));
+      mutateProcessPayment({
+        amount: 1200,
+        user_id: user_id,
+        design_id: packageId,
+        total_amount: amount * numberOfWeeks,
+        date_start: startDate,
+      });
     },
     onError: (error) => {
       console.error("Error posting data:", error.message);
@@ -778,7 +821,7 @@ const DesignCourseForm = () => {
                     }
                   }}
                 >
-                  {step === 3 ? `${t("create a quote")}` : `${t("next")}`}
+                  {step === 3 ? `${t("Download quote")}` : `${t("next")}`}
                 </Button>
               </div>
             </Form>

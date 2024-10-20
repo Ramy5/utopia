@@ -150,10 +150,10 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
           style={{ gridTemplateColumns: "20px 1fr" }}
           className="grid items-center justify-center py-6 mx-6"
         >
-          <Link to={"/"} className="">
+          <Link to={"/"}>
             <FaArrowRightLong className="cursor-pointer justify-self-start" />
           </Link>
-          <h4 className="text-xl text-center">{t("signup")}</h4>
+          <h4 className="text-xl font-semibold text-center">{t("signup")}</h4>
         </div>
 
         <div className="flex flex-col px-4 py-6 w-[95%] mx-auto bg-white">

@@ -69,7 +69,8 @@
   "certified": "معتمد",
   "list of majors": "قائمة التخصصات",
   "list of majors that you can study at the university": "قائمة بالتخصصات التي يمكنك دراستها بالجامعه",
-  "sort by academic degree": "فرز علي حسب الدجه العلمية",
+  "sort by academic degree": "فرز علي حسب الدرجه العلمية",
+  "academic degree":"الدجه العلمية",
   "sort by specialization": "فرز علي حسب التخصص",
   "brief about the university": "نبذة مختصرة عن الجامعة",
   "explore the list of specializations": "استكشف قائمة التخصصات",
@@ -278,5 +279,10 @@
   "Contact the institute":"التواصل مع المعهد",
   "add a request":"اضافة طلب",
   "The institute":"المعهد",
-  "The request is being prepared":"الطلب قيد التحضير"
+  "The request is being prepared":"الطلب قيد التحضير",
+  "The data has been added successfully":"تم اضافة البيانات بنجاح",
+  "Page":"الصفحة",
+  "of":"من ",
+  "Download quote":"تحميل عرض السعر",
+  "Data must be completed":"يجب اكمال البيانات"
 }

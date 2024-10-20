@@ -14,6 +14,23 @@ import { MdOutlineMailOutline, MdOutlinePerson } from "react-icons/md";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoMdPhonePortrait } from "react-icons/io";
 
+const postProcessPayment = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/process-payment",
+      method: "POST",
+      data: postData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data?.data;
+  } catch (errors) {
+    toast.error(errors);
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
+
 const postUniversityForm = async (postData) => {
   try {
     const data = await apiRequest({
@@ -47,12 +64,15 @@ const UniversityAdmissionForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const location = useLocation();
+  console.log("🚀 ~ UniversityAdmissionForm ~ location:", location)
   const {
     partnerId = null,
     specializationID = null,
     universityName = "",
+    amount = "",
+    user_id = null,
+    universityId = null,
   } = location.state || {};
-  console.log(location);
   const [step, setStep] = useState(1);
   const [universityNameState, setUniversityNameState] =
     useState(universityName);
@@ -60,6 +80,7 @@ const UniversityAdmissionForm = () => {
     "🚀 ~ UniversityAdmissionForm ~ universityNameState:",
     universityNameState
   );
+  console.log("🚀 ~ UniversityAdmissionForm ~ amount:", amount);
 
   const initialValues = {
     firstName: "",
@@ -110,13 +131,32 @@ const UniversityAdmissionForm = () => {
   });
   console.log("🚀 ~ UniversityAdmissionForm ~ nationalities:", nationalities);
 
+  const {
+    mutate: mutateProcessPayment,
+    isPending: isPendingProcessPayment,
+    isSuccess: isSuccessProcessPayment,
+  } = useMutation({
+    mutationKey: ["uniProcessPayment"],
+    mutationFn: (data: any) => postProcessPayment(data),
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success(t("registration successful"));
+      window.location.href = data?.redirect_url;
+    },
+  });
+
   const { mutate, isPending, isSuccess } = useMutation({
     mutationKey: ["password"],
     mutationFn: (data: any) => postUniversityForm(data),
     onSuccess: (data) => {
       console.log(data);
-      navigate("/");
       toast.success(t("registration successful"));
+      mutateProcessPayment({
+        amount: 1200,
+        user_id: user_id,
+        un_app_id: universityId,
+        total_amount: amount,
+      });
     },
   });
 

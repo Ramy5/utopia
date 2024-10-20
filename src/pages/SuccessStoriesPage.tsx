@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { t } from "i18next";
 import { apiRequest } from "../utils/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Button from "../components/atoms/Button/Button";
 
 const SuccessStoriesPage = () => {
+  const navigate = useNavigate();
+
   const fetchSuccessStory = async () => {
     try {
       const response = await apiRequest({
@@ -28,14 +30,14 @@ const SuccessStoriesPage = () => {
     <div className="px-4 pb-4 block sm:hidden">
       <div className="relative">
         <div className="absolute top-1/2 -translate-y-1/2 ">
-          <Link to={"/"}>
+          <div onClick={() => navigate(-1)}>
             <FaArrowRightLong
               size={22}
-              className="mt-4 cursor-pointer justify-self-start"
+              className="cursor-pointer justify-self-start"
             />
-          </Link>
+          </div>
         </div>
-        <h2 className="text-3xl font-medium text-center py-12">
+        <h2 className="text-xl font-semibold text-center py-12">
           {t("success stories")}
         </h2>
       </div>

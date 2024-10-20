@@ -61,6 +61,7 @@ const Login = () => {
 
   useEffect(() => {
     getTokenAsync(setFcmToken, toast);
+    window.scrollTo(0, 0)
   }, []);
 
   const { mutate, isPending, isSuccess } = useMutation({
