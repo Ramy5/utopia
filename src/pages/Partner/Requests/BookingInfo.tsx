@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { IoChevronDown } from "react-icons/io5";
+import {
+  IoChatbubbleOutline,
+  IoChevronDown,
+  IoLocationOutline,
+} from "react-icons/io5";
 import LoginBg from "../../../assets/loginBg.jpg";
 import Button from "../../../components/atoms/Button/Button";
 import cn from "../../../utils/cn";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
-const BookingInfo = () => {
+const BookingInfo = ({ step }: { step?: number }) => {
   const [showStudentInfo, setShowStudentInfo] = useState(true);
+  const navigate = useNavigate();
 
   const CourseData = [
     {
@@ -32,8 +38,8 @@ const BookingInfo = () => {
     },
   ];
   return (
-    <div className="mb-20">
-      <div className="flex gap-6">
+    <div className="mx-4 mb-8">
+      <div className="hidden gap-6 md:flex">
         <h2 className="text-3xl">{"Booking Info"}</h2>
         <IoMdArrowDropdownCircle
           onClick={() => setShowStudentInfo((prev) => !prev)}
@@ -46,8 +52,9 @@ const BookingInfo = () => {
         />
       </div>
 
+      {/* DESKTOP */}
       {showStudentInfo && (
-        <div className="bg-[#F7F7F7] rounded-2xl py-16 px-4">
+        <div className="bg-[#F7F7F7] rounded-2xl py-8 sm:py-16 px-4 md:block hidden">
           <div className="grid grid-cols-12 gap-x-5 border-b border-[#D1CBCB] pb-8">
             <div className="col-span-4 lg:col-span-3">
               <img src={LoginBg} className="w-full h-full rounded-2xl" />
@@ -146,6 +153,138 @@ const BookingInfo = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* MOBILE */}
+      {step === 2 && (
+        <div className="md:hidden">
+          <div className="bg-[#F7F7F7] rounded-2xl py-8 sm:py-12 px-4 block shadow-md">
+            <div className=" border-b border-[#D1CBCB] pb-2">
+              <div className="flex items-start gap-x-3">
+                <div>
+                  <div className="mb-6">
+                    <img src={LoginBg} className="h-44 w-44 rounded-2xl" />
+                  </div>
+                </div>
+                <div>
+                  <div className="">
+                    <div className="pb-2">
+                      <h2 className="text-2xl font-medium">Lila</h2>
+                      <div className="flex items-center gap-x-1 my-3.5">
+                        <div className="bg-mainColor rounded-xl flex items-center justify-center w-[1.8rem] h-[1.8rem] ">
+                          <IoLocationOutline
+                            fill="white"
+                            className="w-6 h-6 text-white"
+                          />
+                        </div>
+                        <span className="text-sm font-medium">Liverpool</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between w-full">
+                <div className="flex flex-col text-sm gap-x-1">
+                  <p className="text-sm">Booking Date:</p>
+                  <h2 className="text-[#79767A]">22 Jan 2023</h2>
+                </div>
+                <div className="flex flex-col text-sm gap-x-1">
+                  <p className="text-sm">School Contact:</p>
+                  <h2 className="text-[#79767A]">Stacey Machee</h2>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-b border-[#D1CBCB] pb-4">
+              <div className="relative flex items-center justify-between w-full mt-4 text-center">
+                <Button className="px-5 bg-[#FFB6BF] text-black py-1.5 text-xs font-medium">
+                  <p className="mb-2 text-xs font-bold">
+                    upload the Net Invoice here
+                  </p>
+                  <span>Upload docs here</span>
+                </Button>
+                <div className="relative flex items-center justify-between">
+                  <Button className="px-5 bg-[#FFB6BF] text-black py-1.5 text-xs font-medium">
+                    <p className="mb-2 text-xs font-bold">
+                      Upload Gross Invoice
+                    </p>
+                    <span>Upload docs here</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="pb-4 border-b border-[#D1CBCB]">
+              <div className="flex items-center justify-between pb-2 my-8">
+                <h2 className="text-xl">Downloading student documents ::</h2>
+              </div>
+              <div className="flex justify-between">
+                <Button className="text-sm bg-[#1B0924]">
+                  Student Passport
+                </Button>
+                <Button className="text-sm bg-[#1B0924]">
+                  High School Certificate
+                </Button>
+              </div>
+            </div>
+
+            <div className="">
+              <div className="">
+                <h2 className="mt-12 text-3xl">Options</h2>
+                <div className="grid mt-8 md:grid-cols-2 gap-x-8 lg:gap-x-32 gap-y-8">
+                  {CourseData?.map((item, index) => (
+                    <div
+                      key={index}
+                      className="border border-[#C9C5CA] rounded-xl py-4 px-4 relative"
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs">{item.title}</p>
+                        <span
+                          className={cn(
+                            "text-xs py-1.5 rounded-2xl bg-[#39FF0A] px-8"
+                          )}
+                        >
+                          Confirmed
+                        </span>
+                      </div>
+                      <h2 className="my-3 text-xl text-mainColor">
+                        {item.name}
+                      </h2>
+                      <div className="border-t border-[#D1CBCB] text-sm pt-4">
+                        {/* <div>
+                          <h3 className="font-semibold">Type</h3>
+                          <p className="text-[#79767A] mt-2">{item.type}</p>
+                        </div> */}
+                        <div className="flex items-center gap-5 my-5">
+                          <h3 className="font-semibold">Duration</h3>
+                          <p className="text-[#79767A]">{item.duration}</p>
+                        </div>
+                        <div className="flex items-center gap-5">
+                          <h3 className="font-semibold">Dates</h3>
+                          <p className="text-[#79767A]">{item.dates}</p>
+                        </div>
+                      </div>
+                      <Button className="mt-4 w-full rounded-xl py-2.5">
+                        Upload Confirmation
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Button
+            action={() => navigate("/chat")}
+            className="text-base font-medium bg-[#1B0924] mt-5 sm:hidden block mb-24"
+          >
+            <div className="flex items-center gap-2">
+              <IoChatbubbleOutline size={20} />
+              <p>Contact Student</p>
+            </div>
+          </Button>
         </div>
       )}
     </div>

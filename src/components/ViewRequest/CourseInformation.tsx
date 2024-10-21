@@ -38,7 +38,7 @@ const CourseInformation = ({ steps }) => {
   ];
   return (
     <div className="mb-20">
-      <div className="hidden sm:flex items-center gap-x-3 mb-6">
+      <div className="items-center hidden mb-6 sm:flex gap-x-3">
         <h2 className="text-3xl">{t("Course information")}</h2>
         <div className="flex items-center justify-center rounded-full w-7 h-7 bg-mainColor">
           <IoChevronDown size={18} className="text-white" />
@@ -169,12 +169,12 @@ const CourseInformation = ({ steps }) => {
                     <div className="bg-mainColor rounded-xl flex items-center justify-center w-[1.8rem] h-[1.8rem] ">
                       <IoLocationOutline
                         fill="white"
-                        className="text-white w-6 h-6"
+                        className="w-6 h-6 text-white"
                       />
                     </div>
                     <span className="text-sm font-medium">ليڤربول</span>
                   </div>
-                  <div className="text-sm flex items-center gap-x-1">
+                  <div className="flex items-center text-sm gap-x-1">
                     <h2 className="font-medium">{t("Application date:")}</h2>
                     <p className="text-[#79767A]">22 Jan 2023</p>
                   </div>
@@ -183,7 +183,7 @@ const CourseInformation = ({ steps }) => {
             </div>
             <div>
               <div className="border-b border-[#D1CBCB] pb-4">
-                <div className="flex items-center justify-between text-center mt-4 w-full relative">
+                <div className="relative flex items-center justify-between w-full mt-4 text-center">
                   <p className="text-sm font-medium">
                     {t("You can attach the receipt for full payment here")}
                   </p>
@@ -191,7 +191,7 @@ const CourseInformation = ({ steps }) => {
                     {t("Attach")}
                   </Button>
                 </div>
-                <div className="flex items-center justify-between mt-4 relative">
+                <div className="relative flex items-center justify-between mt-4">
                   <p className="text-sm font-medium">
                     {t("Download the invoice")}
                   </p>
@@ -205,7 +205,7 @@ const CourseInformation = ({ steps }) => {
             <div className="pb-4 border-b border-[#D1CBCB]">
               <div className="col-span-4 lg:col-span-3"></div>
               <div className="col-span-8 lg:col-span-9">
-                <div className="flex items-center justify-between my-8 pb-2">
+                <div className="flex items-center justify-between pb-2 my-8">
                   <h2 className="text-xl">
                     {t("Requirements that have been attached:")}
                   </h2>
@@ -230,14 +230,14 @@ const CourseInformation = ({ steps }) => {
 
             <div className="">
               <div className="">
-                <h2 className="text-3xl mt-12">{t("Options")}</h2>
-                <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-32 gap-y-8 mt-8">
+                <h2 className="mt-12 text-3xl">{t("Options")}</h2>
+                <div className="grid mt-8 md:grid-cols-2 gap-x-8 lg:gap-x-32 gap-y-8">
                   {CourseData?.map((item, index) => (
                     <div
                       key={index}
                       className="border border-[#C9C5CA] rounded-xl py-4 px-4 relative"
                     >
-                      <div className="flex justify-between items-center">
+                      <div className="flex items-center justify-between">
                         <p className="text-xs">{t("Accommodation")}</p>
                         <span
                           className={cn(
@@ -252,7 +252,7 @@ const CourseInformation = ({ steps }) => {
                             : t("Under process")}
                         </span>
                       </div>
-                      <h2 className="text-xl text-mainColor my-3">
+                      <h2 className="my-3 text-xl text-mainColor">
                         {item.name}
                       </h2>
                       <div className="border-t border-[#D1CBCB] text-sm pt-4">
@@ -260,7 +260,7 @@ const CourseInformation = ({ steps }) => {
                           <h3 className="font-semibold">{t("type")}</h3>
                           <p className="text-[#79767A] mt-2">{item.type}</p>
                         </div>
-                        <div className="my-5 flex items-center gap-5">
+                        <div className="flex items-center gap-5 my-5">
                           <h3 className="font-semibold">{t("Duration")}</h3>
                           <p className="text-[#79767A]">{item.duration}</p>
                         </div>
