@@ -287,11 +287,12 @@
   "of": "من ",
   "Download quote": "تحميل عرض السعر",
   "Data must be completed": "يجب اكمال البيانات",
-  "Confirmation of accommodation":"تأكيد السكن",
-  "Confirmation of airport pickup":"تأكيد الاستقبال من المطار",
-  "Visa":"التأشيرة",
-  "Travel insurance":"تأمين السفر ",
-  "Flight ticket":"تذكرة الطيران",
-  "Image uploaded successfully":"تم تحميل الصورة بنجاح",
-  "Image attached successfully":"تم ارفاق الصورة بنجاح"
+  "Confirmation of accommodation": "تأكيد السكن",
+  "Confirmation of airport pickup": "تأكيد الاستقبال من المطار",
+  "Visa": "التأشيرة",
+  "Travel insurance": "تأمين السفر ",
+  "Flight ticket": "تذكرة الطيران",
+  "Image uploaded successfully": "تم تحميل الصورة بنجاح",
+  "Image attached successfully": "تم ارفاق الصورة بنجاح",
+  "add pic": "اضافة صورة"
 }

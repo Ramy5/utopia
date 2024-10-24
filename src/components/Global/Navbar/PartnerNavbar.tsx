@@ -204,7 +204,6 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
                 src={profile?.image}
                 alt={profile?.name}
                 className="object-cover w-full h-full cursor-pointer"
-                onClick={openImageModal}
               />
             ) : (
               <div className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor">
@@ -241,8 +240,12 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
       {/* Image upload modal */}
       {profileImgIsEdit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="w-full max-w-sm p-4 bg-white rounded-md shadow-lg sm:max-w-xl">
+        <div className="">
+          <div
+            onClick={() => setProfileImgIsEdit(false)}
+            className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50"
+          ></div>
+          <div className="fixed top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 z-[100] max-w-sm w-full p-4 bg-white rounded-md shadow-lg sm:max-w-xl">
             <h2 className="mb-4 text-lg font-semibold">{t("add image")}</h2>
             <input
               type="file"

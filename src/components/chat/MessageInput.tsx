@@ -1,11 +1,12 @@
 import { Form, Formik } from "formik";
 import { t } from "i18next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BaseInput from "../atoms/molecules/formik-fields/BaseInput";
 import { BsFillSendFill } from "react-icons/bs";
 import Button from "../atoms/Button/Button";
 import cn from "../../utils/cn";
 import { ROLE } from "../../constants/LocalStorageKeys";
+import { useAuth } from "../../context/AuthContext";
 
 interface MessageInputProps {
   onSendMessage: (text: string) => void;
@@ -17,7 +18,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   isMobail,
 }) => {
   const [text, setText] = useState("");
-  const role = localStorage.getItem(ROLE);
+  const {role} = useAuth()
 
   const handleSend = () => {
     onSendMessage(text);

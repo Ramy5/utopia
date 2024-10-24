@@ -1,11 +1,11 @@
-import { lazy, useEffect, useLayoutEffect } from "react";
+import { lazy, useEffect, useLayoutEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useRTL } from "./hooks/useRTL";
 import LoadingWrapper from "./components/Global/Loading/LoadingWrapper";
 import { BookConsultant } from "./pages";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import StudentRequest from "./pages/StudentRequest";
 import { onMessageListener } from "../firebase";
 import Chat from "./pages/chat/Chat";
@@ -90,21 +90,6 @@ const ViewPartnerRequest = lazy(
 );
 
 function App() {
-  const isRTL = useRTL();
-
-  const role = localStorage.getItem(ROLE); // ROLE
-  console.log("🚀 ~ App ~ role:", role);
-
-  useLayoutEffect(() => {
-    if (role === "Partner") {
-      document.documentElement.dir = "ltr";
-      document.documentElement.lang = "en";
-    } else {
-      document.documentElement.dir = isRTL ? "rtl" : "ltr";
-      document.documentElement.lang = isRTL ? "ar" : "en";
-    }
-  }, [isRTL, role]);
-
   onMessageListener()
     .then((payload: any) => {
       toast(
