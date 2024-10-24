@@ -4,32 +4,26 @@ import Button from "../atoms/Button/Button";
 import { IoChatbubbleOutline, IoChevronDown } from "react-icons/io5";
 import cn from "../../utils/cn";
 import { useNavigate } from "react-router-dom";
+import { downloadImage, downloadPDF } from "../../hooks/Download";
 
-const OtherInformation = ({ steps }) => {
+const OtherInformation = ({ steps, others }) => {
+  console.log("🚀 ~ OtherInformation ~ others:", others);
   const navigate = useNavigate();
   const CourseData = [
     {
-      name: "انجليزي عام ٢٠ درس في الاسبوع",
-      type: "غرفة خاصة، حمام مشترك، افطار وعشاء",
-      duration: "اسبوع",
-      dates: "2025 05 - 2024",
-      isConfirmed: true,
+      name: t("Visa"),
+      isConfirmed: others?.visa,
     },
     {
-      name: "السكن العائلي ٢٠ درس في الاسبوع",
-      type: "غرفة خاصة، حمام مشترك، افطار وعشاء",
-      duration: "اسبوع",
-      dates: "2025 05 - 2024",
-      isConfirmed: false,
+      name: t("Travel insurance"),
+      isConfirmed: others?.travel,
     },
     {
-      name: "السكن العائلي ٢٠ درس في الاسبوع",
-      type: "غرفة خاصة، حمام مشترك، افطار وعشاء",
-      duration: "اسبوع",
-      dates: "2025 05 - 2024",
-      isConfirmed: false,
+      name: t("Flight ticket"),
+      isConfirmed: others?.ticket,
     },
   ];
+
   return (
     <div className="mb-20">
       <div className="sm:flex items-center gap-x-3 mb-6 hidden">
@@ -57,7 +51,29 @@ const OtherInformation = ({ steps }) => {
                 {item.isConfirmed ? t("Confirmed") : t("Under process")}
               </span>
             </div>
-            <Button className="absolute w-[90%] left-1/2 -translate-x-1/2 -bottom-3 rounded-3xl py-2">
+            <Button
+              action={() => {
+                const fileExtension = item.isConfirmed
+                  .split(".")
+                  .pop()
+                  .toLowerCase();
+                if (
+                  ["jpg", "jpeg", "png", "gif", "svg", "bmp"].includes(
+                    fileExtension
+                  )
+                ) {
+                  downloadImage(item.isConfirmed);
+                } else {
+                  downloadPDF(item.isConfirmed);
+                }
+              }}
+              className={`absolute h-11 w-[90%]  left-1/2 -translate-x-1/2 -bottom-3 rounded-3xl py-2 ${
+                item.isConfirmed
+                  ? "cursor-pointer"
+                  : "cursor-not-allowed disabled:bg-mainColor disabled:border-none disabled:text-white"
+              } `}
+              disabled
+            >
               {t("Download")}
             </Button>
           </div>
@@ -86,7 +102,24 @@ const OtherInformation = ({ steps }) => {
                     {item.isConfirmed ? t("Confirmed") : t("Under process")}
                   </span>
                 </div>
-                <Button className="w-full rounded-xl py-2 mt-4">
+                <Button
+                  action={() => {
+                    const fileExtension = item.isConfirmed
+                      .split(".")
+                      .pop()
+                      .toLowerCase();
+                    if (
+                      ["jpg", "jpeg", "png", "gif", "svg", "bmp"].includes(
+                        fileExtension
+                      )
+                    ) {
+                      downloadImage(item.isConfirmed);
+                    } else {
+                      downloadPDF(item.isConfirmed);
+                    }
+                  }}
+                  className="w-full rounded-xl py-2 mt-4"
+                >
                   {t("Download")}
                 </Button>
               </div>

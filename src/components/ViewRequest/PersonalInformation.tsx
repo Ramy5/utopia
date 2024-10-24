@@ -3,23 +3,23 @@ import PersonalImage from "../../assets/jnc6or4k_400x400.png";
 import Button from "../atoms/Button/Button";
 import cn from "../../utils/cn";
 
-const PersonalInformation = ({ steps }: any) => {
+const PersonalInformation = ({ steps, personalInfo, userName, userImage }: any) => {
   const personalData = {
-    name: "عبدالعزيز اليحيا",
-    student_number: "240001",
-    gender: "ذكر",
-    birth_date: "20 May 2005",
-    nationality: "سعودي",
-    passport_number: "Z197564",
-    passport_expiration: "المملكة العربية السعودية",
-    country_passport: "المملكة العربية السعودية",
-    english_level: "متوسط",
-    address: "طريق الملك فهد، 7689",
-    postal_code: "25525",
-    city: "جده",
-    email: "Azizmio78@gmail.com",
-    mobile_number: "+966550880636",
-    relative_mobile: "+966550880636",
+    name: userName,
+    student_number: personalInfo?.user_id,
+    gender: personalInfo?.gender,
+    birth_date: personalInfo?.birthday,
+    nationality: personalInfo?.nationality_id,
+    passport_number: personalInfo?.passport_number,
+    passport_expiration: personalInfo?.passport_expiry_date,
+    country_passport: personalInfo?.passport_county,
+    english_level: personalInfo?.level,
+    address: personalInfo?.address,
+    postal_code: personalInfo?.postal_code,
+    city: personalInfo?.city_name,
+    email: personalInfo?.email,
+    mobile_number: personalInfo?.phone,
+    relative_mobile: personalInfo?.relative_phone,
   };
 
   const renderDataItem = (label, value) => {
@@ -32,7 +32,6 @@ const PersonalInformation = ({ steps }: any) => {
   };
 
   const renderDataItemMobile = (label, value) => {
-    console.log("🚀 ~ renderDataItem ~ label:", label);
     return (
       <div className="flex items-center sm:block">
         <h3 className="flex items-center mb-0 text-sm sm:mb-2">
@@ -59,7 +58,7 @@ const PersonalInformation = ({ steps }: any) => {
           <div className="grid grid-cols-12">
             <div className="col-span-4 md:col-span-3 lg:col-span-2">
               <img
-                src={PersonalImage}
+                src={userImage}
                 alt="Personal"
                 className="w-32 h-32 mx-auto -mt-8 overflow-hidden rounded-full"
               />
@@ -111,7 +110,7 @@ const PersonalInformation = ({ steps }: any) => {
               <div className="flex items-center gap-x-4 sm:gap-x-8">
                 <div>
                   <img
-                    src={PersonalImage}
+                    src={userImage}
                     alt="Personal"
                     className="h-full rounded-xl"
                   />

@@ -62,6 +62,9 @@ const DesignYourOwnCourseDetails = lazy(
 const DesignYourOwnCourseRegister = lazy(
   () => import("./pages/DesignCourse/DesignYourOwnCourseRegister")
 );
+const DesignOwnRegistrationFormPage = lazy(
+  () => import("./pages/DesignCourse/DesignOwnRegistrationFormPage")
+);
 const DesignCourseRegistration = lazy(
   () => import("./pages/DesignCourse/DesignCourseRegistration")
 );
@@ -154,6 +157,10 @@ function App() {
               <Route
                 path="/designCourse/register"
                 element={<DesignYourOwnCourseRegister />}
+              />
+              <Route
+                path="/designRegister"
+                element={<DesignOwnRegistrationFormPage />}
               />
               <Route
                 path="/designCourse/registration"

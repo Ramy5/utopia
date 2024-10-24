@@ -8,7 +8,7 @@ interface Sidebar_TP {
 const Sidebar: React.FC<Sidebar_TP> = ({ children, className }) => {
   return (
     <div
-      className={`${className} w-full h-full fixed top-0 z-30 left-0 bg-white py-2 px-4`}
+      className={`${className} w-full h-full fixed top-0 z-30 left-0 bg-white py-2 px-4 overflow-y-scroll scrollbar-none`}
     >
       <div>{children}</div>
     </div>

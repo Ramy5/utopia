@@ -318,7 +318,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             </div>
             <div
               style={{ height: "calc(100vh - 105px)" }}
-              className="py-4 overflow-auto "
+              className="py-4"
             >
               {notifications?.map((notification) => (
                 <Notification

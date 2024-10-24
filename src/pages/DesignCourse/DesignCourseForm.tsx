@@ -16,7 +16,7 @@ import { apiRequest } from "../../utils/axios";
 import { PiHouseLineLight, PiHouseLineThin } from "react-icons/pi";
 import Button from "../../components/atoms/Button/Button";
 import { lazy, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BaseSelect from "../../components/atoms/molecules/formik-fields/BaseSelect";
 import { useRTL } from "../../hooks/useRTL";
 import { StylesConfig, GroupBase } from "react-select";
@@ -112,12 +112,18 @@ const DesignCourseForm = () => {
   const partnersID = location?.state?.id;
   const startDate = location?.state?.startDate;
   const isRTL = useRTL();
+  const navigate = useNavigate();
 
   const {
-    packageId = null,
+    id = null,
     amount = "",
     user_id = null,
   } = location.state || {};
+
+  console.log("🚀 ~ DesignCourseForm ~ packageId:", id)
+  console.log("🚀 ~ DesignCourseForm ~ amount:", amount * +numberOfWeeks?.id)
+
+
 
   const isEnabled = !!partnersID && !!startDate && !!numberWeek;
 
@@ -213,13 +219,22 @@ const DesignCourseForm = () => {
     mutationFn: postCourseData,
     onSuccess: (data) => {
       toast.success(t("The course was designed successfully."));
-      mutateProcessPayment({
-        amount: 1200,
-        user_id: user_id,
-        design_id: packageId,
-        total_amount: amount * numberOfWeeks,
-        date_start: startDate,
+      navigate("/designRegister", {
+        state: {
+          amount: 1200,
+          user_id: user_id,
+          design_id: id,
+          total_amount: amount * +numberOfWeeks?.id,
+          date_start: startDate,
+        },
       });
+      // mutateProcessPayment({
+      //   amount: 1200,
+      //   user_id: user_id,
+      //   design_id: packageId,
+      //   total_amount: amount * numberOfWeeks,
+      //   date_start: startDate,
+      // });
     },
     onError: (error) => {
       console.error("Error posting data:", error.message);
@@ -228,7 +243,7 @@ const DesignCourseForm = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [step]);
+  }, []);
 
   return (
     <div>

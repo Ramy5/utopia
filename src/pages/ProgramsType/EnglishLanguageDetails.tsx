@@ -18,7 +18,6 @@ const EnglishLanguageDetails = () => {
   const EnglishLanguageDetails = location.state;
   const [planId, setPlanId] = useState(null);
   const [amount, setAmount] = useState("");
-  console.log("🚀 ~ SummerProgramsDetails ~ amount:", amount);
   const { user } = useAuth();
 
   const handleSelectedPlanId = (id, amount) => {
@@ -246,7 +245,7 @@ const EnglishLanguageDetails = () => {
                   packageId: EnglishLanguageDetails?.category_id,
                   planId: planId,
                   amount: amount,
-                  user_id: user.id
+                  user_id: user?.id
                 }}
               >
                 <Button className="w-full mt-8 sm:w-fit">
