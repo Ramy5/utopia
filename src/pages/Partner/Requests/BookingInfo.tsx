@@ -32,8 +32,7 @@ const postPartnerAttachments = async (postData) => {
 };
 
 const BookingInfo = ({ step, packageInfo, design, data }: any) => {
-  console.log("🚀 ~ BookingInfo ~ data:", data);
-  console.log("🚀 ~ BookingInfo ~ packageInfo:", packageInfo);
+
   const [showStudentInfo, setShowStudentInfo] = useState(true);
   const [netInvoice, setNetInvoice] = useState(null);
   const [grossInvoice, setGrossInvoice] = useState(null);
@@ -85,6 +84,7 @@ const BookingInfo = ({ step, packageInfo, design, data }: any) => {
     }
     mutate({
       invoice: netInvoice,
+      grossInvoice: null,
       accept: null,
       residence: null,
       airport: null,
@@ -97,7 +97,8 @@ const BookingInfo = ({ step, packageInfo, design, data }: any) => {
       setGrossInvoice(file);
     }
     mutate({
-      invoice: grossInvoice,
+      invoice: null,
+      grossInvoice: grossInvoice,
       accept: null,
       residence: null,
       airport: null,
@@ -111,6 +112,7 @@ const BookingInfo = ({ step, packageInfo, design, data }: any) => {
     }
     mutate({
       invoice: null,
+      grossInvoice: null,
       accept: accept,
       residence: null,
       airport: null,
@@ -124,6 +126,7 @@ const BookingInfo = ({ step, packageInfo, design, data }: any) => {
     }
     mutate({
       invoice: null,
+      grossInvoice: null,
       accept: null,
       residence: residence,
       airport: null,
@@ -137,6 +140,7 @@ const BookingInfo = ({ step, packageInfo, design, data }: any) => {
     }
     mutate({
       invoice: null,
+      grossInvoice: null,
       accept: null,
       residence: null,
       airport: airport,

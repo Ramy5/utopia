@@ -1,6 +1,5 @@
 export const downloadImage = (imageUrl) => {
   const fileExtension = imageUrl.split(".").pop().toLowerCase();
-  console.log("🚀 ~ downloadImage ~ fileExtension:", fileExtension);
   const proxyUrl = "https://corsproxy.io/?";
   const fullUrl = proxyUrl + imageUrl;
 
@@ -30,25 +29,20 @@ export const downloadPDF = async (pdfUrl) => {
   const proxyUrl = "https://corsproxy.io/?";
   try {
     const response = await fetch(proxyUrl + pdfUrl);
-    const blob = await response.blob(); // Convert response to a blob
+    const blob = await response.blob();
 
-    // Create a URL for the blob
     const url = window.URL.createObjectURL(blob);
 
-    // Create a link element
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", "downloaded.pdf"); // Set the filename
+    link.setAttribute("download", "downloaded.pdf");
 
-    // Append the link to the body
     document.body.appendChild(link);
 
-    // Trigger the download by simulating a click
     link.click();
 
-    // Clean up and remove the link
     link.parentNode.removeChild(link);
-    window.URL.revokeObjectURL(url); // Release the blob URL
+    window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error("Error downloading the PDF:", error);
   }
