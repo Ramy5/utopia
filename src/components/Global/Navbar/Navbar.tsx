@@ -198,7 +198,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                     src={profile?.image}
                     alt={profile?.name}
                     className="object-cover w-full h-full cursor-pointer"
-                    onClick={openImageModal}
+                    // onClick={openImageModal}
                   />
                 ) : (
                   <div className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor">
@@ -219,16 +219,22 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
               {isOpen && (
                 <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
                   <div className="">
+                    <p
+                      onClick={openImageModal}
+                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                    >
+                      {t("add pic")}
+                    </p>
                     <Link
                       to="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100 animation_delay-3"
                     >
                       {t("dashboard")}
                     </Link>
                     <p
                       onClick={handleLogout}
                       className={cn(
-                        "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
+                        "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-5 hover:bg-gray-100",
                         {
                           "cursor-not-allowed": isPending,
                         }
@@ -258,7 +264,6 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                   src={profile?.image}
                   alt={profile?.name}
                   className="object-cover w-full h-full cursor-pointer"
-                  onClick={openImageModal}
                 />
               </div>
               <p className="mx-2 font-semibold cursor-pointer">
@@ -267,16 +272,22 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
               {isOpen && (
                 <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
                   <div className="">
+                    <p
+                      onClick={openImageModal}
+                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                    >
+                      {t("add pic")}
+                    </p>
                     <Link
                       to="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100 animation_delay-3"
                     >
                       {t("dashboard")}
                     </Link>
                     <p
                       onClick={handleLogout}
                       className={cn(
-                        "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-3 hover:bg-gray-100",
+                        "block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer hover:ps-6 animate_from_left animation_delay-5 hover:bg-gray-100",
                         {
                           "cursor-not-allowed": isPending,
                         }
@@ -356,8 +367,12 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
       {/* Image upload modal */}
       {profileImgIsEdit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="w-full max-w-sm p-4 bg-white rounded-md shadow-lg sm:max-w-xl">
+        <div>
+          <div
+            onClick={() => setProfileImgIsEdit(false)}
+            className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50"
+          ></div>
+          <div className="fixed top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 z-[100] max-w-sm w-full p-4 bg-white rounded-md shadow-lg sm:max-w-xl">
             <h2 className="mb-4 text-lg font-semibold">{t("add image")}</h2>
             <input
               type="file"

@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const clearAuth = () => {
     setToken(null);
     setUser(null);
+    setRole(null);
 
     localStorage.removeItem(TOKEN);
     localStorage.removeItem(USER);

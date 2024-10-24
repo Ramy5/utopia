@@ -59,11 +59,10 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
   });
   const isRTL = useRTL();
   const navigate = useNavigate();
-  const { clearAuth, user, token } = useAuth();
+  const { clearAuth, role, user, token } = useAuth();
   const { i18n } = useTranslation();
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const role = localStorage.getItem(ROLE); // ROLE
 
   const fetchRequests = async () => {
     try {
