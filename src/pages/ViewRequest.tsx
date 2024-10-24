@@ -44,7 +44,12 @@ const ViewRequest = () => {
         <div className="px-4 md:px-0">
           <div className="items-center justify-between hidden sm:flex">
             <h2 className="text-3xl font-medium">{t("The order")}</h2>
-            <Button className="text-base rounded-2xl">{t("return")}</Button>
+            <Button
+              className="text-base rounded-2xl"
+              action={() => navigate(-1)}
+            >
+              {t("return")}
+            </Button>
           </div>
 
           <div className="relative block sm:hidden">
@@ -62,7 +67,7 @@ const ViewRequest = () => {
           </div>
 
           <div>
-            <RequestStatus />
+            <RequestStatus statusData={data} />
           </div>
 
           <div className="flex items-center justify-between mt-8 mb-10 sm:hidden gap-x-1">
@@ -90,15 +95,25 @@ const ViewRequest = () => {
           </div>
 
           <div>
-            <PersonalInformation steps={steps} />
+            <PersonalInformation
+              steps={steps}
+              personalInfo={data?.personalInfo}
+              userName={data?.user}
+              userImage={data?.image}
+            />
           </div>
 
           <div>
-            <CourseInformation steps={steps} />
+            <CourseInformation
+              steps={steps}
+              packageInfo={data?.packageInfo}
+              design={data?.design}
+              data={data}
+            />
           </div>
 
           <div>
-            <OtherInformation steps={steps} />
+            <OtherInformation steps={steps} others={data?.others} />
           </div>
 
           <div className="hidden sm:block">

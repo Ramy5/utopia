@@ -37,7 +37,7 @@ const SuccessStoriesPage = () => {
             />
           </div>
         </div>
-        <h2 className="text-xl font-semibold text-center py-12">
+        <h2 className="text-xl font-semibold text-center py-8">
           {t("success stories")}
         </h2>
       </div>

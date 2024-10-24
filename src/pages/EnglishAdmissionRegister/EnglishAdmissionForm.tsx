@@ -149,7 +149,6 @@ const EnglishAdmissionForm = () => {
     mutationFn: (data: any) => postProcessPayment(data),
     onSuccess: (data) => {
       console.log(data);
-      toast.success(t("registration successful"));
       window.location.href = data?.redirect_url;
 
     },

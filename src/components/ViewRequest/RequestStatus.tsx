@@ -9,19 +9,20 @@ import RequestStatus05 from "../../assets/RequestStatus05.svg";
 import StraightLine from "../../assets/StraightLine.svg";
 import DashedLine from "../../assets/DashedLine.svg";
 
-const RequestStatus = () => {
+const RequestStatus = ({ statusData }) => {
+
   const RequestStatusData = [
     {
       title: "Submit the request and pay the deposit",
       percentageNumber: "20%",
       day: "8 يناير",
-      status: true,
+      status: false,
     },
     {
       title: "Complete the placement test",
       percentageNumber: "40%",
       day: "8 يناير",
-      status: true,
+      status: false,
     },
     {
       title: "Confirmation of acceptance",
@@ -42,6 +43,17 @@ const RequestStatus = () => {
       status: false,
     },
   ];
+
+  const updatedRequestStatusData = RequestStatusData.map((item, index) => {
+    if (index <= statusData?.status) {
+      return { ...item, status: true };
+    } else {
+      return { ...item, status: false };
+    }
+  });
+
+  console.log("🚀 ~ updatedRequestStatusData ~ updatedRequestStatusData:", updatedRequestStatusData)
+
 
   const notesData = [
     {
@@ -71,7 +83,7 @@ const RequestStatus = () => {
     <div>
       <div className="bg-[#F7F7F7] rounded-2xl flex sm:flex-row flex-col items-center justify-between px-3 sm:px-5 py-8 sm:py-12 relative z-10 my-6 sm:my-8 shadow-md sm:shadow-none">
         <div className="bg-[#707070] w-[96%] h-[0.7px] absolute left-1/2 -translate-x-1/2 bottom-[5.22rem] -z-10 sm:block hidden"></div>
-        {RequestStatusData?.map((item, index) => (
+        {updatedRequestStatusData?.map((item, index) => (
           <div key={index} className="text-center sm:block hidden">
             <span className="text-xs">{item.percentageNumber}</span>
             <p
@@ -100,22 +112,24 @@ const RequestStatus = () => {
 
         <div className="text-center gap-x-0.5 flex items-center sm:hidden justify-between w-full mt-8">
           <img src={RequestStatus01} className="w-6 h-6" />
-          <img src={StraightLine} className="col-span-2 w-1/2"/>
-          <img src={RequestStatus02} className="w-6 h-6"/>
-          <img src={DashedLine} className="col-span-2 w-1/2"/>
-          <img src={RequestStatus03} className="w-6 h-6"/>
-          <img src={DashedLine} className="col-span-2 w-1/2"/>
-          <img src={RequestStatus04} className="w-6 h-6"/>
-          <img src={DashedLine} className="col-span-2 w-1/2"/>
-          <img src={RequestStatus05} className="w-6 h-6"/>
+          <img src={StraightLine} className="col-span-2 w-1/2" />
+          <img src={RequestStatus02} className="w-6 h-6" />
+          <img src={DashedLine} className="col-span-2 w-1/2" />
+          <img src={RequestStatus03} className="w-6 h-6" />
+          <img src={DashedLine} className="col-span-2 w-1/2" />
+          <img src={RequestStatus04} className="w-6 h-6" />
+          <img src={DashedLine} className="col-span-2 w-1/2" />
+          <img src={RequestStatus05} className="w-6 h-6" />
         </div>
       </div>
 
       <div className="bg-[#FFCC1A] py-5 sm:py-10 px-4 text-center rounded-2xl">
         <p className="text-[15px]">
-          {t(
-            "A message that can be changed according to the application stage"
-          )}
+          {statusData?.message
+            ? statusData?.message
+            : t(
+                "A message that can be changed according to the application stage"
+              )}
         </p>
       </div>
 

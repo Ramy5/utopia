@@ -145,7 +145,7 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
         </Link>
 
         {/* Nav Links */}
-        <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
+        <ul className="hidden gap-3 text-gray-700 xl:gap-6 md:flex">
           <li className="cursor-pointer hover:text-mainColor">
             <Link
               className={cn({

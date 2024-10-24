@@ -166,6 +166,10 @@ const DesignYourOwnCourseDetails = () => {
     return date.getDay() === 1;
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  },[])
+
   if (isFetching || isRefetching || isLoading) return <Loading />;
 
   return (

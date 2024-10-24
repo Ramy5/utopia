@@ -15,7 +15,7 @@ const UserCard = (user) => {
       >
         <div>
           <img
-            src={testImage}
+            src={image}
             alt={name}
             className="w-full h-full rounded-xl md:w-36 sm:w-40"
           />

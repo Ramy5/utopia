@@ -28,26 +28,26 @@ const renderDataItemMobile = (label, value) => {
   );
 };
 
-const StudentInfo = ({ step }: { step?: number }) => {
+const StudentInfo = ({ step, personalInfo, userName, userImage }: any) => {
   const navigate = useNavigate();
   const [showStudentInfo, setShowStudentInfo] = useState(true);
 
   const personalData = {
-    name: "عبدالعزيز اليحيا",
-    student_number: "240001",
-    gender: "ذكر",
-    birth_date: "20 May 2005",
-    nationality: "سعودي",
-    passport_number: "Z197564",
-    passport_expiration: "المملكة العربية السعودية",
-    country_passport: "المملكة العربية السعودية",
-    english_level: "متوسط",
-    address: "طريق الملك فهد، 7689",
-    postal_code: "25525",
-    city: "جده",
-    email: "Azizmio78@gmail.com",
-    mobile_number: "+966550880636",
-    relative_mobile: "+966550880636",
+    name: userName,
+    student_number: personalInfo?.user_id,
+    gender: personalInfo?.gender,
+    birth_date: personalInfo?.birthday,
+    nationality: personalInfo?.nationality_id,
+    passport_number: personalInfo?.passport_number,
+    passport_expiration: personalInfo?.passport_expiry_date,
+    country_passport: personalInfo?.passport_county,
+    english_level: personalInfo?.level,
+    address: personalInfo?.address,
+    postal_code: personalInfo?.postal_code,
+    city: personalInfo?.city_name,
+    email: personalInfo?.email,
+    mobile_number: personalInfo?.phone,
+    relative_mobile: personalInfo?.relative_phone,
   };
 
   return (
@@ -73,58 +73,53 @@ const StudentInfo = ({ step }: { step?: number }) => {
           <span>Back</span>
         </Button>
       </div>
-      {showStudentInfo && (
-        <div className="bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4 md:block hidden">
-          <div>
-            <h2 className="mb-20 text-3xl ms-14">{personalData.name}</h2>
+      <div className="bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4 md:block hidden">
+        <div>
+          <h2 className="mb-20 text-3xl ms-14">{personalData.name}</h2>
 
-            <div className="grid grid-cols-12">
-              <div className="col-span-4 md:col-span-3 lg:col-span-2">
-                <img
-                  src={PersonalImage}
-                  alt="Personal"
-                  className="w-32 h-32 mx-auto -mt-8 overflow-hidden rounded-full"
-                />
-              </div>
+          <div className="grid grid-cols-12">
+            <div className="col-span-4 md:col-span-3 lg:col-span-2">
+              <img
+                src={PersonalImage}
+                alt="Personal"
+                className="w-32 h-32 mx-auto -mt-8 overflow-hidden rounded-full"
+              />
+            </div>
 
-              <div className="grid grid-cols-2 col-span-8 md:col-span-9 lg:col-span-10 md:grid-cols-3 lg:grid-cols-4 gap-y-8">
-                {renderDataItem("Student number", personalData.student_number)}
-                {renderDataItem("Gender", personalData.gender)}
-                {renderDataItem("Date of birth", personalData.birth_date)}
-                {renderDataItem("Nationality", personalData.nationality)}
-                {renderDataItem(
-                  "Passport number",
-                  personalData.passport_number
-                )}
-                {renderDataItem(
-                  "Passport expiration date",
-                  personalData.passport_expiration
-                )}
-                {renderDataItem(
-                  "Country of passport",
-                  personalData.country_passport
-                )}
-                {renderDataItem(
-                  "English language proficiency level",
-                  personalData.english_level
-                )}
-                {renderDataItem("Address", personalData.address)}
-                {renderDataItem("Postal code", personalData.postal_code)}
-                {renderDataItem("City", personalData.city)}
-                {renderDataItem("Email", personalData.email)}
-                {renderDataItem("Mobile number", personalData.mobile_number)}
-                {renderDataItem(
-                  "Relative's mobile number",
-                  personalData.relative_mobile
-                )}
-              </div>
+            <div className="grid grid-cols-2 col-span-8 md:col-span-9 lg:col-span-10 md:grid-cols-3 lg:grid-cols-4 gap-y-8">
+              {renderDataItem("Student number", personalData.student_number)}
+              {renderDataItem("Gender", personalData.gender)}
+              {renderDataItem("Date of birth", personalData.birth_date)}
+              {renderDataItem("Nationality", personalData.nationality)}
+              {renderDataItem("Passport number", personalData.passport_number)}
+              {renderDataItem(
+                "Passport expiration date",
+                personalData.passport_expiration
+              )}
+              {renderDataItem(
+                "Country of passport",
+                personalData.country_passport
+              )}
+              {renderDataItem(
+                "English language proficiency level",
+                personalData.english_level
+              )}
+              {renderDataItem("Address", personalData.address)}
+              {renderDataItem("Postal code", personalData.postal_code)}
+              {renderDataItem("City", personalData.city)}
+              {renderDataItem("Email", personalData.email)}
+              {renderDataItem("Mobile number", personalData.mobile_number)}
+              {renderDataItem(
+                "Relative's mobile number",
+                personalData.relative_mobile
+              )}
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {step === 1 && (
-        <div className="md:hidden">
+        <div className="md:hidden block">
           <div className="md:bg-[#F7F7F7] rounded-2xl shadow-md sm:shadow-none py-8 sm:py-16 px-4  mb-6">
             <div className="">
               <div className="">

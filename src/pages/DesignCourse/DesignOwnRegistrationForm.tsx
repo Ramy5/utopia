@@ -14,10 +14,10 @@ import { MdOutlineMailOutline, MdOutlinePerson } from "react-icons/md";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoMdPhonePortrait } from "react-icons/io";
 
-const postProcessPayment = async (postData) => {
+const postEnglishForm = async (postData) => {
   try {
     const data = await apiRequest({
-      url: "/api/student/process-payment",
+      url: "/api/student/design-course-form",
       method: "POST",
       data: postData,
       headers: {
@@ -31,10 +31,10 @@ const postProcessPayment = async (postData) => {
   }
 };
 
-const postUniversityForm = async (postData) => {
+const postProcessPayment = async (postData) => {
   try {
     const data = await apiRequest({
-      url: "/api/student/university-register-package",
+      url: "/api/student/process-payment",
       method: "POST",
       data: postData,
       headers: {
@@ -60,27 +60,19 @@ const fetchNationalities = async () => {
   }
 };
 
-const UniversityAdmissionForm = () => {
+const DesignOwnRegistrationForm = ({ designOwn }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const location = useLocation();
-  console.log("🚀 ~ UniversityAdmissionForm ~ location:", location)
+
   const {
     partnerId = null,
-    specializationID = null,
-    universityName = "",
+    packageId = null,
+    englishName = "",
+    planId = null,
     amount = "",
     user_id = null,
-    universityId = null,
   } = location.state || {};
   const [step, setStep] = useState(1);
-  const [universityNameState, setUniversityNameState] =
-    useState(universityName);
-  console.log(
-    "🚀 ~ UniversityAdmissionForm ~ universityNameState:",
-    universityNameState
-  );
-  console.log("🚀 ~ UniversityAdmissionForm ~ amount:", amount);
 
   const initialValues = {
     firstName: "",
@@ -94,10 +86,19 @@ const UniversityAdmissionForm = () => {
     address: "",
     city: "",
     postalCode: "",
+    healthIssues: "",
+    healthIssueDetails: "",
     specialRequests: "",
     heardAboutUs: "",
     contactForBooking: "",
     agreeToTerms: false,
+    isSmoker: "",
+    petProblem: "",
+    relativeName: "",
+    relativeRelation: "",
+    relativePhone: "",
+    nationalID: "",
+    absherPhoneNumber: "",
     documents: {
       highSchoolCertificate: null,
       passportPhoto: null,
@@ -118,25 +119,32 @@ const UniversityAdmissionForm = () => {
     city: Yup.string().required(t("required")),
     postalCode: Yup.string().required(t("required")),
     agreeToTerms: Yup.boolean().oneOf([true], t("must_accept_terms")),
+    isSmoker: Yup.string().required(t("required")),
+    petProblem: Yup.string().required(t("required")),
+    relativeName: Yup.string().required(t("required")),
+    relativeRelation: Yup.string().required(t("required")),
+    relativePhone: Yup.string().required(t("required")),
+    nationalID: Yup.string().required(t("required")),
+    absherPhoneNumber: Yup.string().required(t("required")),
+    healthIssues: Yup.string().required(t("required")),
+    // healthIssueDetails: Yup.string().when("healthIssues", {
+    //   is: "yes",
+    //   then: Yup.string().required(t("Please provide details")),
+    // }),
   });
-
-  useEffect(() => {
-    setUniversityNameState(universityName);
-  }, [location.state]);
 
   const { data: nationalities } = useQuery({
     queryKey: ["nationalities"],
     queryFn: fetchNationalities,
     suspense: true,
   });
-  console.log("🚀 ~ UniversityAdmissionForm ~ nationalities:", nationalities);
 
   const {
     mutate: mutateProcessPayment,
     isPending: isPendingProcessPayment,
     isSuccess: isSuccessProcessPayment,
   } = useMutation({
-    mutationKey: ["uniProcessPayment"],
+    mutationKey: ["designProcessPayment"],
     mutationFn: (data: any) => postProcessPayment(data),
     onSuccess: (data) => {
       console.log(data);
@@ -145,15 +153,15 @@ const UniversityAdmissionForm = () => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationKey: ["password"],
-    mutationFn: (data: any) => postUniversityForm(data),
+    mutationKey: ["englishForm"],
+    mutationFn: (data: any) => postEnglishForm(data),
     onSuccess: (data) => {
       console.log(data);
       toast.success(t("registration successful"));
       mutateProcessPayment({
         amount: 1200,
         user_id: user_id,
-        un_app_id: universityId,
+        app_id: packageId,
         total_amount: amount,
       });
     },
@@ -173,21 +181,20 @@ const UniversityAdmissionForm = () => {
       gender: values?.gender,
       level: values?.englishLevel,
       address: values?.address,
-      // is_smoker: 1,
-      // problem_with_pets: 1,
-      // relative_name: "ASD",
-      // relative_relation: "my_cousin",
-      // relative_phone: 010000000000,
-      // abs_her_id: 3000623213123,
-      // abs_her_phone: 011111111111111,
-      // health_problems: 1,
-      // health_problems_desc: "AEWE",
+      is_smoker: values?.isSmoker === "yes" ? 1 : 0,
+      problem_with_pets: values?.petProblem === "yes" ? 1 : 0,
+      relative_name: values?.relativeName,
+      relative_relation: values?.relativeRelation,
+      relative_phone: values?.relativePhone,
+      abs_her_id: values?.nationalID,
+      abs_her_phone: values?.absherPhoneNumber,
+      health_problems: values?.healthIssues === "yes" ? 1 : 0,
+      health_problems_desc: values?.healthIssueDetails,
       special_requests: values?.specialRequests,
       hear_about_utopia: values?.heardAboutUs,
       contact_you_to_book: values?.contactForBooking === "yes" ? 1 : 0,
       partner_id: partnerId,
-      specialization_id: specializationID,
-      // plan_id: 1,
+      design_id: designOwn?.design_id,
       passport: values?.documents?.passportPhoto,
       school_certificate: values?.documents?.highSchoolCertificate,
       image: values?.documents?.passportSizePhoto,
@@ -204,7 +211,6 @@ const UniversityAdmissionForm = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, values, touched, setFieldValue, isValid }) => {
-        console.log("🚀 ~ UniversityAdmissionForm ~ validateField:", isValid);
         return (
           <Form className="">
             {/* DESKTOP */}
@@ -213,7 +219,7 @@ const UniversityAdmissionForm = () => {
                 <h1 className="text-4xl font-bold ">
                   {t("registration form")}
                 </h1>
-                <p className="text-xl">{universityName}</p>
+                <p className="text-xl">{englishName}</p>
               </div>
 
               <div className="grid gap-x-36 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -434,7 +440,7 @@ const UniversityAdmissionForm = () => {
                     {t("national address")}
                   </h1>
                 </div>
-                <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-x-36 gap-y-14">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-12 xl:gap-x-36 gap-y-14">
                   <div className="col-span-2 mb-4">
                     <BaseInput
                       label={t("address")}
@@ -491,26 +497,319 @@ const UniversityAdmissionForm = () => {
                 </div>
               </div>
 
-              {/* Special Requests */}
-              <div className="my-20">
-                <label
-                  htmlFor="specialRequests"
-                  className="block mb-2 text-gray-700"
-                >
-                  {t("are there any special request")}
-                </label>
-                <textarea
-                  id="specialRequests"
-                  name="specialRequests"
-                  rows={6}
-                  className={`mb-1 border w-96  rounded-2xl border-[#BEC8CF] ${
-                    touched.address && errors.address && "border-red-700"
-                  }`}
-                  placeholder={t("enter special requests")}
-                  onChange={(e) =>
-                    setFieldValue("specialRequests", e.target.value)
-                  }
-                ></textarea>
+              {/* Housing Information */}
+              <div>
+                <div className="my-24 ">
+                  <h1 className="text-4xl font-bold">
+                    {t("information about housing in britain")}
+                  </h1>
+                </div>
+                <div className="grid grid-cols-2 xl:grid-cols-4 gap-28">
+                  <div className="">
+                    <label
+                      htmlFor="isSmoker"
+                      className="block mb-2 text-gray-700"
+                    >
+                      {t("are you smoker")}
+                    </label>
+                    <select
+                      id="isSmoker"
+                      name="isSmoker"
+                      className={`mb-1 border w-full  rounded-2xl border-[#BEC8CF] ${
+                        touched.isSmoker && errors.isSmoker && "border-red-700"
+                      }`}
+                      onChange={(e) =>
+                        setFieldValue("isSmoker", e.target.value)
+                      }
+                    >
+                      <option value="yes" label={t("yes")} />
+                      <option value="no" label={t("no")} />
+                    </select>
+                  </div>
+                  <div className="">
+                    <label
+                      htmlFor="petProblem"
+                      className="block mb-2 text-gray-700"
+                    >
+                      {t("do you have a problem with pets")}
+                    </label>
+                    <select
+                      id="petProblem"
+                      name="petProblem"
+                      className={`mb-1 border w-full  rounded-2xl border-[#BEC8CF] ${
+                        touched.petProblem &&
+                        errors.petProblem &&
+                        "border-red-700"
+                      }`}
+                      onChange={(e) =>
+                        setFieldValue("petProblem", e.target.value)
+                      }
+                    >
+                      <option value="yes" label={t("yes")} />
+                      <option value="no" label={t("no")} />
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="my-24 ">
+                  <h1 className="text-4xl font-bold">
+                    {t("contact information for a relative")}
+                  </h1>
+                </div>
+                <div className="grid gap-x-36 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {/* Relative's Full Name */}
+                  <div className="mb-4">
+                    <BaseInput
+                      label={t("full name")}
+                      id="relativeName"
+                      name="relativeName"
+                      placeholder={t("in english")}
+                      type="text"
+                      className={`mb-1 text-center border rounded-2xl border-[#BEC8CF] ${
+                        touched.relativeName &&
+                        errors.relativeName &&
+                        "border-red-700"
+                      }`}
+                    />
+                    {touched.relativeName && errors.relativeName && (
+                      <div className="mt-1 text-sm text-red-700">
+                        {errors.relativeName}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Relation to the Applicant */}
+                  <div className="mb-4">
+                    <label
+                      htmlFor="relativeRelation"
+                      className="block mb-2 text-gray-700"
+                    >
+                      {t("relation to the applicant")}
+                    </label>
+                    <select
+                      id="relativeRelation"
+                      name="relativeRelation"
+                      className={`mb-1 border w-full text-center rounded-2xl border-[#BEC8CF] ${
+                        touched.relativeRelation &&
+                        errors.relativeRelation &&
+                        "border-red-700"
+                      }`}
+                      onChange={(e) =>
+                        setFieldValue("relativeRelation", e.target.value)
+                      }
+                    >
+                      <option value="" label={t("Select")} />
+                      <option value="my_cousin " label={t("cousin")} />
+                      <option value="my_brother " label={t("brother")} />
+                      <option value="my_uncle " label={t("uncle")} />
+                      <option value="my_dad" label={t("dad")} />
+                      <option value="my_mom " label={t("mom ")} />
+                      <option
+                        value="my_grandmother "
+                        label={t("grandmother ")}
+                      />
+                      <option
+                        value="my_grandfather "
+                        label={t("grandfather ")}
+                      />
+                    </select>
+                    {touched.relativeRelation && errors.relativeRelation && (
+                      <div className="mt-1 text-sm text-red-700">
+                        {errors.relativeRelation}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Relative's Mobile Number */}
+                  <div className="mb-4">
+                    <BaseInput
+                      label={t("phone number")}
+                      id="relativePhone"
+                      name="relativePhone"
+                      type="text"
+                      className={`mb-1 text-center border rounded-2xl border-[#BEC8CF] ${
+                        touched.relativePhone &&
+                        errors.relativePhone &&
+                        "border-red-700"
+                      }`}
+                    />
+                    {touched.relativePhone && errors.relativePhone && (
+                      <div className="mt-1 text-sm text-red-700">
+                        {errors.relativePhone}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="my-24 ">
+                  <h1 className="text-4xl font-bold">
+                    {t(
+                      "please enter the id number and mobile number registered in absher to complete the student's travel insurance procedures"
+                    )}
+                  </h1>
+                </div>
+
+                <div className="grid gap-x-36 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+                  {/* National ID Number */}
+                  <div className="mb-4">
+                    <BaseInput
+                      label={t("national id number")}
+                      id="nationalID"
+                      name="nationalID"
+                      type="text"
+                      className={`mb-1 text-center border rounded-2xl border-[#BEC8CF] ${
+                        touched.nationalID &&
+                        errors.nationalID &&
+                        "border-red-700"
+                      }`}
+                    />
+                    {touched.nationalID && errors.nationalID && (
+                      <div className="mt-1 text-sm text-red-700">
+                        {errors.nationalID}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Absher Registered Phone Number */}
+                  <div className="mb-4">
+                    <BaseInput
+                      label={t("mobile number registered in absher")}
+                      id="absherPhoneNumber"
+                      name="absherPhoneNumber"
+                      type="text"
+                      className={`mb-1 text-center border rounded-2xl border-[#BEC8CF] ${
+                        touched.absherPhoneNumber &&
+                        errors.absherPhoneNumber &&
+                        "border-red-700"
+                      }`}
+                    />
+                    {touched.absherPhoneNumber && errors.absherPhoneNumber && (
+                      <div className="mt-1 text-sm text-red-700">
+                        {errors.absherPhoneNumber}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-16">
+                {/* Health Issues */}
+                <div className="mb-4">
+                  <label className="block mb-2 text-gray-700">
+                    {t("do you have any health issues or chronic diseases")}
+                  </label>
+                  <div className="flex gap-4">
+                    <label
+                      htmlFor="healthIssuesYes"
+                      className={`cursor-pointer px-10 py-3 rounded-2xl border ${
+                        values.healthIssues === "yes"
+                          ? "bg-gray-200 border-gray-500 text-black"
+                          : "border-gray-300 text-[#8f9395]"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        id="healthIssuesYes"
+                        name="healthIssues"
+                        value="yes"
+                        className="hidden"
+                        onChange={() => setFieldValue("healthIssues", "yes")}
+                      />
+                      {t("yes")}
+                    </label>
+
+                    <label
+                      htmlFor="healthIssuesNo"
+                      className={`cursor-pointer px-10 py-3 rounded-2xl border ${
+                        values.healthIssues === "no"
+                          ? "bg-gray-200 border-gray-500 text-black"
+                          : "border-gray-300 text-[#8f9395]"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        id="healthIssuesNo"
+                        name="healthIssues"
+                        value="no"
+                        className="hidden"
+                        onChange={() => setFieldValue("healthIssues", "no")}
+                      />
+                      {t("no")}
+                    </label>
+                  </div>
+                  {touched.healthIssues && errors.healthIssues && (
+                    <div className="mt-1 text-sm text-red-700">
+                      {errors.healthIssues}
+                    </div>
+                  )}
+                </div>
+
+                <div className="grid mt-12 gap-x-36 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+                  {/* Health Issue Details (Text Area) */}
+                  {values.healthIssues === "yes" && (
+                    <div className="mb-4">
+                      <label
+                        htmlFor="healthIssueDetails"
+                        className="block mb-2 text-gray-700"
+                      >
+                        {t("your health issue:")}
+                      </label>
+                      <textarea
+                        id="healthIssueDetails"
+                        name="healthIssueDetails"
+                        rows={5}
+                        className={`mb-1 border w-full rounded-2xl border-[#BEC8CF] ${
+                          touched.healthIssueDetails &&
+                          errors.healthIssueDetails &&
+                          "border-red-700"
+                        }`}
+                        placeholder={t("enter health issue details")}
+                        onChange={(e) =>
+                          setFieldValue("healthIssueDetails", e.target.value)
+                        }
+                      ></textarea>
+                      {touched.healthIssueDetails &&
+                        errors.healthIssueDetails && (
+                          <div className="mt-1 text-sm text-red-700">
+                            {errors.healthIssueDetails}
+                          </div>
+                        )}
+                    </div>
+                  )}
+
+                  {/* Special Requests (Text Area) */}
+                  <div className="mb-4">
+                    <label
+                      htmlFor="specialRequests"
+                      className="block mb-2 text-gray-700"
+                    >
+                      {t("do you have any special requests")}
+                    </label>
+                    <textarea
+                      id="specialRequests"
+                      name="specialRequests"
+                      rows={5}
+                      className={`mb-1 border w-full rounded-2xl border-[#BEC8CF] ${
+                        touched.specialRequests &&
+                        errors.specialRequests &&
+                        "border-red-700"
+                      }`}
+                      placeholder={t("please write here")}
+                      onChange={(e) =>
+                        setFieldValue("specialRequests", e.target.value)
+                      }
+                    ></textarea>
+                    {touched.specialRequests && errors.specialRequests && (
+                      <div className="mt-1 text-sm text-red-700">
+                        {errors.specialRequests}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* How did you hear about us? */}
@@ -531,7 +830,7 @@ const UniversityAdmissionForm = () => {
                     setFieldValue("heardAboutUs", e.target.value)
                   }
                 >
-                  <option value="" label={t("select option")} />
+                  <option value="" label={t("select")} />
                   <option value="friend" label={t("friend")} />
                   <option value="facebook" label={t("facebook")} />
                   <option value="other" label={t("other")} />
@@ -780,8 +1079,7 @@ const UniversityAdmissionForm = () => {
                   <div className="p-4">
                     <h2 className="mb-8 font-bold">
                       {t(`this is the registration form for application to`)}{" "}
-                      {universityNameState}{" "}
-                      {t("please fill out this form carefully")}
+                      {englishName} {t("please fill out this form carefully")}
                     </h2>
 
                     <div className="grid grid-cols-2 gap-6">
@@ -1068,7 +1366,7 @@ const UniversityAdmissionForm = () => {
 
                     <Button
                       type="button"
-                      disabled={isValid}
+                      // disabled={!isValid}
                       action={() => {
                         setStep(2);
                       }}
@@ -1091,30 +1389,368 @@ const UniversityAdmissionForm = () => {
                   </div>
 
                   <div className="p-4">
-                    {/* Special Requests */}
+                    <div className="mb-6">
+                      <h1 className="text-2xl font-bold">
+                        {t("information about housing in britain")}
+                      </h1>
+                    </div>
+                    {/* Is Smoker */}
                     <div className="">
-                      <label
-                        htmlFor="specialRequests"
-                        className="block mb-2 text-gray-700"
-                      >
-                        {t("are there any special request")}
+                      <label className="block mb-2 text-gray-700">
+                        {t("are you smoker")}
                       </label>
-                      <textarea
-                        id="specialRequests"
-                        name="specialRequests"
-                        rows={6}
-                        className={`mb-1 border w-full  rounded-2xl border-[#BEC8CF] ${
-                          touched.address && errors.address && "border-red-700"
-                        }`}
-                        placeholder={t("enter special requests")}
-                        onChange={(e) =>
-                          setFieldValue("specialRequests", e.target.value)
-                        }
-                      ></textarea>
+                      <div className="space-y-2">
+                        <div className="">
+                          <input
+                            type="radio"
+                            id="isSmokerYes"
+                            name="isSmoker"
+                            className="text-mainColor"
+                            value="yes"
+                            onChange={() => setFieldValue("isSmoker", "yes")}
+                          />
+                          <label htmlFor="isSmokerYes" className="mx-2">
+                            {t("yes")}
+                          </label>
+                        </div>
+
+                        <div>
+                          <input
+                            type="radio"
+                            id="isSmokerNo"
+                            name="isSmoker"
+                            value="no"
+                            className="text-mainColor"
+                            onChange={() => setFieldValue("isSmoker", "no")}
+                          />
+                          <label htmlFor="isSmokerNo" className="mx-2">
+                            {t("no")}
+                          </label>
+                        </div>
+                      </div>
+                      {touched.isSmoker && errors.isSmoker && (
+                        <div className="mt-1 text-sm text-red-700">
+                          {errors.isSmoker}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Pet Problem */}
+                    <div className="my-6">
+                      <label className="block mb-2 text-gray-700">
+                        {t("do you have a problem with pets")}
+                      </label>
+                      <div className="space-y-2">
+                        <div>
+                          <input
+                            type="radio"
+                            id="petProblemYes"
+                            name="petProblem"
+                            value="yes"
+                            className="text-mainColor"
+                            onChange={() => setFieldValue("petProblem", "yes")}
+                          />
+                          <label htmlFor="petProblemYes" className="mx-2">
+                            {t("yes")}
+                          </label>
+                        </div>
+
+                        <div>
+                          <input
+                            type="radio"
+                            id="petProblemNo"
+                            name="petProblem"
+                            value="no"
+                            className="text-mainColor"
+                            onChange={() => setFieldValue("petProblem", "no")}
+                          />
+                          <label htmlFor="petProblemNo" className="mx-2">
+                            {t("no")}
+                          </label>
+                        </div>
+                      </div>
+                      {touched.petProblem && errors.petProblem && (
+                        <div className="mt-1 text-sm text-red-700">
+                          {errors.petProblem}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="">
+                      {/* Contact Information for a Relative */}
+                      <div className="my-6">
+                        <h1 className="text-xl font-bold">
+                          {t("contact information for a relative")}
+                        </h1>
+                      </div>
+                      <div className="mb-4">
+                        <BaseInput
+                          label={t("full name")}
+                          id="relativeName"
+                          name="relativeName"
+                          placeholder={t("in english")}
+                          type="text"
+                          className={`mb-1 border rounded-xl border-[#BEC8CF] ${
+                            touched.relativeName &&
+                            errors.relativeName &&
+                            "border-red-700"
+                          }`}
+                        />
+                        {touched.relativeName && errors.relativeName && (
+                          <div className="mt-1 text-sm text-red-700">
+                            {errors.relativeName}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          htmlFor="relativeRelation"
+                          className="block mb-2 text-gray-700"
+                        >
+                          {t("relation to the applicant")}
+                        </label>
+                        <select
+                          id="relativeRelation"
+                          name="relativeRelation"
+                          className={`mb-1 border w-full rounded-xl border-[#BEC8CF] ${
+                            touched.relativeRelation &&
+                            errors.relativeRelation &&
+                            "border-red-700"
+                          }`}
+                          onChange={(e) =>
+                            setFieldValue("relativeRelation", e.target.value)
+                          }
+                        >
+                          <option value="" label={t("Select")} />
+                          <option value="my_cousin " label={t("cousin")} />
+                          <option value="my_brother " label={t("brother")} />
+                          <option value="my_uncle " label={t("uncle")} />
+                          <option value="my_dad" label={t("dad")} />
+                          <option value="my_mom " label={t("mom ")} />
+                          <option
+                            value="my_grandmother "
+                            label={t("grandmother ")}
+                          />
+                          <option
+                            value="my_grandfather "
+                            label={t("grandfather ")}
+                          />
+                        </select>
+                        {touched.relativeRelation &&
+                          errors.relativeRelation && (
+                            <div className="mt-1 text-sm text-red-700">
+                              {errors.relativeRelation}
+                            </div>
+                          )}
+                      </div>
+
+                      <div className="mb-4">
+                        <BaseInput
+                          label={t("phone number")}
+                          id="relativePhone"
+                          name="relativePhone"
+                          type="text"
+                          className={`mb-1 border rounded-xl border-[#BEC8CF] ${
+                            touched.relativePhone &&
+                            errors.relativePhone &&
+                            "border-red-700"
+                          }`}
+                        />
+                        {touched.relativePhone && errors.relativePhone && (
+                          <div className="mt-1 text-sm text-red-700">
+                            {errors.relativePhone}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* National ID and Absher Phone Number */}
+                      <div className="my-6">
+                        <h1 className="text-xl font-bold">
+                          {t(
+                            "please enter the id number and mobile number registered in absher to complete the student's travel insurance procedures"
+                          )}
+                        </h1>
+                      </div>
+                      <div className="mb-4">
+                        <BaseInput
+                          label={t("national id number")}
+                          id="nationalID"
+                          name="nationalID"
+                          type="text"
+                          className={`mb-1 border rounded-xl border-[#BEC8CF] ${
+                            touched.nationalID &&
+                            errors.nationalID &&
+                            "border-red-700"
+                          }`}
+                        />
+                        {touched.nationalID && errors.nationalID && (
+                          <div className="mt-1 text-sm text-red-700">
+                            {errors.nationalID}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mb-4">
+                        <BaseInput
+                          label={t("mobile number registered in absher")}
+                          id="absherPhoneNumber"
+                          name="absherPhoneNumber"
+                          type="text"
+                          className={`mb-1 border rounded-xl border-[#BEC8CF] ${
+                            touched.absherPhoneNumber &&
+                            errors.absherPhoneNumber &&
+                            "border-red-700"
+                          }`}
+                        />
+                        {touched.absherPhoneNumber &&
+                          errors.absherPhoneNumber && (
+                            <div className="mt-1 text-sm text-red-700">
+                              {errors.absherPhoneNumber}
+                            </div>
+                          )}
+                      </div>
+                    </div>
+
+                    <Button
+                      type="button"
+                      // disabled={!isValid}
+                      action={() => {
+                        setStep(3);
+                      }}
+                      className={`w-full disabled:bg-mainColor/60 disabled:cursor-not-allowed disabled:border-none py-4 mt-8 text-white bg-mainColor rounded-xl`}
+                    >
+                      {t("next")}
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div>
+                  <div
+                    onClick={() => setStep(2)}
+                    style={{ gridTemplateColumns: "20px 1fr" }}
+                    className="grid items-center justify-center px-6 py-3"
+                  >
+                    <FaArrowRightLong className="cursor-pointer justify-self-start" />
+                  </div>
+                  <div className="p-4">
+                    <div className="">
+                      {/* Health Issues */}
+                      <div className="my-6">
+                        <label className="block mb-2 text-gray-700">
+                          {t(
+                            "do you have any health issues or chronic diseases"
+                          )}
+                        </label>
+                        <div className="space-y-2">
+                          <div>
+                            <input
+                              type="radio"
+                              id="healthIssuesYes"
+                              name="healthIssues"
+                              value="yes"
+                              className="text-mainColor"
+                              onChange={() =>
+                                setFieldValue("healthIssues", "yes")
+                              }
+                            />
+                            <label htmlFor="healthIssuesYes" className="mx-2">
+                              {t("yes")}
+                            </label>
+                          </div>
+
+                          <div>
+                            <input
+                              type="radio"
+                              id="healthIssuesNo"
+                              name="healthIssues"
+                              value="no"
+                              className="text-mainColor"
+                              onChange={() =>
+                                setFieldValue("healthIssues", "no")
+                              }
+                            />
+                            <label htmlFor="healthIssuesNo" className="mx-2">
+                              {t("no")}
+                            </label>
+                          </div>
+                        </div>
+                        {touched.healthIssues && errors.healthIssues && (
+                          <div className="mt-1 text-sm text-red-700">
+                            {errors.healthIssues}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Health Issue Details (Conditional Text Area) */}
+                      {values.healthIssues === "yes" && (
+                        <div className="mb-4">
+                          <label
+                            htmlFor="healthIssueDetails"
+                            className="block mb-2 text-gray-700"
+                          >
+                            {t("your health issue:")}
+                          </label>
+                          <textarea
+                            id="healthIssueDetails"
+                            name="healthIssueDetails"
+                            rows={5}
+                            className={`mb-1 border w-full rounded-xl border-[#BEC8CF] ${
+                              touched.healthIssueDetails &&
+                              errors.healthIssueDetails &&
+                              "border-red-700"
+                            }`}
+                            placeholder={t("enter health issue details")}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "healthIssueDetails",
+                                e.target.value
+                              )
+                            }
+                          ></textarea>
+                          {touched.healthIssueDetails &&
+                            errors.healthIssueDetails && (
+                              <div className="mt-1 text-sm text-red-700">
+                                {errors.healthIssueDetails}
+                              </div>
+                            )}
+                        </div>
+                      )}
+
+                      {/* Special Requests (Text Area) */}
+                      <div className="mb-4">
+                        <label
+                          htmlFor="specialRequests"
+                          className="block mb-2 text-gray-700"
+                        >
+                          {t("do you have any special requests")}
+                        </label>
+                        <textarea
+                          id="specialRequests"
+                          name="specialRequests"
+                          rows={5}
+                          className={`mb-1 border w-full rounded-xl border-[#BEC8CF] ${
+                            touched.specialRequests &&
+                            errors.specialRequests &&
+                            "border-red-700"
+                          }`}
+                          placeholder={t("please write here")}
+                          onChange={(e) =>
+                            setFieldValue("specialRequests", e.target.value)
+                          }
+                        ></textarea>
+                        {touched.specialRequests && errors.specialRequests && (
+                          <div className="mt-1 text-sm text-red-700">
+                            {errors.specialRequests}
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     {/* How did you hear about us? */}
-                    <div className="my-6">
+                    <div className="my-6 ">
                       <label
                         htmlFor="heardAboutUs"
                         className="block mb-2 text-gray-700"
@@ -1124,7 +1760,7 @@ const UniversityAdmissionForm = () => {
                       <select
                         id="heardAboutUs"
                         name="heardAboutUs"
-                        className={`mb-1 border w-full rounded-2xl border-[#BEC8CF] ${
+                        className={`mb-1 border w-full  rounded-2xl border-[#BEC8CF] ${
                           touched.address && errors.address && "border-red-700"
                         }`}
                         onChange={(e) =>
@@ -1178,7 +1814,7 @@ const UniversityAdmissionForm = () => {
 
                     {/* File Uploads */}
                     <div className="mb-6">
-                      <div className=" mb-6 w-full sm:w-[60vw] lg:w-[45vw] xl:w-[40vw]">
+                      <div className=" mb-6 sm:w-[60vw] lg:w-[45vw] xl:w-[40vw]">
                         <p className="mb-2 text-xl font-semibold">
                           {t("upload requirements")}
                         </p>
@@ -1367,7 +2003,7 @@ const UniversityAdmissionForm = () => {
                     <Button
                       type="submit"
                       loading={isPending}
-                      disabled={!isValid}
+                      // disabled={!isValid}
                       className={`w-full disabled:bg-mainColor/60 disabled:cursor-not-allowed disabled:border-none py-4 mt-8 text-white bg-mainColor rounded-xl`}
                     >
                       {t("confirm and submit")}
@@ -1383,4 +2019,4 @@ const UniversityAdmissionForm = () => {
   );
 };
 
-export default UniversityAdmissionForm;
+export default DesignOwnRegistrationForm;
