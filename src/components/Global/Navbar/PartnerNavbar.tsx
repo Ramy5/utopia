@@ -188,10 +188,7 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
           </li>
         </ul>
 
-        <div
-          onClick={toggleDropdown}
-          className="relative flex items-center gap-6"
-        >
+        <div className="relative flex items-center gap-6">
           <p className="relative mx-2 font-semibold cursor-pointer">
             <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-600 rounded-full">
               1
@@ -203,6 +200,7 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
               <img
                 src={profile?.image}
                 alt={profile?.name}
+                onClick={toggleDropdown}
                 className="object-cover w-full h-full cursor-pointer"
               />
             ) : (

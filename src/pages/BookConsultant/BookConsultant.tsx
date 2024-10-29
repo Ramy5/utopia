@@ -14,6 +14,8 @@ import { IoPersonOutline } from "react-icons/io5";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { Footer, Navbar } from "../../components";
+import { bookConsultantValidationSchema } from "../../Schema/BookConsultantSchema";
+import cn from "../../utils/cn";
 
 const bookConsultantPost = async (postData) => {
   try {
@@ -44,110 +46,131 @@ const BookConsultant = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values, { setSubmitting }) => {
+      validationSchema={bookConsultantValidationSchema}
+      onSubmit={async (values: any, { setSubmitting }) => {
         if (values?.name === "" || values?.phone === "") return;
         await mutate(values);
         setSubmitting(false);
       }}
     >
-      {({ values, setFieldValue }) => (
+      {({ values, setFieldValue, isValid, dirty, errors, touched }) => (
         <Form className="">
-          <Navbar hidden />
+          <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto">
+            <Navbar hidden />
+          </div>
 
           {/* DESKTOP */}
-          <div className="hidden sm:block">
-            <div>
-              {isSuccess ? (
-                <div>
-                  <div className="flex rounded-2xl flex-col items-center justify-center w-[80%] md:w-[578px] bg-mainColor my-12 mx-auto text-white p-6 gap-7">
-                    <h1 className="text-6xl">
-                      {isRTL
-                        ? `اهلا ${values?.name}`
-                        : `welcome ${values?.name}`}
-                    </h1>
-                    <p className="text-lg text-center w-96">
-                      {t(
-                        "thank you for contacting us. we will contact you as soon as possible"
-                      )}
-                    </p>
-                    <p className="text-lg">{t("have a nice day")}</p>
-                    <div className="flex flex-col items-center gap-1">
-                      <img src={logo} alt="logo" />
-                      <p className="text-sm">فريق يوتوبيا</p>
+          <div className="hidden sm:block ">
+            <div className="p-4 my-12 max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto">
+              <div>
+                {isSuccess ? (
+                  <div>
+                    <div className="flex rounded-2xl flex-col items-center justify-center w-[80%] md:w-[578px] bg-mainColor my-12 mx-auto text-white p-6 gap-7">
+                      <h1 className="text-6xl">
+                        {isRTL
+                          ? `اهلا ${values?.name}`
+                          : `welcome ${values?.name}`}
+                      </h1>
+                      <p className="text-lg text-center w-96">
+                        {t(
+                          "thank you for contacting us. we will contact you as soon as possible"
+                        )}
+                      </p>
+                      <p className="text-lg">{t("have a nice day")}</p>
+                      <div className="flex flex-col items-center gap-1">
+                        <img src={logo} alt="logo" />
+                        <p className="text-sm">فريق يوتوبيا</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-center">
+                      <Link
+                        to={"/"}
+                        className="px-6 py-1 mb-12 text-white bg-black rounded-md"
+                      >
+                        {t("back to home")}
+                      </Link>
                     </div>
                   </div>
-                  <div className="flex justify-center">
-                    <Link
-                      to={"/"}
-                      className="px-6 py-1 mb-12 text-white bg-black rounded-md"
-                    >
-                      {t("back to home")}
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-wrap items-center justify-center w-full px-12 pb-16 mt-20 bg-white md:justify-between ">
-                  <div className="w-full md:w-auto">
-                    <h2 className={`hidden mb-12 text-6xl sm:block `}>
-                      {t("book consultant")}
-                    </h2>
-                    <div className="flex items-center justify-center w-full ">
-                      <div className="relative w-full p-8 py-12 rounded-lg shadow-xl bg-mainColor">
-                        <h2 className="mb-4 text-lg text-white ">
-                          {t("consultant")}
-                        </h2>
+                ) : (
+                  <div className="flex flex-wrap items-center justify-center w-full px-12 pb-16 mt-20 bg-white md:justify-between ">
+                    <div className="w-full md:w-auto">
+                      <h2 className={`hidden mb-12 text-6xl sm:block `}>
+                        {t("book consultant")}
+                      </h2>
+                      <div className="flex items-center justify-center w-full ">
+                        <div className="relative w-full p-8 py-12 rounded-lg shadow-xl bg-mainColor">
+                          <h2 className="mb-4 text-lg text-white ">
+                            {t("consultant")}
+                          </h2>
 
-                        <div className="flex flex-col w-full space-y-4">
-                          <div
-                            style={{ gridTemplateColumns: "100px 1fr" }}
-                            className="grid w-full gap-4"
-                          >
-                            <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                              {t("name")}
-                            </Button>
-                            <BaseInput
-                              id="name"
-                              name="name"
-                              type="text"
-                              className="w-full md:w-[536px] p-3 text-right bg-white rounded-lg"
-                            />
-                          </div>
-                          <div
-                            style={{ gridTemplateColumns: "100px 1fr" }}
-                            className="grid w-full gap-4"
-                          >
-                            <Button className="px-2 text-xs border cursor-auto hover:scale-100">
-                              {t("phone number")}
-                            </Button>
-                            <BaseInput
-                              id="phone"
-                              name="phone"
-                              type="text"
-                              className="w-full md:w-[536px] p-3 text-right bg-white rounded-lg"
-                            />
-                          </div>
+                          <div className="flex flex-col w-full space-y-4">
+                            <div
+                              style={{ gridTemplateColumns: "100px 1fr" }}
+                              className="grid w-full gap-4"
+                            >
+                              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
+                                {t("name")}
+                              </Button>
+                              <BaseInput
+                                id="name"
+                                name="name"
+                                type="text"
+                                className="w-full md:w-[536px] p-3 text-right bg-white rounded-lg"
+                              />
+                            </div>
+                            {errors.name && touched.name && (
+                              <div className="mt-1 text-sm text-red-500">
+                                {errors.name}
+                              </div>
+                            )}
+                            <div
+                              style={{ gridTemplateColumns: "100px 1fr" }}
+                              className="grid w-full gap-4"
+                            >
+                              <Button className="px-2 text-xs border cursor-auto hover:scale-100">
+                                {t("phone number")}
+                              </Button>
+                              <BaseInput
+                                id="phone"
+                                name="phone"
+                                type="text"
+                                className="w-full md:w-[536px] p-3 text-right bg-white rounded-lg"
+                              />
+                            </div>
+                            {errors.phone && touched.phone && (
+                              <div className="mt-2 text-sm text-red-500">
+                                {errors.phone}
+                              </div>
+                            )}
 
-                          <Button
-                            type="submit"
-                            loading={isPending}
-                            className="w-1/3 py-3 mx-auto mt-6 text-white  bg-[#1B0924] hover:bg-[#1B0924]/80"
-                          >
-                            {t("send")}
-                          </Button>
+                            <Button
+                              type="submit"
+                              loading={isPending}
+                              disabled={!isValid || !dirty || isPending}
+                              className={cn(
+                                "w-1/3 py-3 mx-auto mt-6 text-white  bg-[#1B0924] hover:bg-[#1B0924]/80",
+                                {
+                                  "opacity-40 cursor-not-allowed":
+                                    !isValid || !dirty || isPending,
+                                }
+                              )}
+                            >
+                              {t("send")}
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <img
+                      className="w-[200px] h-[200px] hidden lg:block xl:w-[350px] xl:h-[350px]"
+                      src={PhoneIcon}
+                      alt="phone"
+                    />
                   </div>
-                  <img
-                    className="w-[200px] h-[200px] hidden lg:block xl:w-[350px] xl:h-[350px]"
-                    src={PhoneIcon}
-                    alt="phone"
-                  />
-                </div>
-              )}
-
-              <DownLoadApp />
+                )}
+              </div>
             </div>
+            <DownLoadApp />
           </div>
 
           {/* MOBIL */}
@@ -206,7 +229,7 @@ const BookConsultant = () => {
                 ) : (
                   <>
                     <div className="mt-28">
-                      <div className="mb-6">
+                      <div className="">
                         <label htmlFor="name">{t("name")}</label>
                         <div className="relative">
                           <BaseInput
@@ -222,6 +245,11 @@ const BookConsultant = () => {
                           />
                         </div>
                       </div>
+                      {errors.phone && touched.phone && (
+                        <div className="mt-2 mb-6 text-sm text-red-500">
+                          {errors.phone}
+                        </div>
+                      )}
                       <div className="">
                         <label htmlFor="phone">{t("phone number")}</label>
                         <div className="relative">
@@ -238,12 +266,24 @@ const BookConsultant = () => {
                           />
                         </div>
                       </div>
+                      {errors.phone && touched.phone && (
+                        <div className="mt-2 text-sm text-red-500">
+                          {errors.phone}
+                        </div>
+                      )}
                     </div>
 
                     <Button
                       type="submit"
                       loading={isPending}
-                      className="w-full py-3 mt-10 text-white bg-mainColor hover:bg-mainColor/70"
+                      disabled={!isValid || !dirty || isPending}
+                      className={cn(
+                        "w-full py-3 mt-10 text-white bg-mainColor hover:bg-mainColor/70",
+                        {
+                          "opacity-40 cursor-not-allowed":
+                            !isValid || !dirty || isPending,
+                        }
+                      )}
                     >
                       {t("send")}
                     </Button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../components/atoms/Button/Button";
-import { t } from "i18next";
+import i18next, { t } from "i18next";
 import BaseInput from "../components/atoms/molecules/formik-fields/BaseInput";
 import { Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,6 +17,11 @@ import { useAuth } from "../context/AuthContext";
 import cn from "../utils/cn";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import DownLoadAppSecondImg from "../components/atoms/molecules/downLoad-app/DownLoadAppSecondImg";
+import {
+  getPartnerValidationSchema,
+  getStudentValidationSchema,
+} from "../Schema/loginSchema";
+import { bePartnerValidationSchema } from "../Schema/BePartnerSchema";
 
 const loginPost = async (postData) => {
   try {
@@ -27,7 +32,7 @@ const loginPost = async (postData) => {
     });
     return data?.data;
   } catch (errors) {
-    console.log("🚀 ~ loginPost ~ error:", errors);
+    toast.error(errors.response?.data?.errors?.message);
   }
 };
 
@@ -40,7 +45,7 @@ const partnerLoginPost = async (postData) => {
     });
     return data?.data;
   } catch (errors) {
-    console.log("🚀 ~ loginPost ~ error:", errors);
+    toast.error(errors.response?.data?.errors?.message);
   }
 };
 
@@ -74,9 +79,6 @@ const Login = () => {
       setTimeout(() => {
         toast.success(t(`login was successful`));
       }, 100);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
 
@@ -139,12 +141,22 @@ const Login = () => {
 
   return (
     <Formik
+      key={i18next.language}
       initialValues={initialValues}
-      onSubmit={(values, { setSubmitting }) => {}}
+      validationSchema={
+        role === "student"
+          ? getStudentValidationSchema()
+          : getPartnerValidationSchema()
+      }
+      validateOnMount={true}
+      onSubmit={(values) => {
+        if (role === "student") handleStudentSubmit(values);
+        else handlePartnerSubmit(values);
+      }}
     >
-      {({ values }) => {
+      {({ values, errors, touched, isValid, dirty, handleSubmit }) => {
         return (
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto">
               <Navbar hidden />
             </div>
@@ -186,7 +198,7 @@ const Login = () => {
                     <div className="px-20 py-20 ">
                       <div
                         style={{ gridTemplateColumns: "100px 1fr" }}
-                        className="grid gap-4 mb-6 animate_from_top"
+                        className="grid gap-4 mb-2 animate_from_top"
                       >
                         <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
                           {t("phone number")}
@@ -198,9 +210,12 @@ const Login = () => {
                           className="border-[#C9C5CA] p-3 text-black bg-white border rounded-2xl text-start"
                         />
                       </div>
+                      {errors.phone && touched.phone && (
+                        <div className="mb-4 text-red-500">{errors.phone}</div>
+                      )}
                       <div
                         style={{ gridTemplateColumns: "100px 1fr" }}
-                        className="grid gap-4 mb-6 animate_from_bottom"
+                        className="grid gap-4 mb-2 animate_from_bottom"
                       >
                         <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
                           {t("password")}
@@ -212,6 +227,11 @@ const Login = () => {
                           className="border-[#C9C5CA] p-3 text-black bg-white border rounded-2xl text-start"
                         />
                       </div>
+                      {errors.studentPassword && touched.studentPassword && (
+                        <div className="mb-4 text-red-500">
+                          {errors.studentPassword}
+                        </div>
+                      )}
                       <Link
                         to={"/register"}
                         className="mt-16 text-white underline ms-1"
@@ -223,12 +243,13 @@ const Login = () => {
                     </div>
                     <div className="flex flex-col gap-4 ">
                       <Button
-                        disabled={isPending}
+                        disabled={!isValid || !dirty || isPending}
                         action={() => handleStudentSubmit(values)}
                         className={cn(
                           "bg-[#FFB6BF] rounded-2xl hover:bg-[#FFCC1A] animate_from_left py-3 text-black font-normal",
                           {
-                            "opacity-40 cursor-not-allowed": isPending,
+                            "opacity-40 cursor-not-allowed":
+                              !isValid || !dirty || isPending,
                           }
                         )}
                       >
@@ -241,7 +262,7 @@ const Login = () => {
                     <div className="px-20 py-20 ">
                       <div
                         style={{ gridTemplateColumns: "100px 1fr" }}
-                        className="grid gap-4 mb-6 animate_from_right"
+                        className="grid gap-4 mb-2 animate_from_right"
                       >
                         <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
                           {t("email")}
@@ -253,9 +274,12 @@ const Login = () => {
                           className="border-[#C9C5CA] p-3 rounded-2xl text-right text-black bg-white border"
                         />
                       </div>
+                      {errors.email && touched.email && (
+                        <div className="mb-4 text-red-500">{errors.email}</div>
+                      )}
                       <div
                         style={{ gridTemplateColumns: "100px 1fr" }}
-                        className="grid gap-4 mb-6 animate_from_left"
+                        className="grid gap-4 mb-2 animate_from_left"
                       >
                         <Button className="px-2 text-xs border cursor-auto rounded-2xl hover:scale-100">
                           {t("password")}
@@ -263,19 +287,25 @@ const Login = () => {
                         <BaseInput
                           id="password"
                           name="password"
-                          type="text"
+                          type="password"
                           className="border-[#C9C5CA] p-3 rounded-2xl text-right text-black bg-white border"
                         />
                       </div>
+                      {errors.password && touched.password && (
+                        <div className="mb-4 text-red-500">
+                          {errors.password}
+                        </div>
+                      )}
                     </div>
                     <div className="flex flex-col gap-4">
                       <Button
-                        disabled={partnerIsPending}
+                        disabled={!isValid || !dirty || partnerIsPending}
                         action={() => handlePartnerSubmit(values)}
                         className={cn(
                           "bg-[#FFB6BF] py-3 rounded-2xl hover:bg-[#FFCC1A] animate_scale text-black font-normal",
                           {
-                            "opacity-40 cursor-not-allowed": isPending,
+                            "opacity-40 cursor-not-allowed":
+                              !isValid || !dirty || partnerIsPending,
                           }
                         )}
                       >
@@ -344,6 +374,9 @@ const Login = () => {
                       />
                     </div>
                   </div>
+                  {errors.phone && touched.phone && (
+                    <div className="mb-4 text-red-500">{errors.phone}</div>
+                  )}
                   <div className="">
                     <label htmlFor="studentPassword" className="text-[#100D10]">
                       {t("password")}
@@ -372,15 +405,21 @@ const Login = () => {
                       )}
                     </div>
                   </div>
+                  {errors.studentPassword && touched.studentPassword && (
+                    <div className="mb-4 text-red-500">
+                      {errors.studentPassword}
+                    </div>
+                  )}
 
                   <div className="flex flex-col gap-4 mt-16">
                     <Button
-                      disabled={isPending}
+                      disabled={!isValid || !dirty || isPending}
                       action={() => handleStudentSubmit(values)}
                       className={cn(
                         "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 animate_from_left",
                         {
-                          "opacity-40 cursor-not-allowed": isPending,
+                          "opacity-40 cursor-not-allowed":
+                            !isValid || !dirty || isPending,
                         }
                       )}
                     >
@@ -417,6 +456,9 @@ const Login = () => {
                       />
                     </div>
                   </div>
+                  {errors.email && touched.email && (
+                    <div className="mb-4 text-red-500">{errors.email}</div>
+                  )}
                   <div className="">
                     <label htmlFor="password" className="text-[#100D10]">
                       {t("password")}
@@ -435,13 +477,18 @@ const Login = () => {
                       />
                     </div>
                   </div>
+                  {errors.password && touched.password && (
+                    <div className="mb-4 text-red-500">{errors.password}</div>
+                  )}
 
                   <div className="flex flex-col gap-4 mt-16">
                     <Button
+                      disabled={!isValid || !dirty || partnerIsPending}
                       className={cn(
                         "font-normal text-white bg-mainColor hover:[#FFCC1A] transition-all duration-500 hover:bg animate_from_left",
                         {
-                          "opacity-40 cursor-not-allowed": isPending,
+                          "opacity-40 cursor-not-allowed":
+                            !isValid || !dirty || partnerIsPending,
                         }
                       )}
                     >

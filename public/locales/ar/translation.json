@@ -295,19 +295,26 @@
   "Image uploaded successfully": "تم تحميل الصورة بنجاح",
   "Image attached successfully": "تم ارفاق الصورة بنجاح",
   "add pic": "اضافة صورة",
+  "phone number is required": "رقم الهاتف مطلوب",
   "phone number must contain only digits": "يجب أن يحتوي رقم الهاتف على أرقام فقط",
   "phone number must be at least 10 digits": "يجب أن يكون رقم الهاتف 10 أرقام على الأقل",
-  "phone number must be 15 digits or less": "يجب أن يكون رقم الهاتف 15 رقما أو أقل",
-  "phone is a required field": "رقم الهاتف مطلوب",
-
-  "invalid email address": "البريد الإلكتروني غير صالح",
-  "email is a required field": "البريد الإلكتروني مطلوب",
-
+  "phone number cannot exceed 15 digits": "يجب ألا يتجاوز رقم الهاتف 15 رقمًا",
+  "invalid phone number": "رقم الهاتف غير صالح",
+  "email is required": "البريد الإلكتروني مطلوب",
+  "password is required": "كلمة المرور مطلوبة",
   "password must be at least 8 characters": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
-  "password must be 20 characters or less": "يجب أن تكون كلمة المرور 20 حرفًا أو أقل",
-  "password is a required field": "كلمة المرور مطلوبة",
-
-  "student password must be at least 8 characters": "يجب أن تكون كلمة مرور الطالب 8 أحرف على الأقل",
-  "student password must be 20 characters or less": "يجب أن تكون كلمة مرور الطالب 20 حرفًا أو أقل",
-  "studentPassword is a required field": "كلمة مرور الطالب مطلوبة"
+  "password must contain at least one lowercase letter": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
+  "password must contain at least one uppercase letter": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
+  "password must contain at least one number": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+  "phone number must contain only numbers": "يجب أن يحتوي رقم الهاتف على أرقام فقط",
+  "invalid_email": "البريد الإلكتروني غير صالح",
+  "must_accept_terms": "يجب أن توافق على الشروط والأحكام",
+  "must_be_at_least_18": "يجب أن يكون عمرك 18 عامًا على الأقل",
+  "invalid_phone_number": "رقم الهاتف غير صالح",
+  "invalid_postal_code": "الرمز البريدي غير صالح",
+  "invalid_smoker_status": "يرجى اختيار نعم أو لا",
+  "invalid_relative_phone": "رقم هاتف القريب غير صالح",
+  "invalid_national_id": "رقم الهوية الوطنية غير صالح",
+  "invalid_absher_phone_number": "رقم هاتف أبشر غير صالح",
+  "provide_details": "يرجى تقديم التفاصيل"
 }

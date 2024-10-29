@@ -13,6 +13,9 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineMailOutline, MdOutlinePerson } from "react-icons/md";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoMdPhonePortrait } from "react-icons/io";
+import i18next from "i18next";
+import { englishAdmissionValidationSchema } from "../../Schema/EnglishAdmissionSchema";
+import cn from "../../utils/cn";
 
 const postEnglishForm = async (postData) => {
   try {
@@ -107,33 +110,6 @@ const EnglishAdmissionForm = () => {
     },
   };
 
-  const validationSchema = Yup.object({
-    firstName: Yup.string().required(t("required")),
-    lastName: Yup.string().required(t("required")),
-    birthDate: Yup.date().required(t("required")),
-    gender: Yup.string().required(t("required")),
-    nationality: Yup.string().required(t("required")),
-    phoneNumber: Yup.string().required(t("required")),
-    email: Yup.string().email(t("invalid_email")).required(t("required")),
-    englishLevel: Yup.string().required(t("required")),
-    address: Yup.string().required(t("required")),
-    city: Yup.string().required(t("required")),
-    postalCode: Yup.string().required(t("required")),
-    agreeToTerms: Yup.boolean().oneOf([true], t("must_accept_terms")),
-    isSmoker: Yup.string().required(t("required")),
-    petProblem: Yup.string().required(t("required")),
-    relativeName: Yup.string().required(t("required")),
-    relativeRelation: Yup.string().required(t("required")),
-    relativePhone: Yup.string().required(t("required")),
-    nationalID: Yup.string().required(t("required")),
-    absherPhoneNumber: Yup.string().required(t("required")),
-    healthIssues: Yup.string().required(t("required")),
-    // healthIssueDetails: Yup.string().when("healthIssues", {
-    //   is: "yes",
-    //   then: Yup.string().required(t("Please provide details")),
-    // }),
-  });
-
   const { data: nationalities } = useQuery({
     queryKey: ["nationalities"],
     queryFn: fetchNationalities,
@@ -150,7 +126,6 @@ const EnglishAdmissionForm = () => {
     onSuccess: (data) => {
       console.log(data);
       window.location.href = data?.redirect_url;
-
     },
   });
 
@@ -209,11 +184,13 @@ const EnglishAdmissionForm = () => {
 
   return (
     <Formik
+      key={i18next.language}
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      validationSchema={englishAdmissionValidationSchema}
       onSubmit={handleSubmit}
+      validateOnMount={true}
     >
-      {({ errors, values, touched, setFieldValue, isValid }) => {
+      {({ errors, values, touched, setFieldValue, dirty, isValid }) => {
         return (
           <Form className="">
             {/* DESKTOP */}
@@ -525,6 +502,7 @@ const EnglishAdmissionForm = () => {
                         setFieldValue("isSmoker", e.target.value)
                       }
                     >
+                      <option value="" label={t("Select")} />
                       <option value="yes" label={t("yes")} />
                       <option value="no" label={t("no")} />
                     </select>
@@ -548,6 +526,7 @@ const EnglishAdmissionForm = () => {
                         setFieldValue("petProblem", e.target.value)
                       }
                     >
+                      <option value="" label={t("Select")} />
                       <option value="yes" label={t("yes")} />
                       <option value="no" label={t("no")} />
                     </select>
@@ -1057,7 +1036,11 @@ const EnglishAdmissionForm = () => {
               <Button
                 type="submit"
                 loading={isPending}
-                className="py-4 mt-8 text-white bg-mainColor rounded-2xl"
+                disabled={!isValid || !dirty || isPending}
+                className={cn("py-4 mt-8 text-white bg-mainColor rounded-2xl", {
+                  "opacity-40 cursor-not-allowed":
+                    !isValid || !dirty || isPending,
+                })}
               >
                 {t("confirm and submit")}
               </Button>
@@ -1100,9 +1083,9 @@ const EnglishAdmissionForm = () => {
                         />
                         <MdOutlinePerson className="absolute top-1/2 left-3 text-xl text-[#BEC8CF]" />
                         {touched.firstName && errors.firstName && (
-                          <div className="text-sm text-red-700">
+                          <p className="text-sm text-red-700">
                             {errors.firstName}
-                          </div>
+                          </p>
                         )}
                       </div>
 
@@ -2006,8 +1989,14 @@ const EnglishAdmissionForm = () => {
                     <Button
                       type="submit"
                       loading={isPending}
-                      // disabled={!isValid}
-                      className={`w-full disabled:bg-mainColor/60 disabled:cursor-not-allowed disabled:border-none py-4 mt-8 text-white bg-mainColor rounded-xl`}
+                      disabled={!isValid || !dirty || isPending}
+                      className={cn(
+                        "w-full disabled:bg-mainColor/60 disabled:cursor-not-allowed disabled:border-none py-4 mt-8 text-white bg-mainColor rounded-xl",
+                        {
+                          "opacity-40 cursor-not-allowed":
+                            !isValid || !dirty || isPending,
+                        }
+                      )}
                     >
                       {t("confirm and submit")}
                     </Button>

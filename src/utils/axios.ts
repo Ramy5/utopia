@@ -3,13 +3,13 @@ import { BASE_URL } from "./BaseURL";
 interface ApiRequestOptions {
   url: string;
   method?: "GET" | "POST" | "PUT" | "DELETE";
-  params?: Record<string, any>; 
-  data?: Record<string, any>;  
+  params?: Record<string, any>;
+  data?: Record<string, any>;
   headers?: Record<string, string>;
   token?: string;
 }
 
-type ApiResponse<T> = T; 
+type ApiResponse<T> = T;
 
 export const apiRequest = async <T>({
   url,
@@ -37,7 +37,7 @@ export const apiRequest = async <T>({
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || error.message);
+      throw error;
     }
     throw new Error("An unknown error occurred");
   }
