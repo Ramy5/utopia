@@ -294,5 +294,20 @@
   "Flight ticket": "تذكرة الطيران",
   "Image uploaded successfully": "تم تحميل الصورة بنجاح",
   "Image attached successfully": "تم ارفاق الصورة بنجاح",
-  "add pic": "اضافة صورة"
+  "add pic": "اضافة صورة",
+  "phone number must contain only digits": "يجب أن يحتوي رقم الهاتف على أرقام فقط",
+  "phone number must be at least 10 digits": "يجب أن يكون رقم الهاتف 10 أرقام على الأقل",
+  "phone number must be 15 digits or less": "يجب أن يكون رقم الهاتف 15 رقما أو أقل",
+  "phone is a required field": "رقم الهاتف مطلوب",
+
+  "invalid email address": "البريد الإلكتروني غير صالح",
+  "email is a required field": "البريد الإلكتروني مطلوب",
+
+  "password must be at least 8 characters": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "password must be 20 characters or less": "يجب أن تكون كلمة المرور 20 حرفًا أو أقل",
+  "password is a required field": "كلمة المرور مطلوبة",
+
+  "student password must be at least 8 characters": "يجب أن تكون كلمة مرور الطالب 8 أحرف على الأقل",
+  "student password must be 20 characters or less": "يجب أن تكون كلمة مرور الطالب 20 حرفًا أو أقل",
+  "studentPassword is a required field": "كلمة مرور الطالب مطلوبة"
 }
