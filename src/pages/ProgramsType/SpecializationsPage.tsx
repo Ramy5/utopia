@@ -13,7 +13,7 @@ import "swiper/css";
 import { useAuth } from "../../context/AuthContext";
 
 const SpecializationsPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
   console.log("🚀 ~ SpecializationsPage ~ location:", location);
   const { user } = useAuth();
@@ -109,7 +109,7 @@ const SpecializationsPage = () => {
                     universityName: universityName,
                     universityId: specializations?.id,
                     amount: specializations?.order_price,
-                    user_id: user.id,
+                    user_id: user?.id,
                   }}
                 >
                   <Button>{t("apply now")}</Button>
@@ -146,7 +146,7 @@ const SpecializationsPage = () => {
             universityName: universityName,
             universityId: specializations?.id,
             amount: specializations?.order_price,
-            user_id: user.id,
+            user_id: user?.id,
           }}
         >
           <Button className="block w-full py-4 sm:hidden rounded-2xl mb-28">

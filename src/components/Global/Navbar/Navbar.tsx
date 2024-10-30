@@ -189,7 +189,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
         </ul> */}
 
             <div
-              onClick={toggleDropdown}
+              // onClick={toggleDropdown}
               className="relative flex items-center gap-6"
             >
               <div className="w-12 h-12 overflow-hidden rounded-xl">
@@ -198,7 +198,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                     src={profile?.image}
                     alt={profile?.name}
                     className="object-cover w-full h-full cursor-pointer"
-                    // onClick={openImageModal}
+                    onClick={() => setIsOpen((prev) => !prev)}
                   />
                 ) : (
                   <div className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor">

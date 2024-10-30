@@ -13,6 +13,8 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineMailOutline, MdOutlinePerson } from "react-icons/md";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoMdPhonePortrait } from "react-icons/io";
+import { universityValidationSchema } from "../../Schema/UniversityAdmissionSchema";
+import cn from "../../utils/cn";
 
 const postProcessPayment = async (postData) => {
   try {
@@ -64,7 +66,7 @@ const UniversityAdmissionForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const location = useLocation();
-  console.log("🚀 ~ UniversityAdmissionForm ~ location:", location)
+  console.log("🚀 ~ UniversityAdmissionForm ~ location:", location);
   const {
     partnerId = null,
     specializationID = null,
@@ -104,21 +106,6 @@ const UniversityAdmissionForm = () => {
       passportSizePhoto: null,
     },
   };
-
-  const validationSchema = Yup.object({
-    firstName: Yup.string().required(t("required")),
-    lastName: Yup.string().required(t("required")),
-    birthDate: Yup.date().required(t("required")),
-    gender: Yup.string().required(t("required")),
-    nationality: Yup.string().required(t("required")),
-    phoneNumber: Yup.string().required(t("required")),
-    email: Yup.string().email(t("invalid_email")).required(t("required")),
-    englishLevel: Yup.string().required(t("required")),
-    address: Yup.string().required(t("required")),
-    city: Yup.string().required(t("required")),
-    postalCode: Yup.string().required(t("required")),
-    agreeToTerms: Yup.boolean().oneOf([true], t("must_accept_terms")),
-  });
 
   useEffect(() => {
     setUniversityNameState(universityName);
@@ -200,11 +187,11 @@ const UniversityAdmissionForm = () => {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      validationSchema={universityValidationSchema()}
       onSubmit={handleSubmit}
     >
-      {({ errors, values, touched, setFieldValue, isValid }) => {
-        console.log("🚀 ~ UniversityAdmissionForm ~ validateField:", isValid);
+      {({ errors, values, touched, setFieldValue, isValid, dirty }) => {
+        console.log("🚀 ~ UniversityAdmissionForm ~ errors:", errors);
         return (
           <Form className="">
             {/* DESKTOP */}
@@ -755,7 +742,11 @@ const UniversityAdmissionForm = () => {
               <Button
                 type="submit"
                 loading={isPending}
-                className="py-4 mt-8 text-white bg-mainColor rounded-2xl"
+                disabled={!isValid || !dirty || isPending}
+                className={cn("py-4 mt-8 text-white bg-mainColor rounded-2xl", {
+                  "opacity-40 cursor-not-allowed":
+                    !isValid || !dirty || isPending,
+                })}
               >
                 {t("confirm and submit")}
               </Button>
@@ -1367,8 +1358,14 @@ const UniversityAdmissionForm = () => {
                     <Button
                       type="submit"
                       loading={isPending}
-                      disabled={!isValid}
-                      className={`w-full disabled:bg-mainColor/60 disabled:cursor-not-allowed disabled:border-none py-4 mt-8 text-white bg-mainColor rounded-xl`}
+                      disabled={!isValid || !dirty || isPending}
+                      className={cn(
+                        `w-full disabled:bg-mainColor/60 disabled:cursor-not-allowed disabled:border-none py-4 mt-8 text-white bg-mainColor rounded-xl`,
+                        {
+                          "opacity-40 cursor-not-allowed":
+                            !isValid || !dirty || isPending,
+                        }
+                      )}
                     >
                       {t("confirm and submit")}
                     </Button>
