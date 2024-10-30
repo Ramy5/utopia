@@ -176,7 +176,7 @@ const DesignYourOwnCourseDetails = () => {
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
         <div className="relative block sm:hidden">
-          <div className="absolute top-1/2 -translate-y-1/2 ">
+          <div className="absolute -translate-y-1/2 top-1/2 ">
             <div onClick={() => navigate(-1)}>
               <FaArrowRightLong
                 size={22}
@@ -184,15 +184,15 @@ const DesignYourOwnCourseDetails = () => {
               />
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-center py-6">
+          <h2 className="py-6 text-xl font-semibold text-center">
             {t("available institutes")}
           </h2>
         </div>
 
-        <div className="my-16 sm:block hidden">
+        <div className="hidden my-16 sm:block">
           {!!!data?.partners?.length ? (
             <div>
-              <h2 className="text-5xl mb-8">{location?.state.city_name}</h2>
+              <h2 className="mb-8 text-5xl">{location?.state.city_name}</h2>
               <div>
                 <Formik
                   initialValues={{ week: "", start_date: "" }}
@@ -230,7 +230,7 @@ const DesignYourOwnCourseDetails = () => {
                           selectStyle={OwnCoursSelectStyle}
                         />
                       </div>
-                      <div className="col-span-4 relative">
+                      <div className="relative col-span-4">
                         <label htmlFor="start_date">
                           {t("study start date")}
                         </label>
@@ -268,7 +268,7 @@ const DesignYourOwnCourseDetails = () => {
           ) : (
             <div>
               <div>
-                <h2 className="text-5xl mb-8">{location?.state.city_name}</h2>
+                <h2 className="mb-8 text-5xl">{location?.state.city_name}</h2>
                 <div className="chooseCourse">
                   <Formik
                     initialValues={{ week: "", start_date: "" }}
@@ -282,7 +282,7 @@ const DesignYourOwnCourseDetails = () => {
                   >
                     {({ setFieldValue }) => {
                       return (
-                        <Form className="hidden sm:grid grid-cols-10 gap-3 items-end mt-20 mb-20 md:mb-24">
+                        <Form className="items-end hidden grid-cols-10 gap-3 mt-20 mb-20 sm:grid md:mb-24">
                           <div className="relative col-span-3 lg:col-span-2">
                             <BaseSelect
                               id="week"
@@ -307,7 +307,7 @@ const DesignYourOwnCourseDetails = () => {
                               // disabled
                             />
                           </div>
-                          <div className="col-span-4 lg:col-span-3 relative">
+                          <div className="relative col-span-4 lg:col-span-3">
                             <label htmlFor="start_date">
                               {t("study start date")}
                             </label>
@@ -358,7 +358,7 @@ const DesignYourOwnCourseDetails = () => {
                           <img
                             src={item.image}
                             alt="own details"
-                            className="rounded-2xl overflow-hidden h-60 w-full"
+                            className="w-full overflow-hidden rounded-2xl h-60"
                           />
                         </div>
                         <ul className="flex justify-between items-center mt-5 mb-0.5">
@@ -380,7 +380,7 @@ const DesignYourOwnCourseDetails = () => {
                           )}
                         </ul>
 
-                        <div className="hidden sm:flex justify-between items-center gap-1 sm:gap-2 pt-5">
+                        <div className="items-center justify-between hidden gap-1 pt-5 sm:flex sm:gap-2">
                           {isActive?.map((item, index) => (
                             <div
                               key={index}
@@ -403,10 +403,10 @@ const DesignYourOwnCourseDetails = () => {
                       >
                         <div className="flex gap-20">
                           <div>
-                            <h2 className="text-white text-2xl">
+                            <h2 className="text-2xl text-white">
                               {item.partner_name}
                             </h2>
-                            <p className="text-white text-base lg:text-lg my-14 w-3/4">
+                            <p className="w-3/4 text-base text-white lg:text-lg my-14">
                               {item.desc}
                             </p>
                           </div>
@@ -450,10 +450,10 @@ const DesignYourOwnCourseDetails = () => {
           )}
         </div>
 
-        <div className="my-5 sm:hidden block">
+        <div className="block my-5 sm:hidden">
           <div>
             {!data?.partners?.length ? (
-              <div className="chooseCourse mt-12">
+              <div className="mt-12 chooseCourse">
                 <Formik
                   initialValues={{ week: "", start_date: "" }}
                   onSubmit={(values) => {
@@ -470,7 +470,7 @@ const DesignYourOwnCourseDetails = () => {
                   }}
                 >
                   {({ setFieldValue }) => (
-                    <Form className="grid grid-cols-1 gap-3 items-end mb-24">
+                    <Form className="grid items-end grid-cols-1 gap-3 mb-24">
                       <div className="relative">
                         <BaseSelect
                           id="week"
@@ -533,7 +533,7 @@ const DesignYourOwnCourseDetails = () => {
               </div>
             ) : (
               <div>
-                <div className="border-2 mb-10 text-lg sm:text-xl text-mainColor font-medium border-mainColor w-fit px-5 sm:px-8 py-3 rounded-2xl m-auto">
+                <div className="px-5 py-3 m-auto mb-10 text-lg font-medium border-2 sm:text-xl text-mainColor border-mainColor w-fit sm:px-8 rounded-2xl">
                   {data?.city} - {numberOfWeeks?.id} {t("اسابيع")} -{" "}
                   {formattedDate}
                 </div>
@@ -556,7 +556,7 @@ const DesignYourOwnCourseDetails = () => {
                       }
                     }}
                   >
-                    <div className="flex shadow-card rounded-2xl overflow-hidden mb-8 h-40 cursor-pointer group">
+                    <div className="flex h-40 mb-8 overflow-hidden cursor-pointer shadow-card rounded-2xl group">
                       <div className="rounded-2xl overflow-hidden h-40 w-[800px] sm:w-[550px]">
                         <img
                           src={item.image}
@@ -565,13 +565,13 @@ const DesignYourOwnCourseDetails = () => {
                         />
                       </div>
                       <div className="px-4 py-4">
-                        <h2 className="text-lg sm:text-xl font-semibold">
+                        <h2 className="text-lg font-semibold sm:text-xl">
                           {item.partner_name}
                         </h2>
                         <p className="my-3 text-[15px] sm:text-base overflow-hidden text-ellipsis line-clamp-2">
                           {item.desc}
                         </p>
-                        <p className="text-mainColor text-xl text-end w-full font-semibold">
+                        <p className="w-full text-xl font-semibold text-mainColor text-end">
                           {item.price} SAR
                         </p>
                       </div>

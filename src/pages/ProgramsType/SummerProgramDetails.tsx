@@ -237,7 +237,7 @@ const SummerProgramsDetails = () => {
                   packageId: programDetails?.category_id,
                   planId: planId,
                   amount: amount,
-                  user_id: user.id
+                  user_id: user?.id
                 }}
               >
                 <Button className="w-full mt-8 sm:w-fit">
