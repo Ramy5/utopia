@@ -3,9 +3,12 @@ import * as Yup from "yup";
 
 export const englishAdmissionValidationSchema = () =>
   Yup.object({
-    firstName: Yup.string().required(t("required")),
-    lastName: Yup.string().required(t("required")),
-
+    firstName: Yup.string()
+      .matches(/^[A-Za-z]+$/, t("no numbers allowed"))
+      .required(t("required")),
+    lastName: Yup.string()
+      .matches(/^[A-Za-z]+$/, t("no numbers allowed"))
+      .required(t("required")),
     birthDate: Yup.date()
       .required(t("required"))
       .test("is-18", t("must_be_at_least_18"), (value) => {

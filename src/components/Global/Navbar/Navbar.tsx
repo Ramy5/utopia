@@ -225,12 +225,12 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                     >
                       {t("add pic")}
                     </p>
-                    <Link
+                    {/* <Link
                       to="/dashboard"
                       className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100 animation_delay-3"
                     >
                       {t("dashboard")}
-                    </Link>
+                    </Link> */}
                     <p
                       onClick={handleLogout}
                       className={cn(
@@ -278,12 +278,12 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                     >
                       {t("add pic")}
                     </p>
-                    <Link
+                    {/* <Link
                       to="/dashboard"
                       className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100 animation_delay-3"
                     >
                       {t("dashboard")}
-                    </Link>
+                    </Link> */}
                     <p
                       onClick={handleLogout}
                       className={cn(

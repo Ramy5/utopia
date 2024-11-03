@@ -167,8 +167,8 @@ const DesignYourOwnCourseDetails = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  },[])
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isFetching || isRefetching || isLoading) return <Loading />;
 
@@ -419,17 +419,21 @@ const DesignYourOwnCourseDetails = () => {
                         <div className="flex gap-3">
                           <Button
                             className="bg-white text-[#1B0924]"
-                            action={() =>
-                              navigate("/designCourse/register", {
-                                state: {
-                                  id: item.id,
-                                  numberOfWeeks: data?.numberOfWeeks,
-                                  startDate: data?.start_date,
-                                  amount: item.price,
-                                  user_id: user?.id,
-                                },
-                              })
-                            }
+                            action={() => {
+                              if (user) {
+                                navigate("/designCourse/register", {
+                                  state: {
+                                    id: item.id,
+                                    numberOfWeeks: data?.numberOfWeeks,
+                                    startDate: data?.start_date,
+                                    amount: item.price,
+                                    user_id: user ? user.id : null,
+                                  },
+                                });
+                              } else {
+                                navigate("/login");
+                              }
+                            }}
                           >
                             {t("register now")}
                           </Button>
@@ -537,15 +541,19 @@ const DesignYourOwnCourseDetails = () => {
                   <div
                     key={index}
                     onClick={() => {
-                      navigate("/designCourse/register", {
-                        state: {
-                          id: item.id,
-                          numberOfWeeks: data?.numberOfWeeks,
-                          startDate: data?.start_date,
-                          amount: item.price,
-                          user_id: user?.id,
-                        },
-                      });
+                      if (user) {
+                        navigate("/designCourse/register", {
+                          state: {
+                            id: item.id,
+                            numberOfWeeks: data?.numberOfWeeks,
+                            startDate: data?.start_date,
+                            amount: item.price,
+                            user_id: user ? user.id : null,
+                          },
+                        });
+                      } else {
+                        navigate("/login");
+                      }
                     }}
                   >
                     <div className="flex h-40 mb-8 overflow-hidden cursor-pointer shadow-card rounded-2xl group">
