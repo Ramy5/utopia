@@ -336,5 +336,6 @@
   "must be at least 18": "يجب أن يكون العمر 18 عامًا على الأقل",
   "invalid gender": "النوع غير صالح",
   "invalid english level": "مستوى اللغة الإنجليزية غير صالح",
-  "invalid postal code": "الرمز البريدي غير صالح"
+  "invalid postal code": "الرمز البريدي غير صالح",
+  "no numbers allowed": "لا يسمح بالأرقام"
 }

@@ -191,6 +191,7 @@ const EnglishAdmissionForm = () => {
       validateOnMount={true}
     >
       {({ errors, values, touched, setFieldValue, dirty, isValid }) => {
+        console.log("🚀 ~ EnglishAdmissionForm ~ values:", values)
         return (
           <Form className="">
             {/* DESKTOP */}

@@ -11,7 +11,8 @@ export const universityValidationSchema = () =>
           field: t("firstName"),
           min: 2,
         })
-      ),
+      )
+      .matches(/^[A-Za-z]+$/, t("no numbers allowed")),
 
     lastName: Yup.string()
       .required(t("required"))
@@ -21,7 +22,8 @@ export const universityValidationSchema = () =>
           field: t("lastName"),
           min: 2,
         })
-      ),
+      )
+      .matches(/^[A-Za-z]+$/, t("no numbers allowed")),
 
     birthDate: Yup.date()
       .required(t("required"))
