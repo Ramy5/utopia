@@ -1,5 +1,11 @@
 import { t } from "i18next";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 import { useRTL } from "../../hooks/useRTL";
@@ -8,23 +14,36 @@ import BaseInput from "../../components/atoms/molecules/formik-fields/BaseInput"
 import { Form, Formik } from "formik";
 import Button from "../../components/atoms/Button/Button";
 import DownLoadApp from "../../components/atoms/molecules/downLoad-app/DownLoadApp";
+import { useAuth } from "../../context/AuthContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { useAuth } from "../../context/AuthContext";
+import "swiper/css/navigation";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { Pagination, Navigation } from "swiper/modules";
+import Loading from "../../components/Global/Loading/Loading";
+import cn from "../../utils/cn";
 
 const EnglishLanguageDetails = () => {
   const [styledHtml, setStyledHtml] = useState("");
   const location = useLocation();
+  console.log("🚀 ~ EnglishLanguageDetails ~ location:", location);
   const EnglishLanguageDetails = location.state;
+  console.log(
+    "🚀 ~ EnglishLanguageDetails ~ EnglishLanguageDetails:",
+    EnglishLanguageDetails
+  );
+  const [loading, setLoading] = useState(false);
   const [planId, setPlanId] = useState(null);
+  console.log("🚀 ~ EnglishLanguageDetails ~ planId:", planId);
   const [amount, setAmount] = useState("");
   const { user } = useAuth();
+  const swiperRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSelectedPlanId = (id, amount) => {
     setPlanId(id);
     setAmount(amount);
   };
-
 
   useEffect(() => {
     const htmlWithStyles = EnglishLanguageDetails?.includes
@@ -71,6 +90,26 @@ const EnglishLanguageDetails = () => {
           : t("unavailable"),
     },
   ];
+
+  const handleSlideChange = (swiper) => {
+    setCurrentIndex(swiper.activeIndex);
+  };
+
+  const handleNextSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
+  const handlePrevSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
+    }
+  };
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   return (
     <div>
@@ -119,14 +158,82 @@ const EnglishLanguageDetails = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-center order-1 md:justify-end md:order-2">
-            <div className="md:border border-[#707070] rounded-3xl w-full md:w-auto">
+          <div className="flex justify-center order-1 md:justify-end md:order-2 h-fit">
+            <div className="md:border border-[#707070] rounded-3xl w-full">
               <div className="relative overflow-hidden rounded-3xl h-60 md:h-full">
-                <img
+                {/* <img
                   src={EnglishLanguageDetails?.cityData.image}
                   className="w-full h-full m-auto md:h-auto rounded-3xl"
-                />
-                <div className="absolute bottom-3 right-3 md:hidden">
+                /> */}
+                <div className="relative w-full">
+                  <Swiper
+                    slidesPerView={1}
+                    spaceBetween={0}
+                    onSlideChange={handleSlideChange}
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    loop={true}
+                    pagination={{
+                      clickable: true,
+                    }}
+                  >
+                    <div className="w-full">
+                      {EnglishLanguageDetails?.packageImage.map(
+                        (item, index) => (
+                          <SwiperSlide key={index} className="w-full">
+                            <img
+                              src={item?.image}
+                              className="rounded-3xl object-fill w-full h-60 md:h-full md:max-h-[26rem]"
+                            />
+                          </SwiperSlide>
+                        )
+                      )}
+                    </div>
+                  </Swiper>
+                  <div className="w-full md:flex hidden items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 z-50">
+                    <div
+                      className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor cursor-pointer`}
+                      onClick={handlePrevSlide}
+                    >
+                      <HiChevronRight />
+                    </div>
+                    <div
+                      className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor cursor-pointer`}
+                      onClick={handleNextSlide}
+                    >
+                      <HiChevronLeft />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full md:hidden flex items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 z-50">
+                  <div
+                    className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor  ${
+                      currentIndex === 0
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                    onClick={handlePrevSlide}
+                    disabled={currentIndex === 0}
+                  >
+                    <HiChevronRight />
+                  </div>
+                  <div
+                    className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor ${
+                      currentIndex ===
+                      EnglishLanguageDetails?.packageImage?.length - 1
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                    onClick={handleNextSlide}
+                    disabled={
+                      currentIndex ===
+                      EnglishLanguageDetails?.packageImage?.length - 2
+                    }
+                  >
+                    <HiChevronLeft />
+                  </div>
+                </div>
+                <div className="absolute z-50 bottom-3 right-3 md:hidden">
                   <Link
                     to={EnglishLanguageDetails?.instagram}
                     className="flex items-center justify-center w-12 h-12 cursor-pointer bg-mainColor rounded-2xl"
@@ -177,27 +284,70 @@ const EnglishLanguageDetails = () => {
               {EnglishLanguageDetails?.cityData.name}
             </h2>
             <div className="h-64 overflow-hidden cursor-pointer rounded-3xl md:h-80 lg:h-96">
-              <Link to={EnglishLanguageDetails?.cityData.url}>
+              {/* <Link to={EnglishLanguageDetails?.cityData.url}>
                 <img
                   src={EnglishLanguageDetails?.cityData.image}
                   alt="youtube"
                   className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
                 />
-              </Link>
+              </Link> */}
+              {EnglishLanguageDetails?.cityData?.url ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${
+                    EnglishLanguageDetails?.cityData.url.split("v=")[1]
+                  }`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <Link to={EnglishLanguageDetails?.cityData.url}>
+                  <img
+                    src={EnglishLanguageDetails?.cityData.image}
+                    alt="youtube"
+                    className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
+                  />
+                </Link>
+              )}
             </div>
           </div>
           <div className="md:col-span-4">
             <h2 className="mb-4 text-2xl">
-              {EnglishLanguageDetails?.cityData.name}
+              {EnglishLanguageDetails?.partner_name}
             </h2>
             <div className="h-64 overflow-hidden cursor-pointer rounded-3xl md:h-80 lg:h-96">
-              <Link to={EnglishLanguageDetails?.partner_url}>
+              {/* <Link to={EnglishLanguageDetails?.partner_url}>
                 <img
                   src={EnglishLanguageDetails?.partner_image}
                   alt="youtube"
                   className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
                 />
-              </Link>
+              </Link> */}
+
+              {EnglishLanguageDetails?.partner_url ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${
+                    EnglishLanguageDetails?.partner_url.split("v=")[1]
+                  }`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <Link to={EnglishLanguageDetails?.partner_url}>
+                  <img
+                    src={EnglishLanguageDetails?.partner_image}
+                    alt="youtube"
+                    className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
+                  />
+                </Link>
+              )}
             </div>
           </div>
           <div className="mr-auto md:col-span-2 md:mr-0 ">
@@ -221,17 +371,37 @@ const EnglishLanguageDetails = () => {
                       id={plan?.id}
                       name={`packagePlan`}
                       type="radio"
-                      className="p-2"
+                      className="p-2 cursor-pointer"
                       onChange={(e) =>
                         handleSelectedPlanId(e.target.id, plan.price)
                       }
                     />
-                    <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
-                      {plan.duration === 1
+                    <h2
+                      className={cn(
+                        "border  px-5 py-2 rounded-xl text-center text-[15px] w-28",
+                        {
+                          "border-mainColor text-mainColor": planId == plan?.id,
+                          "border-[#707070]": planId != plan?.id,
+                        }
+                      )}
+                    >
+                      {plan.duration == 1
                         ? `${t("mounth")}`
-                        : `${plan.duration} ${t("mounths")}`}
+                        : plan.duration == 2
+                        ? `${t("2 months")}`
+                        : plan.duration > 10
+                        ? `${plan.duration} ${t("mounth")}`
+                        : `${plan.duration} ${t("Months")}`}
                     </h2>
-                    <p className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
+                    <p
+                      className={cn(
+                        "border border-[#707070] px-5 py-2 rounded-xl text-center text-[15px] w-32",
+                        {
+                          "border-mainColor text-mainColor": planId == plan?.id,
+                          "border-[#707070]": planId != plan?.id,
+                        }
+                      )}
+                    >
                       {plan.price} <span>{plan.unit}</span>
                     </p>
                   </div>
@@ -245,10 +415,10 @@ const EnglishLanguageDetails = () => {
                   packageId: EnglishLanguageDetails?.category_id,
                   planId: planId,
                   amount: amount,
-                  user_id: user?.id
+                  user_id: user?.id,
                 }}
               >
-                <Button className="w-full mt-8 sm:w-fit">
+                <Button className="w-full mt-8 sm:w-fit hover:bg-mainYellow duration-500">
                   {t("register now")}
                 </Button>
               </Link>

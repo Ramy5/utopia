@@ -26,7 +26,7 @@ const ProgramTypePackages = ({ data }) => {
             <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
               <Form>
                 <div className="relative w-full">
-                  <IoSearchOutline 
+                  <IoSearchOutline
                     size={23}
                     className="fill-[#212529] absolute z-10 top-1/2 -translate-y-1/2 start-3"
                   />
@@ -42,13 +42,16 @@ const ProgramTypePackages = ({ data }) => {
             </Formik>
           </div>
           <Button
-            className="py-2.5 lg:px-10 sm:px-2 rounded-full text-xl col-span-3 font-normal"
+            className="py-2.5 lg:px-10 sm:px-2 rounded-full text-xl col-span-3 font-normal hover:bg-mainYellow duration-500"
             action={() => navigate("/designCourse")}
           >
             {t("design your own course")}
           </Button>
         </div>
-        <p className="block text-base underline font-medium sm:hidden text-mainColor">
+        <p
+          className="block text-base underline font-medium sm:hidden text-mainColor cursor-pointer"
+          onClick={() => navigate("/englishLanguage")}
+        >
           {t("More")}
         </p>
       </div>
@@ -57,6 +60,11 @@ const ProgramTypePackages = ({ data }) => {
           <div
             key={index}
             className="text-center group cursor-pointer border border-[#707070] rounded-2xl  relative packege"
+            onClick={() =>
+              navigate("/englishLanguage/details", {
+                state: packages,
+              })
+            }
           >
             {packages?.is_note === 1 && (
               <p className="absolute bg-[#FFCC1A] px-4 pt-2.5 pb-2 text-xs rounded-full left-1/2 w-fit whitespace-nowrap -translate-x-1/2 -top-4 z-20">
@@ -67,7 +75,8 @@ const ProgramTypePackages = ({ data }) => {
               <div className="flex rounded-2xl overflow-hidden max-h-full">
                 <img
                   src={packages.packageImage[0].image}
-                  className="rounded-t-2xl w-full h-[17.5vw] group-hover:h-[13vw] duration-300 object-cover rounded-b-2xl group-hover:rounded-b-none"
+                  className="rounded-t-2xl w-full h-[17.5vw] group-hover:h-[13vw] duration-300 rounded-b-2xl group-hover:rounded-b-none"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -76,11 +85,11 @@ const ProgramTypePackages = ({ data }) => {
                 {packages.partner_name}
               </p>
               <p
-                className="max-w-full px-2.5 my-5 overflow-hidden text-black duration-300 text-ellipsis max-h-48 text-[15px]"
+                className="max-w-full px-3.5 my-4 overflow-hidden text-black duration-300 text-ellipsis max-h-48 text-[15px]"
                 style={{
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 6,
+                  WebkitLineClamp: 5,
                 }}
               >
                 {packages.desc}
@@ -93,22 +102,33 @@ const ProgramTypePackages = ({ data }) => {
         ))}
       </div>
 
-      <Button className="sm:flex font-normal hidden bg-transparent m-auto text-black hover:text-mainColor duration-300 mt-8">
+      <Button
+        action={() => navigate("/englishLanguage")}
+        className="sm:flex font-normal hidden bg-transparent m-auto text-black hover:text-mainColor duration-300 mt-8"
+      >
         <div>
           <p className="text-xl mb-1">{t("more")}</p>
           <BsChevronDown size={28} className="m-auto" />
         </div>
       </Button>
 
-      <div className="flex items-center justify-between sm:hidden">
+      <div className="flex items-center justify-between sm:hidden cursor-pointer">
         <Swiper spaceBetween={15} slidesPerView={1.5}>
           {data?.englishPackages?.map((packages, index) => (
             <SwiperSlide key={index}>
-              <div className="shadow-xl rounded-2xl">
+              <div
+                className="shadow-xl rounded-2xl"
+                onClick={() =>
+                  navigate("/englishLanguage/details", {
+                    state: packages,
+                  })
+                }
+              >
                 <div>
                   <img
                     src={packages.packageImage[0].image}
                     className="object-cover w-full duration-700 h-52 rounded-t-2xl rounded-b-2xl group-hover:rounded-b-none"
+                    loading="lazy"
                   />
                 </div>
                 <div className="flex items-center justify-between px-4 py-5">

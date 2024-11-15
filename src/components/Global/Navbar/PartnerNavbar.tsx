@@ -204,7 +204,10 @@ const PartnerNavbar: React.FC<Navbar_TP> = ({ hidden }) => {
                 className="object-cover w-full h-full cursor-pointer"
               />
             ) : (
-              <div className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor">
+              <div
+                className="flex items-center justify-center object-cover w-full h-full cursor-pointer bg-mainColor"
+                onClick={toggleDropdown}
+              >
                 <MdPerson className="text-4xl text-white" />
               </div>
             )}

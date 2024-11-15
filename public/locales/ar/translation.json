@@ -1,5 +1,6 @@
 {
   "login": "تسجيل الدخول",
+  "Create an account": "إنشاء حساب",
   "email": "البريد الإلكتروني",
   "book consultation": "حجز استشارة",
   "contact us": "اتصل بنا",
@@ -337,5 +338,8 @@
   "invalid gender": "النوع غير صالح",
   "invalid english level": "مستوى اللغة الإنجليزية غير صالح",
   "invalid postal code": "الرمز البريدي غير صالح",
-  "no numbers allowed": "لا يسمح بالأرقام"
+  "no numbers allowed": "لا يسمح بالأرقام",
+  "Search by city name": "البحث باسم المدينة",
+  "2 months": "شهرين",
+  "Months": "أشهر"
 }

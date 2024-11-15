@@ -50,7 +50,10 @@ const BookConsultation = ({ data }) => {
                 <img
                   src={offer?.image}
                   alt="Book"
-                  className={`${index === 2 ? "h-full" : "max-h-[275px] w-full"}`}
+                  className={`${
+                    index === 2 ? "h-full" : "max-h-[275px] w-full"
+                  }`}
+                  loading="lazy"
                 />
               </div>
               <div className="mt-6">
@@ -139,13 +142,20 @@ const BookConsultation = ({ data }) => {
             </div>
           </div>
           <Link to={"/bookConsultant"} className="col-span-5">
-            <Button className="mt-4 py-2 rounded-3xl font-normal text-xl">{t("book consultation")}</Button>
+            <Button className="mt-4 py-2 rounded-3xl font-normal text-xl hover:bg-mainYellow duration-500">
+              {t("book consultation")}
+            </Button>
           </Link>
         </div>
       </div>
 
       <div className="relative block sm:hidden">
-        <img src={PhoneHeader} alt="Landing" className="w-full" />
+        <img
+          src={PhoneHeader}
+          alt="Landing"
+          className="w-full"
+          loading="lazy"
+        />
         <div className="absolute w-full px-4 mt-4 -translate-y-1/2 top-full">
           <div className="grid w-full grid-cols-3 gap-4 ">
             {data?.categories?.map((categorie, index) => (
@@ -158,7 +168,6 @@ const BookConsultation = ({ data }) => {
                       ? "/universityAdmissions"
                       : "/englishLanguage"
                   } `}
-                  
                 >
                   <div
                     className="px-2 py-4 rounded-2xl"
@@ -169,6 +178,7 @@ const BookConsultation = ({ data }) => {
                         src={BookCards[index]?.image}
                         alt="Landing"
                         className="w-20 h-20 m-auto"
+                        loading="lazy"
                       />
                       <h2 className="mt-3 font-medium">{categorie.name}</h2>
                     </div>

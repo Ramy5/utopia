@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         mainColor: "#9F85F3",
+        mainYellow: "#FFCC1A",
       },
       animation: {
         "spin-slow": "spin 3s linear infinite",

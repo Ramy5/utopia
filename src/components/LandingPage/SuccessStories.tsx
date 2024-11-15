@@ -7,10 +7,16 @@ import { Pagination, Grid } from "swiper/modules";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import "swiper/css/grid";
+import { useRTL } from "../../hooks/useRTL";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const SuccessStories = () => {
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
+  console.log("🚀 ~ SuccessStories ~ selectedStoryIndex:", selectedStoryIndex);
   const swiperRef = useRef(null);
+  const swiperMoveRef = useRef(null);
+  const isRTL = useRTL();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const fetchSuccessStories = async () => {
     try {
@@ -35,6 +41,22 @@ const SuccessStories = () => {
     setSelectedStoryIndex(index);
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slideTo(index, 800);
+    }
+  };
+
+  const handleSlideChange = (swiper) => {
+    setCurrentIndex(swiper.activeIndex);
+  };
+
+  const handleNextSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
+  const handlePrevSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
     }
   };
 
@@ -83,6 +105,7 @@ const SuccessStories = () => {
                       <img
                         src={story.image}
                         className={`w-36 h-36 md:w-40 md:h-40 lg:w-48 lg:h-48  rounded-full group-hover:rounded-b-none duration-700 object-cover cursor-pointer `}
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -92,42 +115,69 @@ const SuccessStories = () => {
           </Swiper>
         </div>
         <div className="relative col-span-5 lg:col-span-4">
-          <div className="absolute z-10 -top-[112px] -right-6 md:-top-32 md:-right-14">
+          <div
+            className={`absolute z-10 -top-[112px] md:-top-32  ${
+              isRTL ? "-right-6 md:-right-14" : "-left-6 md:-left-14"
+            }`}
+          >
             <img
               src={data?.[selectedStoryIndex]?.image}
               className="object-cover transition-all duration-1000 ease-in-out rounded-full w-36 h-36 md:w-40 md:h-40 group-hover:rounded-b-none"
+              loading="lazy"
+            />
+          </div>
+          <div
+            className={`absolute z-10 -top-10 flex ${
+              isRTL ? "left-0" : "right-0"
+            }`}
+          >
+            <IoIosArrowForward
+              className="text-white cursor-pointer"
+              size={26}
+              onClick={handleNextSlide}
+            />
+            <IoIosArrowBack
+              className="text-white cursor-pointer"
+              size={26}
+              onClick={handlePrevSlide}
             />
           </div>
           <Swiper
-            spaceBetween={50}
+            spaceBetween={100}
             slidesPerView={1}
-            className="h-[400px]"
+            className={`h-[400px]`}
             pagination={{
               clickable: true,
             }}
-            modules={[Pagination]}
-            speed={800}
+            // modules={[Pagination]}
+            loop={true}
+            speed={1200}
             ref={swiperRef}
-            onSlideChange={(swiper) =>
-              setSelectedStoryIndex(swiper.activeIndex)
-            }
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            onSlideChange={(swiper) => {
+              // setSelectedStoryIndex(swiper.activeIndex);
+              // handleSlideChange;
+              const realIndex = swiper.realIndex;
+              setSelectedStoryIndex(realIndex);
+              if (handleSlideChange) handleSlideChange(realIndex);
+            }}
           >
             {data?.map((storie, index) => (
               <SwiperSlide key={index}>
                 <div className="shadow-xl rounded-2xl bg-[#FFB6BF] relative h-full z-0 pt-10 pb-6 px-8">
-                  <div className="pb-5 pt-2 lg:pt-3">
+                  <div className="pb-5 pt-2 lg:pt-5">
                     <h2 className="relative mb-1 text-3xl font-normal text-black duration-300 group-hover:text-white">
                       {storie.name}
                     </h2>
                     <p className="text-[15px]">{storie.title}</p>
-                    <h3 className="text-[15px] py-6 lg:py-8">
+                    <h3
+                      className="text-[15px] py-6 lg:py-14"
+                      style={{ lineHeight: "35px" }}
+                    >
                       <span
                         dangerouslySetInnerHTML={{ __html: storie?.desc }}
                       />
                     </h3>
-                    <Button className="text-black bg-white">
-                      {t("learn more")}
-                    </Button>
                   </div>
                 </div>
               </SwiperSlide>

@@ -17,6 +17,7 @@ import State_flag from "../../assets/State_flag.png";
 import MainPopup from "../../components/UI/MainPopup";
 import Loading from "../../components/Global/Loading/Loading";
 import { useAuth } from "../../context/AuthContext";
+import { ar } from "date-fns/locale";
 
 interface CustomOption {
   label: string;
@@ -136,7 +137,7 @@ const DesignYourOwnCourseDetails = () => {
   });
   console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
 
-  const weekOptions = [1, 2, 3, 4, 12].map((num) => ({
+  const weekOptions = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => ({
     id: num,
     label: num,
     value: num,
@@ -211,7 +212,7 @@ const DesignYourOwnCourseDetails = () => {
                           id="week"
                           name="week"
                           placeholder={t("study duration")}
-                          label={t("study duration")}
+                          // label={t("study duration")}
                           options={weekOptions}
                           onChange={(option) => {
                             setFieldValue("week", option.id);
@@ -231,9 +232,9 @@ const DesignYourOwnCourseDetails = () => {
                         />
                       </div>
                       <div className="relative col-span-4">
-                        <label htmlFor="start_date">
+                        {/* <label htmlFor="start_date">
                           {t("study start date")}
-                        </label>
+                        </label> */}
                         <DatePicker
                           showIcon
                           id="start_date"
@@ -246,6 +247,8 @@ const DesignYourOwnCourseDetails = () => {
                               .split("T")[0];
                             setFieldValue("start_date", formatdDate);
                           }}
+                          dateFormat="d MMMM yyyy"
+                          locale={ar}
                           filterDate={isMonday}
                           disabledKeyboardNavigation
                           placeholderText={t("study start date")}
@@ -323,6 +326,8 @@ const DesignYourOwnCourseDetails = () => {
                                   .split("T")[0];
                                 setFieldValue("start_date", formatdDate);
                               }}
+                              dateFormat="d MMMM yyyy"
+                              locale={ar}
                               filterDate={isMonday}
                               disabledKeyboardNavigation
                               placeholderText={t("study start date")}
@@ -350,20 +355,27 @@ const DesignYourOwnCourseDetails = () => {
                       className="grid grid-cols-1 md:grid-cols-10 mb-28 gap-y-8 gap-x-4"
                     >
                       <div
-                        className={`col-span-5 lg:col-span-4 ${
+                        className={`col-span-5 lg:col-span-4 h-full  ${
                           index % 2 !== 0 ? "order-2" : "order-1"
                         }`}
                       >
-                        <div className="w-full">
+                        <div
+                          className="w-full"
+                          // style={{ height: "calc(100% - 160px)" }}
+                        >
                           <img
                             src={item.image}
                             alt="own details"
-                            className="w-full overflow-hidden rounded-2xl h-60"
+                            className="w-full overflow-hidden rounded-2xl h-[300px] object-cover"
                           />
                         </div>
-                        <ul className="flex justify-between items-center mt-5 mb-0.5">
-                          {["معتمد", "أنشطة متنوعة", "يقع في وسط المدينة"].map(
-                            (list, idx) => (
+                        <div className="pt-2">
+                          <ul className="flex justify-between items-center mt-5 mb-0.5">
+                            {[
+                              "معتمد",
+                              "أنشطة متنوعة",
+                              "يقع في وسط المدينة",
+                            ].map((list, idx) => (
                               <li
                                 key={idx}
                                 className={`px-3 lg:px-5 py-1.5 rounded-xl text-[15px] ${
@@ -376,24 +388,24 @@ const DesignYourOwnCourseDetails = () => {
                               >
                                 {list}
                               </li>
-                            )
-                          )}
-                        </ul>
+                            ))}
+                          </ul>
 
-                        <div className="items-center justify-between hidden gap-1 pt-5 sm:flex sm:gap-2">
-                          {isActive?.map((item, index) => (
-                            <div
-                              key={index}
-                              className="border border-[#C9C5CA] sm:border-none text-center px-2 sm:px-0 rounded-2xl"
-                            >
-                              <h2 className="lg:text-[15px]">
-                                {t(item.label)}
-                              </h2>
-                              <p className="sm:border border-[#707070] py-1 rounded-lg text-center mt-2 text-[15px] text-mainColor sm:text-black">
-                                {item.value}
-                              </p>
-                            </div>
-                          ))}
+                          <div className="items-center justify-between hidden gap-1 pt-5 sm:flex sm:gap-2">
+                            {isActive?.map((item, index) => (
+                              <div
+                                key={index}
+                                className="border border-[#C9C5CA] sm:border-none text-center px-2 sm:px-0 rounded-2xl"
+                              >
+                                <h2 className="lg:text-[15px]">
+                                  {t(item.label)}
+                                </h2>
+                                <p className="sm:border border-[#707070] py-1 rounded-lg text-center mt-2 text-[15px] text-mainColor sm:text-black">
+                                  {item.value}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                       <div
@@ -512,6 +524,8 @@ const DesignYourOwnCourseDetails = () => {
                               .split("T")[0];
                             setFieldValue("start_date", formatdDate);
                           }}
+                          dateFormat="d MMMM yyyy"
+                          locale={ar}
                           filterDate={isMonday}
                           disabledKeyboardNavigation
                           placeholderText={t("study start date")}

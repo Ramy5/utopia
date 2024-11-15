@@ -148,8 +148,19 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
     setIsSidebarOpen({ ...isSidebarOpen, more: false });
   };
 
+  // const toggleLang = () => {
+  //   i18n.changeLanguage(isRTL ? "en" : "ar");
+  // };
+
   const toggleLang = () => {
-    i18n.changeLanguage(isRTL ? "en" : "ar");
+    const currentLang = localStorage.getItem("lang") || "en";
+    const newLang = currentLang === "ar" ? "en" : "ar";
+
+    i18n.changeLanguage(newLang);
+
+    localStorage.setItem("lang", newLang);
+
+    window.location.reload();
   };
 
   const handlePageChange = (page: number) => {
@@ -315,10 +326,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
               />
               <h4 className="text-center">{t("notifications")}</h4>
             </div>
-            <div
-              style={{ height: "calc(100vh - 105px)" }}
-              className="py-4"
-            >
+            <div style={{ height: "calc(100vh - 105px)" }} className="py-4">
               {notifications?.map((notification) => (
                 <Notification
                   onDelete={deleteNotification}

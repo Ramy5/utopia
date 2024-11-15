@@ -11,6 +11,7 @@ import { onMessageListener } from "../firebase";
 import Chat from "./pages/chat/Chat";
 import AddRequest from "./pages/Request/AddRequest";
 import { ROLE } from "./constants/LocalStorageKeys";
+import { useTranslation } from "react-i18next";
 
 const StructurePages = lazy(() => import("./pages/StructurePages"));
 const Home = lazy(() => import("./pages/Home"));
@@ -90,6 +91,9 @@ const ViewPartnerRequest = lazy(
 );
 
 function App() {
+  const isRTL = useRTL();
+  const { i18n } = useTranslation();
+
   onMessageListener()
     .then((payload: any) => {
       toast(
@@ -100,6 +104,18 @@ function App() {
       );
     })
     .catch((err) => console.log("err"));
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang) {
+      i18n.changeLanguage(savedLang); // Set language based on localStorage
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    document.documentElement.dir = isRTL ? "rtl" : "ltr";
+    document.documentElement.lang = isRTL ? "ar" : "en";
+  }, [isRTL]);
 
   return (
     <BrowserRouter>

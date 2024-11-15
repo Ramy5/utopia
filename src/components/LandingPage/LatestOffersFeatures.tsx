@@ -39,7 +39,7 @@ const LatestOffersFeatures = ({ data }) => {
           {data?.offers?.map((offer, index) => (
             <SwiperSlide key={index}>
               <div className="rounded-2xl overflow-hidden">
-                <img src={offer.image} alt="offers" className="w-full h-60" />
+                <img src={offer.image} alt="offers" className="w-full h-60" loading="lazy"/>
               </div>
             </SwiperSlide>
           ))}

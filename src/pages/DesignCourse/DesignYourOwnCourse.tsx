@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { IoLocationOutline } from "react-icons/io5";
@@ -19,10 +19,20 @@ import Pagination from "../../components/UI/Pagination";
 const DesignYourOwnCourse = () => {
   const [dropDown, setdropDown] = useState(false);
   const [countryID, setCountryID] = useState(0);
+  const [countryName, setCountryName] = useState("");
   const [cityName, setCityName] = useState("");
+  console.log("🚀 ~ DesignYourOwnCourse ~ cityName:", cityName);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   console.log("🚀 ~ DesignYourOwnCourse ~ page:", page);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (cityName) {
+      inputRef.current?.focus();
+    }
+  }, [cityName]);
+
   const fetchDesignYourOwnCourse = async () => {
     try {
       const data = await apiRequest({
@@ -116,7 +126,7 @@ const DesignYourOwnCourse = () => {
   const { data: cityNameFilter } = useQuery({
     queryKey: ["university_name_filter", cityName],
     queryFn: () => fetchFilterByCity(cityName),
-    suspense: true,
+    suspense: false,
     enabled: !!cityName,
   });
 
@@ -183,12 +193,9 @@ const DesignYourOwnCourse = () => {
     refetch();
   }, [page]);
 
-  // if (
-  //   isLoadingDesignOwnCourse ||
-  //   isRefetchingDesignOwnCourse ||
-  //   isFetchingDesignOwnCourse
-  // )
-  //   return <Loading />;
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -198,48 +205,66 @@ const DesignYourOwnCourse = () => {
 
           <div className="flex items-center justify-between mb-12">
             <h2 className="text-lg lg:text-xl font-semibold">
-              {data?.[0]?.county_name}
+              {countryName
+                ? countryName
+                : cityNameFilter?.length === 1
+                ? cityNameFilter?.[0]?.county_name
+                : t("everyone")}
             </h2>
-            <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
-              {({ resetForm }) => (
-                <Form className="hidden sm:flex gap-2 md:gap-4 items-end justify-end">
-                  <div className="w-48 md:w-56 lg:w-64">
-                    <BaseSelect
-                      id="country_id"
-                      name="country_id"
-                      placeholder={t("select country")}
-                      label={t("select country")}
-                      onChange={(option) => {
-                        setCountryID(option.id);
-                      }}
-                      options={countriesOption}
-                      isLoading={isLoading || isFetching}
-                      className="pt-1.5 w-48 md:w-56 lg:w-64 text-black"
-                    />
-                  </div>
+            <Formik
+              initialValues={{ country_id: "", research: "" }}
+              onSubmit={() => {}}
+            >
+              {({ resetForm, values }) => {
+                console.log("🚀 ~ DesignYourOwnCourse ~ values:", values);
+                return (
+                  <Form className="hidden sm:flex gap-2 md:gap-4 items-end justify-end">
+                    <div className="w-48 md:w-56 lg:w-64">
+                      <BaseSelect
+                        id="country_id"
+                        name="country_id"
+                        placeholder={t("select country")}
+                        // label={t("select country")}
+                        onChange={(option) => {
+                          setCountryID(option.id);
+                          setCountryName(option.value);
+                        }}
+                        options={countriesOption}
+                        isLoading={isLoading || isFetching}
+                        className=" w-48 md:w-56 lg:w-64 text-black"
+                      />
+                    </div>
 
-                  <div className="relative ">
-                    <IoIosSearch
-                      size={30}
-                      className="mb-3 fill-[#707070] absolute top-1/2 -translate-x-1/2 z-10 mt-1"
-                    />
-                    <BaseInput
-                      id="research"
-                      name="research"
-                      placeholder={t("search by city or institute name")}
-                      label={t("search by city or institute name")}
-                      className="py-[13px] w-48 md:w-56 lg:w-64 mt-2 ps-12 rounded-2xl"
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
+                    <div className="relative flex flex-col">
+                      <IoIosSearch
+                        size={30}
+                        className="mb-3 fill-[#707070] absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 "
+                      />
+                      {/* <label htmlFor="research">
+                        {t("Search by city name")}
+                      </label> */}
+                      <input
+                        id="research"
+                        name="research"
+                        placeholder={t("Search by city name")}
+                        className="py-[13px] w-48 md:w-56 lg:w-64 ps-12 rounded-2xl  border-2 border-[#BEC8CF] focus:!border-2 focus:!border-black"
+                        value={cityName}
+                        onChange={(e) => {
                           setCityName(e.target.value);
-                          e.target.value = "";
-                          resetForm();
-                        }
-                      }}
-                    />
-                  </div>
-                </Form>
-              )}
+                        }}
+                        ref={inputRef}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     setCityName(e.target.value);
+                        //     e.target.value = "";
+                        //     resetForm();
+                        //   }
+                        // }}
+                      />
+                    </div>
+                  </Form>
+                );
+              }}
             </Formik>
           </div>
 
@@ -287,7 +312,7 @@ const DesignYourOwnCourse = () => {
                   <Form className="grid grid-cols-10 mb-4 mt-5 items-end">
                     <div className="relative col-span-8 me-2.5">
                       <div
-                        className="bg-mainColor absolute bottom-0 left-0 z-10 py-[13.2px] rounded-2xl px-4"
+                        className="bg-mainColor absolute bottom-0 left-0 z-10 py-[13.2px] rounded-2xl px-4 cursor-pointer"
                         onClick={() => {
                           setCityName(values.research);
                           resetForm();
@@ -304,7 +329,7 @@ const DesignYourOwnCourse = () => {
                     </div>
                     <div className="col-span-2 m-auto">
                       <div
-                        className="border-2 border-mainColor rounded-2xl px-3.5 py-[8.5px] mt-2"
+                        className="border-2 border-mainColor rounded-2xl px-3.5 py-[8.5px] mt-2 cursor-pointer"
                         onClick={() => setdropDown(!dropDown)}
                       >
                         <TbFilter
@@ -323,6 +348,7 @@ const DesignYourOwnCourse = () => {
                               onClick={() => {
                                 setCountryID(item.id);
                                 setdropDown(!dropDown);
+                                setCountryName(item.value);
                                 // refetch()
                               }}
                             >
@@ -341,7 +367,14 @@ const DesignYourOwnCourse = () => {
             <div className="bg-mainColor rounded-xl p-1 w-fit">
               <IoLocationOutline className="text-white w-6 h-6" />
             </div>
-            <p className="text-black text-lg">{data?.[0]?.county_name}</p>
+            {/* <p className="text-black text-lg">{data?.[0]?.county_name}</p> */}
+            <h2 className="text-black text-lg">
+              {countryName
+                ? countryName
+                : cityNameFilter?.length === 1
+                ? cityNameFilter?.[0]?.county_name
+                : t("everyone")}
+            </h2>
           </div>
           <div>
             {data?.length && countryID === 0 && cityName === "" ? (

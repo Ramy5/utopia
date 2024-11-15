@@ -46,21 +46,21 @@ const Brands = () => {
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-20 h-20" />
+                <img src={brand.image} alt="brand" className="w-20 h-20" loading="lazy"/>
               </div>
             </SwiperSlide>
           ))}
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-20 h-20" />
+                <img src={brand.image} alt="brand" className="w-20 h-20" loading="lazy"/>
               </div>
             </SwiperSlide>
           ))}
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-20 h-20" />
+                <img src={brand.image} alt="brand" className="w-20 h-20" loading="lazy"/>
               </div>
             </SwiperSlide>
           ))}

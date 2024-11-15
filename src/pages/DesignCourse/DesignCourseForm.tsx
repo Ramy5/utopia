@@ -21,6 +21,7 @@ import BaseSelect from "../../components/atoms/molecules/formik-fields/BaseSelec
 import { useRTL } from "../../hooks/useRTL";
 import { StylesConfig, GroupBase } from "react-select";
 import { toast } from "react-toastify";
+import cn from "../../utils/cn";
 
 interface CustomOption {
   label: string;
@@ -105,27 +106,24 @@ const postProcessPayment = async (postData) => {
 const DesignCourseForm = () => {
   const [step, setStep] = useState(1);
   const location = useLocation();
-  console.log("🚀 ~ DesignCourseForm ~ location:", location);
   const numberWeek = location?.state?.numberOfWeeks;
   const [numberOfWeeks, setNumberOfWeeks] = useState(null);
-  console.log("🚀 ~ DesignCourseForm ~ numberOfWeeks:", numberOfWeeks);
   const partnersID = location?.state?.id;
   const startDate = location?.state?.startDate;
   const isRTL = useRTL();
   const navigate = useNavigate();
 
-  const {
-    id = null,
-    amount = "",
-    user_id = null,
-  } = location.state || {};
-
-  console.log("🚀 ~ DesignCourseForm ~ packageId:", id)
-  console.log("🚀 ~ DesignCourseForm ~ amount:", amount * +numberOfWeeks?.id)
-
-
+  const { id = null, amount = "", user_id = null } = location.state || {};
 
   const isEnabled = !!partnersID && !!startDate && !!numberWeek;
+
+  useEffect(() => {
+    setNumberOfWeeks({
+      id: Number(numberWeek),
+      label: `${numberWeek} ${!isRTL ? "A week" : "أسابيع"}`,
+      value: `${numberWeek} ${!isRTL ? "A week" : "أسابيع"}`,
+    });
+  }, [!!numberWeek]);
 
   const initialValues = {
     number_weeks: numberOfWeeks || 0,
@@ -144,14 +142,6 @@ const DesignCourseForm = () => {
     fees_price: 0,
     amount: 0,
   };
-
-  useEffect(() => {
-    setNumberOfWeeks({
-      id: numberWeek,
-      label: `${numberWeek} ${!isRTL ? "A week" : "أسابيع"}`,
-      value: `${numberWeek} ${!isRTL ? "A week" : "أسابيع"}`,
-    });
-  }, [numberWeek]);
 
   const fetchChooseYourCourseDetail = async () => {
     try {
@@ -272,7 +262,9 @@ const DesignCourseForm = () => {
                       </div>
 
                       <div className="relative flex items-center gap-2">
-                        <p className="text-[15px]">{t("study duration")}</p>
+                        <p className="text-[15px] bg-mainColor py-3 px-6 text-white rounded-2xl">
+                          {t("study duration")}
+                        </p>
                         <BaseSelect
                           id="number_weeks"
                           name="number_weeks"
@@ -297,20 +289,20 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.courses?.map((course, index) => (
-                          <li
-                            key={index}
-                            className={`flex justify-between gap-2 items-center py-4 ${
-                              index > 0 ? "border-t border-t-[#C9C5CA]" : ""
-                            } sm:border-t-[1.8px] sm:border-t-[#707070] `}
-                          >
-                            <div>
-                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
+                        {data?.courses?.map((course, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`flex justify-between gap-2 items-center py-4 ${
+                                index > 0 ? "border-t border-t-[#C9C5CA]" : ""
+                              } sm:border-t-[1.8px] sm:border-t-[#707070] `}
+                            >
+                              <div className="flex gap-3">
                                 <input
                                   id={`course_${index}`}
                                   name="courses_id"
                                   type="radio"
-                                  className="p-2 cursor-pointer"
+                                  className="p-2 cursor-pointer mt-1"
                                   onChange={(e) => {
                                     setFieldValue("courses_id", course.id);
                                     setFieldValue(
@@ -319,25 +311,65 @@ const DesignCourseForm = () => {
                                     );
                                   }}
                                 />
-                                <h2 className="text-base font-medium sm:font-normal sm:text-xl">
-                                  {course.key}
-                                </h2>{" "}
-                                {course.note && (
-                                  <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
-                                    {course.note}
-                                  </span>
-                                )}
+                                <div className="mb-3 ">
+                                  <div className="flex items-center gap-3">
+                                    <h2
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
+                                        course?.id == values.courses_id
+                                          ? " text-mainColor"
+                                          : ""
+                                      }`}
+                                    >
+                                      {course.key}
+                                    </h2>{" "}
+                                    {course.note && (
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                        {course.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm sm:text-[15px] mt-5">
+                                    {course.value.split("-")?.map((item) => (
+                                      <span
+                                        className={cn(
+                                          "   py-1.5 rounded-xl  me-2",
+                                          {
+                                            "px-5 text-center border":
+                                              course.value.split("-")
+                                                ?.length !== 1,
+                                            "border-mainColor text-mainColor":
+                                              course?.id == values.courses_id,
+                                            "border-[#707070]":
+                                              course?.id != values.courses_id,
+                                          }
+                                        )}
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm sm:text-[15px]">
-                                {course.value}
-                              </p>
-                            </div>
-                            <h2 className="text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap">
-                              {course.plan?.[0]?.total_price}{" "}
-                              {course.plan?.[0]?.unit}
-                            </h2>
-                          </li>
-                        ))}
+                              <h2
+                                className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${
+                                  course?.id == values.courses_id
+                                    ? " text-mainColor"
+                                    : ""
+                                }`}
+                              >
+                                {course.plan.length !== 0
+                                  ? Number(
+                                      course.plan?.[0]?.total_price
+                                    ).toFixed(2)
+                                  : "0.00"}
+                                <span>
+                                  {" "}
+                                  {course.plan?.[0]?.unit || t("reyal")}
+                                </span>
+                              </h2>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -377,20 +409,20 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.living?.map((living, index) => (
-                          <li
-                            key={index}
-                            className={`flex justify-between gap-2 items-center py-4 ${
-                              index > 0 ? "border-t border-t-[#C9C5CA]" : ""
-                            } sm:border-t-[1.8px] sm:border-t-[#707070] `}
-                          >
-                            <div>
-                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
+                        {data?.living?.map((living, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`flex justify-between gap-2 items-center py-4 ${
+                                index > 0 ? "border-t border-t-[#C9C5CA]" : ""
+                              } sm:border-t-[1.8px] sm:border-t-[#707070] `}
+                            >
+                              <div className="flex gap-3">
                                 <input
                                   id={`living_${index}`}
                                   name="living_id"
                                   type="radio"
-                                  className="p-2 cursor-pointer"
+                                  className="p-2 cursor-pointer mt-1"
                                   onChange={(e) => {
                                     setFieldValue("living_id", living.id);
                                     setFieldValue(
@@ -399,25 +431,65 @@ const DesignCourseForm = () => {
                                     );
                                   }}
                                 />
-                                <h2 className="text-base font-medium sm:font-normal sm:text-xl">
-                                  {living.key}
-                                </h2>{" "}
-                                {living.note && (
-                                  <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
-                                    {living.note}
-                                  </span>
-                                )}
+                                <div className="mb-3 ">
+                                  <div className="flex items-center gap-3">
+                                    <h2
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
+                                        living?.id == values.living_id
+                                          ? " text-mainColor"
+                                          : ""
+                                      }`}
+                                    >
+                                      {living.key}
+                                    </h2>{" "}
+                                    {living.note && (
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                        {living.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm sm:text-[15px] mt-5">
+                                    {living.value.split("-")?.map((item) => (
+                                      <span
+                                        className={cn(
+                                          "   py-1.5 rounded-xl  me-2",
+                                          {
+                                            "px-5 text-center border":
+                                              living.value.split("-")
+                                                ?.length !== 1,
+                                            "border-mainColor text-mainColor":
+                                              living?.id == values.living_id,
+                                            "border-[#707070]":
+                                              living?.id != values.living_id,
+                                          }
+                                        )}
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm sm:text-[15px]">
-                                {living.value}
-                              </p>
-                            </div>
-                            <h2 className="text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap">
-                              {living.plan?.[0]?.total_price}{" "}
-                              {living.plan?.[0]?.unit}
-                            </h2>
-                          </li>
-                        ))}
+                              <h2
+                                className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${
+                                  living?.id == values.living_id
+                                    ? " text-mainColor"
+                                    : ""
+                                }`}
+                              >
+                                {living.plan.length !== 0
+                                  ? Number(
+                                      living.plan?.[0]?.total_price
+                                    ).toFixed(2)
+                                  : "0.00"}
+                                <span>
+                                  {" "}
+                                  {living.plan?.[0]?.unit || t("reyal")}
+                                </span>
+                              </h2>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -440,47 +512,87 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.pick_up?.map((pickUp, index) => (
-                          <li
-                            key={index}
-                            className={`flex justify-between gap-2 items-center py-4 ${
-                              index > 0 ? "border-t border-t-[#C9C5CA]" : ""
-                            } sm:border-t-[1.8px] sm:border-t-[#707070] `}
-                          >
-                            <div>
-                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
+                        {data?.pick_up?.map((pick_up, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`flex justify-between gap-2 items-center py-4 ${
+                                index > 0 ? "border-t border-t-[#C9C5CA]" : ""
+                              } sm:border-t-[1.8px] sm:border-t-[#707070] `}
+                            >
+                              <div className="flex gap-3">
                                 <input
-                                  id={`pickUp_${index}`}
+                                  id={`pick_${index}`}
                                   name="pick_id"
                                   type="radio"
-                                  className="p-2 cursor-pointer"
+                                  className="p-2 cursor-pointer mt-1"
                                   onChange={(e) => {
-                                    setFieldValue("pick_id", pickUp.id);
+                                    setFieldValue("pick_id", pick_up.id);
                                     setFieldValue(
                                       "pick_price",
-                                      pickUp.plan?.[0]?.total_price
+                                      pick_up.plan?.[0]?.total_price
                                     );
                                   }}
                                 />
-                                <h2 className="text-base font-medium sm:font-normal sm:text-xl">
-                                  {pickUp.key}
-                                </h2>{" "}
-                                {pickUp.note && (
-                                  <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
-                                    {pickUp.note}
-                                  </span>
-                                )}
+                                <div className="mb-3 ">
+                                  <div className="flex items-center gap-3">
+                                    <h2
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
+                                        pick_up?.id == values.pick_id
+                                          ? " text-mainColor"
+                                          : ""
+                                      }`}
+                                    >
+                                      {pick_up.key}
+                                    </h2>{" "}
+                                    {pick_up.note && (
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                        {pick_up.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm sm:text-[15px] mt-5">
+                                    {pick_up.value.split("-")?.map((item) => (
+                                      <span
+                                        className={cn(
+                                          "   py-1.5 rounded-xl  me-2",
+                                          {
+                                            "px-5 text-center border":
+                                              pick_up.value.split("-")
+                                                ?.length !== 1,
+                                            "border-mainColor text-mainColor":
+                                              pick_up?.id == values.pick_id,
+                                            "border-[#707070]":
+                                              pick_up?.id != values.pick_id,
+                                          }
+                                        )}
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm sm:text-[15px]">
-                                {pickUp.value}
-                              </p>
-                            </div>
-                            <h2 className="text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap">
-                              {pickUp.plan?.[0]?.total_price}{" "}
-                              {pickUp.plan?.[0]?.unit}
-                            </h2>
-                          </li>
-                        ))}
+                              <h2
+                                className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${
+                                  pick_up?.id == values.pick_id
+                                    ? " text-mainColor"
+                                    : ""
+                                }`}
+                              >
+                                {pick_up.plan.length !== 0
+                                  ? Number(
+                                      pick_up.plan?.[0]?.total_price
+                                    ).toFixed(2)
+                                  : "0.00"}
+                                <span>
+                                  {" "}
+                                  {pick_up.plan?.[0]?.unit || t("reyal")}
+                                </span>
+                              </h2>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -501,20 +613,20 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.medical?.map((medical, index) => (
-                          <li
-                            key={index}
-                            className={`flex justify-between gap-2 items-center py-4 ${
-                              index > 0 ? "border-t border-t-[#C9C5CA]" : ""
-                            } sm:border-t-[1.8px] sm:border-t-[#707070] `}
-                          >
-                            <div>
-                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
+                        {data?.medical?.map((medical, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`flex justify-between gap-2 items-center py-4 ${
+                                index > 0 ? "border-t border-t-[#C9C5CA]" : ""
+                              } sm:border-t-[1.8px] sm:border-t-[#707070] `}
+                            >
+                              <div className="flex gap-3">
                                 <input
                                   id={`medical_${index}`}
                                   name="medical_id"
                                   type="radio"
-                                  className="p-2 cursor-pointer"
+                                  className="p-2 cursor-pointer mt-1"
                                   onChange={(e) => {
                                     setFieldValue("medical_id", medical.id);
                                     setFieldValue(
@@ -523,25 +635,65 @@ const DesignCourseForm = () => {
                                     );
                                   }}
                                 />
-                                <h2 className="text-base font-medium sm:font-normal sm:text-xl">
-                                  {medical.key}
-                                </h2>{" "}
-                                {medical.note && (
-                                  <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
-                                    {medical.note}
-                                  </span>
-                                )}
+                                <div className="mb-3 ">
+                                  <div className="flex items-center gap-3">
+                                    <h2
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
+                                        medical?.id == values.medical_id
+                                          ? " text-mainColor"
+                                          : ""
+                                      }`}
+                                    >
+                                      {medical.key}
+                                    </h2>{" "}
+                                    {medical.note && (
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                        {medical.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm sm:text-[15px] mt-5">
+                                    {medical.value.split("-")?.map((item) => (
+                                      <span
+                                        className={cn(
+                                          "   py-1.5 rounded-xl  me-2",
+                                          {
+                                            "px-5 text-center border":
+                                              medical.value.split("-")
+                                                ?.length !== 1,
+                                            "border-mainColor text-mainColor":
+                                              medical?.id == values.medical_id,
+                                            "border-[#707070]":
+                                              medical?.id != values.medical_id,
+                                          }
+                                        )}
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm sm:text-[15px]">
-                                {medical.value}
-                              </p>
-                            </div>
-                            <h2 className="text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap">
-                              {medical.plan?.[0]?.total_price}{" "}
-                              {medical.plan?.[0]?.unit}
-                            </h2>
-                          </li>
-                        ))}
+                              <h2
+                                className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${
+                                  medical?.id == values.medical_id
+                                    ? " text-mainColor"
+                                    : ""
+                                }`}
+                              >
+                                {medical.plan.length !== 0
+                                  ? Number(
+                                      medical.plan?.[0]?.total_price
+                                    ).toFixed(2)
+                                  : "0.00"}
+                                <span>
+                                  {" "}
+                                  {medical.plan?.[0]?.unit || t("reyal")}
+                                </span>
+                              </h2>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -562,47 +714,91 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.other_fees?.map((fees, index) => (
-                          <li
-                            key={index}
-                            className={`flex justify-between gap-2 items-center py-4 ${
-                              index > 0 ? "border-t border-t-[#C9C5CA]" : ""
-                            } sm:border-t-[1.8px] sm:border-t-[#707070] `}
-                          >
-                            <div>
-                              <div className="flex items-end gap-2 mb-3 sm:gap-4">
+                        {data?.other_fees?.map((other_fees, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`flex justify-between gap-2 items-center py-4 ${
+                                index > 0 ? "border-t border-t-[#C9C5CA]" : ""
+                              } sm:border-t-[1.8px] sm:border-t-[#707070] `}
+                            >
+                              <div className="flex gap-3">
                                 <input
                                   id={`fees_${index}`}
                                   name="fees_id"
                                   type="radio"
-                                  className="p-2 cursor-pointer"
+                                  className="p-2 cursor-pointer mt-1"
                                   onChange={(e) => {
-                                    setFieldValue("fees_id", fees.id);
+                                    setFieldValue("fees_id", other_fees.id);
                                     setFieldValue(
                                       "fees_price",
-                                      fees.plan?.[0]?.total_price
+                                      other_fees.plan?.[0]?.total_price
                                     );
                                   }}
                                 />
-                                <h2 className="text-base font-medium sm:font-normal sm:text-xl">
-                                  {fees.key}
-                                </h2>{" "}
-                                {fees.note && (
-                                  <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
-                                    {fees.note}
-                                  </span>
-                                )}
+                                <div className="mb-3 ">
+                                  <div className="flex items-center gap-3">
+                                    <h2
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
+                                        other_fees?.id == values.fees_id
+                                          ? " text-mainColor"
+                                          : ""
+                                      }`}
+                                    >
+                                      {other_fees.key}
+                                    </h2>{" "}
+                                    {other_fees.note && (
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                        {other_fees.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm sm:text-[15px] mt-5">
+                                    {other_fees.value
+                                      .split("-")
+                                      ?.map((item) => (
+                                        <span
+                                          className={cn(
+                                            "   py-1.5 rounded-xl  me-2",
+                                            {
+                                              "px-5 text-center border":
+                                                other_fees.value.split("-")
+                                                  ?.length !== 1,
+                                              "border-mainColor text-mainColor":
+                                                other_fees?.id ==
+                                                values.fees_id,
+                                              "border-[#707070]":
+                                                other_fees?.id !=
+                                                values.fees_id,
+                                            }
+                                          )}
+                                        >
+                                          {item}
+                                        </span>
+                                      ))}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm sm:text-[15px]">
-                                {fees.value}
-                              </p>
-                            </div>
-                            <h2 className="text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap">
-                              {fees.plan?.[0]?.total_price}{" "}
-                              {fees.plan?.[0]?.unit}
-                            </h2>
-                          </li>
-                        ))}
+                              <h2
+                                className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${
+                                  other_fees?.id == values.fees_id
+                                    ? " text-mainColor"
+                                    : ""
+                                }`}
+                              >
+                                {other_fees.plan.length !== 0
+                                  ? Number(
+                                      other_fees.plan?.[0]?.total_price
+                                    ).toFixed(2)
+                                  : "0.00"}
+                                <span>
+                                  {" "}
+                                  {other_fees.plan?.[0]?.unit || t("reyal")}
+                                </span>
+                              </h2>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -644,7 +840,8 @@ const DesignCourseForm = () => {
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
-                        {values?.courses_price} SAR
+                        {values?.courses_price.toFixed(2) || "0.00"}{" "}
+                        {t("reyal")}
                       </div>
                     </div>
 
@@ -661,7 +858,7 @@ const DesignCourseForm = () => {
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
-                        {values?.living_price} SAR
+                        {values?.living_price.toFixed(2) || "0.00"} {t("reyal")}
                       </div>
                     </div>
 
@@ -680,7 +877,7 @@ const DesignCourseForm = () => {
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
-                        {values.pick_price} SAR
+                        {values.pick_price.toFixed(2) || "0.00"} {t("reyal")}
                       </div>
                     </div>
 
@@ -701,7 +898,7 @@ const DesignCourseForm = () => {
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
-                        {values.medical_price} SAR
+                        {values.medical_price.toFixed(2) || "0.00"} {t("reyal")}
                       </div>
                     </div>
 
@@ -720,7 +917,7 @@ const DesignCourseForm = () => {
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
-                        {values.fees_price} SAR
+                        {values.fees_price.toFixed(2) || "0.00"} {t("reyal")}
                       </div>
                     </div>
 
@@ -729,12 +926,14 @@ const DesignCourseForm = () => {
                         <p className="text-xl sm:text-2xl">{t("Total")}</p>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
-                        {values.courses_price +
-                          values.living_price +
-                          values.medical_price +
-                          values.pick_price +
-                          values.fees_price}{" "}
-                        SAR
+                        {(
+                          Number(values.courses_price || 0) +
+                          Number(values.living_price || 0) +
+                          Number(values.medical_price || 0) +
+                          Number(values.pick_price || 0) +
+                          Number(values.fees_price || 0)
+                        ).toFixed(2)}{" "}
+                        {t("reyal")}
                       </div>
                     </div>
 
@@ -744,12 +943,14 @@ const DesignCourseForm = () => {
                           {t("Total")}
                         </h2>
                         <div className="py-2.5 font-semibold text-mainColor">
-                          {values.courses_price +
-                            values.living_price +
-                            values.medical_price +
-                            values.pick_price +
-                            values.fees_price}{" "}
-                          SAR
+                          {(
+                            Number(values.courses_price || 0) +
+                            Number(values.living_price || 0) +
+                            Number(values.medical_price || 0) +
+                            Number(values.pick_price || 0) +
+                            Number(values.fees_price || 0)
+                          ).toFixed(2)}{" "}
+                          {t("reyal")}
                         </div>
                       </div>
                       <div className="flex justify-between items-center border-b border-b-[#C9C5CA] py-2.5">
@@ -757,7 +958,7 @@ const DesignCourseForm = () => {
                           {t("Application fees")}
                         </h2>
                         <div className="py-2.5 font-semibold text-mainColor">
-                          11000 SAR
+                          11000 {t("reyal")}
                         </div>
                       </div>
                       <div className="flex justify-between items-center py-2.5">
@@ -765,7 +966,7 @@ const DesignCourseForm = () => {
                           {t("The rest will be paid after final acceptance.")}
                         </h2>
                         <div className="py-2.5 font-semibold text-mainColor">
-                          11000 SAR
+                          11000 {t("reyal")}
                         </div>
                       </div>
                     </div>
@@ -775,7 +976,9 @@ const DesignCourseForm = () => {
                         <h2 className="font-semibold text-[17px]">
                           {t("Total")}
                         </h2>
-                        <div className="py-2.5 font-semibold">11000 SAR</div>
+                        <div className="py-2.5 font-semibold">
+                          11000 {t("reyal")}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -807,7 +1010,7 @@ const DesignCourseForm = () => {
                         amount: values.partner_id,
                       });
                     }}
-                    className="w-full bg-[#1B0924] py-3.5"
+                    className="w-full bg-[#1B0924] py-3.5 hover:bg-mainYellow duration-500"
                     loading={isPending}
                   >
                     {t("book now")}

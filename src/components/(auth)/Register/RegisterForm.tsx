@@ -65,7 +65,7 @@ const RegisterForm = ({ isPending, handleSubmit }) => {
               <Button
                 disabled={isPending}
                 action={() => handleSubmit(values)}
-                className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left py-4 rounded-3xl text-black font-normal"
+                className="bg-[#FFB6BF] hover:bg-[#FFCC1A] animate_from_left py-4 rounded-3xl text-black font-normal hover:scale-1 duration-500"
               >
                 {t("next")}
               </Button>

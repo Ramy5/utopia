@@ -129,7 +129,7 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
                 disabled={isPending}
                 action={() => handleSubmit(values)}
                 className={cn(
-                  "bg-[#FFB6BF] py-4 hover:bg-[#FFCC1A] animate_from_left rounded-2xl text-black font-normal",
+                  "bg-[#FFB6BF] py-4 hover:bg-[#FFCC1A] animate_from_left rounded-2xl text-black font-normal hover:scale-1 duration-500",
                   {
                     "opacity-40 cursor-not-allowed": isPending,
                   }

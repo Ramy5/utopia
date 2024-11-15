@@ -146,13 +146,9 @@ const BookConsultant = () => {
                             <Button
                               type="submit"
                               loading={isPending}
-                              disabled={!isValid || !dirty || isPending}
+                              // disabled={!isValid || !dirty || isPending}
                               className={cn(
-                                "w-1/3 py-3 mx-auto mt-6 text-white  bg-[#1B0924] hover:bg-[#1B0924]/80",
-                                {
-                                  "opacity-40 cursor-not-allowed":
-                                    !isValid || !dirty || isPending,
-                                }
+                                "w-1/3 py-3 mx-auto mt-6 text-white  bg-[#1B0924] hover:bg-mainYellow duration-500"
                               )}
                             >
                               {t("send")}
@@ -276,13 +272,9 @@ const BookConsultant = () => {
                     <Button
                       type="submit"
                       loading={isPending}
-                      disabled={!isValid || !dirty || isPending}
+                      // disabled={!isValid || !dirty || isPending}
                       className={cn(
-                        "w-full py-3 mt-10 text-white bg-mainColor hover:bg-mainColor/70",
-                        {
-                          "opacity-40 cursor-not-allowed":
-                            !isValid || !dirty || isPending,
-                        }
+                        "w-full py-3 mt-10 text-white bg-mainColor hover:bg-mainColor/70"
                       )}
                     >
                       {t("send")}

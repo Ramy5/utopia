@@ -66,6 +66,7 @@ const fetchNationalities = async () => {
 const EnglishAdmissionForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  console.log("🚀 ~ EnglishAdmissionForm ~ user:", user)
   const location = useLocation();
   console.log("🚀 ~ EnglishAdmissionForm ~ location:", location);
   const {

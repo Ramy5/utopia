@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { BASE_URL } from "./BaseURL";
+import { useRTL } from "../hooks/useRTL";
 interface ApiRequestOptions {
   url: string;
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -21,6 +22,7 @@ export const apiRequest = async <T>({
 }: ApiRequestOptions): Promise<ApiResponse<T>> => {
   try {
     const localStorageToken = localStorage.getItem("token");
+    const language = localStorage.getItem("lang");
 
     const response: AxiosResponse<T> = await axios({
       url: `${BASE_URL}${url}`,
@@ -30,6 +32,7 @@ export const apiRequest = async <T>({
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token || localStorageToken}`,
+        "Accept-Language": language,
         ...headers,
       },
     });
