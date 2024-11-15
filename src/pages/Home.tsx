@@ -31,6 +31,10 @@ const Home = () => {
   });
   console.log("🚀 ~ fetchItems ~ data:", data);
 
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">

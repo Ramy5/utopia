@@ -13,6 +13,8 @@ import Shop from "../../../assets/shop.png";
 import Star from "../../../assets/star.png";
 import { IoMdNotifications } from "react-icons/io";
 import { MdPerson } from "react-icons/md";
+import { useRTL } from "../../../hooks/useRTL";
+import { useTranslation } from "react-i18next";
 interface Navbar_TP {
   hidden?: boolean;
 }
@@ -33,6 +35,8 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   const [newImage, setNewImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const isRTL = useRTL();
+  const { i18n } = useTranslation();
 
   const fetchProfile = async () => {
     try {
@@ -134,6 +138,17 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
       navigate("/");
     },
   });
+
+  const toggleLang = () => {
+    const currentLang = localStorage.getItem("lang") || "en";
+    const newLang = currentLang === "ar" ? "en" : "ar";
+
+    i18n.changeLanguage(newLang);
+
+    localStorage.setItem("lang", newLang);
+
+    window.location.reload();
+  };
 
   const handleLogout = () => {
     mutate({});
@@ -321,12 +336,15 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
               <img src={Shop} alt="shop" className="w-5 " />
             </div>
             <Link to="/login" className="hover:text-mainColor text-[17px]">
-              تسجيل الدخول
+              {t("login")}
             </Link>
             <Link to="/register" className="hover:text-mainColor text-[17px]">
-              إنشاء حساب
+              {t("Create an account")}
             </Link>
-            <button className="hover:text-mainColor text-[17px]">
+            <button
+              onClick={toggleLang}
+              className="hover:text-mainColor text-[17px]"
+            >
               عربي EN
             </button>
           </div>

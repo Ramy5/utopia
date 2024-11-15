@@ -8,17 +8,37 @@ html {
 
 @font-face {
   font-family: "pingRegular";
-  src: url("./assets/Ping.Font.Tlwen.com/PingAR+LT-Regular.otf") format("opentype"),
+  src: url("./assets/Ping.Font.Tlwen.com/PingAR+LT-Regular.otf")
+      format("opentype"),
     url("./assets/Ping.Font.Tlwen.com/PingAR+LT-Medium.otf") format("opentype"),
     url("./assets/Ping.Font.Tlwen.com/PingAR+LT-Thin.otf") format("opentype"),
     url("./assets/Ping.Font.Tlwen.com/PingAR+LT-Medium.otf") format("opentype"),
     url("./assets/Ping.Font.Tlwen.com/PingAR+LT-Bold.otf") format("opentype"),
-    url("./assets/Ping.Font.Tlwen.com/PingAR+LT-ExtraLight.otf") format("opentype"),
+    url("./assets/Ping.Font.Tlwen.com/PingAR+LT-ExtraLight.otf")
+      format("opentype");
 }
 
 body {
   font-family: "pingRegular", sans-serif;
 }
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+input[type="radio"]:checked {
+  border-color: #9f85f3;
+  background-color: #9f85f3;
+}
+
 .bookConsultantBg {
   background: url(./assets/bookConsultation/downloadApp.webp) center center
     no-repeat fixed;
@@ -176,15 +196,18 @@ body {
 .react-datepicker-popper {
   left: 50% !important;
   transform: translateX(-50%) !important;
-  top: 115px !important;
+  top: 105px !important;
   width: 100%;
 }
 .react-datepicker,
 .react-datepicker__month-container {
   width: 100% !important;
+  background-color: #9f85f3;
+  color: #fff !important;
+  border-radius: 20px !important;
 }
 .react-datepicker__month {
-  margin: 0px 10px 10px !important;
+  margin: 0px 0.4rem !important;
 }
 
 .react-datepicker__day-names {
@@ -194,18 +217,63 @@ body {
   padding: 22px 0px !important;
 }
 .react-datepicker__navigation {
-  top: 17px !important;
+  top: 30px !important;
+}
+.react-datepicker__navigation--next {
+  right: 20px !important;
+}
+.react-datepicker__navigation--previous {
+  left: 20px !important;
+}
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__month-read-view--down-arrow,
+.react-datepicker__month-year-read-view--down-arrow,
+.react-datepicker__navigation-icon::before {
+  border-color: #333 !important;
+}
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: white !important;
+  font-size: 16px;
+}
+.react-datepicker__day--disabled,
+.react-datepicker__month-text--disabled,
+.react-datepicker__quarter-text--disabled,
+.react-datepicker__year-text--disabled {
+  color: #ccc !important;
+}
+.react-datepicker__day:not([aria-disabled="true"]):hover,
+.react-datepicker__month-text:not([aria-disabled="true"]):hover,
+.react-datepicker__quarter-text:not([aria-disabled="true"]):hover,
+.react-datepicker__year-text:not([aria-disabled="true"]):hover {
+  background-color: #ffcc1a !important;
+  color: #333 !important;
+}
+.react-datepicker__header:not(.react-datepicker__header--has-time-select) {
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
 }
 .react-datepicker,
 .react-datepicker__header {
-  background-color: #f7f7f7 !important;
+  background-color: #9f85f3 !important;
   border: none !important;
+}
+.react-datepicker__header {
+  padding: 20px !important;
+}
+.react-datepicker__current-month {
+  padding: 15px !important;
+}
+.react-datepicker,
+.react-datepicker__header h2 {
+  background-color: #f7f7f7 !important;
 }
 .react-datepicker__week {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  padding-bottom: 8px;
 }
 .react-datepicker__triangle {
   display: none;
@@ -225,13 +293,7 @@ body {
 .react-datepicker__day--selected {
   background-color: #9f85f3 !important;
 }
-.react-datepicker__day--disabled,
-.react-datepicker__month-text--disabled,
-.react-datepicker__quarter-text--disabled,
-.react-datepicker__year-text--disabled {
-  cursor: default;
-  color: #b4b0b0 !important;
-}
+
 .react-datepicker__input-container input::placeholder {
   color: white !important;
 }
@@ -276,4 +338,3 @@ body {
   transition: all ease-in-out 0.25s;
   z-index: -1;
 }
-

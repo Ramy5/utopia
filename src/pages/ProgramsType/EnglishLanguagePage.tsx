@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { IoLocationOutline } from "react-icons/io5";
@@ -115,7 +115,7 @@ const EnglishLanguagePage = () => {
   });
 
   const renderCardsInSmallScreen = (items) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 sm:gap-8 gap-y-12 mb-36">
+    <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 sm:gap-8 gap-y-12 mb-36 cursor-pointer">
       {items?.map((item, index) => (
         <div
           key={index}
@@ -148,6 +148,10 @@ const EnglishLanguagePage = () => {
       ))}
     </div>
   );
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -190,7 +194,10 @@ const EnglishLanguagePage = () => {
                     )}
                   </Formik>
                 </div>
-                <Button className="rounded-3xl py-2.5 px-3 md:px-8 ">
+                <Button
+                  className="rounded-3xl py-2.5 px-3 md:px-8 "
+                  action={() => navigate("/designCourse")}
+                >
                   {t("design your own course")}
                 </Button>
               </div>
@@ -303,6 +310,7 @@ const EnglishLanguagePage = () => {
                               className="text-lg font-medium border-b border-[#ddd] py-5 px-20 text-white cursor-pointer"
                               onClick={() => {
                                 setCountryID(item.id);
+
                                 setdropDown(!dropDown);
                               }}
                             >

@@ -44,6 +44,7 @@ const ProgramsType = ({ data }) => {
                       src={categorie?.image}
                       alt="Book"
                       className="w-full h-64 lg:h-[19rem]"
+                      loading="lazy"
                     />
                   </div>
                   <div

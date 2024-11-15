@@ -243,14 +243,14 @@ const Login = () => {
                     </div>
                     <div className="flex flex-col gap-4 ">
                       <Button
-                        disabled={!isValid || !dirty || isPending}
+                        // disabled={!isValid || !dirty || isPending}
                         action={() => handleStudentSubmit(values)}
                         className={cn(
-                          "bg-[#FFB6BF] rounded-2xl hover:bg-[#FFCC1A] animate_from_left py-3 text-black font-normal",
-                          {
-                            "opacity-40 cursor-not-allowed":
-                              !isValid || !dirty || isPending,
-                          }
+                          "bg-[#FFB6BF] rounded-2xl hover:bg-[#FFCC1A] animate_from_left py-3.5 text-black font-normal hover:scale-1 duration-500",
+                          // {
+                          //   "opacity-40 cursor-not-allowed":
+                          //     !isValid || !dirty || isPending,
+                          // }
                         )}
                       >
                         {t("login")}
@@ -299,14 +299,14 @@ const Login = () => {
                     </div>
                     <div className="flex flex-col gap-4">
                       <Button
-                        disabled={!isValid || !dirty || partnerIsPending}
+                        // disabled={!isValid || !dirty || partnerIsPending}
                         action={() => handlePartnerSubmit(values)}
                         className={cn(
-                          "bg-[#FFB6BF] py-3 rounded-2xl hover:bg-[#FFCC1A] animate_scale text-black font-normal",
-                          {
-                            "opacity-40 cursor-not-allowed":
-                              !isValid || !dirty || partnerIsPending,
-                          }
+                          "bg-[#FFB6BF] py-3.5 rounded-2xl hover:bg-[#FFCC1A] animate_scale text-black font-normal hover:scale-1 duration-500",
+                          // {
+                          //   "opacity-40 cursor-not-allowed":
+                          //     !isValid || !dirty || partnerIsPending,
+                          // }
                         )}
                       >
                         {t("login")}

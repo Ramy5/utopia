@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 import { useRTL } from "../../hooks/useRTL";
@@ -11,6 +11,10 @@ import DownLoadApp from "../../components/atoms/molecules/downLoad-app/DownLoadA
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useAuth } from "../../context/AuthContext";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper/modules";
+import cn from "../../utils/cn";
 
 const SummerProgramsDetails = () => {
   const [styledHtml, setStyledHtml] = useState("");
@@ -21,6 +25,13 @@ const SummerProgramsDetails = () => {
   const programDetails = location.state;
   console.log("🚀 ~ SummerProgramsDetails ~ programDetails:", programDetails);
   const isRTL = useRTL();
+  const swiperRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  console.log("🚀 ~ SummerProgramsDetails ~ currentIndex:", currentIndex);
+  console.log(
+    "🚀 ~ SummerProgramsDetails ~ programDetails?.packageImage?.length:",
+    programDetails?.packageImage?.length - 1
+  );
 
   const handleSelectedPlanId = (id, amount) => {
     setPlanId(id);
@@ -70,6 +81,26 @@ const SummerProgramsDetails = () => {
     },
   ];
 
+  const handleSlideChange = (swiper) => {
+    setCurrentIndex(swiper.activeIndex);
+  };
+
+  const handleNextSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
+  const handlePrevSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
+    }
+  };
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
@@ -115,14 +146,77 @@ const SummerProgramsDetails = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-center order-1 md:justify-end md:order-2">
-            <div className="md:border border-[#707070] rounded-3xl w-full md:w-auto">
+          <div className="flex justify-center order-1 md:justify-end md:order-2 h-fit">
+            <div className="md:border border-[#707070] rounded-3xl w-full md:w-auto overflow-x-hidden">
               <div className="relative overflow-hidden rounded-3xl h-60 md:h-full">
-                <img
-                  src={programDetails?.cityData.image}
-                  className="w-full h-full m-auto md:h-auto rounded-3xl"
-                />
-                <div className="absolute bottom-3 right-3 md:hidden">
+                <div className="relative w-full">
+                  <Swiper
+                    slidesPerView={1}
+                    spaceBetween={0}
+                    onSlideChange={handleSlideChange}
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    loop={true}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    modules={[Pagination, Navigation]}
+                  >
+                    <>
+                      {programDetails?.packageImage.map((item, index) => (
+                        <SwiperSlide key={index}>
+                          <img
+                            src={item?.image}
+                            className="rounded-3xl object-fill w-full h-60 md:h-full md:max-h-96"
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </>
+                  </Swiper>
+
+                  <div className="w-full hidden md:flex items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 z-50">
+                    <div
+                      className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor cursor-pointer `}
+                      onClick={handlePrevSlide}
+                    >
+                      <HiChevronRight />
+                    </div>
+                    <div
+                      className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor cursor-pointer `}
+                      onClick={handleNextSlide}
+                    >
+                      <HiChevronLeft />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full flex md:hidden items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 z-50">
+                  <div
+                    className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor  ${
+                      currentIndex === 0
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                    onClick={handlePrevSlide}
+                    disabled={currentIndex === 0}
+                  >
+                    <HiChevronRight />
+                  </div>
+                  <div
+                    className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor ${
+                      currentIndex === programDetails?.packageImage?.length - 1
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                    onClick={handleNextSlide}
+                    disabled={
+                      currentIndex === programDetails?.packageImage?.length - 2
+                    }
+                  >
+                    <HiChevronLeft />
+                  </div>
+                </div>
+
+                <div className="absolute bottom-3 right-3 md:hidden z-50">
                   <Link
                     to={programDetails?.instagram}
                     className="flex items-center justify-center w-12 h-12 cursor-pointer bg-mainColor rounded-2xl"
@@ -171,25 +265,53 @@ const SummerProgramsDetails = () => {
           <div className="sm:col-span-5 md:col-span-6">
             <h2 className="mb-4 text-2xl">{programDetails?.cityData.name}</h2>
             <div className="h-64 overflow-hidden cursor-pointer rounded-3xl md:h-80 lg:h-96">
-              <Link to={programDetails?.cityData.url}>
-                <img
-                  src={programDetails?.cityData.image}
-                  alt="youtube"
-                  className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
-                />
-              </Link>
+              {programDetails?.cityData?.url ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${
+                    programDetails.cityData.url.split("v=")[1]
+                  }`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <Link to={programDetails?.cityData.url}>
+                  <img
+                    src={programDetails?.cityData.image}
+                    alt="youtube"
+                    className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
+                  />
+                </Link>
+              )}
             </div>
           </div>
           <div className="sm:col-span-5 md:col-span-4 ">
-            <h2 className="mb-4 text-2xl">{programDetails?.cityData.name}</h2>
+            <h2 className="mb-4 text-2xl">{programDetails?.partner_name}</h2>
             <div className="h-64 overflow-hidden cursor-pointer rounded-3xl md:h-80 lg:h-96">
-              <Link to={programDetails?.partner_url}>
-                <img
-                  src={programDetails?.partner_image}
-                  alt="youtube"
-                  className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
-                />
-              </Link>
+              {programDetails?.cityData?.url ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${
+                    programDetails?.partner_url.split("v=")[1]
+                  }`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <Link to={programDetails?.partner_url}>
+                  <img
+                    src={programDetails?.partner_image}
+                    alt="youtube"
+                    className="hover:scale-[1.03] duration-300 w-full h-64 md:h-80 lg:h-full"
+                  />
+                </Link>
+              )}
             </div>
           </div>
           <div className="mr-auto sm:col-span-2 md:mr-0 ">
@@ -213,17 +335,37 @@ const SummerProgramsDetails = () => {
                       id={plan?.id}
                       name={`packagePlan`}
                       type="radio"
-                      className="p-2"
+                      className="p-2 cursor-pointer"
                       onChange={(e) =>
                         handleSelectedPlanId(e.target.id, plan.price)
                       }
                     />
-                    <h2 className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
-                      {plan.duration === 1
+                    <h2
+                      className={cn(
+                        "border  px-5 py-2 rounded-xl text-center text-[15px] w-24",
+                        {
+                          "border-mainColor text-mainColor": planId == plan?.id,
+                          "border-[#707070]": planId != plan?.id,
+                        }
+                      )}
+                    >
+                      {plan.duration == 1
                         ? `${t("mounth")}`
-                        : `${plan.duration} ${t("mounths")}`}
+                        : plan.duration == 2
+                        ? `${t("2 months")}`
+                        : plan.duration > 10
+                        ? `${plan.duration} ${t("mounth")}`
+                        : `${plan.duration} ${t("Months")}`}
                     </h2>
-                    <p className="border border-[#707070] px-5 py-1 rounded-lg text-center mt-2 text-[15px]">
+                    <p
+                      className={cn(
+                        "border border-[#707070] px-5 py-2 rounded-xl text-center text-[15px] w-32",
+                        {
+                          "border-mainColor text-mainColor": planId == plan?.id,
+                          "border-[#707070]": planId != plan?.id,
+                        }
+                      )}
+                    >
                       {plan.price} <span>{plan.unit}</span>
                     </p>
                   </div>
@@ -237,10 +379,10 @@ const SummerProgramsDetails = () => {
                   packageId: programDetails?.category_id,
                   planId: planId,
                   amount: amount,
-                  user_id: user?.id
+                  user_id: user?.id,
                 }}
               >
-                <Button className="w-full mt-8 sm:w-fit">
+                <Button className="w-full mt-8 sm:w-fit hover:bg-mainYellow duration-500">
                   {t("register now")}
                 </Button>
               </Link>
@@ -285,4 +427,35 @@ export default SummerProgramsDetails;
   استخدام الكمبويتر والانترنت مجا نًا داخل المعهد.
 </li>
 </ul> */
+}
+
+{
+  /* <div className="w-full hidden md:flex items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 z-50">
+<div
+  className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor  ${
+    currentIndex === 0
+      ? "cursor-not-allowed"
+      : "cursor-pointer"
+  }`}
+  onClick={handlePrevSlide}
+  disabled={currentIndex === 0}
+>
+  <HiChevronRight />
+</div>
+<div
+  className={`w-7 h-7 flex items-center justify-center text-white font-semibold text-xl rounded-full bg-mainColor ${
+    currentIndex ===
+    programDetails?.packageImage?.length - 1
+      ? "cursor-not-allowed"
+      : "cursor-pointer"
+  }`}
+  onClick={handleNextSlide}
+  disabled={
+    currentIndex ===
+    programDetails?.packageImage?.length - 2
+  }
+>
+  <HiChevronLeft />
+</div>
+</div> */
 }

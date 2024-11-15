@@ -73,6 +73,7 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
                 src={item.image}
                 alt="choose"
                 className="w-full h-full"
+                loading="lazy"
               />
             </div>
             <p className={`flex items-end h-full m-auto text-center text-base md:text-xl lg:text-xl text-white ${isFootered ? "w-3/4" :"w-full"}` }>
