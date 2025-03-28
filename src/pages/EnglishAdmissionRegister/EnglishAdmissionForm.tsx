@@ -66,9 +66,7 @@ const fetchNationalities = async () => {
 const EnglishAdmissionForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  console.log("🚀 ~ EnglishAdmissionForm ~ user:", user)
   const location = useLocation();
-  console.log("🚀 ~ EnglishAdmissionForm ~ location:", location);
   const {
     partnerId = null,
     packageId = null,
@@ -125,7 +123,6 @@ const EnglishAdmissionForm = () => {
     mutationKey: ["ProcessPayment"],
     mutationFn: (data: any) => postProcessPayment(data),
     onSuccess: (data) => {
-      console.log(data);
       window.location.href = data?.redirect_url;
     },
   });
@@ -134,7 +131,6 @@ const EnglishAdmissionForm = () => {
     mutationKey: ["englishForm"],
     mutationFn: (data: any) => postEnglishForm(data),
     onSuccess: (data) => {
-      console.log(data);
       toast.success(t("registration successful"));
       mutateProcessPayment({
         amount: 1200,
@@ -146,7 +142,6 @@ const EnglishAdmissionForm = () => {
   });
 
   const handleSubmit = async (values: any) => {
-    console.log("🚀 ~ handleSubmit ~ values:", values);
     const formatData = {
       city_name: values?.city,
       nationality_id: values?.nationality,
@@ -178,7 +173,6 @@ const EnglishAdmissionForm = () => {
       school_certificate: values?.documents?.highSchoolCertificate,
       image: values?.documents?.passportSizePhoto,
     };
-    console.log(formatData);
 
     await mutate(formatData);
   };
@@ -192,7 +186,6 @@ const EnglishAdmissionForm = () => {
       validateOnMount={true}
     >
       {({ errors, values, touched, setFieldValue, dirty, isValid }) => {
-        console.log("🚀 ~ EnglishAdmissionForm ~ values:", values)
         return (
           <Form className="">
             {/* DESKTOP */}
@@ -208,7 +201,7 @@ const EnglishAdmissionForm = () => {
                 {/* Personal Information */}
                 <div className="mb-4">
                   <BaseInput
-                    label={t("first name")}
+                    label={t("First name")}
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -225,7 +218,7 @@ const EnglishAdmissionForm = () => {
 
                 <div className="mb-4">
                   <BaseInput
-                    label={t("last name")}
+                    label={t("Last name")}
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -425,7 +418,7 @@ const EnglishAdmissionForm = () => {
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-12 xl:gap-x-36 gap-y-14">
                   <div className="col-span-2 mb-4">
                     <BaseInput
-                      label={t("address")}
+                      label={t("Address")}
                       id="address"
                       name="address"
                       placeholder={t("example: king fahd road 6579")}
@@ -461,7 +454,7 @@ const EnglishAdmissionForm = () => {
 
                   <div className="mb-4">
                     <BaseInput
-                      label={t("postal code")}
+                      label={t("Postal code")}
                       id="postalCode"
                       name="postalCode"
                       type="text"
@@ -1073,7 +1066,7 @@ const EnglishAdmissionForm = () => {
                     <div className="grid grid-cols-2 gap-6">
                       <div className="relative mb-4">
                         <BaseInput
-                          label={t("first name")}
+                          label={t("First name")}
                           id="firstName"
                           name="firstName"
                           type="text"
@@ -1093,7 +1086,7 @@ const EnglishAdmissionForm = () => {
 
                       <div className="relative mb-4">
                         <BaseInput
-                          label={t("last name")}
+                          label={t("Last name")}
                           id="lastName"
                           name="lastName"
                           type="text"
@@ -1290,7 +1283,7 @@ const EnglishAdmissionForm = () => {
                       </div>
                       <div className="relative mb-4 ">
                         <BaseInput
-                          label={t("address")}
+                          label={t("Address")}
                           id="address"
                           name="address"
                           placeholder={t("example: king fahd road 6579")}
@@ -1332,7 +1325,7 @@ const EnglishAdmissionForm = () => {
 
                         <div className="mb-4">
                           <BaseInput
-                            label={t("postal code")}
+                            label={t("Postal code")}
                             id="postalCode"
                             name="postalCode"
                             type="text"

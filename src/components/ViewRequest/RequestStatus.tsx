@@ -10,7 +10,6 @@ import StraightLine from "../../assets/StraightLine.svg";
 import DashedLine from "../../assets/DashedLine.svg";
 
 const RequestStatus = ({ statusData }) => {
-
   const RequestStatusData = [
     {
       title: "Submit the request and pay the deposit",
@@ -51,9 +50,6 @@ const RequestStatus = ({ statusData }) => {
       return { ...item, status: false };
     }
   });
-
-  console.log("🚀 ~ updatedRequestStatusData ~ updatedRequestStatusData:", updatedRequestStatusData)
-
 
   const notesData = [
     {

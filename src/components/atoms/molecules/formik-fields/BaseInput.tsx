@@ -3,6 +3,7 @@ import { tv } from "tailwind-variants";
 import { useFormikContext } from "formik";
 import { FormikError } from "./FormikError";
 import { useRTL } from "../../../../hooks/useRTL";
+import { useEffect } from "react";
 
 export type BaseInput_TP = {
   label?: string;
@@ -29,7 +30,8 @@ export type BaseInput_TP = {
     | "radio"
     | "text"
     | "date"
-    | "time";
+    | "time"
+    | "tel";
   min?: number;
   max?: number;
 };
@@ -87,6 +89,19 @@ const BaseInput = ({
     },
   });
 
+  const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
+    if (e.target instanceof HTMLInputElement && e.target.type === "number") {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   return (
     <div
       className={
@@ -137,6 +152,7 @@ const BaseInput = ({
           disabled={disabled}
           min={min}
           max={max}
+          onWheel={handleWheel}
         />
       </div>
       {/* <FormikError

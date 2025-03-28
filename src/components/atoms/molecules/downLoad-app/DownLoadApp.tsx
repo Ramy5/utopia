@@ -8,7 +8,7 @@ const DownLoadApp = () => {
     <div className="hidden items-center bookConsultantBg h-[22rem] sm:flex ">
       <div className="w-full max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] mx-auto md:px-4">
         <h2 className="text-white text-3xl mb-10">
-          {t("download the app now")}
+          {t("Download the app now")}
         </h2>
         <div className="flex items-center gap-4">
           <img className="w-44 " src={googlePlay} alt="google play" />

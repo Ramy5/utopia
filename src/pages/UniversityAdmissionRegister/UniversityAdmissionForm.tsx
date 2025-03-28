@@ -66,7 +66,6 @@ const UniversityAdmissionForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const location = useLocation();
-  console.log("🚀 ~ UniversityAdmissionForm ~ location:", location);
   const {
     partnerId = null,
     specializationID = null,
@@ -78,11 +77,6 @@ const UniversityAdmissionForm = () => {
   const [step, setStep] = useState(1);
   const [universityNameState, setUniversityNameState] =
     useState(universityName);
-  console.log(
-    "🚀 ~ UniversityAdmissionForm ~ universityNameState:",
-    universityNameState
-  );
-  console.log("🚀 ~ UniversityAdmissionForm ~ amount:", amount);
 
   const initialValues = {
     firstName: "",
@@ -116,7 +110,6 @@ const UniversityAdmissionForm = () => {
     queryFn: fetchNationalities,
     suspense: true,
   });
-  console.log("🚀 ~ UniversityAdmissionForm ~ nationalities:", nationalities);
 
   const {
     mutate: mutateProcessPayment,
@@ -126,7 +119,6 @@ const UniversityAdmissionForm = () => {
     mutationKey: ["uniProcessPayment"],
     mutationFn: (data: any) => postProcessPayment(data),
     onSuccess: (data) => {
-      console.log(data);
       window.location.href = data?.redirect_url;
     },
   });
@@ -135,7 +127,6 @@ const UniversityAdmissionForm = () => {
     mutationKey: ["password"],
     mutationFn: (data: any) => postUniversityForm(data),
     onSuccess: (data) => {
-      console.log(data);
       toast.success(t("registration successful"));
       mutateProcessPayment({
         amount: 1200,
@@ -147,7 +138,6 @@ const UniversityAdmissionForm = () => {
   });
 
   const handleSubmit = async (values: any) => {
-    console.log("🚀 ~ handleSubmit ~ values:", values);
     const formatData = {
       city_name: values?.city,
       nationality_id: values?.nationality,
@@ -179,7 +169,6 @@ const UniversityAdmissionForm = () => {
       school_certificate: values?.documents?.highSchoolCertificate,
       image: values?.documents?.passportSizePhoto,
     };
-    console.log(formatData);
 
     await mutate(formatData);
   };
@@ -191,7 +180,6 @@ const UniversityAdmissionForm = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, values, touched, setFieldValue, isValid, dirty }) => {
-        console.log("🚀 ~ UniversityAdmissionForm ~ errors:", errors);
         return (
           <Form className="">
             {/* DESKTOP */}
@@ -207,7 +195,7 @@ const UniversityAdmissionForm = () => {
                 {/* Personal Information */}
                 <div className="mb-4">
                   <BaseInput
-                    label={t("first name")}
+                    label={t("First name")}
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -224,7 +212,7 @@ const UniversityAdmissionForm = () => {
 
                 <div className="mb-4">
                   <BaseInput
-                    label={t("last name")}
+                    label={t("Last name")}
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -424,7 +412,7 @@ const UniversityAdmissionForm = () => {
                 <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-x-36 gap-y-14">
                   <div className="col-span-2 mb-4">
                     <BaseInput
-                      label={t("address")}
+                      label={t("Address")}
                       id="address"
                       name="address"
                       placeholder={t("example: king fahd road 6579")}
@@ -460,7 +448,7 @@ const UniversityAdmissionForm = () => {
 
                   <div className="mb-4">
                     <BaseInput
-                      label={t("postal code")}
+                      label={t("Postal code")}
                       id="postalCode"
                       name="postalCode"
                       type="text"
@@ -778,7 +766,7 @@ const UniversityAdmissionForm = () => {
                     <div className="grid grid-cols-2 gap-6">
                       <div className="relative mb-4">
                         <BaseInput
-                          label={t("first name")}
+                          label={t("First name")}
                           id="firstName"
                           name="firstName"
                           type="text"
@@ -798,7 +786,7 @@ const UniversityAdmissionForm = () => {
 
                       <div className="relative mb-4">
                         <BaseInput
-                          label={t("last name")}
+                          label={t("Last name")}
                           id="lastName"
                           name="lastName"
                           type="text"
@@ -995,7 +983,7 @@ const UniversityAdmissionForm = () => {
                       </div>
                       <div className="relative mb-4 ">
                         <BaseInput
-                          label={t("address")}
+                          label={t("Address")}
                           id="address"
                           name="address"
                           placeholder={t("example: king fahd road 6579")}
@@ -1037,7 +1025,7 @@ const UniversityAdmissionForm = () => {
 
                         <div className="mb-4">
                           <BaseInput
-                            label={t("postal code")}
+                            label={t("Postal code")}
                             id="postalCode"
                             name="postalCode"
                             type="text"

@@ -7,7 +7,7 @@ const BookConsultationPage = () => {
   return (
     <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
       <div className="my-12 mx-4 md:mx-0">
-        <h2>{t("book consultation")}</h2>
+        <h2>{t("Book consultation")}</h2>
         <div className="my-8 flex justify-between">
           <div className="bg-mainColor rounded-xl">
             <p>{t("consultation")}</p>

@@ -16,7 +16,7 @@ const UniversityAdmissions = ({ data }) => {
           {t("More")}
         </Link>
       </div>
-      <div className="flex items-center justify-between sm:hidden">
+      <div className="block sm:hidden">
         <Swiper spaceBetween={15} slidesPerView={1.5}>
           {data?.universityPackages?.map((packages, index) => (
             <SwiperSlide key={index}>

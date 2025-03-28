@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { downloadImage, downloadPDF } from "../../hooks/Download";
 
 const OtherInformation = ({ steps, others }) => {
-  console.log("🚀 ~ OtherInformation ~ others:", others);
   const navigate = useNavigate();
   const CourseData = [
     {

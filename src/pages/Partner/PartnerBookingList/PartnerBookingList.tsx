@@ -24,7 +24,6 @@ const filterOption = [
 
 const PartnerBookingList = () => {
   const [showFilterPopup, setShowFilterPopup] = useState(false);
-  console.log("🚀 ~ PartnerBookingList ~ showFilterPopup:", showFilterPopup);
 
   const initialValues = {
     search: "",

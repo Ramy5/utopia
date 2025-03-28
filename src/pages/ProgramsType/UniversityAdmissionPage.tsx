@@ -137,7 +137,7 @@ const UniversityAdmissionPage = () => {
   );
 
   const renderCardsInSmallScreen = (items) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 sm:gap-8 gap-y-12 mb-36">
+    <div className="grid grid-cols-2 sm:grid-cols-2 justify-center gap-2 sm:gap-8 gap-y-12 mb-36">
       {items?.map((item, index) => (
         <div
           key={index}
@@ -148,12 +148,12 @@ const UniversityAdmissionPage = () => {
             })
           }
         >
-          <div className="rounded-3xl overflow-hidden h-60">
+          <div className="rounded-3xl overflow-hidden h-44 sm:h-60">
             <img src={item.image} alt="country" className="w-full h-full" />
           </div>
-          <div className="px-5 py-8">
-            <h2 className="text-xl font-medium mb-2">{item.name}</h2>
-            <p className="text-[#AEAAAE] text-lg">{item.city}</p>
+          <div className="px-3 sm:px-5 py-4 sm:py-8">
+            <h2 className="text-base sm:text-xl font-medium mb-2">{item.name}</h2>
+            <p className="text-[#AEAAAE] sm:text-lg">{item.city}</p>
           </div>
         </div>
       ))}

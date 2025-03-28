@@ -27,7 +27,6 @@ const postEnglishForm = async (postData) => {
     return data?.data;
   } catch (errors) {
     toast.error(errors);
-    console.log("🚀 ~ loginPost ~ error:", errors);
   }
 };
 
@@ -44,7 +43,6 @@ const postProcessPayment = async (postData) => {
     return data?.data;
   } catch (errors) {
     toast.error(errors);
-    console.log("🚀 ~ loginPost ~ error:", errors);
   }
 };
 
@@ -147,7 +145,6 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
     mutationKey: ["designProcessPayment"],
     mutationFn: (data: any) => postProcessPayment(data),
     onSuccess: (data) => {
-      console.log(data);
       window.location.href = data?.redirect_url;
     },
   });
@@ -156,7 +153,6 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
     mutationKey: ["englishForm"],
     mutationFn: (data: any) => postEnglishForm(data),
     onSuccess: (data) => {
-      console.log(data);
       toast.success(t("registration successful"));
       mutateProcessPayment({
         amount: 1200,
@@ -168,7 +164,6 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
   });
 
   const handleSubmit = async (values: any) => {
-    console.log("🚀 ~ handleSubmit ~ values:", values);
     const formatData = {
       city_name: values?.city,
       nationality_id: values?.nationality,
@@ -199,7 +194,6 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
       school_certificate: values?.documents?.highSchoolCertificate,
       image: values?.documents?.passportSizePhoto,
     };
-    console.log(formatData);
 
     await mutate(formatData);
   };
@@ -226,7 +220,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
                 {/* Personal Information */}
                 <div className="mb-4">
                   <BaseInput
-                    label={t("first name")}
+                    label={t("First name")}
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -243,7 +237,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
 
                 <div className="mb-4">
                   <BaseInput
-                    label={t("last name")}
+                    label={t("Last name")}
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -443,7 +437,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-12 xl:gap-x-36 gap-y-14">
                   <div className="col-span-2 mb-4">
                     <BaseInput
-                      label={t("address")}
+                      label={t("Address")}
                       id="address"
                       name="address"
                       placeholder={t("example: king fahd road 6579")}
@@ -479,7 +473,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
 
                   <div className="mb-4">
                     <BaseInput
-                      label={t("postal code")}
+                      label={t("Postal code")}
                       id="postalCode"
                       name="postalCode"
                       type="text"
@@ -1085,7 +1079,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
                     <div className="grid grid-cols-2 gap-6">
                       <div className="relative mb-4">
                         <BaseInput
-                          label={t("first name")}
+                          label={t("First name")}
                           id="firstName"
                           name="firstName"
                           type="text"
@@ -1105,7 +1099,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
 
                       <div className="relative mb-4">
                         <BaseInput
-                          label={t("last name")}
+                          label={t("Last name")}
                           id="lastName"
                           name="lastName"
                           type="text"
@@ -1302,7 +1296,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
                       </div>
                       <div className="relative mb-4 ">
                         <BaseInput
-                          label={t("address")}
+                          label={t("Address")}
                           id="address"
                           name="address"
                           placeholder={t("example: king fahd road 6579")}
@@ -1344,7 +1338,7 @@ const DesignOwnRegistrationForm = ({ designOwn }) => {
 
                         <div className="mb-4">
                           <BaseInput
-                            label={t("postal code")}
+                            label={t("Postal code")}
                             id="postalCode"
                             name="postalCode"
                             type="text"

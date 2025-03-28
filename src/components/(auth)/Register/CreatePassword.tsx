@@ -78,7 +78,6 @@ const CreatePassword: React.FC<CreatePassword_TP> = ({ setStep, userId }) => {
       password_confirmation: values?.newPassword,
       fcm_token: fcmToken,
     };
-    console.log("🚀 ~ onSubmit={ ~ values:", data);
 
     await mutate(data);
   };

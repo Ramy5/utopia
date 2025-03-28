@@ -24,6 +24,8 @@ const ChooseUtopia = lazy(
 const SuccessStoriesPage = lazy(() => import("./pages/SuccessStoriesPage"));
 const BankAccounts = lazy(() => import("./pages/BankAccounts"));
 const OurPartners = lazy(() => import("./pages/OurPartners"));
+const Notifications = lazy(() => import("./pages/Notifications"));
+const Accounts = lazy(() => import("./pages/Accounts"));
 // const ProgramsTypeDetails = lazy(() =>
 //   import("./pages/ProgramsType/ProgramsTypeDetails")
 // );
@@ -45,6 +47,7 @@ const UniversityAdmissionsDetails = lazy(
 const EnglishLanguagePage = lazy(
   () => import("./pages/ProgramsType/EnglishLanguagePage")
 );
+const Favorites = lazy(() => import("./pages/Favorites/Favorites"));
 const EnglishLanguageDetails = lazy(
   () => import("./pages/ProgramsType/EnglishLanguageDetails")
 );
@@ -89,11 +92,19 @@ const PartnerSnatches = lazy(() => import("./pages/Partner/Snatches/Snatches"));
 const ViewPartnerRequest = lazy(
   () => import("./pages/Partner/Requests/ViewPartnerRequest")
 );
+const MessageOperationEnd = lazy(
+  () => import("./pages/BookConsultant/messageOperationEnd")
+);
+
+const getDefaultLanguage = () => {
+  const language = navigator.language;
+  return language.startsWith("ar") ? "ar" : "en";
+};
 
 function App() {
-  const isRTL = useRTL();
+  const [language, setLanguage] = useState(getDefaultLanguage());
   const { i18n } = useTranslation();
-
+  const isRTL = useRTL();
   onMessageListener()
     .then((payload: any) => {
       toast(
@@ -108,14 +119,14 @@ function App() {
   useEffect(() => {
     const savedLang = localStorage.getItem("lang");
     if (savedLang) {
-      i18n.changeLanguage(savedLang); // Set language based on localStorage
+      i18n.changeLanguage(savedLang);
     }
   }, []);
 
   useLayoutEffect(() => {
-    document.documentElement.dir = isRTL ? "rtl" : "ltr";
-    document.documentElement.lang = isRTL ? "ar" : "en";
-  }, [isRTL]);
+    document.documentElement.dir = language ? "rtl" : "ltr";
+    document.documentElement.lang = language;
+  }, [language]);
 
   return (
     <BrowserRouter>
@@ -139,6 +150,7 @@ function App() {
                 element={<UniversityAdmissionsDetails />}
               />
               <Route path="englishLanguage" element={<EnglishLanguagePage />} />
+              <Route path="/favorites" element={<Favorites />} />
               <Route
                 path="englishLanguage/details"
                 element={<EnglishLanguageDetails />}
@@ -201,6 +213,7 @@ function App() {
               element={<UniversityAdmissionsDetails />}
             />
             <Route path="/englishLanguage" element={<EnglishLanguagePage />} />
+            <Route path="/englishLanguage" element={<EnglishLanguagePage />} />
             <Route
               path="/UniversityAdmissionRegister"
               element={<UniversityAdmissionRegister />}
@@ -220,10 +233,13 @@ function App() {
             <Route path="/specializations" element={<SpecializationsPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/bookConsultant" element={<BookConsultant />} />
+            <Route path="/Message_peration" element={<MessageOperationEnd />} />
             <Route path="/whyUs" element={<ChooseUtopia isFootered />} />
             <Route path="/successStory" element={<SuccessStoriesPage />} />
             <Route path="/bankAccounts" element={<BankAccounts />} />
             <Route path="/ourPartners" element={<OurPartners />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/accounts" element={<Accounts />} />
           </Routes>
         </LoadingWrapper>
         <ToastContainer />

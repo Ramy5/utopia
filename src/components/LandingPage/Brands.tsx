@@ -25,8 +25,6 @@ const Brands = () => {
     suspense: true,
   });
 
-  console.log("🚀 ~ Brands ~ data:", data);
-
   return (
     <div className="hidden sm:block">
       <Swiper
@@ -46,21 +44,36 @@ const Brands = () => {
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-20 h-20" loading="lazy"/>
+                <img
+                  src={brand.image}
+                  alt="brand"
+                  className="w-20 h-20"
+                  loading="lazy"
+                />
               </div>
             </SwiperSlide>
           ))}
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-20 h-20" loading="lazy"/>
+                <img
+                  src={brand.image}
+                  alt="brand"
+                  className="w-20 h-20"
+                  loading="lazy"
+                />
               </div>
             </SwiperSlide>
           ))}
           {data?.map((brand, index) => (
             <SwiperSlide key={index}>
               <div className="py-12 cursor-pointer">
-                <img src={brand.image} alt="brand" className="w-20 h-20" loading="lazy"/>
+                <img
+                  src={brand.image}
+                  alt="brand"
+                  className="w-20 h-20"
+                  loading="lazy"
+                />
               </div>
             </SwiperSlide>
           ))}

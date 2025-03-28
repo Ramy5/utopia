@@ -7,7 +7,6 @@ import cn from "../../../utils/cn";
 import { IoChatbubbleOutline } from "react-icons/io5";
 
 const renderDataItem = (label, value) => {
-  console.log("🚀 ~ renderDataItem ~ label:", label);
   return (
     <div className="">
       <h3 className="mb-2 text-sm">{label}</h3>
@@ -17,7 +16,6 @@ const renderDataItem = (label, value) => {
 };
 
 const renderDataItemMobile = (label, value) => {
-  console.log("🚀 ~ renderDataItem ~ label:", label);
   return (
     <div className="flex items-center sm:block">
       <h3 className="flex items-center mb-0 text-sm sm:mb-2">

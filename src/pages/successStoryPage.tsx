@@ -40,7 +40,7 @@ const SuccessStoryPage = () => {
           <FaArrowRightLong className="text-xl cursor-pointer justify-self-start" />
         </Link>
         <h4 className="text-xl font-bold text-center">
-          {t("success stories")}
+          {t("Success stories")}
         </h4>
       </div>
 

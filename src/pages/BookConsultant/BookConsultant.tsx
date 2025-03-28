@@ -66,12 +66,12 @@ const BookConsultant = () => {
                 {isSuccess ? (
                   <div>
                     <div className="flex rounded-2xl flex-col items-center justify-center w-[80%] md:w-[578px] bg-mainColor my-12 mx-auto text-white p-6 gap-7">
-                      <h1 className="text-6xl">
+                      <h1 className="text-4xl sm:text-6xl">
                         {isRTL
                           ? `اهلا ${values?.name}`
                           : `welcome ${values?.name}`}
                       </h1>
-                      <p className="text-lg text-center w-96">
+                      <p className="text-lg text-center sm:w-96">
                         {t(
                           "thank you for contacting us. we will contact you as soon as possible"
                         )}
@@ -95,7 +95,7 @@ const BookConsultant = () => {
                   <div className="flex flex-wrap items-center justify-center w-full px-12 pb-16 mt-20 bg-white md:justify-between ">
                     <div className="w-full md:w-auto">
                       <h2 className={`hidden mb-12 text-6xl sm:block `}>
-                        {t("book consultant")}
+                        {t("Book consultant")}
                       </h2>
                       <div className="flex items-center justify-center w-full ">
                         <div className="relative w-full p-8 py-12 rounded-lg shadow-xl bg-mainColor">
@@ -178,7 +178,7 @@ const BookConsultant = () => {
               <Link to={"/"} className="">
                 <FaArrowRightLong className="cursor-pointer justify-self-start" />
               </Link>
-              <h4 className="text-xl text-center">{t("book consultant")}</h4>
+              <h4 className="text-xl text-center">{t("Book consultant")}</h4>
             </div>
 
             <>
@@ -202,7 +202,7 @@ const BookConsultant = () => {
                           ? `اهلا ${values?.name}`
                           : `welcome ${values?.name}`}
                       </h1>
-                      <p className="text-lg text-center w-96">
+                      <p className="text-lg text-center sm:w-96">
                         {t(
                           "thank you for contacting us. we will contact you as soon as possible"
                         )}

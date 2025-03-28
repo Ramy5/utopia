@@ -3,13 +3,15 @@ import { apiRequest } from "../../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
+import { useRTL } from "../../hooks/useRTL";
 
 interface ChooseUtopia_TP {
   isFootered?: boolean;
 }
 
 const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const isRTL = useRTL();
   const fetchChooseUtopia = async () => {
     try {
       const data = await apiRequest({
@@ -27,7 +29,6 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
     queryFn: fetchChooseUtopia,
     suspense: true,
   });
-  console.log("🚀 ~ data:", data);
 
   return (
     <div
@@ -56,18 +57,26 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
       </div>
       <div
         className={`${
-          isFootered ? "flex-col gap-20 mt-32" : "flex-row gap-2 md:gap-4 lg:gap-5"
+          isFootered
+            ? "flex-col gap-20 mt-32"
+            : "flex-row gap-2 md:gap-4 lg:gap-5"
         } flex items-center justify-between`}
       >
         {data?.map((item, index) => (
           <div
             key={index}
-            className={`relative bg-[#1B0924] px-4 lg:px-8 pb-8 rounded-3xl ${
-              isFootered ? "h-40 mb-8" : "h-40 lg:h-44"
-            } `}
+            className={`relative bg-[#1B0924] px-4 lg:px-8 ${
+              isRTL ? "pb-8" : "pb-6"
+            }  rounded-3xl ${isFootered ? "h-40 mb-8" : "h-40 lg:h-44"} `}
           >
             <div
-              className={`rounded-full absolute -top-[4.5rem] md:-top-[7.3rem] lg:-top-32 left-1/2 -translate-x-1/2 ${isFootered ? "w-[8.5rem]  h-[8.5rem]" :"w-[8rem]  h-[8rem]"}  md:w-44 md:h-44 lg:w-48 lg:h-48`}
+              className={`rounded-full absolute ${
+                isRTL
+                  ? "-top-[4.5rem] md:-top-[7.3rem] lg:-top-32"
+                  : "-top-[5.5rem] md:-top-32 lg:-top-36"
+              } left-1/2 -translate-x-1/2 ${
+                isFootered ? "w-[8.5rem]  h-[8.5rem]" : "w-[8rem]  h-[8rem]"
+              } md:w-44 md:h-44 lg:w-48 lg:h-48`}
             >
               <img
                 src={item.image}
@@ -76,7 +85,13 @@ const ChooseUtopia: React.FC<ChooseUtopia_TP> = ({ isFootered }) => {
                 loading="lazy"
               />
             </div>
-            <p className={`flex items-end h-full m-auto text-center text-base md:text-xl lg:text-xl text-white ${isFootered ? "w-3/4" :"w-full"}` }>
+            <p
+              className={`flex items-end h-full m-auto text-center  ${
+                isRTL
+                  ? "text-base md:text-xl"
+                  : "text-[15px] md:text-base  lg:text-xl"
+              } text-white ${isFootered ? "w-3/4" : "w-full"}`}
+            >
               {item.name}
             </p>
           </div>

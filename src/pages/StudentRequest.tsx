@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 const StudentRequest = () => {
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log("🚀 ~ StudentRequest ~ requests:", requests);
 
   const fetchRequests = async () => {
     try {

@@ -51,7 +51,7 @@ const SummerProgramsPage = () => {
                       className="text-white w-6 h-6"
                     />
                   </div>
-                  <p className="bg-mainColor rounded-full px-7 pt-1 text-[15px] text-white">
+                  <p className="bg-mainColor rounded-full px-7 flex items-center pt-0.5 text-[15px] text-white">
                     {item.city_name}
                   </p>
                 </div>

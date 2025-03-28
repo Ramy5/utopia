@@ -22,7 +22,7 @@ const UserList = () => {
     queryFn: fetchUserData,
     suspense: true,
   });
-  console.log("🚀 ~ BookingList ~ usersData:", usersData);
+
   const userList = usersData?.map((item) => ({
     id: item?.id,
     image: item?.image,
@@ -31,8 +31,6 @@ const UserList = () => {
     email: item?.email,
     school: item?.school,
   }));
-
-  console.log("🚀 ~ userListx ~ userListx:", userList);
 
   // const userList = [
   //   {

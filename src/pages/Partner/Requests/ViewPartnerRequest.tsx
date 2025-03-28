@@ -33,7 +33,6 @@ const ViewPartnerRequest = () => {
     queryFn: fetchViewPartnerRequest,
     suspense: true,
   });
-  console.log("🚀 ~ ViewRequest ~ data:", data);
 
   return (
     <div>

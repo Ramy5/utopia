@@ -25,10 +25,7 @@ const Orders = () => {
     suspense: true,
   });
 
-  console.log("🚀 ~ Orders ~ data:", data);
-
   const renderDataItem = (label, value) => {
-    console.log("🚀 ~ renderDataItem ~ label:", label);
     return (
       <div className="flex items-center sm:block">
         <h3 className="flex items-center mb-0 text-sm sm:mb-2">

@@ -32,7 +32,6 @@ const postPartnerAttachments = async (postData) => {
 };
 
 const BookingInfo = ({ step, packageInfo, design, data }: any) => {
-
   const [showStudentInfo, setShowStudentInfo] = useState(true);
   const [netInvoice, setNetInvoice] = useState(null);
   const [grossInvoice, setGrossInvoice] = useState(null);
@@ -71,7 +70,6 @@ const BookingInfo = ({ step, packageInfo, design, data }: any) => {
     mutationKey: ["attach_receipt"],
     mutationFn: (data: any) => postPartnerAttachments(data),
     onSuccess: (data) => {
-      console.log(data);
       toast.success("Image attached successfully");
       setNetInvoice(null);
     },

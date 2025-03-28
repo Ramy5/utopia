@@ -47,7 +47,6 @@ const ChatForm: React.FC<chat_TP> = ({ className }) => {
   }, []);
 
   const handleSendMessage = async (text: string) => {
-    console.log("🚀 ~ handleSendMessage ~ text:", text);
     if (text.trim()) {
       await addDoc(collection(db, "messages"), {
         text,
