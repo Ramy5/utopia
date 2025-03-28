@@ -17,10 +17,22 @@ import { t } from "i18next";
 import { apiRequest } from "../../../utils/axios";
 import FormatDate from "../../../utils/FormatDate";
 import { toast } from "react-toastify";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../Loading/Loading";
 import Button from "../../atoms/Button/Button";
 import { ROLE } from "../../../constants/LocalStorageKeys";
+
+const fetchItems = async () => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/home",
+      method: "GET",
+    });
+    return data?.data?.links?.[0];
+  } catch (error) {
+    console.error("Error fetching items:", error.message);
+  }
+};
 
 const currentPages = [
   { id: 1, text: "home", icon: <IoHomeOutline className="text-xl" /> },
@@ -47,57 +59,63 @@ const currentPartnerPages = [
 const Footer = ({ hidden }: { hidden?: boolean }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [notificationState, setNotificationState] = useState([]);
-  const [requestTypeOpen, setRequestTypeOpen] = useState(false);
+  // const [requestTypeOpen, setRequestTypeOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState({
     notifications: false,
     account: false,
     more: false,
   });
-  const [isPartnerSidebarOpen, setIsPartnerSidebarOpen] = useState({
-    users: false,
-    snatches: false,
-  });
+  // const [isPartnerSidebarOpen, setIsPartnerSidebarOpen] = useState({
+  //   users: false,
+  //   snatches: false,
+  // });
   const isRTL = useRTL();
   const navigate = useNavigate();
   const { clearAuth, role, user, token } = useAuth();
   const { i18n } = useTranslation();
-  const [requests, setRequests] = useState([]);
+  // const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchRequests = async () => {
-    try {
-      setIsLoading(true);
-      const data: any = await apiRequest({
-        url: `/api/student/orders`,
-        method: "GET",
-      });
-      setRequests(data?.data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.error("Error fetching items:", error.message);
-    }
-  };
+  // const fetchRequests = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const data: any = await apiRequest({
+  //       url: `/api/student/orders`,
+  //       method: "GET",
+  //     });
+  //     setRequests(data?.data);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     setIsLoading(false);
+  //     console.error("Error fetching items:", error.message);
+  //   }
+  // };
 
-  const getAllNotifications = async () => {
-    try {
-      const data: any = await apiRequest({
-        url: "/api/student/notifications",
-        method: "GET",
-        token,
-      });
-      setNotificationState(data?.data);
-    } catch (error) {
-      console.error("Error fetching items:", error.message);
-    }
-  };
+  // const getAllNotifications = async () => {
+  //   try {
+  //     const data: any = await apiRequest({
+  //       url: "/api/student/notifications",
+  //       method: "GET",
+  //       token,
+  //     });
+  //     setNotificationState(data?.data);
+  //   } catch (error) {
+  //     console.error("Error fetching items:", error.message);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (token) {
-      getAllNotifications();
-      fetchRequests();
-    }
-  }, []);
+  const { data } = useQuery({
+    queryKey: ["footer-contant-data"],
+    queryFn: fetchItems,
+    suspense: true,
+  });
+
+  // useEffect(() => {
+  //   if (token) {
+  //     getAllNotifications();
+  //     fetchRequests();
+  //   }
+  // }, []);
 
   useLayoutEffect(() => {
     if (role === "Partner") {
@@ -109,59 +127,59 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
     }
   }, [isRTL, role]);
 
-  const notifications = notificationState?.map((notification: any) => {
-    const date = new Date(notification?.created_at?.replace(" ", "T"));
+  // const notifications = notificationState?.map((notification: any) => {
+  //   const date = new Date(notification?.created_at?.replace(" ", "T"));
 
-    return {
-      title: notification?.title,
-      message: notification?.description,
-      type: notification?.type,
-      id: notification?.id,
-      date: FormatDate(date),
-      isHighlighted: !!!notification?.is_read,
-      // notification?.notifiable_id
-      // notification?.notifiable_type
-    };
-  });
+  //   return {
+  //     title: notification?.title,
+  //     message: notification?.description,
+  //     type: notification?.type,
+  //     id: notification?.id,
+  //     date: FormatDate(date),
+  //     isHighlighted: !!!notification?.is_read,
+  //     // notification?.notifiable_id
+  //     // notification?.notifiable_type
+  //   };
+  // });
 
-  const deleteNotification = async (notificationId: number | string) => {
-    try {
-      await apiRequest({
-        url: "/api/student/delete-notification",
-        method: "POST",
-        data: {
-          id: notificationId,
-        },
-        token,
-      });
+  // const deleteNotification = async (notificationId: number | string) => {
+  //   try {
+  //     await apiRequest({
+  //       url: "/api/student/delete-notification",
+  //       method: "POST",
+  //       data: {
+  //         id: notificationId,
+  //       },
+  //       token,
+  //     });
 
-      getAllNotifications();
-      toast.success(t("notification was deleted successfully"));
-    } catch (error) {
-      console.error("Error fetching items:", error.message);
-    }
-  };
+  //     getAllNotifications();
+  //     toast.success(t("notification was deleted successfully"));
+  //   } catch (error) {
+  //     console.error("Error fetching items:", error.message);
+  //   }
+  // };
 
-  const handleLogout = () => {
-    clearAuth();
-    setCurrentPage(1);
-    setIsSidebarOpen({ ...isSidebarOpen, more: false });
-  };
+  // const handleLogout = () => {
+  //   clearAuth();
+  //   setCurrentPage(1);
+  //   setIsSidebarOpen({ ...isSidebarOpen, more: false });
+  // };
 
   // const toggleLang = () => {
   //   i18n.changeLanguage(isRTL ? "en" : "ar");
   // };
 
-  const toggleLang = () => {
-    const currentLang = localStorage.getItem("lang") || "en";
-    const newLang = currentLang === "ar" ? "en" : "ar";
+  // const toggleLang = () => {
+  //   const currentLang = localStorage.getItem("lang") || "en";
+  //   const newLang = currentLang === "ar" ? "en" : "ar";
 
-    i18n.changeLanguage(newLang);
+  //   i18n.changeLanguage(newLang);
 
-    localStorage.setItem("lang", newLang);
+  //   localStorage.setItem("lang", newLang);
 
-    window.location.reload();
-  };
+  //   window.location.reload();
+  // };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -180,48 +198,33 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
     });
   };
 
-  const renderSidebarContent = () => (
-    <div>
-      <div className="flex items-center gap-2">
-        <div className="w-10 h-10 overflow-hidden rounded-full">
-          <img
-            src={user?.image}
-            alt={user?.name}
-            className="object-cover w-full h-full"
-          />
-        </div>
-        <p className="font-semibold">{user?.name}</p>
-      </div>
-    </div>
-  );
-
   if (isLoading) return <Loading />;
 
   return (
-    <div className={hidden ? "hidden sm:block" : ""}>
+    <div className={hidden ? "block" : ""}>
       {/* Desktop Footer */}
       <footer
-        className={`hidden text-white bg-mainColor sm:block ${
+        className={` text-white bg-mainColor block ${
           hidden ? "hidden sm:block" : ""
         }`}
       >
         <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
-          <div className="container grid grid-cols-1 gap-24 py-20 lg:gap-40 md:grid-cols-2 lg:grid-cols-4">
-            {["courses", "destinations", "opportunities", "contact us"].map(
+          <div className=" grid overflow-x-hidden  grid-cols-1 gap-24 py-20 xl:gap-40 md:grid-cols-2 lg:grid-cols-4">
+            {["Courses", "Destinations", "Opportunities", "Contact us"].map(
               (section, index) => (
-                <div key={index} className="text-center md:text-right">
+                <div key={index} className={`text-center md:text-start `}>
                   <h4 className="w-3/5 pb-4 m-auto text-xl font-semibold border-b md:w-full">
                     {t(section)}
                   </h4>
                   <ul className="pt-6 space-y-6 text-sm">
-                    {section === "courses" &&
+                    {section === "Courses" &&
                       [
-                        "دورة اللغة الإنجليزية العامة",
-                        "دورة التحضير للأيلتس",
-                        "دورة التحضير للتوفل",
-                        "دورة بزنس انجلش",
+                        t("General English Course"),
+                        t("IELTS Preparation Course"),
+                        t("TOEFL Preparation Course"),
+                        t("Business English Course"),
                       ].map((item, i) => <li key={i}>{item}</li>)}
-                    {section === "destinations" &&
+                    {section === "Destinations" &&
                       [
                         "المملكة المتحدة",
                         "الولايات المتحدة الأمريكية",
@@ -229,22 +232,25 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
                         "أستراليا",
                         "نيوزيلندا",
                       ].map((item, i) => <li key={i}>{item}</li>)}
-                    {section === "opportunities" && (
+                    {section === "Opportunities" && (
                       <>
                         <li>
-                          <Link to="/bePartner">{t("become partner")}</Link>
+                          <Link to="/bePartner">{t("Become partner")}</Link>
                         </li>
-                        <li>يوتوبيا ستدي أعمال</li>
-                        <li>{t("jobs")}</li>
+                        {/* <li>يوتوبيا ستدي أعمال</li> */}
+                        {/* <li>{t("jobs")}</li> */}
                       </>
                     )}
-                    {section === "contact us" && (
+                    {section === "Contact us" && (
                       <>
                         <li>
-                          <a href="tel:966550808636">+966550808636</a>
+                          <a href={`tel:${data?.phone}`}>{data?.phone}</a>
                         </li>
                         <li>
-                          <a href="mailto:Admin@Utopia.com">Admin@Utopia.com</a>
+                          <a href={`mailto:${data?.email}`}>{data?.email}</a>
+                        </li>
+                        <li>
+                          <a>{data?.address}</a>
                         </li>
                       </>
                     )}
@@ -260,26 +266,6 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
           </div>
         </div>
       </footer>
-
-      {/* Mobile Footer */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-custom rounded-t-3xl sm:hidden">
-        <div className="flex justify-around text-gray-500">
-          {currentPages.map((currPage) => (
-            <button
-              onClick={() => handlePageChange(currPage.id)}
-              key={currPage.id}
-              className={`flex flex-col items-center py-3 px-4 gap-1 text-xs ${
-                currPage.id === currentPage
-                  ? "text-mainColor border-t-2 border-t-mainColor"
-                  : "border-t-2 border-t-transparent"
-              }`}
-            >
-              {currPage.icon}
-              <span>{`${t(currPage.text)}`}</span>
-            </button>
-          ))}
-        </div>
-      </nav>
 
       {/* PARTNER FOOTER */}
       {role === "Partner" && (
@@ -310,8 +296,28 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
         </nav>
       )}
 
+      {/* Mobile Footer */}
+      {/* <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-custom rounded-t-3xl sm:hidden">
+        <div className="flex justify-around text-gray-500">
+          {currentPages.map((currPage) => (
+            <button
+              onClick={() => handlePageChange(currPage.id)}
+              key={currPage.id}
+              className={`flex flex-col items-center py-3 px-4 gap-1 text-xs ${
+                currPage.id === currentPage
+                  ? "text-mainColor border-t-2 border-t-mainColor"
+                  : "border-t-2 border-t-transparent"
+              }`}
+            >
+              {currPage.icon}
+              <span>{`${t(currPage.text)}`}</span>
+            </button>
+          ))}
+        </div>
+      </nav> */}
+
       {/* NOTIFICATION SIDEBAR */}
-      {isSidebarOpen.notifications && (
+      {/* {isSidebarOpen.notifications && (
         <Sidebar className="animate_from_left">
           <div>
             <div
@@ -337,10 +343,10 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             </div>
           </div>
         </Sidebar>
-      )}
+      )} */}
 
       {/* ACCOUNT SIDEBAR */}
-      {isSidebarOpen.account && (
+      {/* {isSidebarOpen.account && (
         <Sidebar className="animate_from_left">
           <div className="mx-auto">
             <header className="flex items-center justify-between mb-6">
@@ -361,15 +367,14 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             ))}
           </div>
         </Sidebar>
-      )}
+      )} */}
 
       {/* MORE SIDEBAR */}
-      {isSidebarOpen.more && (
+      {/* {isSidebarOpen.more && (
         <Sidebar className="animate_from_left">
           <div>
             {renderSidebarContent()}
             <div className="mx-auto my-8">
-              {/* Language Toggle */}
               <div className="flex items-center justify-between mb-4">
                 <span className="font-medium">{t("language")}</span>
                 <div className="flex items-center gap-4">
@@ -389,7 +394,6 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
                 </div>
               </div>
 
-              {/* Menu List */}
               <ul className="flex flex-col gap-3 bg-white">
                 {[
                   "Why choose Utopia?",
@@ -428,10 +432,10 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             </div>
           </div>
         </Sidebar>
-      )}
+      )} */}
 
       {/* REQUEST TYPE */}
-      {requestTypeOpen && (
+      {/* {requestTypeOpen && (
         <div>
           <div
             onClick={() => setRequestTypeOpen(false)}
@@ -467,7 +471,7 @@ const Footer = ({ hidden }: { hidden?: boolean }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

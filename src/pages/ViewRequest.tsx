@@ -36,7 +36,6 @@ const ViewRequest = () => {
     queryFn: fetchViewRequest,
     suspense: true,
   });
-  console.log("🚀 ~ ViewRequest ~ data:", data);
 
   return (
     <section>

@@ -21,10 +21,8 @@ const DesignYourOwnCourse = () => {
   const [countryID, setCountryID] = useState(0);
   const [countryName, setCountryName] = useState("");
   const [cityName, setCityName] = useState("");
-  console.log("🚀 ~ DesignYourOwnCourse ~ cityName:", cityName);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  console.log("🚀 ~ DesignYourOwnCourse ~ page:", page);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -56,10 +54,8 @@ const DesignYourOwnCourse = () => {
     queryFn: fetchDesignYourOwnCourse,
     suspense: true,
   });
-  console.log("🚀 ~ DesignYourOwnCourse ~ designOwnCourse:", designOwnCourse);
 
   const data = designOwnCourse.data;
-  console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
 
   const fetchCountries = async () => {
     try {
@@ -130,9 +126,6 @@ const DesignYourOwnCourse = () => {
     enabled: !!cityName,
   });
 
-  console.log("🚀 ~ DesignYourOwnCourse ~ countriesFilter:", countriesFilter);
-  console.log("🚀 ~ DesignYourOwnCourse ~ cityNameFilter:", cityNameFilter);
-
   const renderCards = (items) => (
     <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {items?.map((item, index) => (
@@ -156,7 +149,9 @@ const DesignYourOwnCourse = () => {
             <div className="bg-[#EAEAEA] rounded-full p-1">
               <IoLocationOutline className="w-6 h-6" />
             </div>
-            <p className="bg-[#EAEAEA] rounded-full px-8 py-0.5">{item.name}</p>
+            <p className="bg-[#EAEAEA] rounded-full px-8 flex items-center pt-0.5">
+              {item.name}
+            </p>
           </div>
         </div>
       ))}
@@ -201,7 +196,7 @@ const DesignYourOwnCourse = () => {
     <>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
         <div className="my-16 sm:block hidden px-4 md:px-0">
-          <h2 className="text-5xl mb-12">{t("design your own course")}</h2>
+          <h2 className="text-5xl mb-12">{t("Design your own course")}</h2>
 
           <div className="flex items-center justify-between mb-12">
             <h2 className="text-lg lg:text-xl font-semibold">
@@ -216,7 +211,6 @@ const DesignYourOwnCourse = () => {
               onSubmit={() => {}}
             >
               {({ resetForm, values }) => {
-                console.log("🚀 ~ DesignYourOwnCourse ~ values:", values);
                 return (
                   <Form className="hidden sm:flex gap-2 md:gap-4 items-end justify-end">
                     <div className="w-48 md:w-56 lg:w-64">
@@ -299,7 +293,7 @@ const DesignYourOwnCourse = () => {
               </div>
             </div>
             <h2 className="text-xl font-semibold text-center py-6">
-              {t("design your own course")}
+              {t("Design your own course")}
             </h2>
           </div>
           <div>

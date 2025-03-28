@@ -25,7 +25,6 @@ const OurPartners = () => {
     queryFn: fetchOurPartners,
     suspense: true,
   });
-  console.log("🚀 ~ BankAccounts ~ data:", data);
 
   return (
     <div className="py-3 px-4 relative block sm:hidden">

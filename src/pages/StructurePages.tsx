@@ -7,7 +7,6 @@ import { useAuth } from "../context/AuthContext";
 
 const StructurePages = () => {
   const { role } = useAuth();
-  console.log("🚀 ~ StructurePages ~ role:", role)
 
   return (
     <div>

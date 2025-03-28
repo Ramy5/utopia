@@ -73,7 +73,6 @@ const Login = () => {
     mutationKey: ["student-login"],
     mutationFn: (data) => loginPost(data),
     onSuccess: (data) => {
-      console.log(data);
       setAuthData(data);
       navigate("/orders");
       setTimeout(() => {
@@ -90,7 +89,6 @@ const Login = () => {
     mutationKey: ["partner-login"],
     mutationFn: (data) => partnerLoginPost(data),
     onSuccess: (data) => {
-      console.log({ ...data, role: "Partner" });
       setAuthData({ ...data, role: "Partner" });
       navigate("/partnerBookingList");
       setTimeout(() => {
@@ -178,7 +176,7 @@ const Login = () => {
                   >
                     {t("student login")}
                   </Button>
-                  <Button
+                  {/* <Button
                     className={cn(
                       "text-black animate_scale animation_delay-3 rounded-xl font-normal",
                       {
@@ -190,7 +188,7 @@ const Login = () => {
                     action={() => setRole("partner")}
                   >
                     {t("partner login")}
-                  </Button>
+                  </Button> */}
                 </div>
 
                 {role === "student" ? (
@@ -340,7 +338,7 @@ const Login = () => {
                 >
                   {t("student login")}
                 </Button>
-                <Button
+                {/* <Button
                   className={cn(
                     "text-black animate_scale animation_delay-3 font-normal",
                     {
@@ -351,7 +349,7 @@ const Login = () => {
                   action={() => setRole("partner")}
                 >
                   {t("partner login")}
-                </Button>
+                </Button> */}
               </div>
 
               {role === "student" ? (

@@ -7,21 +7,45 @@ import { toast } from "react-toastify";
 import { apiRequest } from "../../../utils/axios";
 import cn from "../../../utils/cn";
 import DownLoadApp from "../../atoms/molecules/downLoad-app/DownLoadApp";
+import { useFormikContext } from "formik";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+
+const postFavorite = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/store-favorite",
+      method: "POST",
+      data: postData,
+    });
+    return data?.data;
+  } catch (errors) {
+    toast.error(errors);
+    console.log("🚀 ~ loginPost ~ error:", errors);
+  }
+};
 
 type VerificationCode_TP = {
   setStep?: React.Dispatch<React.SetStateAction<number>>;
   userId?: number;
+  packageId?: number;
+  mutatePackage?: any;
+  selectedCourse?: any;
 };
 
 const VerificationCode: React.FC<VerificationCode_TP> = ({
   userId,
   setStep,
+  mutatePackage,
+  selectedCourse,
+  packageId,
 }) => {
   const [otp, setOtp] = useState<string[]>(Array(4).fill(""));
-  const { token, user } = useAuth();
-  console.log("🚀 ~ user:", user);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [isPending, setIsPending] = useState(false);
+  const { values } = useFormikContext();
+  const navigate = useNavigate();
+  const { setAuthData } = useAuth();
 
   const [timer, setTimer] = useState(() => {
     const storedVerification = localStorage.getItem("verification");
@@ -66,20 +90,51 @@ const VerificationCode: React.FC<VerificationCode_TP> = ({
     }
   };
 
+  const { mutate, isSuccess } = useMutation({
+    mutationKey: ["Favorite"],
+    mutationFn: (data: any) => postFavorite(data),
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      navigate("/favorites");
+    },
+  });
+
   const verifyOTP = async (otp: string) => {
     try {
       setIsPending(true);
       const data = await apiRequest({
-        url: "/api/student/checkOtp",
+        url: "/api/student/checkOtp2",
         method: "POST",
         data: {
           user_id: userId,
           code: otp,
         },
       });
-      setStep?.(3);
       toast.success("verify is completed");
       setIsPending(false);
+      if (!!selectedCourse) {
+        navigate("/designCourse/register", {
+          state: {
+            id: selectedCourse?.id,
+            numberOfWeeks: selectedCourse?.numberOfWeeks,
+            startDate: selectedCourse?.startDate,
+            amount: selectedCourse?.amount,
+            user_id: data?.data?.user?.id,
+          },
+        });
+      } else if (!!mutatePackage) {
+        mutatePackage({
+          user_id: data?.data?.user?.id,
+          plan_id: values?.plan_id,
+          partner_id: values?.partner_id,
+          package_id: values?.package_id,
+        });
+      } else if (packageId) {
+        mutate({ package_id: packageId });
+      } else {
+        setStep(3);
+      }
+      setAuthData(data?.data);
       return data?.data;
     } catch (error) {
       setIsPending(false);

@@ -34,7 +34,6 @@ const DesignYourOwnCourseRegister = () => {
     queryFn: fetchPartnerDetails,
     suspense: true,
   });
-  console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
 
   const isActive = [
     { label: "age group", value: 18 },
@@ -55,10 +54,11 @@ const DesignYourOwnCourseRegister = () => {
       value: "active" === "active" ? t("available") : t("unavailable"),
     },
   ];
+
   return (
     <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto">
       <h2 className="text-3xl sm:text-4xl md:text-5xl mb-5 md:mb-0 mt-12 hidden sm:block md:hidden">
-        {t("register now")}
+        {t("Register now")}
       </h2>
       <div className="relative block sm:hidden">
         <div className="absolute top-1/2 -translate-y-1/2 ">
@@ -77,7 +77,7 @@ const DesignYourOwnCourseRegister = () => {
         <div className="order-2 md:order-1">
           <div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl mb-5 md:mb-0 hidden md:block">
-              {t("register now")}
+              {t("Register now")}
             </h2>
           </div>
           <div className="mt-8 md:mt-28">
@@ -91,7 +91,7 @@ const DesignYourOwnCourseRegister = () => {
                   className="text-white w-6 h-6"
                 />
               </div>
-              <p className="bg-mainColor rounded-full px-5 py-0.5 text-white text-[15px]">
+              <p className="bg-mainColor rounded-full px-5 pt-0.5 flex items-center text-white text-[15px]">
                 {data?.partner?.city}
               </p>
             </div>
@@ -186,9 +186,9 @@ const DesignYourOwnCourseRegister = () => {
       </div>
       <Button
         className="mb-28 w-full bg-mainColor sm:hidden"
-        action={() => navigate("/designCourse/registration", 
-          {state: location.state}
-        )}
+        action={() =>
+          navigate("/designCourse/registration", { state: location.state })
+        }
       >
         {t("next")}
       </Button>

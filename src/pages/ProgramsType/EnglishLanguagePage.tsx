@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { apiRequest } from "../../utils/axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { IoLocationOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -12,12 +12,29 @@ import { IoIosSearch } from "react-icons/io";
 import BaseInput from "../../components/atoms/molecules/formik-fields/BaseInput";
 import Button from "../../components/atoms/Button/Button";
 import { TbFilter } from "react-icons/tb";
+import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
+import { MdOutlineFavorite } from "react-icons/md";
+import { GrFavorite } from "react-icons/gr";
+
+const postFavorite = async (postData) => {
+  try {
+    const data = await apiRequest({
+      url: "/api/student/store-favorite",
+      method: "POST",
+      data: postData,
+    });
+    return data?.data;
+  } catch (errors) {
+    toast.error(errors);
+  }
+};
 
 const EnglishLanguagePage = () => {
-  const [cityOfEnglichPackage, setCityOfEnglichPackage] = useState("");
   const [nameOfEnglichPackage, setNameOfEnglichPackage] = useState("");
   const [dropDown, setdropDown] = useState(false);
   const [countryID, setCountryID] = useState(0);
+  const { token } = useAuth();
 
   const navigate = useNavigate();
   const fetchEnglishLanguage = async () => {
@@ -32,13 +49,11 @@ const EnglishLanguagePage = () => {
     }
   };
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["english_language_data"],
     queryFn: fetchEnglishLanguage,
     suspense: true,
   });
-
-  console.log("🚀 ~ EnglishLanguagePage ~ data:", data);
 
   const fetchByNameOfEnglishPachages = async (name) => {
     try {
@@ -58,11 +73,6 @@ const EnglishLanguagePage = () => {
     suspense: true,
     enabled: !!nameOfEnglichPackage,
   });
-
-  console.log(
-    "🚀 ~ EnglishLanguagePage ~ filterNameEnglishPachages:",
-    filterNameEnglishPachages
-  );
 
   const fetchCountries = async () => {
     try {
@@ -114,33 +124,67 @@ const EnglishLanguagePage = () => {
     enabled: !!countryID,
   });
 
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationKey: ["Favorite"],
+    mutationFn: (data: any) => postFavorite(data),
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      // toast.success(t("Saved to favorites successfully, enjoy it!"));
+      refetch();
+    },
+  });
+
   const renderCardsInSmallScreen = (items) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 sm:gap-8 gap-y-12 mb-36 cursor-pointer">
+    <div className="grid grid-cols-2 sm:grid-cols-2 justify-center gap-2 sm:gap-8 gap-y-12 mb-36 cursor-pointer">
       {items?.map((item, index) => (
         <div
           key={index}
-          className="shadow-lg rounded-3xl overflow-hidden"
-          onClick={() =>
+          className="shadow-lg rounded-xl overflow-hidden"
+          onClick={(e) => {
+            if (e.target.closest(".favorite-button")) return;
             navigate("/englishLanguage/details", {
               state: item,
-            })
-          }
+            });
+          }}
         >
-          <div className="rounded-3xl overflow-hidden h-60">
+          <div className="rounded-xl overflow-hidden h-44 sm:h-60 relative">
+            <div
+              className="absolute top-4 right-2.5 bg-mainColor rounded-xl p-1.5 z-50 favorite-button"
+              title={
+                token && item?.is_favorite === 1
+                  ? t("Remove from Favorites")
+                  : t("Add to Favorites")
+              }
+              onClick={() => {
+                if (!token) {
+                  navigate("/register");
+                  return;
+                }
+                mutate({ package_id: item?.id });
+              }}
+            >
+              {token && item?.is_favorite === 1 ? (
+                <MdOutlineFavorite size={22} className="text-white" />
+              ) : (
+                <GrFavorite size={22} className="text-white" />
+              )}
+            </div>
             <img
               src={item.packageImage?.[0]?.image}
               alt="country"
               className="w-full h-full"
             />
           </div>
-          <div className="px-5 py-8">
+          <div className="px-3 sm:px-5 py-4 sm:py-8">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-medium mb-2">{item.name}</h2>
-              <p className="text-xl font-medium text-mainColor">
+              <h2 className="text-base sm:text-xl font-medium mb-1 sm:mb-2">
+                {item.name}
+              </h2>
+              <p className="text-[15px] sm:text-xl font-semibold sm:font-medium text-mainColor whitespace-nowrap">
                 {item.g_price} <span>{item.unit}</span>
               </p>
             </div>
-            <p className="text-[#AEAAAE] text-lg">
+            <p className="text-[#AEAAAE] sm:text-lg">
               {item.cityData.county_name}
             </p>
           </div>
@@ -163,7 +207,7 @@ const EnglishLanguagePage = () => {
           >
             <div className="flex items-center justify-between mb-12">
               <h2 className="text-xl font-semibold whitespace-nowrap">
-                {t("english language study packages")}
+                {t("English language study packages")}
               </h2>
               <div className="hidden justify-end gap-1.5 sm:flex">
                 <div className="w-48 md:w-1/2 lg:w-80">
@@ -195,10 +239,10 @@ const EnglishLanguagePage = () => {
                   </Formik>
                 </div>
                 <Button
-                  className="rounded-3xl py-2.5 px-3 md:px-8 "
+                  className="rounded-3xl py-2.5 px-3 md:px-8 hover:bg-mainYellow duration-500"
                   action={() => navigate("/designCourse")}
                 >
-                  {t("design your own course")}
+                  {t("Design your own course")}
                 </Button>
               </div>
               <p className="block text-2xl font-medium sm:hidden text-mainColor">
@@ -206,16 +250,17 @@ const EnglishLanguagePage = () => {
               </p>
             </div>
 
-            <div className="hidden grid-cols-2 gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
+            <div className="hidden grid-cols-2 gap-x-3 gap-y-12 sm:grid md:grid-cols-3 lg:grid-cols-4">
               {data?.map((packages, index) => (
                 <div
                   key={index}
                   className="text-center group cursor-pointer border border-[#707070] rounded-2xl  relative packege"
-                  onClick={() =>
+                  onClick={(e) => {
+                    if (e.target.closest(".favorite-button")) return;
                     navigate("/englishLanguage/details", {
                       state: packages,
-                    })
-                  }
+                    });
+                  }}
                 >
                   {packages?.is_note === 1 && (
                     <p className="absolute bg-[#FFCC1A] px-4 pt-2.5 pb-2 text-xs rounded-full left-1/2 w-fit whitespace-nowrap -translate-x-1/2 -top-4 z-20">
@@ -223,7 +268,28 @@ const EnglishLanguagePage = () => {
                     </p>
                   )}
                   <div className="h-[17.5vw]">
-                    <div className="flex rounded-2xl overflow-hidden max-h-full">
+                    <div className="flex rounded-2xl overflow-hidden max-h-full relative">
+                      <div
+                        className="absolute top-7 right-2.5 bg-mainColor rounded-xl p-1.5 z-50 favorite-button"
+                        title={
+                          token && packages?.is_favorite === 1
+                            ? t("Remove from Favorites")
+                            : t("Add to Favorites")
+                        }
+                        onClick={() => {
+                          if (!token) {
+                            navigate("/register");
+                            return;
+                          }
+                          mutate({ package_id: packages?.id });
+                        }}
+                      >
+                        {token && packages?.is_favorite === 1 ? (
+                          <MdOutlineFavorite size={25} className="text-white" />
+                        ) : (
+                          <GrFavorite size={25} className="text-white" />
+                        )}
+                      </div>
                       <img
                         src={packages.packageImage[0].image}
                         className="rounded-t-2xl w-full h-[17.5vw] group-hover:h-[13vw] duration-300 object-cover rounded-b-2xl group-hover:rounded-b-none"
@@ -235,14 +301,17 @@ const EnglishLanguagePage = () => {
                       {packages.partner_name}
                     </p>
                     <p
-                      className="max-w-full px-2.5 my-5 overflow-hidden text-black duration-300 text-ellipsis max-h-48 text-[15px]"
-                      style={{
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 6,
-                      }}
+                      className="max-w-full px-3.5 my-4 overflow-hidden text-black duration-300 text-ellipsis max-h-48 text-[15px]"
+                      // style={{
+                      //   display: "-webkit-box",
+                      //   WebkitBoxOrient: "vertical",
+                      //   WebkitLineClamp: 6,
+                      // }}
                     >
-                      {packages.desc}
+                      {/* {packages.desc} */}
+                      {packages.desc.length > 172
+                        ? packages.desc.slice(0, 172) + "..."
+                        : packages.desc}
                     </p>
                     <p className="pt-[1.3rem] pb-3 text-xl text-white bg-mainColor rounded-2xl">
                       {packages.g_price} <span>{packages.unit}</span>

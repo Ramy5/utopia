@@ -32,10 +32,6 @@ const ListSpecializations = () => {
     suspense: true,
   });
 
-  console.log(
-    "🚀 ~ ListSpecializations ~ listSpecializations:",
-    listSpecializations
-  );
   return (
     <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 px-4 m-auto md:hidden block">
       <div className="relative block md:hidden">

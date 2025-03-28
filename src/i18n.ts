@@ -47,7 +47,7 @@ i18next
       // optional custom function to get the user's language, has to return a string (lng) or an array of strings (lngs)
       // getCustomDetector: function() { return 'en'; }
     },
-    fallbackLng: "en",
+    fallbackLng: localStorage.getItem("lang") || "en",
     interpolation: {
       escapeValue: false,
     },

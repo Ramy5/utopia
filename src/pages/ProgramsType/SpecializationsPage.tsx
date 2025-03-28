@@ -15,7 +15,6 @@ import { useAuth } from "../../context/AuthContext";
 const SpecializationsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("🚀 ~ SpecializationsPage ~ location:", location);
   const { user } = useAuth();
   const { id: specializationID = "", universityName = "" } =
     location.state || {};
@@ -37,10 +36,6 @@ const SpecializationsPage = () => {
     queryFn: () => fetchSpecialization(specializationID),
     suspense: true,
   });
-  console.log(
-    "🚀 ~ SpecializationsPage ~ specializations:",
-    specializations.order_price
-  );
 
   return (
     <div>

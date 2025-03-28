@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { bePartnerValidationSchema } from "../../Schema/BePartnerSchema";
 import cn from "../../utils/cn";
+import { FormikError } from "../../components/atoms/molecules/formik-fields/FormikError";
 
 const postBePartner = async (postData) => {
   try {
@@ -31,6 +32,7 @@ const postBePartner = async (postData) => {
 
 const BePartner = () => {
   const navigate = useNavigate();
+  const [successData, setSuccessData] = useState(null);
 
   const initialValues = {
     first_name: "",
@@ -53,21 +55,22 @@ const BePartner = () => {
     mutationKey: ["BePartner"],
     mutationFn: (data: any) => postBePartner(data),
     onSuccess: (data) => {
+      setSuccessData(data);
       toast.success(t("The data has been added successfully"));
     },
   });
 
   const formFields = [
-    { id: "first_name", label: "first name" },
-    { id: "last_name", label: "last name" },
-    { id: "mobile_number", label: "Mobile number" },
-    { id: "Email", label: "Email" },
-    { id: "address", label: "address" },
-    { id: "postal_code", label: "postal code" },
-    { id: "country", label: "country" },
-    { id: "city", label: "city" },
-    { id: "job_title", label: "job title" },
-    { id: "company_name", label: "company name" },
+    { id: "first_name", label: "First name", type: "text" },
+    { id: "last_name", label: "Last name", type: "text" },
+    { id: "mobile_number", label: "Mobile number", type: "number" },
+    { id: "Email", label: "Email", type:"email" },
+    { id: "address", label: "Address", type:"text" },
+    { id: "postal_code", label: "Postal code", type:"text" },
+    { id: "country", label: "Country", type:"text" },
+    { id: "city", label: "City", type:"text" },
+    { id: "job_title", label: "Job title", type:"text" },
+    { id: "company_name", label: "Company name", type:"text" },
   ];
 
   return (
@@ -76,7 +79,9 @@ const BePartner = () => {
         {isSuccess ? (
           <div className="w-[90%] sm:w-3/4 md:w-2/3 lg:w-1/2 my-12 sm:my-16 mx-auto">
             <div className="px-8 py-12 text-center text-white bg-mainColor rounded-2xl">
-              <h2 className="text-5xl font-medium">{t("Hello!")} محمد</h2>
+              <h2 className="text-5xl font-medium">
+                {t("Hello!")} {successData?.f_name} {successData?.l_name}
+              </h2>
               <p className="my-8 text-lg">
                 {t(
                   "Thank you for getting in touch. We will contact you as soon as possible"
@@ -90,7 +95,7 @@ const BePartner = () => {
             </div>
             <Button
               type="submit"
-              className="bg-[#1B0924] px-12 py-3.5 rounded-2xl ms-auto mb-12 sm:mb-0 mt-8"
+              className="bg-[#1B0924] px-12 py-3.5 block mx-auto rounded-2xl mb-12 sm:mb-0 mt-8"
               action={() => navigate("/")}
             >
               {t("Return to the homepage")}
@@ -100,7 +105,7 @@ const BePartner = () => {
           <>
             <div className="px-4 my-8 sm:my-16 md:px-0">
               <h2 className="mb-0 text-3xl font-medium sm:text-6xl sm:mb-20">
-                {t("become a partner")}
+                {t("Become a partner")}
               </h2>
             </div>
 
@@ -125,7 +130,7 @@ const BePartner = () => {
               >
                 {({ errors, touched, isValid, dirty }) => (
                   <Form>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-10">
                       {formFields.map((field) => (
                         <div key={field.id}>
                           <label
@@ -137,14 +142,13 @@ const BePartner = () => {
                           <BaseInput
                             id={field.id}
                             name={field.id}
-                            type="text"
+                            type={field.type}
                             className="py-3 ps-[8.5rem]"
                           />
-                          {errors[field.id] && touched[field.id] && (
-                            <div className="mt-2 text-sm text-red-500">
-                              {errors[field.id]}
-                            </div>
-                          )}
+                          <FormikError
+                            name={field.id}
+                            className="absolute whitespace-nowrap"
+                          />
                         </div>
                       ))}
                     </div>

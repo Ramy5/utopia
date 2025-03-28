@@ -12,7 +12,6 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const SuccessStories = () => {
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
-  console.log("🚀 ~ SuccessStories ~ selectedStoryIndex:", selectedStoryIndex);
   const swiperRef = useRef(null);
   const swiperMoveRef = useRef(null);
   const isRTL = useRTL();
@@ -63,7 +62,7 @@ const SuccessStories = () => {
   return (
     <div className="bg-[#1B0924] px-8 pb-36 hidden sm:block">
       <h2 className="pt-20 mb-20 md:mb-36 text-6xl font-base text-white">
-        {t("success stories")}
+        {t("Success stories")}
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-10 gap-8">
         <div className="col-span-5 lg:col-span-6">
@@ -132,12 +131,12 @@ const SuccessStories = () => {
             }`}
           >
             <IoIosArrowForward
-              className="text-white cursor-pointer"
+              className={`text-white cursor-pointer ${isRTL ? "rotate-0" : "rotate-180"}`}
               size={26}
               onClick={handleNextSlide}
             />
             <IoIosArrowBack
-              className="text-white cursor-pointer"
+              className={`text-white cursor-pointer ${isRTL ? "rotate-0" : "rotate-180"}`}
               size={26}
               onClick={handlePrevSlide}
             />
@@ -151,7 +150,7 @@ const SuccessStories = () => {
             }}
             // modules={[Pagination]}
             loop={true}
-            speed={1200}
+            speed={2500}
             ref={swiperRef}
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             onSlideChange={(swiper) => {
@@ -175,6 +174,13 @@ const SuccessStories = () => {
                       style={{ lineHeight: "35px" }}
                     >
                       <span
+                        className="text-ellipsis max-h-48"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
+                          WebkitLineClamp: 4,
+                          overflow: "hidden",
+                        }}
                         dangerouslySetInnerHTML={{ __html: storie?.desc }}
                       />
                     </h3>

@@ -23,7 +23,6 @@ const BookingList = () => {
     queryFn: fetchRequests,
     suspense: true,
   });
-  console.log("🚀 ~ BookingList ~ requests:", requests);
 
   return (
     <div>

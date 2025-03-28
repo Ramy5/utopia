@@ -11,7 +11,7 @@ import OtherFeesLight from "../../assets/Other_fees_light.png";
 import TotalCosts from "../../assets/TotalCosts.png";
 import { t } from "i18next";
 import BaseInput from "../../components/atoms/molecules/formik-fields/BaseInput";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "../../utils/axios";
 import { PiHouseLineLight, PiHouseLineThin } from "react-icons/pi";
 import Button from "../../components/atoms/Button/Button";
@@ -99,7 +99,6 @@ const postProcessPayment = async (postData) => {
     return data?.data;
   } catch (errors) {
     toast.error(errors);
-    console.log("🚀 ~ loginPost ~ error:", errors);
   }
 };
 
@@ -107,41 +106,28 @@ const DesignCourseForm = () => {
   const [step, setStep] = useState(1);
   const location = useLocation();
   const numberWeek = location?.state?.numberOfWeeks;
+  console.log("🚀 ~ DesignCourseForm ~ numberWeek:", numberWeek);
   const [numberOfWeeks, setNumberOfWeeks] = useState(null);
+  console.log("🚀 ~ DesignCourseForm ~ numberOfWeeks:", numberOfWeeks);
+  const [studyDurationWeeks, setStudyDurationWeeks] = useState(null);
+  const [stayDurationWeeks, setStayDurationWeeks] = useState(null);
   const partnersID = location?.state?.id;
   const startDate = location?.state?.startDate;
   const isRTL = useRTL();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { id = null, amount = "", user_id = null } = location.state || {};
 
-  const isEnabled = !!partnersID && !!startDate && !!numberWeek;
+  // const isEnabled = !!partnersID && !!startDate && !!numberWeek;
 
   useEffect(() => {
     setNumberOfWeeks({
       id: Number(numberWeek),
-      label: `${numberWeek} ${!isRTL ? "A week" : "أسابيع"}`,
-      value: `${numberWeek} ${!isRTL ? "A week" : "أسابيع"}`,
+      label: `${numberWeek} ${t("A Week")}`,
+      value: `${numberWeek} ${t("A Week")}`,
     });
-  }, [!!numberWeek]);
-
-  const initialValues = {
-    number_weeks: numberOfWeeks || 0,
-    start_date: startDate || "",
-    partner_id: partnersID || 0,
-    price: 0,
-    courses_id: 0,
-    courses_price: 0,
-    living_id: 0,
-    living_price: 0,
-    pick_id: 0,
-    pick_price: 0,
-    medical_id: 0,
-    medical_price: 0,
-    fees_id: 0,
-    fees_price: 0,
-    amount: 0,
-  };
+  }, [numberWeek]);
 
   const fetchChooseYourCourseDetail = async () => {
     try {
@@ -156,24 +142,134 @@ const DesignCourseForm = () => {
   };
 
   const { data } = useQuery({
-    queryKey: ["choose-course-detail", numberOfWeeks?.id],
+    queryKey: ["choose-course-detail", !!numberOfWeeks?.id],
     queryFn: fetchChooseYourCourseDetail,
     suspense: true,
     enabled: !!numberOfWeeks?.id,
   });
-  console.log("🚀 ~ DesignYourOwnCourse ~ data:", data);
+  console.log("🚀 ~ DesignCourseForm ~ data:", data);
 
-  // const weekOptions = Array.from({ length: 12 }, (_, i) => ({
-  //   id: i + 1,
-  //   label: i + 1,
-  //   value: i + 1,
-  // }));
+  console.log("🚀 ~ data?.other_fees:", data?.other_fees);
 
-  const weekOptions = [1, 2, 3, 4, 12].map((num) => ({
+  const otherFeesWithOutSummer = data?.other_fees?.filter(
+    (item) => item.key !== "fees"
+  );
+  console.log("🚀 ~ otherFeesWithOutSummer:", otherFeesWithOutSummer);
+  const otherFeesSummer = data?.other_fees?.filter(
+    (item) => item.key === "fees"
+  );
+  console.log("🚀 ~ otherFeesSummer:", otherFeesSummer);
+
+  // const totalFeesPrice = data.other_fees
+  // console.log("🚀 ~ totalFeesPrice:", totalFeesPrice)
+
+  const totalFeesPrice = data.other_fees.reduce((sum, fee) => {
+    const planTotal = fee.plan.reduce(
+      (planSum, plan) => planSum + (Number(plan.total_price) || 0),
+      0
+    );
+    return sum + planTotal;
+  }, 0);
+
+  const initialValues = {
+    number_weeks: numberOfWeeks || 0,
+    start_date: startDate || "",
+    partner_id: partnersID || 0,
+    price: 0,
+    courses_id: 0,
+    courses_price: 0,
+    courses_title: 0,
+    living_id: 0,
+    living_price: 0,
+    living_title: 0,
+    pick_id: 0,
+    pick_price: 0,
+    pick_title: 0,
+    medical_id: 0,
+    medical_price: 0,
+    medical_title: 0,
+    fees_id: data.other_fees?.[0]?.id,
+    fees_price: totalFeesPrice,
+    fees_title: 0,
+    // feesSummer_id: otherFeesSummer?.[0]?.id || 0,
+    // feesSummer_price: otherFeesSummer?.[0]?.plan?.[0]?.total_price || 0,
+    // feesSummer_title: otherFeesSummer?.[0]?.value || 0,
+    amount: 0,
+  };
+
+  const fetchChooseYourCourseDetailOfStudyDuration = async () => {
+    try {
+      const data = await apiRequest({
+        url: `/api/student/choose-your-course-details/${partnersID}/${
+          studyDurationWeeks?.id ? studyDurationWeeks?.id : numberOfWeeks?.id
+        }/${startDate}?per_page=10000`,
+        method: "GET",
+      });
+      return data?.data;
+    } catch (error) {
+      console.error("Error fetching items:", error.message);
+      throw error;
+    }
+  };
+
+  const { data: studyDuration } = useQuery({
+    queryKey: [
+      "choose-course-detail_study",
+      studyDurationWeeks?.id,
+      numberOfWeeks?.id,
+    ],
+    queryFn: fetchChooseYourCourseDetailOfStudyDuration,
+    suspense: true,
+    enabled: !!studyDurationWeeks?.id || !!numberOfWeeks?.id,
+  });
+  console.log("🚀 ~ DesignCourseForm ~ studyDuration:", studyDuration);
+
+  const fetchChooseYourCourseDetailOfStayDuration = async () => {
+    try {
+      const data = await apiRequest({
+        url: `/api/student/choose-your-course-details/${partnersID}/${
+          stayDurationWeeks?.id ? stayDurationWeeks?.id : numberOfWeeks?.id
+        }/${startDate}?per_page=10000`,
+        method: "GET",
+      });
+      return data?.data;
+    } catch (error) {
+      console.error("Error fetching items:", error.message);
+    }
+  };
+
+  const { data: stayDuration } = useQuery({
+    queryKey: [
+      "choose-course-detail_stay",
+      stayDurationWeeks?.id,
+      numberOfWeeks?.id,
+    ],
+    queryFn: fetchChooseYourCourseDetailOfStayDuration,
+    suspense: true,
+    enabled: !!stayDurationWeeks?.id || !!numberOfWeeks?.id,
+  });
+
+  const weekOptions = Array.from({ length: 47 }, (_, i) => i + 2).map(
+    (num) => ({
+      id: num,
+      label: `${num}`,
+      value: `${num}`,
+    })
+  );
+
+  const weekStayOptions = Array.from(
+    {
+      length: studyDurationWeeks
+        ? studyDurationWeeks?.id - 1
+        : numberOfWeeks?.id - 1,
+    },
+    (_, i) => i + 2
+  ).map((num) => ({
     id: num,
-    label: num,
-    value: num,
+    label: `${num}`,
+    value: `${num}`,
   }));
+
   const postCourseData = async (postData) => {
     try {
       const response = await apiRequest({
@@ -195,7 +291,6 @@ const DesignCourseForm = () => {
     mutationKey: ["uniProcessPayment"],
     mutationFn: (data: any) => postProcessPayment(data),
     onSuccess: (data) => {
-      console.log(data);
       window.location.href = data?.redirect_url;
     },
   });
@@ -209,15 +304,15 @@ const DesignCourseForm = () => {
     mutationFn: postCourseData,
     onSuccess: (data) => {
       toast.success(t("The course was designed successfully."));
-      navigate("/designRegister", {
-        state: {
-          amount: 1200,
-          user_id: user_id,
-          design_id: id,
-          total_amount: amount * +numberOfWeeks?.id,
-          date_start: startDate,
-        },
-      });
+      // navigate("/designRegister", {
+      //   state: {
+      //     amount: 1200,
+      //     user_id: user_id,
+      //     design_id: id,
+      //     total_amount: amount * +numberOfWeeks?.id,
+      //     date_start: startDate,
+      //   },
+      // });
       // mutateProcessPayment({
       //   amount: 1200,
       //   user_id: user_id,
@@ -225,6 +320,7 @@ const DesignCourseForm = () => {
       //   total_amount: amount * numberOfWeeks,
       //   date_start: startDate,
       // });
+      navigate("/Message_peration");
     },
     onError: (error) => {
       console.error("Error posting data:", error.message);
@@ -234,6 +330,10 @@ const DesignCourseForm = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
 
   return (
     <div>
@@ -256,9 +356,18 @@ const DesignCourseForm = () => {
                           alt="Graduation"
                           className="hidden w-16 h-10 sm:block"
                         />
-                        <p className="text-lg font-medium sm:font-normal sm:text-xl">
-                          {t("Courses")}
-                        </p>
+                        <div>
+                          <p className="text-lg font-medium sm:font-normal sm:text-xl">
+                            {t("Courses")}
+                          </p>
+                          {studyDuration?.courses?.[0]?.type ? (
+                            <span className="w-fit mt-0.5 text-sm text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-3.5 flex items-center pt-1 pb-1 h-6">
+                              {studyDuration?.courses?.[0]?.type}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
 
                       <div className="relative flex items-center gap-2">
@@ -266,22 +375,22 @@ const DesignCourseForm = () => {
                           {t("study duration")}
                         </p>
                         <BaseSelect
-                          id="number_weeks"
-                          name="number_weeks"
+                          id="study_duration"
+                          name="study_duration"
                           options={weekOptions}
                           onChange={(option) => {
-                            setNumberOfWeeks({
+                            setStudyDurationWeeks({
                               id: option.id,
-                              label: `${option.label} ${
-                                !isRTL ? "A week" : "أسابيع"
-                              }`,
-                              value: `${option.value} ${
-                                !isRTL ? "A week" : "أسابيع"
-                              }`,
+                              label: `${option.label} ${t("A Week")}`,
+                              value: `${option.value} ${t("A Week")}`,
                             });
                           }}
                           className="w-full text-center text-black"
-                          value={numberOfWeeks}
+                          value={
+                            studyDurationWeeks
+                              ? studyDurationWeeks
+                              : numberOfWeeks
+                          }
                           selectStyle={DesignCourseSelect}
                         />
                       </div>
@@ -289,7 +398,7 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.courses?.map((course, index) => {
+                        {studyDuration?.courses?.map((course, index) => {
                           return (
                             <li
                               key={index}
@@ -309,6 +418,7 @@ const DesignCourseForm = () => {
                                       "courses_price",
                                       course.plan?.[0]?.total_price
                                     );
+                                    setFieldValue("courses_title", course.key);
                                   }}
                                 />
                                 <div className="mb-3 ">
@@ -323,12 +433,12 @@ const DesignCourseForm = () => {
                                       {course.key}
                                     </h2>{" "}
                                     {course.note && (
-                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 flex items-center pt-1 pb-0.5 h-7">
                                         {course.note}
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-sm sm:text-[15px] mt-5">
+                                  <p className="text-sm sm:text-[15px] mt-5 flex flex-wrap gap-y-3">
                                     {course.value.split("-")?.map((item) => (
                                       <span
                                         className={cn(
@@ -378,30 +488,41 @@ const DesignCourseForm = () => {
                     <div className="flex items-center justify-between mb-4 sm:mb-12">
                       <div className="flex items-center gap-1 sm:gap-0">
                         <PiHouseLineThin className="hidden w-16 h-14 sm:block" />
-                        <p className="text-lg font-medium sm:text-xl sm:font-normal ">
-                          {t("Housing")}
-                        </p>
+                        <div>
+                          <p className="text-lg font-medium sm:font-normal sm:text-xl">
+                            {t("Housing")}
+                          </p>
+                          {stayDuration?.living?.[0]?.type ? (
+                            <span className="w-fit mt-0.5 text-sm text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-3.5 flex items-center pt-1 pb-1 h-6">
+                              {stayDuration?.living?.[0]?.type}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
 
                       <div className="relative flex items-center gap-2">
-                        <p className="text-[15px]">{t("duration of stay")}</p>
+                        <p className="text-[15px] bg-mainColor py-3 px-6 text-white rounded-2xl">
+                          {t("duration of stay")}
+                        </p>
                         <BaseSelect
-                          id="number_weeks"
-                          name="number_weeks"
-                          options={weekOptions}
+                          id="stay_duration"
+                          name="stay_duration"
+                          options={weekStayOptions}
                           onChange={(option) => {
-                            setNumberOfWeeks({
+                            setStayDurationWeeks({
                               id: option.id,
-                              label: `${option.label} ${
-                                !isRTL ? "A week" : "أسابيع"
-                              }`,
-                              value: `${option.value} ${
-                                !isRTL ? "A week" : "أسابيع"
-                              }`,
+                              label: `${option.label} ${t("A Week")}`,
+                              value: `${option.value} ${t("A Week")}`,
                             });
                           }}
                           className="w-full text-center text-black"
-                          value={numberOfWeeks}
+                          value={
+                            stayDurationWeeks
+                              ? stayDurationWeeks
+                              : numberOfWeeks
+                          }
                           selectStyle={DesignCourseSelect}
                         />
                       </div>
@@ -409,7 +530,7 @@ const DesignCourseForm = () => {
 
                     <div>
                       <ul>
-                        {data?.living?.map((living, index) => {
+                        {stayDuration?.living?.map((living, index) => {
                           return (
                             <li
                               key={index}
@@ -429,6 +550,7 @@ const DesignCourseForm = () => {
                                       "living_price",
                                       living.plan?.[0]?.total_price
                                     );
+                                    setFieldValue("living_title", living.key);
                                   }}
                                 />
                                 <div className="mb-3 ">
@@ -443,12 +565,12 @@ const DesignCourseForm = () => {
                                       {living.key}
                                     </h2>{" "}
                                     {living.note && (
-                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                      <p className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 flex items-center pt-1 pb-0.5 h-7">
                                         {living.note}
-                                      </span>
+                                      </p>
                                     )}
                                   </div>
-                                  <p className="text-sm sm:text-[15px] mt-5">
+                                  <p className="text-sm sm:text-[15px] mt-5 flex flex-wrap gap-y-3">
                                     {living.value.split("-")?.map((item) => (
                                       <span
                                         className={cn(
@@ -504,9 +626,18 @@ const DesignCourseForm = () => {
                           alt="Car"
                           className="hidden w-16 h-10 sm:block"
                         />
-                        <p className="text-lg font-medium sm:text-xl sm:font-normal ">
-                          {t("Airport pick up")}
-                        </p>
+                        <div>
+                          <p className="text-lg font-medium sm:font-normal sm:text-xl">
+                            {t("Airport pick up")}
+                          </p>
+                          {data?.pick_up?.[0]?.type ? (
+                            <span className="w-fit mt-0.5 text-sm text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-3.5 flex items-center pt-1 pb-1 h-6">
+                              {data?.pick_up?.[0]?.type}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
                     </div>
 
@@ -532,6 +663,7 @@ const DesignCourseForm = () => {
                                       "pick_price",
                                       pick_up.plan?.[0]?.total_price
                                     );
+                                    setFieldValue("pick_title", pick_up.key);
                                   }}
                                 />
                                 <div className="mb-3 ">
@@ -546,12 +678,12 @@ const DesignCourseForm = () => {
                                       {pick_up.key}
                                     </h2>{" "}
                                     {pick_up.note && (
-                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 flex items-center pt-1 pb-0.5 h-7">
                                         {pick_up.note}
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-sm sm:text-[15px] mt-5">
+                                  <p className="text-sm sm:text-[15px] mt-5 flex flex-wrap gap-y-3">
                                     {pick_up.value.split("-")?.map((item) => (
                                       <span
                                         className={cn(
@@ -605,9 +737,19 @@ const DesignCourseForm = () => {
                           alt="Student Medical"
                           className="hidden w-14 h-14 sm:block"
                         />
-                        <p className="text-xl font-medium sm:text-xl sm:font-normal ">
-                          {t("Student medical insurance")}
-                        </p>
+
+                        <div>
+                          <p className="text-lg font-medium sm:font-normal sm:text-xl">
+                            {t("Student medical insurance")}
+                          </p>
+                          {data?.medical?.[0]?.type ? (
+                            <span className="w-fit mt-0.5 text-sm text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-3.5 flex items-center pt-1 pb-1 h-6">
+                              {data?.medical?.[0]?.type || t("optional")}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
                     </div>
 
@@ -633,6 +775,7 @@ const DesignCourseForm = () => {
                                       "medical_price",
                                       medical.plan?.[0]?.total_price
                                     );
+                                    setFieldValue("medical_title", medical.key);
                                   }}
                                 />
                                 <div className="mb-3 ">
@@ -647,12 +790,12 @@ const DesignCourseForm = () => {
                                       {medical.key}
                                     </h2>{" "}
                                     {medical.note && (
-                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 flex items-center pt-1 pb-0.5 h-7">
                                         {medical.note}
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-sm sm:text-[15px] mt-5">
+                                  <p className="text-sm sm:text-[15px] mt-5 flex flex-wrap gap-y-3">
                                     {medical.value.split("-")?.map((item) => (
                                       <span
                                         className={cn(
@@ -706,9 +849,18 @@ const DesignCourseForm = () => {
                           alt="Other Fees"
                           className="hidden w-14 h-14 sm:block"
                         />
-                        <p className="text-lg font-medium sm:text-xl sm:font-normal ">
-                          {t("Other fees")}
-                        </p>
+                        <div>
+                          <p className="text-lg font-medium sm:font-normal sm:text-xl">
+                            {t("Other fees")}
+                          </p>
+                          {data?.other_fees?.[0]?.type ? (
+                            <span className="w-fit mt-0.5 text-sm text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-3.5 flex items-center pt-1 pb-1 h-6">
+                              {data?.other_fees?.[0]?.type || t("optional")}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
                     </div>
 
@@ -723,43 +875,60 @@ const DesignCourseForm = () => {
                               } sm:border-t-[1.8px] sm:border-t-[#707070] `}
                             >
                               <div className="flex gap-3">
-                                <input
+                                {/* <input
                                   id={`fees_${index}`}
                                   name="fees_id"
-                                  type="radio"
+                                  type="checkbox"
                                   className="p-2 cursor-pointer mt-1"
-                                  onChange={(e) => {
-                                    setFieldValue("fees_id", other_fees.id);
-                                    setFieldValue(
-                                      "fees_price",
-                                      other_fees.plan?.[0]?.total_price
-                                    );
-                                  }}
-                                />
+                                  value={other_fees.plan?.[0]?.total_price}
+                                  checked
+                                /> */}
+                                <div className="flex items-center justify-center w-[22.4px] h-[22.4px] bg-mainColor rounded-full ">
+                                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                                </div>
                                 <div className="mb-3 ">
                                   <div className="flex items-center gap-3">
                                     <h2
-                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
-                                        other_fees?.id == values.fees_id
-                                          ? " text-mainColor"
-                                          : ""
-                                      }`}
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${" text-mainColor"}`}
                                     >
-                                      {other_fees.key}
+                                      <span className="me-2">
+                                        {other_fees.key == "fees" ||
+                                        other_fees.key == "Christmas"
+                                          ? other_fees.value
+                                          : other_fees.key}
+                                      </span>
+                                      {"  "}
+                                      {other_fees.key === "fees" ||
+                                      other_fees.key === "Christmas" ? (
+                                        <span className="text-mainColor">
+                                          (
+                                          {other_fees.plan.length !== 0
+                                            ? Number(
+                                                other_fees.plan?.[0]?.base_price
+                                              ).toFixed(2)
+                                            : "0.00"}
+                                          {"  "}
+                                          {other_fees.plan?.[0]?.unit}
+                                          {"  "}
+                                          {other_fees.plan?.[0]?.notes})
+                                        </span>
+                                      ) : (
+                                        <span></span>
+                                      )}
                                     </h2>{" "}
                                     {other_fees.note && (
-                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 py-1">
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 flex items-center pt-1 pb-0.5 h-7">
                                         {other_fees.note}
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-sm sm:text-[15px] mt-5">
+                                  <p className="text-sm sm:text-[15px] mt-5 flex flex-wrap gap-y-3">
                                     {other_fees.value
                                       .split("-")
                                       ?.map((item) => (
                                         <span
                                           className={cn(
-                                            "   py-1.5 rounded-xl  me-2",
+                                            "   py-1.5 rounded-xl  me-2 text-mainColor",
                                             {
                                               "px-5 text-center border":
                                                 other_fees.value.split("-")
@@ -780,8 +949,109 @@ const DesignCourseForm = () => {
                                 </div>
                               </div>
                               <h2
+                                className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${" text-mainColor"}`}
+                              >
+                                {other_fees.plan.length !== 0
+                                  ? Number(
+                                      other_fees.plan?.[0]?.total_price
+                                    ).toFixed(2)
+                                  : "0.00"}
+                                <span>
+                                  {" "}
+                                  {other_fees.plan?.[0]?.unit || t("reyal")}
+                                </span>
+                              </h2>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      {/* <ul>
+                        {otherFeesSummer?.map((other_fees, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`flex justify-between gap-2 items-center py-4 ${
+                                index > 0 ? "border-t border-t-[#C9C5CA]" : ""
+                              } sm:border-t-[1.8px] sm:border-t-[#707070] `}
+                            >
+                              <div className="flex gap-3">
+                                <input
+                                  id={`fees_${index}`}
+                                  name="feesSummer_id"
+                                  type="radio"
+                                  className="p-2 cursor-pointer mt-1"
+                                  value={other_fees.plan?.[0]?.total_price}
+                                  checked={true}
+                                />
+                                <div className="mb-3 ">
+                                  <div className="flex items-center gap-3">
+                                    <h2
+                                      className={`text-base font-medium sm:font-normal sm:text-xl ${
+                                        other_fees?.id == values.feesSummer_id
+                                          ? " text-mainColor"
+                                          : ""
+                                      }`}
+                                    >
+                                      <span className="me-2">
+                                        {other_fees.key == "fees" ||
+                                        other_fees.key == "Christmas"
+                                          ? other_fees.value
+                                          : other_fees.key}
+                                      </span>
+                                      {"  "}
+                                      {other_fees.key === "fees" ||
+                                      other_fees.key === "Christmas" ? (
+                                        <span className="text-mainColor">
+                                          (
+                                          {other_fees.plan.length !== 0
+                                            ? Number(
+                                                other_fees.plan?.[0]?.base_price
+                                              ).toFixed(2)
+                                            : "0.00"}
+                                          {"  "}
+                                          {other_fees.plan?.[0]?.unit}
+                                          {"  "}
+                                          {other_fees.plan?.[0]?.notes})
+                                        </span>
+                                      ) : (
+                                        <span></span>
+                                      )}
+                                    </h2>{" "}
+                                    {other_fees.note && (
+                                      <span className="text-sm sm:text-[15px] bg-mainColor text-white rounded-full px-3 sm:px-5 flex items-center pt-1 pb-0.5 h-7">
+                                        {other_fees.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm sm:text-[15px] mt-5 flex flex-wrap gap-y-3">
+                                    {other_fees.value
+                                      .split("-")
+                                      ?.map((item) => (
+                                        <span
+                                          className={cn(
+                                            "   py-1.5 rounded-xl  me-2",
+                                            {
+                                              "px-5 text-center border":
+                                                other_fees.value.split("-")
+                                                  ?.length !== 1,
+                                              "border-mainColor text-mainColor":
+                                                other_fees?.id ==
+                                                values.feesSummer_id,
+                                              "border-[#707070]":
+                                                other_fees?.id !=
+                                                values.feesSummer_id,
+                                            }
+                                          )}
+                                        >
+                                          {item}
+                                        </span>
+                                      ))}
+                                  </p>
+                                </div>
+                              </div>
+                              <h2
                                 className={`text-[17px] sm:text-xl font-semibold sm:font-normal whitespace-nowrap ${
-                                  other_fees?.id == values.fees_id
+                                  other_fees?.id == values.feesSummer_id
                                     ? " text-mainColor"
                                     : ""
                                 }`}
@@ -799,7 +1069,7 @@ const DesignCourseForm = () => {
                             </li>
                           );
                         })}
-                      </ul>
+                      </ul> */}
                     </div>
                   </div>
                 </div>
@@ -816,9 +1086,14 @@ const DesignCourseForm = () => {
                         alt="Total Costs"
                         className="hidden w-14 h-14 sm:block"
                       />
-                      <p className="text-lg font-semibold sm:text-xl sm:font-normal">
-                        {t("Total costs")}
-                      </p>
+                      <div>
+                        <p className="text-lg font-semibold sm:text-xl sm:font-normal mb-1">
+                          {t("Total costs")}
+                        </p>
+                        <p className="bg-mainColor rounded-full w-fit px-4 h-7 flex items-center justify-center text-white text-sm">
+                          {t("Saudi Riyal")}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -835,7 +1110,7 @@ const DesignCourseForm = () => {
                             {t("Courses")}
                           </p>
                           <p className="mt-2 text-sm">
-                            {t("الدورة التحضيرية لإختبار الآيلتس")}
+                            {values?.courses_title || ""}
                           </p>
                         </div>
                       </div>
@@ -853,7 +1128,7 @@ const DesignCourseForm = () => {
                             {t("Housing")}
                           </p>
                           <p className="mt-2 text-sm">
-                            {t("الإقامة مع عائلة")}
+                            {values?.living_title || ""}
                           </p>
                         </div>
                       </div>
@@ -873,7 +1148,9 @@ const DesignCourseForm = () => {
                           <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                             {t("Airport pick up")}
                           </p>
-                          <p className="mt-2 text-sm">{t("بدون إستقبال")}</p>
+                          <p className="mt-2 text-sm">
+                            {values?.pick_title || ""}
+                          </p>
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
@@ -893,7 +1170,7 @@ const DesignCourseForm = () => {
                             {t("Student medical insurance")}
                           </p>
                           <p className="mt-2 text-sm">
-                            {t("بدون التأمين الطبي")}
+                            {values?.medical_title || ""}
                           </p>
                         </div>
                       </div>
@@ -913,7 +1190,9 @@ const DesignCourseForm = () => {
                           <p className="text-lg font-medium sm:text-xl sm:font-normal ">
                             {t("Other fees")}
                           </p>
-                          <p className="mt-2 text-sm">{t("رسوم صيفية")}</p>
+                          <p className="mt-2 text-sm">
+                            {values?.fees_title || ""}
+                          </p>
                         </div>
                       </div>
                       <div className="py-2.5 sm:text-xl font-semibold sm:font-normal">
@@ -997,6 +1276,12 @@ const DesignCourseForm = () => {
                 <div className="hidden w-3/4 m-auto lg:w-1/2 mb-28 sm:block">
                   <Button
                     action={() => {
+                      const total_price =
+                        Number(values.courses_price || 0) +
+                        Number(values.living_price || 0) +
+                        Number(values.medical_price || 0) +
+                        Number(values.pick_price || 0) +
+                        Number(+values.fees_price || 0);
                       mutate({
                         number_weeks: values.number_weeks.id,
                         start_date: values.start_date,
@@ -1008,6 +1293,31 @@ const DesignCourseForm = () => {
                         medical_id: values.medical_id,
                         fees_id: values.fees_id,
                         amount: values.partner_id,
+                        total_cost: [
+                          {
+                            courses_id: {
+                              id: values.courses_id,
+                              values: values.courses_price,
+                            },
+                            living_id: {
+                              id: values.living_id,
+                              values: values.living_price,
+                            },
+                            pick_id: {
+                              id: values.pick_id,
+                              values: values.pick_price,
+                            },
+                            medical_id: {
+                              id: values.medical_id,
+                              values: values.medical_price,
+                            },
+                            fees_id: {
+                              id: values.fees_id,
+                              values: +values.fees_price,
+                            },
+                          },
+                        ],
+                        total_price,
                       });
                     }}
                     className="w-full bg-[#1B0924] py-3.5 hover:bg-mainYellow duration-500"
@@ -1021,6 +1331,12 @@ const DesignCourseForm = () => {
                   className="block w-full text-white sm:hidden "
                   loading={isPending}
                   action={() => {
+                    const total_price =
+                      Number(values.courses_price || 0) +
+                      Number(values.living_price || 0) +
+                      Number(values.medical_price || 0) +
+                      Number(values.pick_price || 0) +
+                      Number(values.fees_price || 0);
                     if (step === 3) {
                       mutate({
                         number_weeks: values.number_weeks.id,
@@ -1033,6 +1349,31 @@ const DesignCourseForm = () => {
                         medical_id: values.medical_id,
                         fees_id: values.fees_id,
                         amount: values.partner_id,
+                        total_cost: [
+                          {
+                            courses_id: {
+                              id: values.courses_id,
+                              values: values.courses_price,
+                            },
+                            living_id: {
+                              id: values.living_id,
+                              values: values.living_price,
+                            },
+                            pick_id: {
+                              id: values.pick_id,
+                              values: values.pick_price,
+                            },
+                            medical_id: {
+                              id: values.medical_id,
+                              values: values.medical_price,
+                            },
+                            fees_id: {
+                              id: values.fees_id,
+                              values: values.fees_price,
+                            },
+                          },
+                        ],
+                        total_price,
                       });
                     } else {
                       setStep((prev) => prev + 1);

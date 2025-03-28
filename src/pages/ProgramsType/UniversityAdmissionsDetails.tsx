@@ -65,10 +65,6 @@ const UniversityAdmissionsDetails = () => {
       queryFn: fetchSpecializations,
       select: (data) => {
         return data?.map((specializations) => {
-          console.log(
-            "🚀 ~ returndata?.map ~ specializations:",
-            specializations
-          );
           return {
             id: specializations?.id,
             label: specializations?.name || `${t("everyone")}`,
@@ -99,11 +95,6 @@ const UniversityAdmissionsDetails = () => {
     queryFn: () => fetchUniversityDetails(isUniversityID),
     suspense: true,
   });
-
-  console.log(
-    "🚀 ~ UniversityAdmissionsDetails ~ universityData:",
-    universityData
-  );
 
   const includes =
     '<ul style="list-style-type:disc;"><li>hhhhh</li><li>hhhhh</li><li>hhhhh</li><li>hhhhh</li><li>jjjj</li></ul>';

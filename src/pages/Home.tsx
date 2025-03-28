@@ -24,12 +24,11 @@ const fetchItems = async () => {
 };
 
 const Home = () => {
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["landing-page-data"],
     queryFn: fetchItems,
     suspense: true,
   });
-  console.log("🚀 ~ fetchItems ~ data:", data);
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -38,16 +37,13 @@ const Home = () => {
   return (
     <div>
       <div className="max-w-full sm:max-w-5xl md:max-w-6xl lg:max-w-[80rem] md:px-4 mx-auto">
-        <p className="my-4 text-xl text-center">
-          ALMADINA AL-FADHILEH (One Partner) Limited liability
-        </p>
         <BookConsultation data={data} />
 
         <ProgramsType data={data} />
 
         <LatestOffersFeatures data={data} />
 
-        <ProgramTypePackages data={data} />
+        <ProgramTypePackages data={data} refetch={refetch} />
 
         <ChooseUtopia />
 

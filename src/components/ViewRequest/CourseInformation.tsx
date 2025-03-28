@@ -32,7 +32,6 @@ const postAttachReceipt = async (postData) => {
     return data?.data;
   } catch (errors) {
     toast.error(errors);
-    console.log("🚀 ~ loginPost ~ error:", errors);
   }
 };
 

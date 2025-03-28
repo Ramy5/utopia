@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 
 const BankAccounts = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  console.log("🚀 ~ BankAccounts ~ selectedIndex:", selectedIndex);
   const [animate, setAnimate] = useState(false);
   const navigate = useNavigate()
 

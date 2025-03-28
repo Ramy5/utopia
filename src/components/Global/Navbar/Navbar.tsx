@@ -12,9 +12,15 @@ import { useAuth } from "../../../context/AuthContext";
 import Shop from "../../../assets/shop.png";
 import Star from "../../../assets/star.png";
 import { IoMdNotifications } from "react-icons/io";
-import { MdPerson } from "react-icons/md";
+import { MdOutlineFavorite, MdPerson } from "react-icons/md";
 import { useRTL } from "../../../hooks/useRTL";
 import { useTranslation } from "react-i18next";
+import { FaArrowRightLong, FaBars } from "react-icons/fa6";
+import Button from "../../atoms/Button/Button";
+import Sidebar from "../../atoms/Sidebar/Sidebar";
+import { IoClose } from "react-icons/io5";
+import { GrFavorite } from "react-icons/gr";
+
 interface Navbar_TP {
   hidden?: boolean;
 }
@@ -26,8 +32,19 @@ interface UserProfile {
   image: string;
 }
 
+// const currentPages = [
+//   { id: 1, text: "home", icon: <IoHomeOutline className="text-xl" /> },
+//   {
+//     id: 2,
+//     text: "notification",
+//     icon: <IoIosNotificationsOutline className="text-xl" />,
+//   },
+//   { id: 3, text: "account", icon: <FaRegUser className="text-xl" /> },
+//   { id: 4, text: "more", icon: <FaBars className="text-xl" /> },
+// ];
+
 const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
-  const { token, clearAuth } = useAuth();
+  const { token, clearAuth, user } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPendingManual, setIsPendingManual] = useState(false);
@@ -37,6 +54,15 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   const navigate = useNavigate();
   const isRTL = useRTL();
   const { i18n } = useTranslation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState({
+    notifications: false,
+    account: false,
+    more: false,
+  });
+  const [requestTypeOpen, setRequestTypeOpen] = useState(false);
+  const [selectLang, setSelectLang] = useState(
+    localStorage.getItem("lang") || "en"
+  );
 
   const fetchProfile = async () => {
     try {
@@ -140,7 +166,7 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
   });
 
   const toggleLang = () => {
-    const currentLang = localStorage.getItem("lang") || "en";
+    const currentLang = localStorage.getItem("lang") || "ar";
     const newLang = currentLang === "ar" ? "en" : "ar";
 
     i18n.changeLanguage(newLang);
@@ -150,64 +176,63 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
     window.location.reload();
   };
 
+  // const toggleLang = (selectedLang: string) => {
+  //   i18n.changeLanguage(selectedLang);
+  //   localStorage.setItem("lang", selectedLang);
+  //   document.documentElement.lang = selectedLang;
+  //   document.documentElement.dir = selectedLang === "ar" ? "rtl" : "ltr";
+  // };
+
+  // useEffect(() => toggleLang(selectLang), [selectLang]);
+
+  // useEffect(() => {
+  //   document.documentElement.dir = isRTL ? "rtl" : "ltr";
+  //   document.documentElement.lang = isRTL ? "ar" : "en";
+  // }, [isRTL]);
+
+  // const toggleLang = () => {
+  //   i18n.changeLanguage(isRTL ? "en" : "ar");
+  //   window.location.reload();
+  // };
+
   const handleLogout = () => {
     mutate({});
   };
+
+  const renderSidebarContent = () => (
+    <div>
+      <div className="flex items-center justify-between my-2">
+        <div className="flex items-center gap-2 ">
+          {user && (
+            <>
+              <div className="w-10 h-10 overflow-hidden rounded-full">
+                <img
+                  src={user?.image}
+                  alt={user?.name}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <p className="font-semibold">{user?.name}</p>
+            </>
+          )}
+        </div>
+        <Button
+          className="bg-transparent p-0"
+          action={() => setIsSidebarOpen({ ...isSidebarOpen, more: false })}
+        >
+          <IoClose size={38} className="text-black" />
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <nav className={hidden ? "hidden sm:block" : ""}>
       {token ? (
         <>
           <header className="items-center justify-between hidden px-4 py-2 md:flex">
-            {/* Nav Links */}
-            {/* <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
-          <li className="cursor-pointer hover:text-mainColor">
-            <Link
-              className={cn({
-                "font-bold": pathName === "/partnerBookingList",
-              })}
-              to={"/partnerBookingList"}
-            >
-              Booking List
-            </Link>
-          </li>
-          <li className="cursor-pointer hover:text-mainColor">
-            <Link
-              className={cn({
-                "font-bold": pathName === "/partnerUsers",
-              })}
-              to={"/partnerUsers"}
-            >
-              Users
-            </Link>
-          </li>
-          <li className="cursor-pointer hover:text-mainColor">
-            <Link
-              className={cn({
-                "font-bold": pathName === "/partnerSnatches",
-              })}
-              to={"/partnerSnatches"}
-            >
-              Snatches
-            </Link>
-          </li>
-          <li className="cursor-pointer hover:text-mainColor">
-            <Link
-              className={cn({
-                "font-bold": pathName === "/partnerContact",
-              })}
-              to={"/partnerContact"}
-            >
-              Contact Utopia
-            </Link>
-          </li>
-        </ul> */}
-
-            <div
-              // onClick={toggleDropdown}
-              className="relative flex items-center gap-6"
-            >
-              <div className="w-12 h-12 overflow-hidden rounded-xl">
+            <div className="relative flex items-center gap-6">
+              <div className="w-12 h-12 overflow-hidden rounded-xl سة:لامخؤن">
                 {profile?.image ? (
                   <img
                     src={profile?.image}
@@ -221,15 +246,32 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                   </div>
                 )}
               </div>
-              <p className="relative mx-2 font-semibold cursor-pointer">
+
+              <Button
+                className="bg-transparent p-0"
+                action={() => navigate("/favorites")}
+              >
+                {/* <img src={Star} alt="star" className="w-6" /> */}
+                <div title={t("Favorites")}>
+                  <GrFavorite size={30} className="text-mainColor " />
+                </div>
+              </Button>
+
+              <button
+                onClick={toggleLang}
+                className="hover:text-mainColor text-[17px]"
+              >
+                عربي EN
+              </button>
+              {/* <p className="relative mx-2 font-semibold cursor-pointer">
                 <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-600 rounded-full">
                   1
                 </span>
                 <IoMdNotifications className="text-[#7070708c] text-4xl" />
-              </p>
+              </p> */}
 
-              <Link to={"/orders"}>{t("orders")}</Link>
-              <Link to={"/chat"}>{t("contact utopia")}</Link>
+              {/* <Link to={"/orders"}>{t("orders")}</Link> */}
+              {/* <Link to={"/chat"}>{t("contact utopia")}</Link> */}
 
               {isOpen && (
                 <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
@@ -240,12 +282,6 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                     >
                       {t("add pic")}
                     </p>
-                    {/* <Link
-                      to="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100 animation_delay-3"
-                    >
-                      {t("dashboard")}
-                    </Link> */}
                     <p
                       onClick={handleLogout}
                       className={cn(
@@ -270,9 +306,15 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
 
           {/* // mobile */}
           <header className="flex items-center px-4 py-2 md:hidden sm:justify-start">
+            <Button
+              className="bg-transparent p-0 me-3"
+              action={() => setIsSidebarOpen({ ...isSidebarOpen, more: true })}
+            >
+              <FaBars size={28} className="text-mainColor" />
+            </Button>
             <div
               onClick={toggleDropdown}
-              className="relative flex items-center gap-2"
+              className="relative flex items-center gap-1"
             >
               <div className="w-10 h-10 overflow-hidden rounded-full">
                 <img
@@ -281,11 +323,11 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                   className="object-cover w-full h-full cursor-pointer"
                 />
               </div>
-              <p className="mx-2 font-semibold cursor-pointer">
+              <p className="mx-2 font-semibold cursor-pointer text-sm">
                 {profile?.name?.split(" ")[0]}
               </p>
               {isOpen && (
-                <div className="absolute z-40 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
+                <div className="absolute z-30 w-48 mt-2 rounded-md start-0 top-10 focus:outline-none">
                   <div className="">
                     <p
                       onClick={openImageModal}
@@ -293,12 +335,6 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
                     >
                       {t("add pic")}
                     </p>
-                    {/* <Link
-                      to="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 transition-all duration-500 bg-white border-b border-l border-r cursor-pointer animate_from_left hover:ps-6 hover:bg-gray-100 animation_delay-3"
-                    >
-                      {t("dashboard")}
-                    </Link> */}
                     <p
                       onClick={handleLogout}
                       className={cn(
@@ -316,14 +352,16 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
             </div>
 
             <div className="flex items-center gap-2 mx-2">
-              <CiHeart className="text-xl" />
-              <Link to={"/chat"}>
-                <PiChatCircleThin className="text-xl" />
+              <Link to={"/favorites"}>
+                <GrFavorite size={26} className="text-mainColor " />
               </Link>
+              {/* <Link to={"/chat"}>
+                <PiChatCircleThin className="text-xl" />
+              </Link> */}
             </div>
             {/* Logo */}
             <Link to={"/"} className="ms-auto">
-              <img src={Logo} alt="logo" className="w-32 h-10" />
+              <img src={Logo} alt="logo" className="w-28 sm:w-32 " />
             </Link>
           </header>
         </>
@@ -332,15 +370,22 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
           {/* Language and Auth */}
           <div className="items-center hidden gap-3 sm:flex xl:gap-6 ">
             <div className="flex gap-4">
-              <img src={Star} alt="star" className="w-5" />
-              <img src={Shop} alt="shop" className="w-5 " />
+              <Button
+                className="bg-transparent p-0"
+                action={() => navigate("/favorites")}
+              >
+                <div title={t("Favorites")}>
+                  <GrFavorite size={30} className="text-mainColor " />
+                </div>
+              </Button>
+              {/* <img src={Shop} alt="shop" className="w-5 " /> */}
             </div>
-            <Link to="/login" className="hover:text-mainColor text-[17px]">
+            <Link to="/register" className="hover:text-mainColor text-[17px]">
               {t("login")}
             </Link>
-            <Link to="/register" className="hover:text-mainColor text-[17px]">
+            {/* <Link to="/register" className="hover:text-mainColor text-[17px]">
               {t("Create an account")}
-            </Link>
+            </Link> */}
             <button
               onClick={toggleLang}
               className="hover:text-mainColor text-[17px]"
@@ -349,32 +394,22 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
             </button>
           </div>
 
-          {/* Nav Links */}
-          {/* <ul className="hidden gap-3 text-gray-700 xl:gap-6 sm:flex">
-            <li className="cursor-pointer hover:text-mainColor">
-              الباكجات السياحية
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">
-              الانشطه السياحية
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">
-              السياحة الفاخرة
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">
-              تذاكر الطيران
-            </li>
-            <li className="cursor-pointer hover:text-mainColor">الفنادق</li>
-            <li className="cursor-pointer hover:text-mainColor">
-              <a href={"/#englishSection"}>اللغة الانجليزية</a>
-            </li>
-          </ul> */}
-
           {/* Hamburger Menu for Mobile */}
-          <Link to={"/login"} className="sm:hidden">
-            <button className="px-3 pt-2 pb-3 text-sm font-semibold border text-mainColor border-mainColor rounded-xl focus:outline-none">
-              {t("login")}
-            </button>
-          </Link>
+          <div
+            className={`flex items-center justify-between w-full my-1 sm:hidden ${
+              isRTL ? "" : "flex-row-reverse"
+            }`}
+          >
+            <Button
+              className="bg-transparent p-0 "
+              action={() => setIsSidebarOpen({ ...isSidebarOpen, more: true })}
+            >
+              <FaBars size={28} className="text-mainColor" />
+            </Button>
+            <Link to={"/"}>
+              <img src={Logo} alt="Logo" className="w-28 " />
+            </Link>
+          </div>
 
           {/* Logo */}
           <Link to={"/"}>
@@ -423,6 +458,80 @@ const Navbar: React.FC<Navbar_TP> = ({ hidden }) => {
             </div>
           </div>
         </div>
+      )}
+
+      {isSidebarOpen.more && (
+        <Sidebar className="animate_from_left">
+          <div>
+            {renderSidebarContent()}
+            <div className="mx-auto my-8">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-medium">{t("language")}</span>
+                <div className="flex items-center gap-4">
+                  {["عربي", "EN"].map((lang, index) => (
+                    <button
+                      key={index}
+                      onClick={toggleLang}
+                      className={`p-1 pb-2 border text-xs rounded-md ${
+                        lang === (isRTL ? "عربي" : "EN")
+                          ? "bg-mainColor text-white"
+                          : "bg-white text-gray-600"
+                      } border-gray-300`}
+                    >
+                      {lang}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <ul className="flex flex-col gap-3 bg-white">
+                {[
+                  "Why choose Utopia?",
+                  "success stories",
+                  "bank accounts",
+                  "partners",
+                  "notification",
+                  "account",
+                  !!token ? "logout" : "login",
+                ].map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      onClick={() => {
+                        if (token && item == "logout") {
+                          handleLogout();
+                        } else if (!token && item === "login") {
+                          navigate("/register");
+                        }
+                        setIsSidebarOpen({ ...isSidebarOpen, more: false });
+                      }}
+                      className="flex items-center justify-between p-4 duration-300 shadow-md cursor-pointer translation-all hover:ps-8 hover:bg-gray-100"
+                      to={
+                        item === "Why choose Utopia?"
+                          ? "/whyUs"
+                          : item === "success stories"
+                          ? "/successStory"
+                          : item === "bank accounts"
+                          ? "/bankAccounts"
+                          : item === "partners"
+                          ? "/ourPartners"
+                          : item === "notification"
+                          ? "/notifications"
+                          : item === "account"
+                          ? "/accounts"
+                          : item === "login"
+                          ? "/register"
+                          : ""
+                      }
+                    >
+                      <span>{t(item)}</span>
+                      <span>❯</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Sidebar>
       )}
     </nav>
   );

@@ -28,7 +28,7 @@ const SummerPrograms = ({ data }) => {
           >
             <div className="col-span-3 rounded-xl overflow-hidden h-40">
               <img
-                src={summer.partner_image}
+                src={summer.packageImage?.[0]?.image}
                 alt="summer"
                 className="h-full w-full"
                 loading="lazy"
